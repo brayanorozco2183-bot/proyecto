@@ -1,0 +1,29 @@
+node_modules/
+.env
+dist/
+build/
+.bot_profiles/
+playwright-report/
+test-results/
+maestro.db
+maestro.db-journal
+database.sqlite
+*.log
+.DS_Store
+
+# Large binaries and logs
+OllamaSetup.exe
+resultado_ts.txt
+ollama_prompts.log
+all_files.txt
+file_list.txt
+FILES.txt
+tsc_output.txt
+
+# Temporary and output directories
+backups/
+output_sites/
+tmp/
+assets_generated/
+parche/
+logs_/
