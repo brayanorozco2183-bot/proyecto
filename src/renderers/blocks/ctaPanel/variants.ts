@@ -59,7 +59,30 @@ const luxuryBanner = (input: BlockRendererInput): string => {
   );
 };
 
+const consultationSplit = (input: BlockRendererInput): string => {
+  const trustBullets = resolveTrustBullets(input);
+  const actionBullets = resolveActionBullets(input);
+  return wrapSectionBlock(
+    input,
+    `
+      <div class="cta-panel__consult">
+        <div class="cta-panel__consult-copy">
+          ${renderSectionHeading(input.content.heading, input.local?.labels?.ctaEyebrow || 'Orientación profesional')}
+          ${renderParagraphs(input.content.subheading, 'cta-panel__intro')}
+        </div>
+        <aside class="cta-panel__consult-card">
+          ${renderInlinePills(trustBullets, 'cta-panel__trust')}
+          ${renderBullets(actionBullets, 'cta-panel__bullets')}
+          ${renderCta(input.content.cta, input.local, input)}
+        </aside>
+      </div>
+    `,
+    'cta-panel cta-panel--consult'
+  );
+};
+
 export const renderCtaPanelVariants: Record<string, (input: BlockRendererInput) => string> = {
   minimal_phone_bar: minimalPhoneBar,
-  luxury_banner: luxuryBanner
+  luxury_banner: luxuryBanner,
+  consultation_split: consultationSplit
 };

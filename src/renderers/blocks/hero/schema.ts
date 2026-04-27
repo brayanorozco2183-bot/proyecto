@@ -8,7 +8,7 @@ const contextSchema = z.object({
   phone: z.string().optional(),
   mapEmbedUrl: z.string().optional(),
   ctaHref: z.string().optional(),
-  labels: z.record(z.string()).optional()
+  labels: z.record(z.string(), z.string()).optional()
 }).partial();
 
 

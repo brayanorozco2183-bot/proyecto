@@ -1,8 +1,13 @@
-import { requireNichePlaybook } from './playbookLoader.js';
+import { requireNichePlaybook, resolveNicheId, resolveCanonicalServiceNiche, normalizeMissionNiche, getCanonicalNicheLabel } from './playbookLoader.js';
 import { buildAgentPlaybookContext, selectFaqEntries } from './playbookSelectors.js';
 
+function resolvePlaybookKey(niche: string): string {
+  const normalized = normalizeMissionNiche(niche);
+  return resolveCanonicalServiceNiche(normalized || niche) || resolveNicheId(normalized || niche) || normalized || niche;
+}
+
 export function resolvePlaybookForMission(niche: string) {
-  const playbook = requireNichePlaybook(niche);
+  const playbook = requireNichePlaybook(resolvePlaybookKey(niche));
   return buildAgentPlaybookContext(playbook);
 }
 
@@ -23,7 +28,7 @@ export function buildTechnicalInjection(niche: string): string {
 }
 
 export function resolveFaqSeed(niche: string, limit = 5) {
-  const playbook = requireNichePlaybook(niche);
+  const playbook = requireNichePlaybook(resolvePlaybookKey(niche));
   return selectFaqEntries(playbook, limit).map(item => ({
     question: item.question,
     answer: item.answerGuidance
@@ -31,9 +36,11 @@ export function resolveFaqSeed(niche: string, limit = 5) {
 }
 
 export function getRequiredSchemaTypesForNiche(niche: string): string[] {
-  return requireNichePlaybook(niche).schemaTypes;
+  return requireNichePlaybook(resolvePlaybookKey(niche)).schemaTypes;
 }
 
 export function getNicheAliases(niche: string): string[] {
-  return requireNichePlaybook(niche).aliases;
+  return requireNichePlaybook(resolvePlaybookKey(niche)).aliases;
 }
+
+export { normalizeMissionNiche, getCanonicalNicheLabel, resolveCanonicalServiceNiche };

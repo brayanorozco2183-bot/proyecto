@@ -4,7 +4,11 @@ export * from './clusterScope.js';
 export * from './visualMemory.js';
 export * from './editorialMemory.js';
 export * from './siteStructureMemory.js';
+export * from './reservationMemory.js';
+export * from './designLearningMemory.js';
+export * from './designLearning.js';
 export * from './schema.js';
 export * from './originalityPlanner.js';
 export * from './qualityGateSiteOriginality.js';
 export * from './pipelineAdapters.js';
+

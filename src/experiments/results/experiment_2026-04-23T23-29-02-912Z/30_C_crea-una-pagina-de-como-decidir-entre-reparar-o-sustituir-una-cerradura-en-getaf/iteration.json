@@ -1,0 +1,35 @@
+{
+  "iterationId": "30",
+  "block": "C",
+  "command": "crea una página de cómo decidir entre reparar o sustituir una cerradura en Getafe",
+  "note": "Validación de mejora acumulada",
+  "jobId": "mission-1777001532174",
+  "timestamp": "2026-04-24T03:39:50.911Z",
+  "durationSeconds": 458.74,
+  "mission": {
+    "id": "mission-1777001532174",
+    "niche": "como decidir entre reparar o sustituir cerradura",
+    "status": "COMPLETED",
+    "created_at": "2026-04-24 03:32:12",
+    "city": null
+  },
+  "review": null,
+  "metrics": {
+    "missionStatus": "COMPLETED",
+    "reviewStatus": null,
+    "score": null,
+    "qualityGateScore": null,
+    "qualityGateFailed": false,
+    "technicalValidationFailed": false,
+    "technicalIssues": [],
+    "issueCount": 0,
+    "issues": [],
+    "writerFallbacks": 0,
+    "correctorFallback": false,
+    "coherenceWarnings": 0,
+    "placeholderWarnings": 0,
+    "modelUsage": [],
+    "totalLogs": 35,
+    "publishabilityHint": "requiere_revision"
+  }
+}

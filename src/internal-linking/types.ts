@@ -113,6 +113,13 @@ export interface ArchitectLinkContext {
   availableLinks: ArchitectAvailableLink[];
   mandatoryLinkGoals: string[];
   suggestedAnchors: string[];
+  upwardLinks?: ArchitectAvailableLink[];
+  lateralLinks?: ArchitectAvailableLink[];
+  moneyLinks?: ArchitectAvailableLink[];
+  relatedLinks?: ArchitectAvailableLink[];
+  localAreas?: string[];
+  relatedCities?: string[];
+  clusterKeywords?: string[];
 }
 
 export interface SimpleContentBlock {
@@ -120,6 +127,8 @@ export interface SimpleContentBlock {
   h2: string;
   html: string;
   wordCount: number;
+  type?: string;
+  blockType?: string;
   metadata: Record<string, unknown>;
 }
 

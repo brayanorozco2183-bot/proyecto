@@ -1,725 +1,286 @@
 [
   {
     "id": "section-0",
-    "h2": "Soluciones de Fontanería que Funcionan",
-    "html": "<html><head></head><body><section class=\"semantic-section shell-plain system-mixed flow-centered media-iconic density-standard cta-weight-medium trust-embedded pattern-panelled variant-default weight-medium emphasis-content composition-trust_first skeleton-editorial-longform cadence-alternating\" id=\"servicios\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell \"> <header class=\"block__header\"><span class=\"block__eyebrow\">services_grid</span><h2 class=\"block__title\">Soluciones de Fontanería que Funcionan</h2></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"services-layout services-layout--default\"> <p>Fontaneros en Valencia demanda un enfoque técnico especializado y el uso de componentes con certificación de calidad.</p>\n<p>Nuestras intervenciones técnicas en el área de Valencia priorizan la durabilidad estructural y el cumplimiento de los estándares de seguridad vigentes.</p>\n<p>Analizamos cada instalación en Valencia para aplicar soluciones específicas que garanticen la estabilidad operativa a largo plazo.</p> <div class=\"semantic-items\"> <article class=\"semantic-card service-card\"> <h3>Detección de fugas</h3> <p>Ejecutamos procesos de detección de fugas bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil.</p> </article> <article class=\"semantic-card service-card\"> <h3>Reparación de bajantes</h3> <p>La resolución de incidencias en reparación de bajantes requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia.</p> </article> <article class=\"semantic-card service-card\"> <h3>Instalación de sanitarios</h3> <p>Auditamos cada fase de instalación de sanitarios en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales.</p> </article> <article class=\"semantic-card service-card\"> <h3>Cambio de grifería</h3> <p>Nuestra operativa en cambio de grifería integra estándares industriales específicos para , velando por que cada detalle reciba atención técnica.</p> </article> <article class=\"semantic-card service-card\"> <h3>Humedades y filtraciones</h3> <p>Ejecutamos procesos de humedades y filtraciones bajo normativas de seguridad rigurosas. En el entorno de , nos enfocamos en el ajuste técnico para maximizar la vida útil.</p> </article> <article class=\"semantic-card service-card\"> <h3>Sustitución de sifones</h3> <p>La resolución de incidencias en sustitución de sifones requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en .</p> </article> <article class=\"semantic-card service-card\"> <h3>Reparación de cisternas</h3> <p>Auditamos cada fase de reparación de cisternas en para asegurar la trazabilidad de la intervención y la idoneidad de los materiales.</p> </article> <article class=\"semantic-card service-card\"> <h3>Fontanería urgente 24h</h3> <p>Nuestra operativa en fontanería urgente 24h integra estándares industriales específicos para , velando por que cada detalle reciba atención técnica.</p> </article> </div> <div class=\"section-cta section-cta--medium section-cta--terminal\"> <a class=\"cta-link cta-link--medium\" href=\"tel:969530521\"> Solicitar evaluación técnica </a> </div> </div> </div> </div> </div> </section></body></html>",
-    "wordCount": 348,
+    "h2": "Cobertura real en Getafe",
+    "html": "<html><head></head><body><section class=\"semantic-section shell-panel system-panelled flow-split media-proof density-standard cta-weight-medium trust-separate pattern-stack variant-default weight-medium emphasis-content composition-conversion skeleton-premium-showcase cadence-contrast-bursts has-contract contract-shell-panel contract-flow-split contract-density-standard contract-emphasis-trust contract-card-outlined contract-ornament-soft mobile-pattern-cards\" id=\"zonas\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell shell-panel density-standard\"> <header class=\"block__header\"><span class=\"block__eyebrow\">local_proof</span></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"trust-layout trust-layout--separate\"> <p>Trabajamos cerrajeros en Getafe con planificación por zonas para ajustar mejor desplazamientos, ventanas de visita y orden de intervención según el tipo de trabajo. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.</p>\n<p>Ese enfoque permite llegar con un criterio más claro sobre el contexto del servicio, algo especialmente útil cuando hay acceso condicionado, horarios concretos o necesidad de coordinar varias fases. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.</p> <div class=\"trust-layout__grid\"> <div class=\"trust-layout__cards\"> <div class=\"semantic-items\"> <article class=\"semantic-card service-card\"> <h3>Barrios y zonas habituales</h3> <p>Organizamos actuaciones de agrupando zonas y franjas compatibles para reducir esperas y mantener una agenda más realista. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</p> </article> <article class=\"semantic-card service-card\"> <h3>Cómo coordinamos la proximidad</h3> <p>Conocer el entorno ayuda a prever mejor accesos, tiempos de preparación y condicionantes habituales antes de empezar la intervención. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</p> </article> <article class=\"semantic-card service-card\"> <h3>Cuándo conviene validar cobertura</h3> <p>Esa logística también facilita plantear revisiones, remates o segundas visitas cuando el servicio necesita continuidad y no solo una actuación aislada. En , el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</p> </article> </div></div> <aside class=\"trust-layout__proof\"> </aside> </div> </div> </div> </div> </div> </section></body></html>",
+    "wordCount": 286,
+    "metadata": {
+      "block_type": "local_proof",
+      "sectionIndex": 0,
+      "section_id": "zonas",
+      "score": 0,
+      "corruptionDetected": false,
+      "unsafeHtml": false,
+      "semantic": {
+        "h2": "Cobertura real en Getafe",
+        "intro": [
+          "Trabajamos cerrajeros en Getafe con planificación por zonas para ajustar mejor desplazamientos, ventanas de visita y orden de intervención según el tipo de trabajo. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.",
+          "Ese enfoque permite llegar con un criterio más claro sobre el contexto del servicio, algo especialmente útil cuando hay acceso condicionado, horarios concretos o necesidad de coordinar varias fases. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención."
+        ],
+        "items": [
+          {
+            "title": "Barrios y zonas habituales",
+            "body": "Organizamos actuaciones de cerrajeros en Getafe agrupando zonas y franjas compatibles para reducir esperas y mantener una agenda más realista. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": []
+          },
+          {
+            "title": "Cómo coordinamos la proximidad",
+            "body": "Conocer el entorno ayuda a prever mejor accesos, tiempos de preparación y condicionantes habituales antes de empezar la intervención. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": []
+          },
+          {
+            "title": "Cuándo conviene validar cobertura",
+            "body": "Esa logística también facilita plantear revisiones, remates o segundas visitas cuando el servicio necesita continuidad y no solo una actuación aislada. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": []
+          }
+        ],
+        "trustBullets": [
+          "Cobertura real en Getafe",
+          "Planificación por zonas",
+          "Seguimiento claro"
+        ],
+        "cta": {
+          "text": "Consultar cobertura"
+        },
+        "bullets": [],
+        "commonMistakes": [],
+        "faqItems": [],
+        "decisionFactors": []
+      }
+    }
+  },
+  {
+    "id": "donde-estamos",
+    "h2": "Cobertura y ubicación en la zona",
+    "html": "<div class=\"map-placeholder\" data-city=\"Getafe\">\n                        <p>Nuestra base operativa se coordina para ofrecer una cobertura técnica profesional en toda el área de Getafe. Disponemos de especialistas distribuidos estratégicamente para garantizar un servicio de proximidad y confianza en todos los distritos de la zona, asegurando una respuesta técnica de alta calidad para cada intervención.</p>\n                    </div>",
+    "wordCount": 50,
+    "metadata": {
+      "block_type": "map",
+      "sectionIndex": 1,
+      "section_id": "donde-estamos",
+      "score": 100
+    }
+  },
+  {
+    "id": "section-2",
+    "h2": "Servicios de Cierre y Mantenimiento en Getafe",
+    "html": "<html><head></head><body><section class=\"semantic-section shell-panel system-panelled flow-stack media-iconic density-standard cta-weight-medium trust-embedded pattern-stack variant-default weight-medium emphasis-content composition-conversion skeleton-premium-showcase cadence-contrast-bursts has-contract contract-shell-panel contract-flow-stack contract-density-standard contract-emphasis-content contract-card-outlined contract-ornament-soft mobile-pattern-cards\" id=\"servicios\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell shell-panel density-standard\"> <header class=\"block__header\"><span class=\"block__eyebrow\">services_grid</span></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"services-layout services-layout--default\"> <p>¿Necesitas ayuda para cerrar tu puerta o mantener tus sistemas de seguridad en Getafe? Nuestros cerrajeros expertos están aquí para asistirte con cualquier problema que pueda surgir. Desde la rápida apertura sin daños hasta el mantenimiento y reparación de cierres, estamos preparados para resolver todos tus necesidades de seguridad en tu vecindario. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.</p>\n<p>Nuestra misión es proporcionarte soluciones eficaces y seguras a un precio justo. No te preocupes por los precios innecesarios ni la falta de transparencia. Nuestros presupuestos son cerrados antes de empezar, asegurándote que no recibirás ninguna sorpresa en tu factura. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.</p>\n<p>¿Buscas una solución rápida y efectiva para tus necesidades de seguridad? No te preocupes por el tiempo de respuesta o las complicaciones innecesarias. Nuestros cerrajeros están preparados para atender a cualquier urgencia, desde la apertura de puertas hasta la instalación de sistemas de seguridad más complejos. ¡Confía en nosotros para mantener tu vecindario seguro y protegido! En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.</p> <div class=\"semantic-items\"> <article class=\"semantic-card service-card\"> <h3>Apertura de Puerta</h3> <p>Nuestra experiencia nos permite resolver problemas como una puerta cerrada, bloqueada o con llave perdida. Situaciones habituales: llave partida, puerta cerrada al salir, bombín agarrotado. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</p> </article> <article class=\"semantic-card service-card\"> <h3>Cambio de Bombín o Cerradura</h3> <p>Una solución parcial o completa según sea necesario, dependiendo del desgaste, seguridad o pérdida de llaves. Situaciones habituales: mudanza, llaves extraviadas, cierre inseguro. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</p> </article> <article class=\"semantic-card service-card\"> <h3>Refuerzo de Seguridad</h3> <p>Mejora tu sistema contra técnicas de intrusión comunes. Situaciones habituales: vivienda habitual, alquiler, local a pie de calle. En , el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</p> </article> <article class=\"semantic-card service-card\"> <h3>Cerrajería Comercial</h3> <p>Ajuste y reparación de persianas, cierres y accesos en negocios. Situaciones habituales: persiana atascada, cierre que no baja, llave que no acciona. En , el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</p> </article> </div> <section class=\"decision-factors\"> <h3>Criterios de elección</h3> <dl class=\"decision-factors__list\"> <div class=\"decision-factor\"> <dt>Riesgo de daño en puerta y marco</dt> <dd>Una intervención correcta reduce reparaciones añadidas y evita agravar el cierre. En , el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</dd> </div> <div class=\"decision-factor\"> <dt>Nivel de seguridad del sistema</dt> <dd>No todas las viviendas o negocios necesitan la misma solución de acceso y protección. En , el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</dd> </div> <div class=\"decision-factor\"> <dt>Compatibilidad de piezas</dt> <dd>Cambiar una sola pieza sin revisar el conjunto puede dejar holguras o un cierre inestable. En , el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.</dd> </div> </dl> </section> <section class=\"common-mistakes\"> <h3>Errores comunes a evitar</h3> <ul class=\"common-mistakes__list\"> <li>Forzar la llave o seguir girando cuando el bombín ya está agarrotado.</li><li>Instalar un cilindro nuevo sin revisar escudo, cerradero y alineación de la puerta.</li><li>Elegir solo por precio y no por compatibilidad o nivel de seguridad.</li> </ul> </section> <div class=\"section-cta section-cta--medium section-cta--hero-heavy\"> <a class=\"cta-link cta-link--medium\" href=\"#contacto\"> Contactar ahora </a> </div> </div> </div> </div> </div> </section></body></html>",
+    "wordCount": 634,
     "metadata": {
       "block_type": "services_grid",
-      "sectionIndex": 0,
+      "sectionIndex": 2,
       "section_id": "servicios",
       "score": 0,
       "corruptionDetected": false,
       "unsafeHtml": false,
       "semantic": {
         "intro": [
-          "Fontaneros en Valencia demanda un enfoque técnico especializado y el uso de componentes con certificación de calidad.",
-          "Nuestras intervenciones técnicas en el área de Valencia priorizan la durabilidad estructural y el cumplimiento de los estándares de seguridad vigentes.",
-          "Analizamos cada instalación en Valencia para aplicar soluciones específicas que garanticen la estabilidad operativa a largo plazo."
+          "¿Necesitas ayuda para cerrar tu puerta o mantener tus sistemas de seguridad en Getafe? Nuestros cerrajeros expertos están aquí para asistirte con cualquier problema que pueda surgir. Desde la rápida apertura sin daños hasta el mantenimiento y reparación de cierres, estamos preparados para resolver todos tus necesidades de seguridad en tu vecindario. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.",
+          "Nuestra misión es proporcionarte soluciones eficaces y seguras a un precio justo. No te preocupes por los precios innecesarios ni la falta de transparencia. Nuestros presupuestos son cerrados antes de empezar, asegurándote que no recibirás ninguna sorpresa en tu factura. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.",
+          "¿Buscas una solución rápida y efectiva para tus necesidades de seguridad? No te preocupes por el tiempo de respuesta o las complicaciones innecesarias. Nuestros cerrajeros están preparados para atender a cualquier urgencia, desde la apertura de puertas hasta la instalación de sistemas de seguridad más complejos. ¡Confía en nosotros para mantener tu vecindario seguro y protegido! En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención."
         ],
         "items": [
           {
-            "title": "Detección de fugas",
-            "body": "Ejecutamos procesos de detección de fugas bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
+            "title": "Apertura de Puerta",
+            "body": "Nuestra experiencia nos permite resolver problemas como una puerta cerrada, bloqueada o con llave perdida. Situaciones habituales: llave partida, puerta cerrada al salir, bombín agarrotado. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": [
+              "Se evalúa el daño, tipo de cierre y si se necesita una sustitución posterior."
+            ]
           },
           {
-            "title": "Reparación de bajantes",
-            "body": "La resolución de incidencias en reparación de bajantes requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
+            "title": "Cambio de Bombín o Cerradura",
+            "body": "Una solución parcial o completa según sea necesario, dependiendo del desgaste, seguridad o pérdida de llaves. Situaciones habituales: mudanza, llaves extraviadas, cierre inseguro. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": [
+              "Importa la compatibilidad entre el cilindro y el escudo."
+            ]
           },
           {
-            "title": "Instalación de sanitarios",
-            "body": "Auditamos cada fase de instalación de sanitarios en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
+            "title": "Refuerzo de Seguridad",
+            "body": "Mejora tu sistema contra técnicas de intrusión comunes. Situaciones habituales: vivienda habitual, alquiler, local a pie de calle. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": [
+              "Se toma la decisión según el riesgo y nivel de protección buscado."
+            ]
           },
           {
-            "title": "Cambio de grifería",
-            "body": "Nuestra operativa en cambio de grifería integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
-          },
-          {
-            "title": "Humedades y filtraciones",
-            "body": "Ejecutamos procesos de humedades y filtraciones bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
-          },
-          {
-            "title": "Sustitución de sifones",
-            "body": "La resolución de incidencias en sustitución de sifones requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
-          },
-          {
-            "title": "Reparación de cisternas",
-            "body": "Auditamos cada fase de reparación de cisternas en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
-          },
-          {
-            "title": "Fontanería urgente 24h",
-            "body": "Nuestra operativa en fontanería urgente 24h integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
+            "title": "Cerrajería Comercial",
+            "body": "Ajuste y reparación de persianas, cierres y accesos en negocios. Situaciones habituales: persiana atascada, cierre que no baja, llave que no acciona. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": [
+              "Se revisa la lama, eje, guías y sistema de cierre."
+            ]
           }
         ],
-        "trustBullets": [
-          "Telefono visible",
-          "Cobertura local",
-          "Faq útil",
-          "Presupuesto sin compromiso",
-          "Atención directa",
-          "Transparencia total",
-          "Técnicos cualificados",
-          "Garantía por escrito",
-          "Respuesta ágil",
-          "Trato profesional",
-          "Limpieza en el trabajo",
-          "Materiales homologados",
-          "Presupuesto previo",
-          "Garantía de reparación",
-          "Detección técnica de fugas",
-          "Soluciones de fontanería",
-          "Atención inmediata",
-          "Componentes de calidad",
-          "Certificación técnica verificada en Valencia",
-          "Presupuesto analítico detallado",
-          "Cumplimiento estricto de normativa industrial"
-        ],
         "cta": {
-          "text": "Solicitar evaluación técnica",
-          "phone": "969530521"
-        }
-      },
-      "degraded": true,
-      "requires_editorial_review": true
-    }
-  },
-  {
-    "id": "section-1",
-    "h2": "Cómo Trabajamos: Diagnóstico y Resolución",
-    "html": "<html><head></head><body><section class=\"semantic-section shell-plain system-mixed flow-zigzag media-iconic density-standard cta-weight-medium trust-embedded pattern-timeline variant-default weight-medium emphasis-content composition-trust_first skeleton-editorial-longform cadence-alternating\" id=\"proceso\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell \"> <header class=\"block__header\"><span class=\"block__eyebrow\">process_steps</span><h2 class=\"block__title\">Cómo Trabajamos: Diagnóstico y Resolución</h2></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"process-layout\"> <p>Un proceso estructurado para garantizar resultados de calidad en cada intervención de fontaneros en Valencia.</p>\n<p>Seguimos protocolos estrictos desde el primer contacto hasta la finalización del trabajo en Valencia.</p> <ol class=\"process-timeline process-steps\"> <li class=\"process-timeline__step step-card\">1 Diagnóstico Analizamos el estado de su instalación en Valencia para proponer la solución más eficiente y duradera.</li> <li class=\"process-timeline__step step-card\">2 Presupuesto Presentamos una valoración detallada y transparente antes de iniciar cualquier acción técnica en Valencia.</li> <li class=\"process-timeline__step step-card\">3 Ejecución Realizamos el trabajo de fontaneros utilizando herramientas de precisión y materiales de alta gama en su ubicación de Valencia.</li> <li class=\"process-timeline__step step-card\">4 Control Verificamos el correcto funcionamiento de la reparación en Valencia antes de dar por finalizado el servicio.</li> <li class=\"process-timeline__step step-card\">5 Documentación y Garantía Entregamos la factura detallada y el certificado de garantía operativa para su total tranquilidad en .</li> </ol> <div class=\"section-cta section-cta--medium section-cta--terminal\"> <a class=\"cta-link cta-link--medium\" href=\"tel:969530521\"> Solicitar evaluación técnica </a> </div> </div> </div> </div> </div> </section></body></html>",
-    "wordCount": 190,
-    "metadata": {
-      "block_type": "process_steps",
-      "sectionIndex": 1,
-      "section_id": "proceso",
-      "score": 0,
-      "corruptionDetected": false,
-      "unsafeHtml": false,
-      "semantic": {
-        "intro": [
-          "Un proceso estructurado para garantizar resultados de calidad en cada intervención de fontaneros en Valencia.",
-          "Seguimos protocolos estrictos desde el primer contacto hasta la finalización del trabajo en Valencia."
+          "text": "Contactar ahora"
+        },
+        "trustBullets": [
+          "Diagnóstico antes de intervenir",
+          "Prioridad a apertura no destructiva cuando sea necesario",
+          "Factura o justificante del servicio por escrito",
+          "Cobertura real en zonas específicas"
         ],
-        "items": [
+        "decisionFactors": [
           {
-            "title": "Diagnóstico",
-            "body": "Analizamos el estado de su instalación en Valencia para proponer la solución más eficiente y duradera."
+            "title": "Riesgo de daño en puerta y marco",
+            "body": "Una intervención correcta reduce reparaciones añadidas y evita agravar el cierre. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso."
           },
           {
-            "title": "Presupuesto",
-            "body": "Presentamos una valoración detallada y transparente antes de iniciar cualquier acción técnica en Valencia."
+            "title": "Nivel de seguridad del sistema",
+            "body": "No todas las viviendas o negocios necesitan la misma solución de acceso y protección. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso."
           },
           {
-            "title": "Ejecución",
-            "body": "Realizamos el trabajo de fontaneros utilizando herramientas de precisión y materiales de alta gama en su ubicación de Valencia."
-          },
-          {
-            "title": "Control",
-            "body": "Verificamos el correcto funcionamiento de la reparación en Valencia antes de dar por finalizado el servicio."
-          },
-          {
-            "title": "Documentación y Garantía",
-            "body": "Entregamos la factura detallada y el certificado de garantía operativa para su total tranquilidad en Valencia."
+            "title": "Compatibilidad de piezas",
+            "body": "Cambiar una sola pieza sin revisar el conjunto puede dejar holguras o un cierre inestable. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso."
           }
         ],
-        "trustBullets": [
-          "Telefono visible",
-          "Cobertura local",
-          "Faq útil",
-          "Presupuesto sin compromiso",
-          "Atención directa",
-          "Transparencia total",
-          "Técnicos cualificados",
-          "Garantía por escrito",
-          "Respuesta ágil",
-          "Trato profesional",
-          "Limpieza en el trabajo",
-          "Materiales homologados",
-          "Presupuesto previo",
-          "Garantía de reparación",
-          "Detección técnica de fugas",
-          "Soluciones de fontanería",
-          "Atención inmediata",
-          "Componentes de calidad",
-          "Certificación técnica verificada en Valencia",
-          "Presupuesto analítico detallado",
-          "Cumplimiento estricto de normativa industrial"
+        "commonMistakes": [
+          "Forzar la llave o seguir girando cuando el bombín ya está agarrotado.",
+          "Instalar un cilindro nuevo sin revisar escudo, cerradero y alineación de la puerta.",
+          "Elegir solo por precio y no por compatibilidad o nivel de seguridad."
         ],
-        "cta": {
-          "text": "Solicitar evaluación técnica",
-          "phone": "969530521"
-        }
-      },
-      "degraded": true,
-      "requires_editorial_review": true
+        "bullets": [],
+        "faqItems": [],
+        "h2": "Servicios de Cierre y Mantenimiento en Getafe"
+      }
     }
   },
   {
-    "id": "section-2",
-    "h2": "Fontaneros en Arrancapins, Ruzafa y Cabañal",
-    "html": "<html><head></head><body><section class=\"semantic-section shell-plain system-mixed flow-centered media-proof density-standard cta-weight-medium trust-embedded pattern-panelled variant-default weight-medium emphasis-content composition-trust_first skeleton-editorial-longform cadence-alternating\" id=\"zonas\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell \"> <header class=\"block__header\"><span class=\"block__eyebrow\">local_proof</span><h2 class=\"block__title\">Fontaneros en Arrancapins, Ruzafa y Cabañal</h2></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"trust-layout trust-layout--embedded\"> <p>Nuestra presencia técnica en Valencia nos permite ofrecer una cobertura real y efectiva en todos los distritos.</p>\n<p>Conocemos las tipologías de instalaciones más comunes en cada zona de Valencia, lo que agiliza el diagnóstico y la reparación.</p> <div class=\"semantic-items\"> <article class=\"semantic-card service-card\"> <h3>Evidencia de Proximidad</h3> <p>Contamos con técnicos residentes en Valencia, lo que reduce las esperas y asegura un conocimiento exhaustivo de la zona geográfica.</p> </article> <article class=\"semantic-card service-card\"> <h3>Adaptación al Entorno</h3> <p>Nuestra metodología contempla las normativas específicas de Valencia y las necesidades particulares de sus diferentes núcleos urbanos.</p> </article> <article class=\"semantic-card service-card\"> <h3>Capacidad de Respuesta</h3> <p>La distribución estratégica de nuestras unidades en Valencia garantiza que siempre podamos atender servicios urgentes y programados.</p> </article> </div> </div> </div> </div> </div> </section></body></html>",
-    "wordCount": 158,
-    "metadata": {
-      "block_type": "local_proof",
-      "sectionIndex": 2,
-      "section_id": "zonas",
-      "score": 0,
-      "corruptionDetected": false,
-      "unsafeHtml": false,
-      "semantic": {
-        "intro": [
-          "Nuestra presencia técnica en Valencia nos permite ofrecer una cobertura real y efectiva en todos los distritos.",
-          "Conocemos las tipologías de instalaciones más comunes en cada zona de Valencia, lo que agiliza el diagnóstico y la reparación."
-        ],
-        "items": [
-          {
-            "title": "Evidencia de Proximidad",
-            "body": "Contamos con técnicos residentes en Valencia, lo que reduce las esperas y asegura un conocimiento exhaustivo de la zona geográfica."
-          },
-          {
-            "title": "Adaptación al Entorno",
-            "body": "Nuestra metodología contempla las normativas específicas de Valencia y las necesidades particulares de sus diferentes núcleos urbanos."
-          },
-          {
-            "title": "Capacidad de Respuesta",
-            "body": "La distribución estratégica de nuestras unidades en Valencia garantiza que siempre podamos atender servicios urgentes y programados."
-          }
-        ],
-        "trustBullets": [
-          "Telefono visible",
-          "Cobertura local",
-          "Faq útil",
-          "Presupuesto sin compromiso",
-          "Atención directa",
-          "Transparencia total",
-          "Técnicos cualificados",
-          "Garantía por escrito",
-          "Respuesta ágil",
-          "Trato profesional",
-          "Limpieza en el trabajo",
-          "Materiales homologados",
-          "Presupuesto previo",
-          "Garantía de reparación",
-          "Detección técnica de fugas",
-          "Soluciones de fontanería",
-          "Atención inmediata",
-          "Componentes de calidad",
-          "Certificación técnica verificada en Valencia",
-          "Presupuesto analítico detallado",
-          "Cumplimiento estricto de normativa industrial"
-        ],
-        "cta": {
-          "text": "Solicitar evaluación técnica",
-          "phone": "969530521"
-        }
-      },
-      "degraded": true,
-      "requires_editorial_review": true
-    }
-  },
-  {
-    "id": "donde-estamos",
-    "h2": "Donde nos encontramos",
-    "html": "<div class=\"map-placeholder\" data-city=\"Valencia\">\n                        <p>Nuestra base operativa se coordina para ofrecer una cobertura técnica profesional en toda el área de Valencia. Disponemos de especialistas distribuidos estratégicamente para garantizar un servicio de proximidad y confianza en todos los distritos de la zona, asegurando una respuesta técnica de alta calidad para cada intervención.</p>\n                    </div>",
-    "wordCount": 50,
-    "metadata": {
-      "block_type": "map",
-      "sectionIndex": 3,
-      "section_id": "donde-estamos",
-      "score": 100
-    }
-  },
-  {
-    "id": "section-4",
-    "h2": "Preguntas Frecuentes sobre Fontanería en Valencia",
-    "html": "<html><head></head><body><section class=\"semantic-section shell-plain system-mixed flow-stack media-none density-standard cta-weight-medium trust-embedded pattern-minimal variant-default weight-medium emphasis-content composition-trust_first skeleton-editorial-longform cadence-alternating\" id=\"faq\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell \"> <header class=\"block__header\"><span class=\"block__eyebrow\">faq</span><h2 class=\"block__title\">Preguntas Frecuentes sobre Fontanería en Valencia</h2></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"faq-layout faq-layout--editorial\"> <div class=\"faq-columns\"> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿Cuál es el tiempo de respuesta para servicios en Valencia?</h3> <p>Contamos con técnicos distribuidos en puntos estratégicos de Valencia para optimizar los traslados. La disponibilidad se gestiona en tiempo real para asegurar una atención ágil en toda la zona geográfica.</p> </article> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿El presupuesto proporcionado para Valencia es vinculante?</h3> <p>Emitimos una valoración técnica previa. Para mayor transparencia, el especialista confirma el diagnóstico in situ en Valencia y presenta el presupuesto detallado antes de proceder con la reparación.</p> </article> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿Qué tipo de garantía ofrecéis por los trabajos realizados en Valencia?</h3> <p>Todos nuestros servicios de fontaneros en cuentan con garantía por escrito que cubre tanto la mano de obra como los materiales instalados, cumpliendo estrictamente con la normativa vigente.</p> </article> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿Tenéis disponibilidad inmediata en todos los barrios de ?</h3> <p>Sí, mantenemos disponibilidad de guardia según la franja y la urgencia en . Cubrimos todos los distritos y áreas metropolitanas, asegurando que siempre haya un profesional disponible cerca de usted.</p> </article> </div> </div> </div> </div> </div> </section></body></html>",
-    "wordCount": 219,
+    "id": "section-3",
+    "h2": "Preguntas frecuentes sobre cerrajeros en Getafe",
+    "html": "<html><head></head><body><section class=\"semantic-section shell-panel system-panelled flow-centered media-none density-standard cta-weight-medium trust-embedded pattern-accordion variant-default weight-medium emphasis-content composition-conversion skeleton-premium-showcase cadence-contrast-bursts has-contract contract-shell-panel contract-flow-centered contract-density-standard contract-emphasis-content contract-card-outlined contract-ornament-strong mobile-pattern-stack\" id=\"faq\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell shell-panel density-standard\"> <header class=\"block__header\"><span class=\"block__eyebrow\">faq</span></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"faq-layout faq-layout--editorial\"> <div class=\"faq-columns\"> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿Se puede abrir una puerta cerrada sin romper la cerradura?</h3> <p>La prioridad profesional es usar métodos no destructivos cuando sea posible. Dependiendo del tipo de cierre, el estado del bombín y si la llave está echada, esta acción se debe realizar con precaución para evitar daños irreparables. Sin embargo, siempre se prioriza la seguridad real sin alarmismo. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real.</p> </article> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿Cuándo conviene cambiar solo el bombín y cuándo toda la cerradura?</h3> <p>La diferencia entre desgaste del cilindro, nivel de seguridad, compatibilidad del escudo y estado del mecanismo completo son elementos cruciales para determinar si es más conveniente cambiar solo el bombín o una parte completa de la cerradura. En general, se recomienda cambiar toda la cerradura cuando sea necesario para asegurar la máxima seguridad. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real.</p> </article> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿Qué debo hacer si he perdido las llaves y no sé quién puede tener copia?</h3> <p>En este caso, es recomendable realizar una reconfiguración de accesos según el riesgo. Si se trata de un acceso habitual, la mejor opción podría ser cambiar solo el bombín o la cerradura del cilindro para evitar daños irreparables en la puerta. Sin embargo, si se trata de un acceso seguro que no está en uso regularmente, es posible que sea más conveniente reconfigurar completamente el sistema. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real.</p> </article> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿Qué influye en el presupuesto de un cerrajero?</h3> <p>El tipo de cierre, la franja horaria, la complejidad del trabajo, las piezas necesarias y si hay daño previo son factores clave que influyen en el presupuesto. Un cerrajero profesional siempre proporcionará una factura o justificante detallada antes de empezar cualquier servicio. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real.</p> </article> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿Qué es una cerradura antibumping y cuándo tiene sentido instalarla?</h3> <p>Una cerradura antibumping se utiliza para proteger puertas contra el resbalón. Esta opción es especialmente útil en viviendas habitadas, alquileres y comunidades donde la exposición a riesgos elevados existe. La instalación de una cerradura antibumping requiere un diagnóstico detallado del sistema existente. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real.</p> </article> <article class=\"faq-card faq-item\" data-faq-item=\"\"> <h3>¿Atendéis cierres metálicos y persianas de local comercial?</h3> <p>Para locales comerciales, es recomendable realizar una visita técnica para determinar si se trata de un caso especial. Esto puede implicar la necesidad de soluciones específicas como atasco, motor dañado o cierre desalineado. En estos casos, siempre se prioriza la seguridad real sin comprometer el uso del servicio. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real.</p> </article> </div> </div> </div> </div> </div> </section></body></html>",
+    "wordCount": 553,
     "metadata": {
       "block_type": "faq",
-      "sectionIndex": 4,
+      "sectionIndex": 3,
       "section_id": "faq",
       "score": 0,
       "corruptionDetected": false,
       "unsafeHtml": false,
       "semantic": {
-        "intro": [
-          "Resolvemos las dudas técnicas y logísticas más frecuentes sobre nuestros servicios de fontaneros en Valencia."
-        ],
-        "items": [
-          {
-            "title": "Detección de fugas",
-            "body": "Ejecutamos procesos de detección de fugas bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
-          },
-          {
-            "title": "Reparación de bajantes",
-            "body": "La resolución de incidencias en reparación de bajantes requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
-          },
-          {
-            "title": "Instalación de sanitarios",
-            "body": "Auditamos cada fase de instalación de sanitarios en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
-          },
-          {
-            "title": "Cambio de grifería",
-            "body": "Nuestra operativa en cambio de grifería integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
-          },
-          {
-            "title": "Humedades y filtraciones",
-            "body": "Ejecutamos procesos de humedades y filtraciones bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
-          },
-          {
-            "title": "Sustitución de sifones",
-            "body": "La resolución de incidencias en sustitución de sifones requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
-          },
-          {
-            "title": "Reparación de cisternas",
-            "body": "Auditamos cada fase de reparación de cisternas en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
-          },
-          {
-            "title": "Fontanería urgente 24h",
-            "body": "Nuestra operativa en fontanería urgente 24h integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
-          }
-        ],
-        "trustBullets": [
-          "Telefono visible",
-          "Cobertura local",
-          "Faq útil",
-          "Presupuesto sin compromiso",
-          "Atención directa",
-          "Transparencia total",
-          "Técnicos cualificados",
-          "Garantía por escrito",
-          "Respuesta ágil",
-          "Trato profesional",
-          "Limpieza en el trabajo",
-          "Materiales homologados",
-          "Presupuesto previo",
-          "Garantía de reparación",
-          "Detección técnica de fugas",
-          "Soluciones de fontanería",
-          "Atención inmediata",
-          "Componentes de calidad",
-          "Certificación técnica verificada en Valencia",
-          "Presupuesto analítico detallado",
-          "Cumplimiento estricto de normativa industrial"
-        ],
+        "intro": [],
+        "items": [],
         "cta": {
-          "text": "Solicitar evaluación técnica",
-          "phone": "969530521"
+          "text": "Contactar ahora"
         },
         "faqItems": [
           {
-            "question": "¿Cuál es el tiempo de respuesta para servicios en Valencia?",
-            "answer": "Contamos con técnicos distribuidos en puntos estratégicos de Valencia para optimizar los traslados. La disponibilidad se gestiona en tiempo real para asegurar una atención ágil en toda la zona geográfica."
+            "question": "¿Se puede abrir una puerta cerrada sin romper la cerradura?",
+            "answer": "La prioridad profesional es usar métodos no destructivos cuando sea posible. Dependiendo del tipo de cierre, el estado del bombín y si la llave está echada, esta acción se debe realizar con precaución para evitar daños irreparables. Sin embargo, siempre se prioriza la seguridad real sin alarmismo. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real."
           },
           {
-            "question": "¿El presupuesto proporcionado para Valencia es vinculante?",
-            "answer": "Emitimos una valoración técnica previa. Para mayor transparencia, el especialista confirma el diagnóstico in situ en Valencia y presenta el presupuesto detallado antes de proceder con la reparación."
+            "question": "¿Cuándo conviene cambiar solo el bombín y cuándo toda la cerradura?",
+            "answer": "La diferencia entre desgaste del cilindro, nivel de seguridad, compatibilidad del escudo y estado del mecanismo completo son elementos cruciales para determinar si es más conveniente cambiar solo el bombín o una parte completa de la cerradura. En general, se recomienda cambiar toda la cerradura cuando sea necesario para asegurar la máxima seguridad. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real."
           },
           {
-            "question": "¿Qué tipo de garantía ofrecéis por los trabajos realizados en Valencia?",
-            "answer": "Todos nuestros servicios de fontaneros en Valencia cuentan con garantía por escrito que cubre tanto la mano de obra como los materiales instalados, cumpliendo estrictamente con la normativa vigente."
+            "question": "¿Qué debo hacer si he perdido las llaves y no sé quién puede tener copia?",
+            "answer": "En este caso, es recomendable realizar una reconfiguración de accesos según el riesgo. Si se trata de un acceso habitual, la mejor opción podría ser cambiar solo el bombín o la cerradura del cilindro para evitar daños irreparables en la puerta. Sin embargo, si se trata de un acceso seguro que no está en uso regularmente, es posible que sea más conveniente reconfigurar completamente el sistema. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real."
           },
           {
-            "question": "¿Tenéis disponibilidad inmediata en todos los barrios de Valencia?",
-            "answer": "Sí, mantenemos disponibilidad de guardia según la franja y la urgencia en Valencia. Cubrimos todos los distritos y áreas metropolitanas, asegurando que siempre haya un profesional disponible cerca de usted."
+            "question": "¿Qué influye en el presupuesto de un cerrajero?",
+            "answer": "El tipo de cierre, la franja horaria, la complejidad del trabajo, las piezas necesarias y si hay daño previo son factores clave que influyen en el presupuesto. Un cerrajero profesional siempre proporcionará una factura o justificante detallada antes de empezar cualquier servicio. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real."
+          },
+          {
+            "question": "¿Qué es una cerradura antibumping y cuándo tiene sentido instalarla?",
+            "answer": "Una cerradura antibumping se utiliza para proteger puertas contra el resbalón. Esta opción es especialmente útil en viviendas habitadas, alquileres y comunidades donde la exposición a riesgos elevados existe. La instalación de una cerradura antibumping requiere un diagnóstico detallado del sistema existente. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real."
+          },
+          {
+            "question": "¿Atendéis cierres metálicos y persianas de local comercial?",
+            "answer": "Para locales comerciales, es recomendable realizar una visita técnica para determinar si se trata de un caso especial. Esto puede implicar la necesidad de soluciones específicas como atasco, motor dañado o cierre desalineado. En estos casos, siempre se prioriza la seguridad real sin comprometer el uso del servicio. En Getafe, este trabajo de cerrajeros conviene resolverlo con una valoración previa y una propuesta ajustada al alcance real."
           }
-        ]
-      },
-      "degraded": true,
-      "requires_editorial_review": true
+        ],
+        "trustBullets": [
+          "Garantía por escrito",
+          "Diagnóstico antes de intervenir",
+          "Prioridad a apertura no destructiva"
+        ],
+        "bullets": [],
+        "commonMistakes": [],
+        "decisionFactors": [],
+        "h2": "Preguntas frecuentes sobre cerrajeros en Getafe"
+      }
     }
   },
   {
-    "id": "section-5",
-    "h2": "Contacta con un Fontanero en Valencia Ahora",
-    "html": "<html><head></head><body><section class=\"semantic-section shell-plain system-mixed flow-centered media-none density-standard cta-weight-medium trust-embedded pattern-editorial variant-default weight-medium emphasis-content composition-trust_first skeleton-editorial-longform cadence-alternating\" id=\"contacto\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell \"> <header class=\"block__header\"><span class=\"block__eyebrow\">cta_panel</span><h2 class=\"block__title\">Contacta con un Fontanero en Valencia Ahora</h2></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"cta-panel cta-panel--centered\"> <p>Contacte ahora con un especialista in fontaneros para resolver su problema en Valencia de forma profesional y transparente.</p>\n<p>Estamos disponibles para asesorarle sobre la mejor solución técnica para su caso particular en Valencia.</p> <div class=\"section-cta section-cta--medium section-cta--terminal\"> <a class=\"cta-link cta-link--medium\" href=\"tel:969530521\"> Solicitar evaluación técnica </a> </div> </div> </div> </div> </div> </section></body></html>",
-    "wordCount": 90,
+    "id": "section-4",
+    "h2": "Solicita orientación profesional en Getafe",
+    "html": "<html><head></head><body><section class=\"semantic-section shell-band system-panelled flow-centered media-none density-compact cta-weight-high trust-embedded pattern-stack variant-default weight-medium emphasis-content composition-conversion skeleton-premium-showcase cadence-contrast-bursts has-contract contract-shell-band contract-flow-centered contract-density-compact contract-emphasis-cta contract-card-outlined contract-ornament-strong mobile-pattern-stack\" id=\"contacto\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell shell-band density-compact\"> <header class=\"block__header\"><span class=\"block__eyebrow\">cta_panel</span></header> <div class=\"generic-layout generic-layout--compact\"> <div class=\"cta-panel cta-panel--centered\"> <p>Si necesitas cerrajeros en Getafe, podemos orientarte con una valoración clara sobre el alcance del trabajo, la forma de organizarlo y los puntos que merece la pena revisar antes de empezar. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.</p>\n<p>El objetivo es que tomes una decisión con contexto suficiente, sin promesas artificiales y con una explicación sencilla de cómo se abordaría tu caso. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.</p> <div class=\"section-cta section-cta--high section-cta--hero-heavy\"> <a class=\"cta-link cta-link--high\" href=\"#contacto\"> Hablar con un especialista </a> </div> </div> </div> </div> </div> </section></body></html>",
+    "wordCount": 153,
     "metadata": {
       "block_type": "cta_panel",
-      "sectionIndex": 5,
+      "sectionIndex": 4,
       "section_id": "contacto",
       "score": 0,
       "corruptionDetected": false,
       "unsafeHtml": false,
       "semantic": {
+        "h2": "Solicita orientación profesional en Getafe",
         "intro": [
-          "Contacte ahora con un especialista in fontaneros para resolver su problema en Valencia de forma profesional y transparente.",
-          "Estamos disponibles para asesorarle sobre la mejor solución técnica para su caso particular en Valencia."
+          "Si necesitas cerrajeros en Getafe, podemos orientarte con una valoración clara sobre el alcance del trabajo, la forma de organizarlo y los puntos que merece la pena revisar antes de empezar. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.",
+          "El objetivo es que tomes una decisión con contexto suficiente, sin promesas artificiales y con una explicación sencilla de cómo se abordaría tu caso. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención."
         ],
-        "items": [
-          {
-            "title": "Atención Directa",
-            "body": "Llame al 969530521 y un técnico cualificado le atenderá personalmente para coordinar la visita a su ubicación en Valencia."
-          }
-        ],
-        "trustBullets": [
-          "Telefono visible",
-          "Cobertura local",
-          "Faq útil",
-          "Presupuesto sin compromiso",
-          "Atención directa",
-          "Transparencia total",
-          "Técnicos cualificados",
-          "Garantía por escrito",
-          "Respuesta ágil",
-          "Trato profesional",
-          "Limpieza en el trabajo",
-          "Materiales homologados",
-          "Presupuesto previo",
-          "Garantía de reparación",
-          "Detección técnica de fugas",
-          "Soluciones de fontanería",
-          "Atención inmediata",
-          "Componentes de calidad",
-          "Certificación técnica verificada en Valencia",
-          "Presupuesto analítico detallado",
-          "Cumplimiento estricto de normativa industrial"
+        "bullets": [
+          "Atención directa para",
+          "Explicación clara del proceso",
+          "Presupuesto transparente cuando proceda"
         ],
         "cta": {
-          "text": "Solicitar evaluación técnica",
-          "phone": "969530521"
-        }
-      },
-      "degraded": true,
-      "requires_editorial_review": true
-    }
-  },
-  {
-    "id": "section-6",
-    "h2": "Líderes en Fontanería en Valencia y su Cinturón Metropolitano",
-    "html": "<html><head></head><body><section class=\"semantic-section shell-plain system-mixed flow-centered media-none density-standard cta-weight-medium trust-embedded pattern-minimal variant-default weight-medium emphasis-content composition-trust_first skeleton-editorial-longform cadence-alternating\" id=\"intro\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell \"> <header class=\"block__header\"><span class=\"block__eyebrow\">intro</span><h2 class=\"block__title\">Líderes en Fontanería en Valencia y su Cinturón Metropolitano</h2></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"generic-layout\"> <div class=\"layout-block layout-block--stack\"> <p>Fontaneros en Valencia demanda un enfoque técnico especializado y el uso de componentes con certificación de calidad.</p>\n<p>Nuestras intervenciones técnicas en el área de Valencia priorizan la durabilidad estructural y el cumplimiento de los estándares de seguridad vigentes.</p>\n<p>Analizamos cada instalación en Valencia para aplicar soluciones específicas que garanticen la estabilidad operativa a largo plazo.</p> <div class=\"semantic-items\"> <article class=\"semantic-card service-card\"> <h3>Detección de fugas</h3> <p>Ejecutamos procesos de detección de fugas bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil.</p> </article> <article class=\"semantic-card service-card\"> <h3>Reparación de bajantes</h3> <p>La resolución de incidencias en reparación de bajantes requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia.</p> </article> <article class=\"semantic-card service-card\"> <h3>Instalación de sanitarios</h3> <p>Auditamos cada fase de instalación de sanitarios en para asegurar la trazabilidad de la intervención y la idoneidad de los materiales.</p> </article> <article class=\"semantic-card service-card\"> <h3>Cambio de grifería</h3> <p>Nuestra operativa en cambio de grifería integra estándares industriales específicos para , velando por que cada detalle reciba atención técnica.</p> </article> <article class=\"semantic-card service-card\"> <h3>Humedades y filtraciones</h3> <p>Ejecutamos procesos de humedades y filtraciones bajo normativas de seguridad rigurosas. En el entorno de , nos enfocamos en el ajuste técnico para maximizar la vida útil.</p> </article> <article class=\"semantic-card service-card\"> <h3>Sustitución de sifones</h3> <p>La resolución de incidencias en sustitución de sifones requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en .</p> </article> <article class=\"semantic-card service-card\"> <h3>Reparación de cisternas</h3> <p>Auditamos cada fase de reparación de cisternas en para asegurar la trazabilidad de la intervención y la idoneidad de los materiales.</p> </article> <article class=\"semantic-card service-card\"> <h3>Fontanería urgente 24h</h3> <p>Nuestra operativa en fontanería urgente 24h integra estándares industriales específicos para , velando por que cada detalle reciba atención técnica.</p> </article> </div> </div> </div> </div> </div> </div> </section></body></html>",
-    "wordCount": 341,
-    "metadata": {
-      "block_type": "intro",
-      "sectionIndex": 6,
-      "section_id": "intro",
-      "score": 0,
-      "corruptionDetected": false,
-      "unsafeHtml": false,
-      "semantic": {
-        "intro": [
-          "Fontaneros en Valencia demanda un enfoque técnico especializado y el uso de componentes con certificación de calidad.",
-          "Nuestras intervenciones técnicas en el área de Valencia priorizan la durabilidad estructural y el cumplimiento de los estándares de seguridad vigentes.",
-          "Analizamos cada instalación en Valencia para aplicar soluciones específicas que garanticen la estabilidad operativa a largo plazo."
-        ],
-        "items": [
-          {
-            "title": "Detección de fugas",
-            "body": "Ejecutamos procesos de detección de fugas bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
-          },
-          {
-            "title": "Reparación de bajantes",
-            "body": "La resolución de incidencias en reparación de bajantes requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
-          },
-          {
-            "title": "Instalación de sanitarios",
-            "body": "Auditamos cada fase de instalación de sanitarios en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
-          },
-          {
-            "title": "Cambio de grifería",
-            "body": "Nuestra operativa en cambio de grifería integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
-          },
-          {
-            "title": "Humedades y filtraciones",
-            "body": "Ejecutamos procesos de humedades y filtraciones bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
-          },
-          {
-            "title": "Sustitución de sifones",
-            "body": "La resolución de incidencias en sustitución de sifones requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
-          },
-          {
-            "title": "Reparación de cisternas",
-            "body": "Auditamos cada fase de reparación de cisternas en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
-          },
-          {
-            "title": "Fontanería urgente 24h",
-            "body": "Nuestra operativa en fontanería urgente 24h integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
-          }
-        ],
-        "trustBullets": [
-          "Telefono visible",
-          "Cobertura local",
-          "Faq útil",
-          "Presupuesto sin compromiso",
-          "Atención directa",
-          "Transparencia total",
-          "Técnicos cualificados",
-          "Garantía por escrito",
-          "Respuesta ágil",
-          "Trato profesional",
-          "Limpieza en el trabajo",
-          "Materiales homologados",
-          "Presupuesto previo",
-          "Garantía de reparación",
-          "Detección técnica de fugas",
-          "Soluciones de fontanería",
-          "Atención inmediata",
-          "Componentes de calidad",
-          "Certificación técnica verificada en Valencia",
-          "Presupuesto analítico detallado",
-          "Cumplimiento estricto de normativa industrial"
-        ],
-        "cta": {
-          "text": "Solicitar evaluación técnica",
-          "phone": "969530521"
-        }
+          "text": "Hablar con un especialista",
+          "note": "Atención para Getafe"
+        },
+        "trustBullets": [],
+        "commonMistakes": [],
+        "items": [],
+        "faqItems": [],
+        "decisionFactors": []
       }
     }
   },
   {
-    "id": "section-7",
-    "h2": "Asistencia Urgente de Fontanería 24h",
-    "html": "<html><head></head><body><section class=\"semantic-section shell-plain system-mixed flow-centered media-none density-standard cta-weight-medium trust-embedded pattern-minimal variant-default weight-medium emphasis-content composition-trust_first skeleton-editorial-longform cadence-alternating\" id=\"urgencia\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell \"> <header class=\"block__header\"><span class=\"block__eyebrow\">urgency_panel</span><h2 class=\"block__title\">Asistencia Urgente de Fontanería 24h</h2></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"urgency-layout urgency-layout--stack\"> <div class=\"urgency-layout__copy\"> <p>Atención técnica prioritaria para incidencias de fontaneros en Valencia que no pueden esperar.</p>\n<p>Nuestra infraestructura logística está diseñada para dar respuesta a averías críticas en cualquier punto de Valencia con la máxima celeridad.</p> </div> <aside class=\"urgency-layout__action\"> <div class=\"section-cta section-cta--medium section-cta--terminal\"> <a class=\"cta-link cta-link--medium\" href=\"tel:969530521\"> Solicitar evaluación técnica </a> </div> </aside> </div> </div> </div> </div> </section></body></html>",
-    "wordCount": 94,
+    "id": "section-5",
+    "h2": "Atención prioritaria cuando el caso no puede esperar",
+    "html": "<html><head></head><body><section class=\"semantic-section shell-panel system-panelled flow-split media-none density-compact cta-weight-high trust-embedded pattern-stack variant-default weight-medium emphasis-content composition-conversion skeleton-premium-showcase cadence-contrast-bursts has-contract contract-shell-panel contract-flow-split contract-density-compact contract-emphasis-cta contract-card-outlined contract-ornament-strong mobile-pattern-stack\" id=\"urgencia\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell shell-panel density-compact\"> <header class=\"block__header\"><span class=\"block__eyebrow\">urgency_panel</span></header> <div class=\"generic-layout generic-layout--compact\"> <div class=\"urgency-layout urgency-layout--split\"> <div class=\"urgency-layout__copy\"> <p>Hay situaciones de cerrajeros en Getafe que conviene ordenar sin demora para que el problema no se agrave, el uso del espacio no quede bloqueado y la intervención siga siendo manejable. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.</p>\n<p>Cuando el caso tiene componente urgente, lo importante no es correr sin criterio, sino decidir rápido qué parte debe resolverse primero y qué puede planificarse para una segunda fase si hace falta. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.</p> </div> <aside class=\"urgency-layout__action\"> <div class=\"section-cta section-cta--high section-cta--hero-heavy\"> <a class=\"cta-link cta-link--high\" href=\"#contacto\"> Pedir atención prioritaria </a> </div> </aside> </div> </div> </div> </div> </section></body></html>",
+    "wordCount": 166,
     "metadata": {
       "block_type": "urgency_panel",
-      "sectionIndex": 7,
+      "sectionIndex": 5,
       "section_id": "urgencia",
       "score": 0,
       "corruptionDetected": false,
       "unsafeHtml": false,
       "semantic": {
+        "h2": "Atención prioritaria cuando el caso no puede esperar",
         "intro": [
-          "Atención técnica prioritaria para incidencias de fontaneros en Valencia que no pueden esperar.",
-          "Nuestra infraestructura logística está diseñada para dar respuesta a averías críticas en cualquier punto de Valencia con la máxima celeridad."
+          "Hay situaciones de cerrajeros en Getafe que conviene ordenar sin demora para que el problema no se agrave, el uso del espacio no quede bloqueado y la intervención siga siendo manejable. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención.",
+          "Cuando el caso tiene componente urgente, lo importante no es correr sin criterio, sino decidir rápido qué parte debe resolverse primero y qué puede planificarse para una segunda fase si hace falta. En Getafe, el servicio de cerrajeros se explica con alcance claro, criterios técnicos y una expectativa realista de intervención."
         ],
         "items": [
           {
-            "title": "Diagnóstico Rápido",
-            "body": "Evaluamos la gravedad de la situación en Valencia para asignar el técnico más cercano y el equipamiento específico necesario para una solución definitiva."
+            "title": "Qué se prioriza",
+            "body": "Empezamos delimitando el punto crítico para que la actuación de cerrajeros en Getafe se centre en lo que realmente impide usar el espacio o mantener el servicio con normalidad. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": []
           },
           {
-            "title": "Unidades Móviles",
-            "body": "Nuestros vehículos en Valencia están equipados con un stock completo de repuestos y herramientas de precisión para resolver la mayoría de servicios en una sola visita."
+            "title": "Cómo pedir ayuda",
+            "body": "Después organizamos materiales, acceso y orden de ejecución para no convertir una urgencia en una intervención desordenada que termine generando más incidencias. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": []
           },
           {
-            "title": "Seguridad Garantizada",
-            "body": "Priorizamos la integridad de su instalación en Valencia, aplicando técnicas no invasivas siempre que sea posible para evitar daños colaterales durante la reparación."
+            "title": "Qué preparar antes de llamar",
+            "body": "Antes de cerrar dejamos una comprobación final y explicamos qué seguimiento conviene hacer si el caso requiere revisión posterior o una segunda actuación programada. En Getafe, el servicio de cerrajeros se organiza con valoración previa, criterio técnico y una ejecución proporcionada al caso.",
+            "meta": []
           }
         ],
         "trustBullets": [
-          "Telefono visible",
-          "Cobertura local",
-          "Faq útil",
-          "Presupuesto sin compromiso",
-          "Atención directa",
-          "Transparencia total",
-          "Técnicos cualificados",
-          "Garantía por escrito",
-          "Respuesta ágil",
-          "Trato profesional",
-          "Limpieza en el trabajo",
-          "Materiales homologados",
-          "Presupuesto previo",
-          "Garantía de reparación",
-          "Detección técnica de fugas",
-          "Soluciones de fontanería",
-          "Atención inmediata",
-          "Componentes de calidad",
-          "Certificación técnica verificada en Valencia",
-          "Presupuesto analítico detallado",
-          "Cumplimiento estricto de normativa industrial"
+          "Prioridad operativa clara",
+          "Intervención ordenada",
+          "Cobertura en Getafe"
         ],
         "cta": {
-          "text": "Solicitar evaluación técnica",
-          "phone": "969530521"
-        }
-      },
-      "degraded": true,
-      "requires_editorial_review": true
-    }
-  },
-  {
-    "id": "section-8",
-    "h2": "Presupuestos Transparentes de Fontanería",
-    "html": "<html><head></head><body><section class=\"semantic-section shell-plain system-mixed flow-centered media-none density-standard cta-weight-medium trust-embedded pattern-comparison_table variant-default weight-medium emphasis-content composition-trust_first skeleton-editorial-longform cadence-alternating\" id=\"tarifas\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell \"> <header class=\"block__header\"><span class=\"block__eyebrow\">price_guidance</span><h2 class=\"block__title\">Presupuestos Transparentes de Fontanería</h2></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"pricing-layout pricing-layout--comparison\"> <div class=\"pricing-layout__main\"> <p>Entienda los factores que determinan la calidad de un servicio técnico de fontaneros en Valencia.</p>\n<p>Comparamos los estándares de nuestra metodología frente a las soluciones genéricas del mercado en Valencia.</p> <div class=\"table-wrap\" style=\"max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;\"> <table class=\"semantic-table\" style=\"min-width:640px;width:100%;table-layout:fixed;\"> <thead> <tr><th>Factor Crítico</th><th>Nuestro Estándar</th><th>Beneficio</th></tr> </thead> <tbody> <tr><td>Materiales</td><td>Componentes Homologados</td><td>Mayor durabilidad del sistema</td></tr> <tr><td>Mano de Obra</td><td>Técnicos Especialistas</td><td>Ejecución precisa y segura</td></tr> <tr><td>Garantía</td><td>Certificado por Escrito</td><td>Tranquilidad total post-servicio</td></tr> <tr><td>Transparencia</td><td>Presupuesto previo</td><td>Sin sorpresas en la factura final</td></tr> </tbody> </table> </div> </div> <aside class=\"pricing-layout__aside\"> <div class=\"section-cta section-cta--medium section-cta--terminal\"> <a class=\"cta-link cta-link--medium\" href=\"tel:969530521\"> Solicitar evaluación técnica </a> </div> </aside> </div> </div> </div> </div> </section></body></html>",
-    "wordCount": 129,
-    "metadata": {
-      "block_type": "price_guidance",
-      "sectionIndex": 8,
-      "section_id": "tarifas",
-      "score": 0,
-      "corruptionDetected": false,
-      "unsafeHtml": false,
-      "semantic": {
-        "intro": [
-          "Entienda los factores que determinan la calidad de un servicio técnico de fontaneros en Valencia.",
-          "Comparamos los estándares de nuestra metodología frente a las soluciones genéricas del mercado en Valencia."
-        ],
-        "items": [
-          {
-            "title": "Detección de fugas",
-            "body": "Ejecutamos procesos de detección de fugas bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
-          },
-          {
-            "title": "Reparación de bajantes",
-            "body": "La resolución de incidencias en reparación de bajantes requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
-          },
-          {
-            "title": "Instalación de sanitarios",
-            "body": "Auditamos cada fase de instalación de sanitarios en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
-          },
-          {
-            "title": "Cambio de grifería",
-            "body": "Nuestra operativa en cambio de grifería integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
-          },
-          {
-            "title": "Humedades y filtraciones",
-            "body": "Ejecutamos procesos de humedades y filtraciones bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
-          },
-          {
-            "title": "Sustitución de sifones",
-            "body": "La resolución de incidencias en sustitución de sifones requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
-          },
-          {
-            "title": "Reparación de cisternas",
-            "body": "Auditamos cada fase de reparación de cisternas en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
-          },
-          {
-            "title": "Fontanería urgente 24h",
-            "body": "Nuestra operativa en fontanería urgente 24h integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
-          }
-        ],
-        "trustBullets": [
-          "Telefono visible",
-          "Cobertura local",
-          "Faq útil",
-          "Presupuesto sin compromiso",
-          "Atención directa",
-          "Transparencia total",
-          "Técnicos cualificados",
-          "Garantía por escrito",
-          "Respuesta ágil",
-          "Trato profesional",
-          "Limpieza en el trabajo",
-          "Materiales homologados",
-          "Presupuesto previo",
-          "Garantía de reparación",
-          "Detección técnica de fugas",
-          "Soluciones de fontanería",
-          "Atención inmediata",
-          "Componentes de calidad",
-          "Certificación técnica verificada en Valencia",
-          "Presupuesto analítico detallado",
-          "Cumplimiento estricto de normativa industrial"
-        ],
-        "cta": {
-          "text": "Solicitar evaluación técnica",
-          "phone": "969530521"
+          "text": "Pedir atención prioritaria"
         },
-        "table": {
-          "columns": [
-            "Factor Crítico",
-            "Nuestro Estándar",
-            "Beneficio"
-          ],
-          "rows": [
-            [
-              "Materiales",
-              "Componentes Homologados",
-              "Mayor durabilidad del sistema"
-            ],
-            [
-              "Mano de Obra",
-              "Técnicos Especialistas",
-              "Ejecución precisa y segura"
-            ],
-            [
-              "Garantía",
-              "Certificado por Escrito",
-              "Tranquilidad total post-servicio"
-            ],
-            [
-              "Transparencia",
-              "Presupuesto previo",
-              "Sin sorpresas en la factura final"
-            ]
-          ]
-        }
-      },
-      "degraded": true,
-      "requires_editorial_review": true
-    }
-  },
-  {
-    "id": "section-9",
-    "h2": "Qué transmite confianza real antes de intervenir",
-    "html": "<html><head></head><body><section class=\"semantic-section shell-plain system-mixed flow-centered media-proof density-standard cta-weight-medium trust-embedded pattern-panelled variant-default weight-medium emphasis-content composition-trust_first skeleton-editorial-longform cadence-alternating\" id=\"senales-confianza\"> <div class=\"el-container\"> <div class=\"semantic-section__container section-shell \"> <header class=\"block__header\"><span class=\"block__eyebrow\">trust_band</span><h2 class=\"block__title\">Qué transmite confianza real antes de intervenir</h2></header> <div class=\"generic-layout generic-layout--standard\"> <div class=\"trust-layout trust-layout--embedded\"> <p>Fontaneros en Valencia demanda un enfoque técnico especializado y el uso de componentes con certificación de calidad.</p>\n<p>Nuestras intervenciones técnicas en el área de Valencia priorizan la durabilidad estructural y el cumplimiento de los estándares de seguridad vigentes.</p>\n<p>Analizamos cada instalación en Valencia para aplicar soluciones específicas que garanticen la estabilidad operativa a largo plazo.</p> <div class=\"semantic-items\"> <article class=\"semantic-card service-card\"> <h3>Detección de fugas</h3> <p>Ejecutamos procesos de detección de fugas bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil.</p> </article> <article class=\"semantic-card service-card\"> <h3>Reparación de bajantes</h3> <p>La resolución de incidencias en reparación de bajantes requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia.</p> </article> <article class=\"semantic-card service-card\"> <h3>Instalación de sanitarios</h3> <p>Auditamos cada fase de instalación de sanitarios en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales.</p> </article> <article class=\"semantic-card service-card\"> <h3>Cambio de grifería</h3> <p>Nuestra operativa en cambio de grifería integra estándares industriales específicos para , velando por que cada detalle reciba atención técnica.</p> </article> <article class=\"semantic-card service-card\"> <h3>Humedades y filtraciones</h3> <p>Ejecutamos procesos de humedades y filtraciones bajo normativas de seguridad rigurosas. En el entorno de , nos enfocamos en el ajuste técnico para maximizar la vida útil.</p> </article> <article class=\"semantic-card service-card\"> <h3>Sustitución de sifones</h3> <p>La resolución de incidencias en sustitución de sifones requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en .</p> </article> <article class=\"semantic-card service-card\"> <h3>Reparación de cisternas</h3> <p>Auditamos cada fase de reparación de cisternas en para asegurar la trazabilidad de la intervención y la idoneidad de los materiales.</p> </article> <article class=\"semantic-card service-card\"> <h3>Fontanería urgente 24h</h3> <p>Nuestra operativa en fontanería urgente 24h integra estándares industriales específicos para , velando por que cada detalle reciba atención técnica.</p> </article> </div> </div> </div> </div> </div> </section></body></html>",
-    "wordCount": 337,
-    "metadata": {
-      "block_type": "trust_band",
-      "sectionIndex": 9,
-      "section_id": "senales-confianza",
-      "score": 0,
-      "corruptionDetected": false,
-      "unsafeHtml": false,
-      "semantic": {
-        "intro": [
-          "Fontaneros en Valencia demanda un enfoque técnico especializado y el uso de componentes con certificación de calidad.",
-          "Nuestras intervenciones técnicas en el área de Valencia priorizan la durabilidad estructural y el cumplimiento de los estándares de seguridad vigentes.",
-          "Analizamos cada instalación en Valencia para aplicar soluciones específicas que garanticen la estabilidad operativa a largo plazo."
-        ],
-        "items": [
-          {
-            "title": "Detección de fugas",
-            "body": "Ejecutamos procesos de detección de fugas bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
-          },
-          {
-            "title": "Reparación de bajantes",
-            "body": "La resolución de incidencias en reparación de bajantes requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
-          },
-          {
-            "title": "Instalación de sanitarios",
-            "body": "Auditamos cada fase de instalación de sanitarios en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
-          },
-          {
-            "title": "Cambio de grifería",
-            "body": "Nuestra operativa en cambio de grifería integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
-          },
-          {
-            "title": "Humedades y filtraciones",
-            "body": "Ejecutamos procesos de humedades y filtraciones bajo normativas de seguridad rigurosas. En el entorno de Valencia, nos enfocamos en el ajuste técnico para maximizar la vida útil."
-          },
-          {
-            "title": "Sustitución de sifones",
-            "body": "La resolución de incidencias en sustitución de sifones requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en Valencia."
-          },
-          {
-            "title": "Reparación de cisternas",
-            "body": "Auditamos cada fase de reparación de cisternas en Valencia para asegurar la trazabilidad de la intervención y la idoneidad de los materiales."
-          },
-          {
-            "title": "Fontanería urgente 24h",
-            "body": "Nuestra operativa en fontanería urgente 24h integra estándares industriales específicos para Valencia, velando por que cada detalle reciba atención técnica."
-          }
-        ],
-        "trustBullets": [
-          "Telefono visible",
-          "Cobertura local",
-          "Faq útil",
-          "Presupuesto sin compromiso",
-          "Atención directa",
-          "Transparencia total",
-          "Técnicos cualificados",
-          "Garantía por escrito",
-          "Respuesta ágil",
-          "Trato profesional",
-          "Limpieza en el trabajo",
-          "Materiales homologados",
-          "Presupuesto previo",
-          "Garantía de reparación",
-          "Detección técnica de fugas",
-          "Soluciones de fontanería",
-          "Atención inmediata",
-          "Componentes de calidad",
-          "Certificación técnica verificada en Valencia",
-          "Presupuesto analítico detallado",
-          "Cumplimiento estricto de normativa industrial"
-        ],
-        "cta": {
-          "text": "Solicitar evaluación técnica",
-          "phone": "969530521"
-        }
+        "bullets": [],
+        "commonMistakes": [],
+        "faqItems": [],
+        "decisionFactors": []
       }
     }
   }

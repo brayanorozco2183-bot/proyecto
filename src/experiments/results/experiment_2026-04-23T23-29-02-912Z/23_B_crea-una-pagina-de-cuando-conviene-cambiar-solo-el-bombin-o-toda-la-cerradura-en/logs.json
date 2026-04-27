@@ -1,0 +1,247 @@
+[
+  {
+    "id": 25886,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "Misión Iniciada Core: Atacando nicho de cuando conviene cambiar solo bombin o toda cerradura en 1 destinos.",
+    "timestamp": "2026-04-24 02:36:14"
+  },
+  {
+    "id": 25887,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] SERP listo para Getafe. Resultados orgánicos: 10. Iniciando auditoría competitiva...",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25888,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Iniciando auditoría profunda de competidores. Candidatos limpios: 10 de 10.",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25889,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeriasoler.es/cambiar-bombin",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25890,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.ferreteriagonzalez.com/cambiar-bombin-cerradura-diferencias",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25891,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.ferreteriagonzalez.com",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25892,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.puertaskiuso.com",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25893,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://josebozacerrajeros.es/las-senales-que-indican-que-te-urge-cambiar-el-bombin",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25894,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.puertaskiuso.com/blog/como-elegir-bombin-cerradura",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25895,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://josebozacerrajeros.es",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25896,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.cerrajerosalmomento.es",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25897,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeriasoler.es",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25898,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.cerrajerosalmomento.es/merece-la-pena-cambiar-solo-el-bombin-o-toda-la-cerradura",
+    "timestamp": "2026-04-24 02:36:21"
+  },
+  {
+    "id": 25899,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditoría útil: 6 aceptadas, 4 rechazadas por baja relevancia o baja señal local.",
+    "timestamp": "2026-04-24 02:36:31"
+  },
+  {
+    "id": 25900,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Iniciando síntesis estratégica para Getafe con 6 auditorías profundas.",
+    "timestamp": "2026-04-24 02:36:31"
+  },
+  {
+    "id": 25901,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Sintetizando Estatuto de Dominación para \"cuando conviene cambiar solo bombin o toda cerradura\" en \"Getafe\". Confianza: high",
+    "timestamp": "2026-04-24 02:36:31"
+  },
+  {
+    "id": 25902,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Consultando modelo estratégico (qwen2.5:1.5b) para Getafe.",
+    "timestamp": "2026-04-24 02:36:31"
+  },
+  {
+    "id": 25903,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Estrategia resuelta para Getafe. Tipo=guide.",
+    "timestamp": "2026-04-24 02:37:06"
+  },
+  {
+    "id": 25904,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Síntesis estratégica finalizada para Getafe en 34942ms.",
+    "timestamp": "2026-04-24 02:37:06"
+  },
+  {
+    "id": 25905,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Resolviendo identidad NAP para Getafe...",
+    "timestamp": "2026-04-24 02:37:06"
+  },
+  {
+    "id": 25906,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "NAP_Guardian_01",
+    "thought": "Verifying deterministic NAP identity for cuando conviene cambiar solo bombin o toda cerradura in Getafe",
+    "timestamp": "2026-04-24 02:37:06"
+  },
+  {
+    "id": 25907,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] NAP finalizado para Getafe en 1ms.",
+    "timestamp": "2026-04-24 02:37:06"
+  },
+  {
+    "id": 25908,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Lanzando pipeline de contenido para Getafe...",
+    "timestamp": "2026-04-24 02:37:06"
+  },
+  {
+    "id": 25909,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Pipeline de contenido completado para Getafe en 489493ms.",
+    "timestamp": "2026-04-24 02:45:16"
+  },
+  {
+    "id": 25910,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[V7] Generando assets técnicos programáticos para cuando conviene cambiar solo bombin o toda cerradura en Getafe",
+    "timestamp": "2026-04-24 02:45:16"
+  },
+  {
+    "id": 25911,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] Comprobando enlace: https://www.getafe.es/",
+    "timestamp": "2026-04-24 02:45:16"
+  },
+  {
+    "id": 25912,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] ✅ Enlace VIVO: https://www.getafe.es/",
+    "timestamp": "2026-04-24 02:45:21"
+  },
+  {
+    "id": 25913,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] Comprobando enlace: https://www.ocu.org/",
+    "timestamp": "2026-04-24 02:45:21"
+  },
+  {
+    "id": 25914,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] Comprobando enlace: https://www.policia.es/",
+    "timestamp": "2026-04-24 02:45:22"
+  },
+  {
+    "id": 25915,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] ✅ Enlace VIVO: https://www.ocu.org/",
+    "timestamp": "2026-04-24 02:45:22"
+  },
+  {
+    "id": 25916,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] ✅ Enlace VIVO: https://www.policia.es/",
+    "timestamp": "2026-04-24 02:45:23"
+  },
+  {
+    "id": 25917,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Quality_Auditor_10",
+    "thought": "[EEAT Audit] Verificando señales negativas para Getafe...",
+    "timestamp": "2026-04-24 02:45:23"
+  },
+  {
+    "id": 25918,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Linguist_Interpreter_08",
+    "thought": "Auditoría lingüística para Getafe: PASSED",
+    "timestamp": "2026-04-24 02:45:23"
+  },
+  {
+    "id": 25919,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Quality_Auditor_10",
+    "thought": "[QualityScore] Final Score for Getafe: 63/100",
+    "timestamp": "2026-04-24 02:45:23"
+  },
+  {
+    "id": 25920,
+    "mission_id": "mission-1776998174163",
+    "agent_name": "Static_Deploy_09",
+    "thought": "Generating static site for cuando conviene cambiar solo bombin o toda cerradura in Getafe (Cluster: cuando-conviene-cambiar-solo-bombin-o-toda-cerradura-getafe)",
+    "timestamp": "2026-04-24 02:45:23"
+  }
+]

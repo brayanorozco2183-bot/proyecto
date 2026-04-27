@@ -1,4 +1,5 @@
 import { defaultPack } from './defaultPack.js';
+import { GOVERNANCE_RULES } from './governanceRules.js';
 
 export interface VerticalPack {
     nicheMatchers: RegExp[];
@@ -30,6 +31,9 @@ const pack = (overrides: Partial<VerticalPack>): VerticalPack => ({
         'excelencia profesional',
         'soluciones prestadas',
         'cronograma de servicios',
+        'en el competitivo mercado actual',
+        'soluciones a medida',
+        'servicio integral de calidad',
         ...(inheritedDefault.forbiddenTerms ?? []),
         ...(overrides.forbiddenTerms ?? [])
     ]),

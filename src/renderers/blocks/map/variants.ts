@@ -29,10 +29,10 @@ function renderMapFrame(input: BlockRendererInput, className = 'map-block__frame
 
   if (!embedUrl) {
     return `
-      <div class="${className} map-block__frame--placeholder" aria-label="Mapa pendiente de hidratar">
-        <div class="map-block__placeholder">
+      <div class="${className} map-block__frame--fallback" aria-label="Mapa de cobertura local">
+        <div class="map-block__fallback">
           <strong>${city}</strong>
-          <span>Inserta aquí el embed controlado de Google Maps o tu proveedor preferido.</span>
+          <span>Cobertura orientativa basada en la ubicación declarada del servicio.</span>
         </div>
       </div>
     `;
@@ -41,11 +41,13 @@ function renderMapFrame(input: BlockRendererInput, className = 'map-block__frame
   return `
     <div class="${className}">
       <iframe
+        class="map-block__iframe"
         src="${escapeAttribute(embedUrl)}"
         allowfullscreen=""
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         aria-label="Mapa de cobertura en ${city}"
+        style="display:block;width:100%;height:100%;min-height:inherit;border:0;"
       ></iframe>
       <div class="map-block__overlay">
         <span class="map-block__overlay-badge">Cobertura local</span>
@@ -60,6 +62,19 @@ function renderMapMeta(input: BlockRendererInput): string {
   const fallback = [input.seo?.city, input.local?.niche, 'Respuesta local'].filter(Boolean).slice(0, 3);
   const values = items.length ? items : fallback;
   return values.length ? renderInlinePills(values, 'map-block__pills') : '';
+}
+
+function renderSupportCard(input: BlockRendererInput): string {
+  const address = escapeHtml(String(input.local?.address || '').trim() || `Cobertura en ${input.seo?.city || input.local?.city || 'tu zona'}`);
+  const city = escapeHtml(String(input.seo?.city || input.local?.city || 'tu zona').trim());
+  return `
+    <article class="map-block__support">
+      <span class="service-card__kicker">Ubicación operativa</span>
+      <h3>${city}</h3>
+      <p>${address}</p>
+      ${input.content.mapNote ? `<p class="map-block__note">${escapeHtml(input.content.mapNote)}</p>` : ''}
+    </article>
+  `;
 }
 
 const fullWidth = (input: BlockRendererInput): string => {
@@ -141,9 +156,29 @@ const minimalEmbed = (input: BlockRendererInput): string => {
   );
 };
 
+const contextFrame = (input: BlockRendererInput): string => {
+  return wrapSectionBlock(
+    input,
+    `
+      ${renderSectionHeading(input.content.heading, input.seo?.city || 'Cobertura local')}
+      <div class="map-block__context">
+        <div class="map-block__context-copy">
+          ${renderParagraphs(input.content.subheading, 'map-block__intro')}
+          ${renderMapMeta(input)}
+          ${renderSupportCard(input)}
+          <div class="map-block__actions">${renderCta(input.content.cta, input.local, input)}</div>
+        </div>
+        ${renderMapFrame(input, 'map-block__frame map-block__frame--context')}
+      </div>
+    `,
+    'map-block map-block--context-frame'
+  );
+};
+
 export const renderMapVariants: Record<string, (input: BlockRendererInput) => string> = {
   full_width: fullWidth,
   boxed_with_text: boxedWithText,
   spotlight_card: spotlightCard,
-  minimal_embed: minimalEmbed
+  minimal_embed: minimalEmbed,
+  context_frame: contextFrame
 };

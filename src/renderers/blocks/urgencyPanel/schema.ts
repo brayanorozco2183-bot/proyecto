@@ -19,7 +19,7 @@ const contextSchema = z.object({
   businessName: z.string().optional(),
   phone: z.string().optional(),
   ctaHref: z.string().optional(),
-  labels: z.record(z.string()).optional()
+  labels: z.record(z.string(), z.string()).optional()
 }).partial();
 
 const ctaSchema = z.object({

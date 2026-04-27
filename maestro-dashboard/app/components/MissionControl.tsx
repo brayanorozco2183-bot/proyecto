@@ -13,6 +13,7 @@ export default function MissionControl() {
     const [siteType, setSiteType] = useState<'wordpress' | 'static'>('wordpress');
     const [isCluster, setIsCluster] = useState(false);
     const [scope, setScope] = useState<'neighborhoods' | 'municipalities' | 'auto'>('auto');
+    const [debugMode, setDebugMode] = useState(false);
 
     // Credenciales específicas de la misión
     const [ftpHost, setFtpHost] = useState('');
@@ -81,6 +82,7 @@ export default function MissionControl() {
                     site_type: siteType,
                     is_cluster: isCluster,
                     scope: scope,
+                    debug_mode: debugMode,
                     ...extraPayload
                 })
             });
@@ -222,6 +224,18 @@ export default function MissionControl() {
                                 ))}
                             </div>
                         )}
+                    </div>
+
+                    <div style={{ padding: '0.75rem', background: 'rgba(56, 189, 248, 0.05)', borderRadius: '8px', marginBottom: '1rem', border: '1px solid rgba(56, 189, 248, 0.2)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#38bdf8' }}>🐞 MODO DEPURACIÓN (SAVES)</label>
+                            <input
+                                type="checkbox"
+                                checked={debugMode}
+                                onChange={(e) => setDebugMode(e.target.checked)}
+                                style={{ transform: 'scale(1.2)', cursor: 'pointer' }}
+                            />
+                        </div>
                     </div>
 
                     <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>

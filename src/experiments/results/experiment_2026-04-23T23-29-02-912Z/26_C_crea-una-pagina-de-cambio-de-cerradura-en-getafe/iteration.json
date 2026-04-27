@@ -1,0 +1,35 @@
+{
+  "iterationId": "26",
+  "block": "C",
+  "command": "crea una página de cambio de cerradura en Getafe",
+  "note": "Validación de mejora acumulada",
+  "jobId": "mission-1776999655527",
+  "timestamp": "2026-04-24T03:09:46.842Z",
+  "durationSeconds": 531.32,
+  "mission": {
+    "id": "mission-1776999655527",
+    "niche": "cerrajeros cambio de cerradura",
+    "status": "COMPLETED",
+    "created_at": "2026-04-24 03:00:55",
+    "city": null
+  },
+  "review": null,
+  "metrics": {
+    "missionStatus": "COMPLETED",
+    "reviewStatus": null,
+    "score": null,
+    "qualityGateScore": null,
+    "qualityGateFailed": false,
+    "technicalValidationFailed": false,
+    "technicalIssues": [],
+    "issueCount": 0,
+    "issues": [],
+    "writerFallbacks": 0,
+    "correctorFallback": false,
+    "coherenceWarnings": 0,
+    "placeholderWarnings": 0,
+    "modelUsage": [],
+    "totalLogs": 24,
+    "publishabilityHint": "requiere_revision"
+  }
+}

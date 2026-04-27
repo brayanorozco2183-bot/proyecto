@@ -37,6 +37,7 @@ const BROKEN_TAG_PATTERNS = [
   /<style[^>]*>[^<]*<\/a>/i,
   /<a[^>]*>\s*<li\b/i,
   /<li[^>]*>\s*<a[^>]*>\s*<meta/i,
+  /<ol[^>]*>[\s\S]*?<span[^>]*class="el-breadcrumbs__separator"/i,
 ];
 
 const EXPECTED_BEM_SELECTORS = [
@@ -50,6 +51,11 @@ const EXPECTED_BEM_SELECTORS = [
   'trust-strip__pills',
   'nav__link',
   'brand__name',
+];
+
+const PLACEHOLDER_VISUAL_PATTERNS = [
+  /Imagen base de referencia lista para sustituirse por una fotografía real del servicio\./i,
+  /Sustituible por imagen real cuando exista material propio\./i,
 ];
 
 function fingerprint(html: string) {
@@ -88,6 +94,10 @@ function countProblems(html: string): { issues: string[]; count: number } {
     if (html.includes(collapsed) && !html.includes(selector)) {
       issues.push(`BEM_COLLAPSE:${selector}->${collapsed}`);
     }
+  }
+
+  for (const rx of PLACEHOLDER_VISUAL_PATTERNS) {
+    if (rx.test(html)) issues.push(`PLACEHOLDER_VISUAL:${rx.source}`);
   }
 
   return { issues, count: issues.length };

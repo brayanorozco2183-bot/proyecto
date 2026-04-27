@@ -1,252 +1,243 @@
+import axios from 'axios';
+import { agentMemoryStore, makePromptHash } from '../ai/agentMemory.js';
 import { vault } from './vault.js';
+import { resolveInstalledModel } from '../ai/modelAvailability.js';
+import { resolveModelForAgent } from '../ai/modelRouter.js';
 
-/**
- * AI Facade - Emergency Brain Extension (Elite Edition)
- * Provides high-fidelity mock responses for Pintores en Zaragoza.
- */
+interface AIFacadeOptions {
+  json?: boolean;
+  timeoutMs?: number;
+  timeout?: number;
+  maxRetries?: number;
+  fastFail?: boolean;
+  fallbackResponse?: string | (() => string);
+  numPredict?: number;
+  maxTokens?: number;
+  temperature?: number;
+  jsonSchema?: any;
+  missionId?: string;
+  niche?: string;
+  city?: string;
+  scopeKey?: string;
+}
+
 export class AIFacade {
-    private static isOllamaOffline = false;
+  private static failureCooldownUntil = 0;
 
-    static async callOllama(agentName: string, prompt: string, model: string): Promise<string> {
-        try {
-            if (!this.isOllamaOffline) {
-                const axios = (await import('axios')).default;
-                const response = await axios.post(`${vault.OLLAMA_URL}/api/generate`, {
-                    model: model || vault.OLLAMA_MODEL_RESEARCH,
-                    prompt: prompt,
-                    stream: false,
-                    options: { temperature: 0.7 }
-                }, { timeout: 3000 }); // Faster timeout for detection
-                
-                return response.data.response;
-            }
-        } catch (e) {
-            console.warn(`[AIFacade] Ollama detected as offline. Hybrid Brain taking control.`);
-            this.isOllamaOffline = true;
-        }
+  private static resolveFallbackResponse(fallbackResponse?: string | (() => string)): string | undefined {
+    if (!fallbackResponse) return undefined;
+    return typeof fallbackResponse === 'function' ? fallbackResponse() : fallbackResponse;
+  }
 
-        return this.getMockResponse(agentName, prompt);
+  static async callOllama(
+  agentName: string,
+  prompt: string,
+  model: string,
+  options: AIFacadeOptions = {}
+): Promise<string> {
+  const endpoint = `${vault.OLLAMA_URL}/api/generate`;
+  
+  // Ruteo inteligente por agente
+  const routing = resolveModelForAgent(agentName, model);
+  const requestedModel = routing.selectedModel;
+
+  const promptLength = String(prompt || '').length;
+  const normalizedAgent = String(agentName || '').toLowerCase();
+  const isArchitect = normalizedAgent.includes('content_architect') || normalizedAgent.includes('architect');
+  const isWriter = normalizedAgent.includes('content_writer') || normalizedAgent.includes('writer');
+  const isLongPrompt = promptLength >= 9000;
+  const baseTimeout = Number(vault.AI_FACADE_TIMEOUT_MS || 60000);
+  const timeoutMs = options.timeoutMs
+    ?? options.timeout
+    ?? (isArchitect
+      ? Math.max(baseTimeout, 90000)
+      : (isWriter ? Math.max(baseTimeout, 180000) : (isLongPrompt ? Math.max(baseTimeout, 120000) : baseTimeout)));
+
+  const maxRetries = Math.max(1, options.maxRetries ?? (isArchitect || isLongPrompt ? 1 : 2));
+  const numPredict = Math.max(256, options.numPredict ?? options.maxTokens ?? (isArchitect ? 1400 : (isLongPrompt ? 1800 : 2400)));
+
+  const now = Date.now();
+  if (now < this.failureCooldownUntil && options.fastFail) {
+    const waitMs = this.failureCooldownUntil - now;
+    if (options.fallbackResponse) return this.resolveFallbackResponse(options.fallbackResponse) || '';
+    throw new Error(`[AIFacade] Fast-fail activo para ${agentName}. Cooldown restante=${waitMs}ms.`);
+  }
+
+  const runtimeResolution = await resolveInstalledModel(requestedModel);
+  const runtimeModel = runtimeResolution.selectedModel;
+
+  if (runtimeModel !== requestedModel) {
+    console.warn(`[AIFacade] ${agentName} remapeado de ${requestedModel} -> ${runtimeModel}. ${runtimeResolution.reason}`);
+  }
+
+  let lastError: any = null;
+  const promptHash = makePromptHash(String(prompt || '').slice(0, 20000));
+  const startedAt = Date.now();
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    console.log(`[AIFacade] ${agentName} -> ${runtimeModel} | intento ${attempt}/${maxRetries} | timeout=${timeoutMs}ms | json=${Boolean(options.json)} | prompt=${promptLength} chars`);
+
+    try {
+      const payload: any = {
+        model: runtimeModel,
+        prompt,
+        stream: false,
+        options: {
+          temperature: options.temperature ?? 0.35,
+          num_predict: numPredict,
+        },
+      };
+
+      if (options.json) payload.format = 'json';
+
+      const response = await axios.post(endpoint, payload, { timeout: timeoutMs });
+      const text = String(response?.data?.response || '').trim();
+      if (!text) throw new Error('empty response');
+
+      this.failureCooldownUntil = 0;
+      console.log(`[AIFacade] ${agentName} respondió correctamente en intento ${attempt}/${maxRetries}.`);
+
+      await agentMemoryStore.recordRun({
+        agentName,
+        model: runtimeModel,
+        success: true,
+        durationMs: Date.now() - startedAt,
+        promptLength,
+        responseLength: text.length,
+        jsonMode: Boolean(options.json),
+        missionId: options.missionId,
+        niche: options.niche,
+        city: options.city,
+        scopeKey: options.scopeKey,
+        promptHash,
+      });
+
+      return text;
+    } catch (error: any) {
+      lastError = error;
+      const responseDetail = error?.response?.data?.error || error?.response?.data || '';
+      const detailSuffix = responseDetail ? ` | detalle=${typeof responseDetail === 'string' ? responseDetail : JSON.stringify(responseDetail)}` : '';
+      console.warn(`[AIFacade] ${agentName} falló en intento ${attempt}/${maxRetries}: ${error?.message || 'unknown error'}${detailSuffix}`);
+      if (attempt >= maxRetries) break;
+      await new Promise((resolve) => setTimeout(resolve, 800 * attempt));
+    }
+  }
+
+  this.failureCooldownUntil = Date.now() + Math.max(2000, Number(vault.AI_FACADE_FAILURE_COOLDOWN_MS || 4000));
+
+  await agentMemoryStore.recordRun({
+    agentName,
+    model: runtimeModel,
+    success: false,
+    durationMs: Date.now() - startedAt,
+    promptLength,
+    responseLength: 0,
+    jsonMode: Boolean(options.json),
+    missionId: options.missionId,
+    niche: options.niche,
+    city: options.city,
+    scopeKey: options.scopeKey,
+    promptHash,
+  });
+
+  await agentMemoryStore.recordFailure({
+    agentName,
+    model: runtimeModel,
+    errorMessage: lastError?.message || 'unknown error',
+    failureType: options.json ? 'llm_json_failure' : 'llm_text_failure',
+    niche: options.niche,
+    city: options.city,
+    scopeKey: options.scopeKey,
+    promptHash,
+  });
+
+  if (options.fallbackResponse) {
+    console.warn(`[AIFacade] ${agentName} usando fallbackResponse explícito tras fallo del modelo ${runtimeModel}.`);
+    return this.resolveFallbackResponse(options.fallbackResponse) || '';
+  }
+
+  const message = `[AIFacade] Ollama request failed for ${agentName}: ${lastError?.message || 'unknown error'} | requested=${requestedModel} | runtime=${runtimeModel}`;
+  if (!vault.AI_FACADE_ALLOW_MOCKS) {
+    throw new Error(`${message}. Mock mode is disabled.`);
+  }
+
+  console.warn(`${message}. Falling back to mock mode because AI_FACADE_ALLOW_MOCKS=true.`);
+  return this.getMockResponse(agentName, prompt);
+}
+
+  static async generateJson(
+    model: string,
+    prompt: string,
+    options: AIFacadeOptions & { agentName?: string } = {}
+  ): Promise<string> {
+    return this.callOllama(options.agentName || 'Compatibility_Layer', prompt, model, {
+      ...options,
+      json: true,
+    });
+  }
+
+  static async generateJsonForAgent(
+    agentName: string,
+    model: string,
+    prompt: string,
+    options: AIFacadeOptions = {}
+  ): Promise<string> {
+    return this.callOllama(agentName, prompt, model, {
+      ...options,
+      json: true,
+    });
+  }
+
+  private static getMockResponse(agentName: string, prompt: string): string {
+    const normalized = String(agentName || '').toLowerCase();
+
+    if (normalized.includes('content_architect') || normalized.includes('architect')) {
+      return JSON.stringify({
+        h1: 'Servicio local con atención técnica y enfoque profesional',
+        meta_title: 'Servicio local profesional y atención técnica',
+        meta_description: 'Atención local con diagnóstico claro, proceso ordenado y garantía por escrito cuando corresponda.',
+        page_skeleton: 'conversion-funnel',
+        hero: {
+          h1: 'Atención técnica local con enfoque profesional',
+          subtitle: 'Organizamos la página para explicar el servicio, demostrar cobertura real y cerrar con una llamada a la acción clara.',
+          trust_bullets: ['Atención local', 'Proceso claro', 'Garantía por escrito'],
+          cta_text: 'Solicitar atención',
+          hero_role: 'conversion',
+          visual_intent: 'high_impact',
+        },
+        sections: [
+          { section_id: 'servicios', h2: 'Qué resolvemos', h3s: ['Servicio principal', 'Casos frecuentes', 'Cuándo conviene actuar'], block_type: 'services_grid', target_words: 420 },
+          { section_id: 'urgencia', h2: 'Atención prioritaria', h3s: ['Disponibilidad', 'Cómo actuamos', 'Qué información pedir'], block_type: 'urgency_panel', target_words: 160 },
+          { section_id: 'zonas', h2: 'Cobertura local', h3s: ['Dónde intervenimos', 'Proximidad', 'Coordinación'], block_type: 'local_proof', target_words: 220 },
+          { section_id: 'faq', h2: 'Preguntas frecuentes', h3s: ['Duda 1', 'Duda 2', 'Duda 3'], block_type: 'faq', target_words: 300 },
+          { section_id: 'contacto', h2: 'Solicita atención', h3s: ['Presupuesto', 'Atención directa'], block_type: 'cta_panel', target_words: 90 },
+        ],
+      });
     }
 
-    private static getMockResponse(agentName: string, prompt: string): string {
-        const p = prompt.toLowerCase();
-        
-        // 1. SEO Analyst - Strategic Intelligence
-        if (agentName.includes('Analyst')) {
-            if (p.includes('fontanero')) {
-                return JSON.stringify({
-                    primaryKeyword: "Fontaneros en Valencia",
-                    secondaryKeywords: ["fontaneros 24 horas Valencia", "desatascos Valencia", "reparación fugas de agua", "fontaneros baratos Valencia"],
-                    entities: ["Valencia", "Ciudad de las Artes", "Distrito de Ciutat Vella", "tuberías de PVC", "calderas de gas"],
-                    pageTypeRecommendation: "service",
-                    primaryIntent: "transactional",
-                    funnelStage: "BOFU",
-                    wordCountTarget: 2500,
-                    serpFeaturesTarget: ["local_pack", "reviews"],
-                    contentAngles: ["Atención inmediata en menos de 30 minutos", "Garantía por escrito en cada reparación", "Especialistas en desatascos sin romper nada"],
-                    trustAssets: ["Técnicos homologados por Industria", "Carnet de instalador autorizado", "Seguro de accidentes corporativo", "Más de 15 años de experiencia local"],
-                    internalLinkTargets: ["/servicios/desatascos", "/presupuesto-fontaneria"],
-                    titleStrategy: "Fontaneros en Valencia 24 Horas | Desatascos y Reparaciones Urgentes",
-                    metaDescriptionStrategy: "¿Buscas fontaneros en Valencia? Estamos operativos las 24h para fugas, desatascos y termos. ¡Llegamos en 20 minutos con garantía oficial!",
-                    schemaTypes: ["PlumbingService", "LocalBusiness"],
-                    strategyConfidence: "high",
-                    classificationReasons: ["Alta demanda de servicios de urgencia en el área metropolitana de Valencia."]
-                });
-            }
-            return JSON.stringify({
-                primaryKeyword: "Pintores en Zaragoza",
-                secondaryKeywords: ["quitar gotele Zaragoza", "pintura decorativa", "reformas de pintura", "presupuestos pintores Zaragoza"],
-                entities: ["Zaragoza", "Basílica del Pilar", "Parque Grande", "pintura plástica", "alisado de paredes"],
-                pageTypeRecommendation: "service",
-                primaryIntent: "transactional",
-                funnelStage: "BOFU",
-                wordCountTarget: 2200,
-                serpFeaturesTarget: ["local_pack", "reviews"],
-                contentAngles: ["Maestría técnica en el Actur y Delicias", "Compromiso de limpieza total", "Criterio estético profesional"],
-                trustAssets: ["Pintores con carnet profesional", "Seguro de responsabilidad civil", "Garantía de acabado fino", "Atención directa sin intermediarios"],
-                internalLinkTargets: ["/servicios/alisado-paredes", "/presupuesto"],
-                titleStrategy: "Pintores en Zaragoza | Expertos en Alisado y Pintura Profesional",
-                metaDescriptionStrategy: "Renueva tu hogar con los mejores pintores de Zaragoza. Acabados impecables, limpieza garantizada y presupuesto cerrado. ¡Llámanos hoy!",
-                schemaTypes: ["ProfessionalService", "LocalBusiness"],
-                strategyConfidence: "high",
-                classificationReasons: ["Intención transaccional clara detectada para servicios de pintura en entorno urbano."]
-            });
-        }
-
-        // 2. Content Architect - Blueprint
-        if (agentName.includes('Architect')) {
-            if (p.includes('fontanero')) {
-                return JSON.stringify({
-                    h1: "Fontaneros en Valencia: Expertos en Reparaciones y Desatascos 24h",
-                    meta_title: "Fontaneros Valencia | Fontanería Urgente y Profesional",
-                    meta_description: "Servicio de fontanería en Valencia las 24 horas. Desatascos, fugas de agua, calderas y termos. Precios sin competencia y llegada inmediata.",
-                    page_skeleton: "editorial-longform",
-                    hero: {
-                        h1: "Tu Fontanero en Valencia de Extrema Confianza",
-                        subtitle: "Detectamos fugas y solucionamos desatascos en tiempo récord en cualquier barrio de Valencia, con materiales de primera y total limpieza.",
-                        trust_bullets: ["Respuesta en 20 min", "Técnicos certificadas", "Sin compromiso de permanencia"],
-                        cta_text: "Llamar ahora a un fontanero",
-                        hero_role: "emergency",
-                        visual_intent: "reliability"
-                    },
-                    sections: [
-                        { section_id: "intro", h2: "Líderes en Fontanería en Valencia y su Cinturón Metropolitano", block_type: "intro", target_words: 300 },
-                        { section_id: "urgencia", h2: "Asistencia Urgente de Fontanería 24h", block_type: "urgency_panel", target_words: 200 },
-                        { section_id: "servicios", h2: "Soluciones de Fontanería que Funcionan", block_type: "services_grid", target_words: 500 },
-                        { section_id: "proceso", h2: "Cómo Trabajamos: Diagnóstico y Resolución", block_type: "process_steps", target_words: 400 },
-                        { section_id: "tarifas", h2: "Presupuestos Transparentes de Fontanería", block_type: "price_guidance", target_words: 350 },
-                        { section_id: "zonas", h2: "Fontaneros en Arrancapins, Ruzafa y Cabañal", block_type: "local_proof", target_words: 350 },
-                        { section_id: "faq", h2: "Preguntas Frecuentes sobre Fontanería en Valencia", block_type: "faq", target_words: 300 },
-                        { section_id: "contacto", h2: "Contacta con un Fontanero en Valencia Ahora", block_type: "cta_panel", target_words: 100 }
-                    ]
-                });
-            }
-            return JSON.stringify({
-                h1: "Maestros Pintores en Zaragoza: Acabados de Alta Calidad",
-                meta_title: "Pintores en Zaragoza | Servicios Profesionales de Pintura",
-                meta_description: "Expertos en pintura de interiores y exteriores en Zaragoza. Alisados, barnices y pintura decorativa con limpieza garantizada. Presupuesto sin compromiso.",
-                page_skeleton: "editorial-longform",
-                hero: {
-                    h1: "Pintores en Zaragoza con el Criterio de Siempre",
-                    subtitle: "Transformamos viviendas y locales en Zaragoza con técnicas avanzadas de pintura, asegurando un entorno limpio y un acabado perfecto.",
-                    trust_bullets: ["Garantía de acabado fino", "Limpieza profesional", "Presupuesto transparente"],
-                    cta_text: "Consultar disponibilidad en Zaragoza",
-                    hero_role: "conversion",
-                    visual_intent: "high_impact"
-                },
-                sections: [
-                    { section_id: "intro", h2: "Servicios de Pintura Profesional en el Corazón de Zaragoza", block_type: "intro", target_words: 250 },
-                    { section_id: "servicios", h2: "Especialidades en Pintura y Revestimientos", block_type: "services_grid", target_words: 400 },
-                    { section_id: "proceso", h2: "Nuestra Metodología de Trabajo en tu Domicilio", block_type: "process_steps", target_words: 350 },
-                    { section_id: "tarifas", h2: "Precios y Compromiso de Transparencia", block_type: "price_guidance", target_words: 300 },
-                    { section_id: "zonas", h2: "Cobertura Completa desde el Actur hasta Casablanca", block_type: "local_proof", target_words: 300 },
-                    { section_id: "faq", h2: "Dudas Habituales sobre Pintura en Zaragoza", block_type: "faq", target_words: 250 }
-                ]
-            });
-        }
-
-        // 3. Content Writer - Elite Copywriting
-        if (agentName.includes('Writer')) {
-            if (p.includes('fontanero')) {
-                if (p.includes('intro')) {
-                    return JSON.stringify({
-                        h2: "Tu sistema de fontanería en Valencia en manos expertas",
-                        intro: ["Una fuga de agua o un atasco no pueden esperar. En Valencia, la cal del agua y la antigüedad de algunas fincas en el centro requieren fontaneros con el equipo adecuado."],
-                        items: [
-                            { title: "Rapidez Levantina", body: "Nuestra base en Valencia nos permite desplegarnos rápidamente por toda la ciudad asegurando una respuesta veloz." }
-                        ]
-                    });
-                }
-                if (p.includes('services_grid')) {
-                    return JSON.stringify({
-                        h2: "Intervenciones integrales de fontanería",
-                        intro: ["Desde el desatasco de tuberías en edificios antiguos de Ciutat Vella hasta la instalación de sistemas de climatización en nuevas promociones."],
-                        items: [
-                            { title: "Desatascos 24h", body: "Equipos de alta presión para eliminar obstrucciones persistentes sin dañar la instalación." },
-                            { title: "Fugas de Agua", body: "Localización no invasiva de filtraciones mediante geófonos y cámaras térmicas." }
-                        ]
-                    });
-                }
-                if (p.includes('urgency_panel')) {
-                    return JSON.stringify({
-                        h2: "Servicio de Urgencias de Fontanería en Valencia",
-                        intro: ["Sabemos que un reventón o una inundación no pueden esperar. Por eso ofrecemos atención inmediata."],
-                        items: [
-                            { title: "Respuesta en menos de 40 min", body: "Disponemos de unidades móviles repartidas por Valencia para llegar donde nos necesites." },
-                            { title: "24 Horas / 365 Días", body: "No importa si es festivo o medianoche, siempre hay un fontanero de guardia." }
-                        ]
-                    });
-                }
-                if (p.includes('cta_panel')) {
-                    return JSON.stringify({
-                        h2: "¿Necesitas un fontanero en Valencia?",
-                        intro: ["Presupuesto cerrado por escrito y sin compromiso. Profesionalidad garantizada."],
-                        cta: { text: "Llamar Ahora", phone: "{{PHONE}}" }
-                    });
-                }
-                if (p.includes('local_proof')) {
-                    return JSON.stringify({
-                        h2: "Disponibilidad total en el área de Valencia",
-                        intro: ["Cubrimos todos los códigos postales de la ciudad, desde la Malvarrosa hasta la avenida del Cid."],
-                        items: [
-                            { title: "Distrito del Eixample", body: "Atendemos con regularidad las necesidades de las fincas señoriales de Gran Vía y alrededores." },
-                            { title: "Extramurs y Patraix", body: "Soporte técnico ágil para reparaciones domésticas de todo tipo en barriadas residenciales." },
-                            { title: "Benicalap y Campanar", body: "Mantenimiento de fontanería en nuevas construcciones y urbanizaciones modernas." }
-                        ]
-                    });
-                }
-            }
-
-            if (p.includes('intro')) {
-                return JSON.stringify({
-                    h2: "Tu hogar en Zaragoza merece un acabado profesional",
-                    intro: ["La pintura no es solo estética; es la piel de tu hogar. En Zaragoza, el clima seco y las variaciones térmicas exigen materiales de alta resiliencia y una aplicación técnica meticulosa."],
-                    items: [
-                        { title: "Experiencia Local", body: "Llevamos años trabajando en los barrios más emblemáticos de Zaragoza, entendiendo la arquitectura de sus viviendas." }
-                    ]
-                });
-            }
-
-            if (p.includes('intro')) {
-                return JSON.stringify({
-                    h2: "Tu hogar en Zaragoza merece un acabado profesional",
-                    intro: ["La pintura no es solo estética; es la piel de tu hogar. En Zaragoza, el clima seco y las variaciones térmicas exigen materiales de alta resiliencia y una aplicación técnica meticulosa."],
-                    items: [
-                        { title: "Experiencia Local", body: "Llevamos años trabajando en los barrios más emblemáticos de Zaragoza, entendiendo la arquitectura de sus viviendas." }
-                    ]
-                });
-            }
-            if (p.includes('services_grid')) {
-                return JSON.stringify({
-                    h2: "Soluciones técnicas para cada pared",
-                    intro: ["Desde el alisado de gotelé clásico en pisos de San José hasta la pintura decorativa avanzada en chalets de Casablanca."],
-                    items: [
-                        { title: "Alisado de Paredes", body: "Eliminamos el gotelé con maquinaria de aspiración industrial, minimizando el polvo y asegurando planimetría perfecta." },
-                        { title: "Pintura Plástica Lavable", body: "Utilizamos resinas de alta calidad que permiten una limpieza fácil y mantienen el color vibrante por años." },
-                        { title: "Tratamientos de Humedad", body: "Diagnóstico y sellado de manchas en baños y cocinas usando pinturas tixotrópicas profesionales." }
-                    ],
-                    bullets: ["Pintura ecológica sin olor", "Respeto total por el mobiliario", "Plazos de ejecución estrictos"]
-                });
-            }
-            if (p.includes('local_proof')) {
-                return JSON.stringify({
-                    h2: "Servicio de proximidad en toda Zaragoza",
-                    intro: ["Nuestra logística nos permite atender solicitudes con agilidad en cualquier distrito de nuestra capital."],
-                    items: [
-                        { title: "El Actur y Rabal", body: "Realizamos intervenciones frecuentes en las zonas residenciales modernas del margen izquierdo." },
-                        { title: "Centro y Casco Histórico", body: "Especialistas en la rehabilitación estética de techos altos y molduras en edificios antiguos." },
-                        { title: "San José y Las Fuentes", body: "Servicios de pintura rápida y eficiente para renovaciones de pisos y locales comerciales." }
-                    ]
-                });
-            }
-            // Universal high-quality fallback for writer
-            return JSON.stringify({
-                h2: "Pintores Comprometidos con Zaragoza",
-                intro: ["Entendemos que entrar en una casa es una responsabilidad. Por eso, nuestro enfoque se basa en la protección escrupulosa del suelo y los muebles."],
-                items: [{ title: "Técnica Depurada", body: "Cada recorte y cada mano de pintura se realiza con el rigor de quien ama su oficio." }],
-                cta: { text: "Contactar para presupuesto", phone: "{{PHONE}}" }
-            });
-        }
-
-        // 4. Quality & Correction Logic (The Gatekeepers)
-        if (agentName.includes('Corrector') || agentName.includes('Auditor') || agentName.includes('QA') || agentName.includes('Score')) {
-            // QualityScoreAgent result
-            if (p.includes('score') || agentName.includes('Score')) {
-                return JSON.stringify({
-                    score: 96,
-                    reasoning: "El contenido presenta una alta coherencia técnica, menciones locales precisas de Zaragoza y una estructura visual variada.",
-                    issues: [],
-                    blockScores: [
-                        { id: "intro", score: 98 },
-                        { id: "servicios", score: 95 },
-                        { id: "zonas", score: 96 }
-                    ]
-                });
-            }
-            // SpanishCorrector/Coherence result
-            return JSON.stringify({ passed: true, score: 98, changesMade: false, fixed_content: null, validationPassed: true, warnings: [] });
-        }
-
-        return "Respuesta Elite del Cerebro Híbrido: Operación Optimizada.";
+    if (normalized.includes('analyst')) {
+      return JSON.stringify({
+        primaryKeyword: 'servicio local',
+        secondaryKeywords: ['servicio urgente', 'servicio en tu zona'],
+        entities: [],
+        pageTypeRecommendation: 'service',
+        primaryIntent: 'transactional',
+        secondaryIntent: 'commercial',
+        funnelStage: 'BOFU',
+        wordCountTarget: 2100,
+        serpFeaturesTarget: ['local_pack'],
+        contentAngles: ['Atención local', 'Proceso profesional'],
+        trustAssets: ['atención directa', 'garantía por escrito'],
+        internalLinkTargets: [],
+        titleStrategy: 'Keyword + ciudad + beneficio',
+        metaDescriptionStrategy: 'beneficio local + CTA',
+        schemaTypes: ['LocalBusiness'],
+        keywordReport: 'Fallback del analista.',
+        strategyConfidence: 'low',
+        classificationReasons: ['Fallback del sistema'],
+      });
     }
+
+    return '{}';
+  }
 }

@@ -1,4 +1,3 @@
-
 import { RenderFn } from '../types.js';
 
 function escapeHtml(value: string = ''): string {
@@ -12,6 +11,27 @@ function escapeHtml(value: string = ''): string {
 
 function safeArray(value: any): any[] {
     return Array.isArray(value) ? value : [];
+}
+
+
+function normalizePhoneValue(value: any): string {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    if (/(?:consultar|pendiente|no\s+disponible|n\/d|sin\s+telefono)/i.test(raw)) return '';
+    const hasPlus = raw.startsWith('+');
+    const digits = raw.replace(/\D/g, '');
+    if (digits.length < 9 || digits.length > 15) return '';
+    if (/^(\d)\1+$/.test(digits)) return '';
+    return hasPlus ? `+${digits}` : digits;
+}
+
+function buildPhoneHref(value: any, fallback = '#contacto'): string {
+    const normalized = normalizePhoneValue(value);
+    return normalized ? `tel:${normalized}` : fallback;
+}
+
+function buildPhoneLabel(value: any, fallback = 'Contactar'): string {
+    return normalizePhoneValue(value) || fallback;
 }
 
 function svgToDataUri(svg: string): string {
@@ -94,45 +114,64 @@ function renderHeroImageFigure(data: {
     caption?: string;
 } = {}): string {
     const src = buildDefaultImage('hero', data);
-    const alt = `${data.niche || 'Servicio profesional'} en ${data.city || 'tu zona'} · imagen de referencia`;
-    const caption = data.caption || 'Imagen base de referencia lista para sustituirse por una fotografía real del servicio.';
+    const alt = `${data.niche || 'Servicio profesional'} en ${data.city || 'tu zona'} · imagen editorial del servicio`;
+    const caption = data.caption || 'Imagen editorial del servicio generada como respaldo visual automático.';
 
     return `
-    <figure class="hero-visual" data-image-slot="${escapeHtml(data.slot || 'hero-default')}">
+    <figure class="hero-visual" data-image-slot="${escapeHtml(data.slot || 'hero-default')}" data-image-kind="hero" data-image-status="provisional">
         <div class="hero-visual__frame">
-            <img src="${src}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async">
+            <img src="${src}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async" fetchpriority="low" width="1600" height="1100" sizes="(max-width: 768px) 100vw, 720px" data-image-origin="fallback-svg">
         </div>
-        <figcaption class="hero-visual__caption">${escapeHtml(caption)}</figcaption>
     </figure>`;
 }
 
 export const renderHeader: RenderFn = ({ content, visualVariant }) => {
     const { businessName, phone, navItems } = content || {};
-    const phoneHref = (phone || '').replace(/\s+/g, '');
+    const phoneHref = buildPhoneHref(phone);
+    const phoneLabel = buildPhoneLabel(phone);
     const navStyle = visualVariant || 'solid';
+    const safeBusinessName = escapeHtml(businessName || 'Servicio local');
 
-    const navHtml = (navItems || [
+    const entries = (navItems || [
         { label: 'Servicios', href: '#servicios' },
         { label: 'Proceso', href: '#procesos' },
         { label: 'FAQ', href: '#faq' }
-    ]).map((item: any) => `<a href="${item.href}" class="nav__link">${item.label}</a>`).join('');
+    ]).filter((item: any) => item && item.label && item.href);
+
+    const navHtml = entries.map((item: any, index: number) => `<a href="${escapeHtml(String(item.href))}" class="nav__link${index === 0 ? ' is-active' : ''}">${escapeHtml(String(item.label))}</a>`).join('');
+    const mobileNavHtml = entries.map((item: any) => `<a href="${escapeHtml(String(item.href))}" class="nav-mobile__link">${escapeHtml(String(item.label))}</a>`).join('');
 
     return `
     <header class="site-header" id="top" data-nav-style="${navStyle}">
         <div class="el-container">
             <div class="site-header__inner">
                 <a href="#top" class="brand">
-                    <span class="brand__name">${businessName}</span>
+                    <span class="brand__name site-header__brand-name">${safeBusinessName}</span>
                 </a>
-                <nav class="nav">
+                <nav class="nav nav--desktop" aria-label="Principal">
                     <div class="nav__links-group">
                         ${navHtml}
                     </div>
-                    <a href="tel:${phoneHref}" class="cta-primary nav__cta">
+                    <a href="${phoneHref}" class="cta-primary nav__cta${navStyle === 'prestige' ? ' nav__cta--prestige' : ''}">
                         <span class="cta-primary__icon">📞</span>
-                        <span class="cta-primary__text">${phone}</span>
+                        <span class="cta-primary__text">${escapeHtml(phoneLabel)}</span>
                     </a>
                 </nav>
+                <details class="nav-mobile" aria-label="Navegación móvil">
+                    <summary class="nav-mobile__summary" aria-label="Abrir menú">
+                        <span class="nav-mobile__summary-text">Menú</span>
+                        <span class="nav-mobile__summary-icon" aria-hidden="true"></span>
+                    </summary>
+                    <div class="nav-mobile__panel">
+                        <div class="nav-mobile__links" role="list">
+                            ${mobileNavHtml}
+                        </div>
+                        <a href="${phoneHref}" class="cta-primary nav-mobile__cta">
+                            <span class="cta-primary__icon">📞</span>
+                            <span class="cta-primary__text">${escapeHtml(phoneLabel)}</span>
+                        </a>
+                    </div>
+                </details>
             </div>
         </div>
     </header>`;
@@ -152,16 +191,15 @@ export const renderHeroPremium: RenderFn = ({ content, heroLayout }) => {
         hero_secondary_label,
         trust_bullets
     } = content || {};
-    const phoneHref = (phone || '').replace(/\s+/g, '');
+    const phoneHref = buildPhoneHref(phone);
+    const phoneLabel = buildPhoneLabel(phone);
     const layout = heroLayout || 'split';
 
-    const bullets = safeArray(trust_bullets).length
-        ? safeArray(trust_bullets).map((b: string) => `<li>${escapeHtml(b)}</li>`).join('')
-        : [
-            '<li>Atención directa</li>',
-            '<li>Presupuesto transparente</li>',
-            '<li>Cobertura local</li>'
-        ].join('');
+    const trustValues = safeArray(trust_bullets).length
+        ? safeArray(trust_bullets).slice(0, 3)
+        : ['Atención directa', 'Presupuesto transparente', 'Cobertura local'];
+
+    const bullets = trustValues.map((b: string) => `<li>${escapeHtml(b)}</li>`).join('');
 
     const safeCardEyebrow = escapeHtml(hero_card_eyebrow || 'Atención profesional');
     const safeCardTitle = escapeHtml(hero_card_title || 'Respuesta rápida y clara');
@@ -171,14 +209,57 @@ export const renderHeroPremium: RenderFn = ({ content, heroLayout }) => {
 
     let heroBody = '';
 
-    if (layout === 'centered') {
+    if (layout === 'grid') {
+        const heroImageSrc = buildDefaultImage('hero', {
+            niche,
+            city,
+            title: h1,
+            subtitle: hero_card_title || subtitle || city
+        });
+
+        heroBody = `
+        <div class="hero-immersive">
+            <figure class="hero-immersive__media" data-image-slot="hero-default" data-image-kind="hero" data-image-status="provisional">
+                <img src="${heroImageSrc}" alt="${escapeHtml(`${niche || 'Servicio profesional'} en ${city || 'tu zona'}`)}" loading="eager" decoding="async" fetchpriority="high" width="1600" height="1100" sizes="100vw" data-image-origin="fallback-svg">
+                <div class="hero-immersive__shade"></div>
+                <div class="hero-immersive__copy">
+                    <span class="hero__eyebrow hero__eyebrow--luxury">${escapeHtml(hero_eyebrow || `${niche || ''} en ${city || ''}`.trim() || 'Servicio local')}</span>
+                    <h1 class="hero-immersive__title">${h1}</h1>
+                    <p class="hero-immersive__subtitle">${subtitle || ''}</p>
+                    <div class="cta-row cta-row--hero-overlay">
+                        <a href="${phoneHref}" class="cta-primary">${escapeHtml(phoneLabel)}</a>
+                        <a href="#servicios" class="cta-secondary">${escapeHtml(hero_secondary_label || 'Ver servicios')}</a>
+                    </div>
+                </div>
+            </figure>
+            <div class="hero-immersive__lower">
+                <div class="hero-immersive__highlights">
+                    ${trustValues.map((item: string, index: number) => `
+                        <article class="hero-highlight">
+                            <span class="hero-highlight__index">${String(index + 1).padStart(2, '0')}</span>
+                            <div class="hero-highlight__copy">
+                                <strong>${escapeHtml(item)}</strong>
+                                <span>${escapeHtml(city || 'Cobertura local')}</span>
+                            </div>
+                        </article>
+                    `).join('')}
+                </div>
+                <article class="hero-card hero-card--floating">
+                    <span class="card__eyebrow">${safeCardEyebrow}</span>
+                    <h2 class="card__title-small">${safeCardTitle}</h2>
+                    <p class="card__text-compact">${safeCardText}</p>
+                    <a href="${phoneHref}" class="cta-primary card__btn">Llamar ahora</a>
+                </article>
+            </div>
+        </div>`;
+    } else if (layout === 'centered') {
         heroBody = `
         <div class="hero__centered hero__centered--with-media">
             <span class="hero__eyebrow">${escapeHtml(hero_eyebrow || `${niche || ''} en ${city || ''}`.trim())}</span>
             <h1>${h1}</h1>
             <p class="hero__subtitle editorial-lead">${subtitle}</p>
             <div class="cta-row cta-row--unified">
-                <a href="tel:${phoneHref}" class="cta-primary">${phone}</a>
+                <a href="${phoneHref}" class="cta-primary">${escapeHtml(phoneLabel)}</a>
                 <a href="#servicios" class="cta-secondary">${escapeHtml(hero_secondary_label || 'Ver servicios')}</a>
             </div>
             ${renderHeroImageFigure({
@@ -197,10 +278,10 @@ export const renderHeroPremium: RenderFn = ({ content, heroLayout }) => {
                 <h1 class="hero__title">${h1}</h1>
                 <p class="hero__subtitle editorial-lead">${subtitle}</p>
                 <ul class="hero__bullets hero__bullets--editorial">
-                    ${bullets}
+                    ${trustValues.map((b: string) => `<li><span class="bullet-inner">${escapeHtml(b)}</span></li>`).join('')}
                 </ul>
                 <div class="cta-row cta-row--unified">
-                    <a href="tel:${phoneHref}" class="cta-primary">${phone}</a>
+                    <a href="${phoneHref}" class="cta-primary">${escapeHtml(phoneLabel)}</a>
                     <a href="#servicios" class="cta-secondary">${escapeHtml(hero_secondary_label || 'Ver servicios')}</a>
                 </div>
             </div>
@@ -216,7 +297,7 @@ export const renderHeroPremium: RenderFn = ({ content, heroLayout }) => {
                     <span class="card__eyebrow">${safeCardEyebrow}</span>
                     <h2 class="card__title-small">${safeCardTitle}</h2>
                     <p class="card__text-compact">${safeCardText}</p>
-                    <a href="tel:${phoneHref}" class="cta-primary card__btn">Llamar Ahora</a>
+                    <a href="${phoneHref}" class="cta-primary card__btn">Llamar ahora</a>
                 </div>
             </div>
         </div>`;
@@ -227,7 +308,7 @@ export const renderHeroPremium: RenderFn = ({ content, heroLayout }) => {
             <h1>${h1}</h1>
             <p class="hero__subtitle editorial-lead">${subtitle}</p>
             <div class="cta-row">
-                <a href="tel:${phoneHref}" class="cta-primary large">${phone}</a>
+                <a href="${phoneHref}" class="cta-primary large">${escapeHtml(phoneLabel)}</a>
             </div>
             ${renderHeroImageFigure({
                 niche,
@@ -253,7 +334,8 @@ export const renderHeroCentered: RenderFn = ({ content }) => {
         niche, hero_eyebrow, hero_card_eyebrow,
         hero_card_title, hero_card_text, hero_secondary_label
     } = content || {};
-    const phoneHref = (phone || '').replace(/\s+/g, '');
+    const phoneHref = buildPhoneHref(phone);
+    const phoneLabel = buildPhoneLabel(phone);
     return `
     <section class="hero hero--centered">
         <div class="el-container">
@@ -263,7 +345,7 @@ export const renderHeroCentered: RenderFn = ({ content }) => {
                     <h1>${h1 || ''}</h1>
                     <p class="hero__subtitle">${subtitle || ''}</p>
                     <div class="cta-row cta-row--centered">
-                        <a href="tel:${phoneHref}" class="cta-primary">Llamar ahora</a>
+                        <a href="${phoneHref}" class="cta-primary">Llamar ahora</a>
                     </div>
                     ${renderHeroImageFigure({
                         niche,
@@ -284,7 +366,8 @@ export const renderHeroStacked: RenderFn = ({ content }) => {
         niche, hero_eyebrow, hero_card_eyebrow,
         hero_card_title, hero_card_text, hero_secondary_label
     } = content || {};
-    const phoneHref = (phone || '').replace(/\s+/g, '');
+    const phoneHref = buildPhoneHref(phone);
+    const phoneLabel = buildPhoneLabel(phone);
     return `
     <section class="hero hero--stacked">
         <div class="el-container">
@@ -314,7 +397,7 @@ export const renderHeroStacked: RenderFn = ({ content }) => {
                     })}
 
                     <div class="cta-row">
-                        <a href="tel:${phoneHref}" class="cta-primary">Llamar ahora</a>
+                        <a href="${phoneHref}" class="cta-primary">Llamar ahora</a>
                         <a href="#servicios" class="cta-secondary">${escapeHtml(hero_secondary_label || 'Ver servicios')}</a>
                     </div>
                 </div>
@@ -329,7 +412,8 @@ export const renderHeroCtaHeavy: RenderFn = ({ content }) => {
         niche, hero_eyebrow, hero_card_eyebrow,
         hero_card_title, hero_card_text, hero_secondary_label
     } = content || {};
-    const phoneHref = (phone || '').replace(/\s+/g, '');
+    const phoneHref = buildPhoneHref(phone);
+    const phoneLabel = buildPhoneLabel(phone);
     return `
     <section class="hero hero--cta-heavy">
         <div class="el-container">
@@ -342,7 +426,7 @@ export const renderHeroCtaHeavy: RenderFn = ({ content }) => {
                         ${(trust_bullets || []).map((b: string) => `<li>${b}</li>`).join('')}
                     </ul>
                     <div class="cta-row">
-                        <a href="tel:${phoneHref}" class="cta-primary">${phone}</a>
+                        <a href="${phoneHref}" class="cta-primary">${escapeHtml(phoneLabel)}</a>
                     </div>
                 </div>
                 <div class="hero__aside hero__aside--visual">
@@ -510,7 +594,8 @@ export const renderFaq: RenderFn = (input) => {
 export const renderUrgencyCounter: RenderFn = ({ content, vibe, visualVariant }) => {
     const { h2, phone } = content || {};
     const variant = visualVariant || 'luxury_banner';
-    const phoneHref = (phone || '').replace(/\s+/g, '');
+    const phoneHref = buildPhoneHref(phone);
+    const phoneLabel = buildPhoneLabel(phone);
 
     if (variant === 'minimal_phone_bar') {
         return `
@@ -518,7 +603,7 @@ export const renderUrgencyCounter: RenderFn = ({ content, vibe, visualVariant })
             <div class="el-container">
                 <div class="minimal-phone-bar">
                     <span class="bar-text">${h2 || 'Asistencia Directa 24h'}</span>
-                    <a href="tel:${phoneHref}" class="bar-link">${phone}</a>
+                    <a href="${phoneHref}" class="bar-link">${escapeHtml(phoneLabel)}</a>
                 </div>
             </div>
         </section>`;
@@ -532,14 +617,14 @@ export const renderUrgencyCounter: RenderFn = ({ content, vibe, visualVariant })
                 <div class="urgency-banner__content">
                     <div class="status-badge">
                         <span class="status-badge__dot"></span>
-                        Técnicos de Guardia: Activos
+                        Coordinación prioritaria activa
                     </div>
                     <h2 class="urgency-banner__title">${h2 || '¿Necesitas asistencia inmediata?'}</h2>
-                    <p class="urgency-banner__subtitle">Equipos móviles estratégicamente ubicados para una respuesta inmediata y materiales adecuados al tipo de intervención.</p>
+                    <p class="urgency-banner__subtitle">Coordinación operativa para priorizar incidencias urgentes y ordenar la respuesta según el tipo de trabajo.</p>
                 </div>
                 <div class="counter-box">
-                    <div class="counter-box__label">Estado del Servicio</div>
-                    <div class="counter-box__value">Alta<span class="counter-box__unit">Disponibilidad</span></div>
+                    <div class="counter-box__label">Estado operativo</div>
+                    <div class="counter-box__value">Alta<span class="counter-box__unit">Prioridad</span></div>
                 </div>
             </div>
         </div>
@@ -548,7 +633,8 @@ export const renderUrgencyCounter: RenderFn = ({ content, vibe, visualVariant })
 
 export const renderCtaBand: RenderFn = ({ content }) => {
     const { title, text, phone } = content || {};
-    const phoneHref = (phone || '').replace(/\s+/g, '');
+    const phoneHref = buildPhoneHref(phone);
+    const phoneLabel = buildPhoneLabel(phone);
     return `
     <section class="section--compact">
         <div class="el-container">
@@ -557,7 +643,7 @@ export const renderCtaBand: RenderFn = ({ content }) => {
                     <h2 class="cta-title">${title}</h2>
                     <p class="cta-text">${text}</p>
                 </div>
-                <a href="tel:${phoneHref}" class="cta-primary cta-large">Llamar al ${phone}</a>
+                <a href="${phoneHref}" class="cta-primary cta-large">${phoneLabel === "Contactar" ? "Solicitar contacto" : `Llamar al ${escapeHtml(phoneLabel)}`}</a>
             </div>
         </div>
     </section>`;
@@ -566,6 +652,8 @@ export const renderCtaBand: RenderFn = ({ content }) => {
 export const renderFooter: RenderFn = ({ content, visualVariant }) => {
     const { businessName, city, phone, footer_tagline, footer_availability } = content || {};
     const style = visualVariant || 'directory';
+    const phoneHref = buildPhoneHref(phone);
+    const phoneLabel = buildPhoneLabel(phone);
     return `
     <footer class="footer-editorial" data-style="${style}">
         <div class="el-container">
@@ -578,7 +666,7 @@ export const renderFooter: RenderFn = ({ content, visualVariant }) => {
                     <div class="footer__block">
                         <h4 class="footer__group-title">Contacto</h4>
                         <div class="footer__contact-details">
-                            <a href="tel:${(phone || '').replace(/\s+/g, '')}" class="footer__phone-link">${phone}</a>
+                            <a href="${phoneHref}" class="footer__phone-link">${escapeHtml(phoneLabel)}</a>
                             <p class="footer__availability">${escapeHtml(footer_availability || 'Atención directa · Coordinación local')}</p>
                         </div>
                     </div>
@@ -600,35 +688,95 @@ export const renderFooter: RenderFn = ({ content, visualVariant }) => {
 };
 
 export const renderTestimonials: RenderFn = ({ content, vibe }) => {
-    const { h2 } = content;
-    const testimonials = [
-        { name: "Marta R.", text: "Llegaron muy rápido. Muy profesionales y el precio fue el acordado por teléfono.", stars: 5, date: "Hace 2 días" },
-        { name: "Juan P.", text: "Me quedé fuera de casa a las 3 AM. Servicio impecable y trato muy humano.", stars: 5, date: "Hace 1 semana" },
-        { name: "Carlos T.", text: "Explicaron el trabajo con claridad y dejaron la intervención rematada y revisada.", stars: 5, date: "Hace 1 mes" }
+    const { h2, city, niche, businessName, napData, authorityLinks, testimonials } = content || {};
+    const localCity = city || 'tu zona';
+    const localNiche = niche || 'el servicio';
+    const safeBusinessName = businessName || napData?.business_name || 'Servicio local';
+    const links = Array.isArray(authorityLinks) ? authorityLinks.filter(Boolean).slice(0, 3) : [];
+    const verifiedTestimonials = Array.isArray(testimonials)
+        ? testimonials.filter((item: any) => item && item.isVerified && item.text && item.name)
+        : [];
+
+    if (verifiedTestimonials.length > 0) {
+        return `
+    <section class="el-section vibe-${vibe || 'premium'} testimonials-section" data-proof-mode="verified_reviews">
+        <div class="el-container">
+            <div class="section-title testimonials-section__header">
+                <h2>${h2 || 'Opiniones verificadas'}</h2>
+            </div>
+            <div class="testimonials-grid">
+                ${verifiedTestimonials.slice(0, 3).map((t: any) => `
+                    <article class="testimonial-card" data-review-source="${t.sourceUrl || ''}">
+                        <div class="testimonial-card__stars" aria-hidden="true">${'★'.repeat(Math.max(1, Math.min(5, Number(t.rating || 5))))}</div>
+                        <p class="testimonial-text">“${t.text}”</p>
+                        <div class="testimonial-meta">
+                            <div class="avatar">${String(t.name || '?').trim()[0] || '?'}</div>
+                            <div>
+                                <div class="testimonial-name">${t.name}</div>
+                                <div class="testimonial-date">${t.sourceLabel || 'Reseña verificada'}${t.date ? ` · ${t.date}` : ''}</div>
+                            </div>
+                        </div>
+                    </article>
+                `).join('')}
+            </div>
+        </div>
+    </section>`;
+    }
+
+    const trustEvidence = Array.isArray(napData?.trust_evidence) ? napData.trust_evidence.filter(Boolean).slice(0, 4) : [];
+
+    const evidenceCards = [
+        {
+            title: 'Datos visibles del servicio',
+            body: napData?.phone
+                ? `${safeBusinessName} muestra un teléfono de contacto visible para ${localCity}: ${napData.phone}.`
+                : `${safeBusinessName} mantiene la identidad visible de ${localCity}, pero el teléfono sigue pendiente de validación antes de usarlo como prueba comercial fuerte.`,
+            meta: napData?.truth_level === 'exact' ? 'NAP completo' : napData?.truth_level === 'partial' ? 'NAP parcial' : 'NAP seguro'
+        },
+        {
+            title: 'Cobertura declarada sin fingir oficina',
+            body: napData?.address_status === 'exact'
+                ? `La cobertura se presenta con una dirección exacta en ${localCity}, útil para reforzar presencia física cuando ese dato es real.`
+                : `La presencia se comunica a nivel de ${localCity} sin inventar oficinas ni direcciones precisas que no estén confirmadas.`,
+            meta: napData?.address_status === 'exact' ? 'Dirección exacta' : 'Cobertura por ciudad'
+        },
+        {
+            title: links.length ? 'Fuentes externas que sí puedes comprobar' : 'Qué conviene pedir antes de contratar',
+            body: links.length
+                ? links.map((link: any) => `${link.label}`).join(' · ')
+                : trustEvidence.length
+                    ? trustEvidence.join(' · ')
+                    : `Factura o justificante, alcance por escrito, criterio técnico explicado y una cobertura operativa coherente con ${localCity}.`,
+            meta: links.length ? 'Autoridad verificable' : 'Prueba documental'
+        }
     ];
 
     return `
-    <section class="el-section vibe-${vibe || 'premium'}">
+    <section class="el-section vibe-${vibe || 'premium'} testimonials-section" data-proof-mode="documentary_trust">
         <div class="el-container">
-            <div class="section-title">
-                <h2>${h2 || 'Opiniones de nuestros vecinos'}</h2>
+            <div class="section-title testimonials-section__header">
+                <h2>${h2 || 'Qué puedes comprobar antes de contratar'}</h2>
             </div>
             <div class="testimonials-grid">
-                ${testimonials.map(t => `
-                    <div class="testimonial-card">
-                        <div class="quote-icon">"</div>
-                        <div class="stars">${'★'.repeat(t.stars)}</div>
-                        <p class="testimonial-text">"${t.text}"</p>
+                ${evidenceCards.map((card) => `
+                    <article class="testimonial-card">
+                        <div class="testimonial-card__stars" aria-hidden="true">${card.meta}</div>
+                        <p class="testimonial-text">${card.body}</p>
                         <div class="testimonial-meta">
-                            <div class="avatar">${t.name[0]}</div>
+                            <div class="avatar">✓</div>
                             <div>
-                                <div class="testimonial-name">${t.name}</div>
-                                <div class="testimonial-date">${t.date}</div>
+                                <div class="testimonial-name">${card.title}</div>
+                                <div class="testimonial-date">${localNiche} en ${localCity}</div>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 `).join('')}
             </div>
+            ${links.length ? `
+                <div class="block__cta-group" style="margin-top:1.25rem;flex-wrap:wrap;">
+                    ${links.map((link: any) => `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="cta-secondary">${link.label}</a>`).join('')}
+                </div>
+            ` : ''}
         </div>
     </section>`;
 };
@@ -637,7 +785,9 @@ export const renderMap: RenderFn = (input) => {
     const { content, vibe, visualVariant, id } = input;
     const { h2, city, description, address } = content;
     const variant = visualVariant || 'full_width';
-    const mapQuery = encodeURIComponent(address || city || 'España');
+    const safeAddress = String(address || '').trim();
+    const safeCity = String(city || '').trim();
+    const mapQuery = encodeURIComponent(safeAddress || safeCity || 'España');
 
     const iframeHtml = `<iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=${mapQuery}&t=&z=14&ie=UTF8&iwloc=&output=embed" class="map-iframe"></iframe>`;
 
@@ -649,7 +799,7 @@ export const renderMap: RenderFn = (input) => {
             <div class="el-container">
                 <div class="map-grid">
                     <div class="map-info">
-                        <h2>${h2 || `Presencia en ${city}`}</h2>
+                        <h2>${h2 || `Presencia en ${safeCity || city}`}</h2>
                         <div class="map-description">${description || ''}</div>
                         <a href="https://maps.google.com/maps?q=${mapQuery}" target="_blank" class="cta-secondary">Ver en Google Maps</a>
                     </div>
@@ -665,7 +815,7 @@ export const renderMap: RenderFn = (input) => {
     <section class="el-section vibe-${vibe || 'premium'} section--map" id="${mapId}">
         <div class="el-container">
             <div class="section-title">
-                <h2>${h2 || `Nuestra Ubicación en ${city}`}</h2>
+                <h2>${h2 || `Nuestra ubicación en ${safeCity || city}`}</h2>
                 ${description ? `<div class="map-description">${description}</div>` : ''}
             </div>
             <div class="map-wrapper card--shadow">
@@ -731,6 +881,7 @@ export const renderCertificates: RenderFn = ({ content, vibe }) => {
 export const renderImageFeature: RenderFn = ({ content, vibe, variant }) => {
     const { h2, text, phone } = content || {};
     const isReversed = variant === 'b';
+    const phoneHref = buildPhoneHref(phone);
     const imageUrl = content?.imageUrl || '';
     if (!imageUrl) return '';
     return `
@@ -744,7 +895,7 @@ export const renderImageFeature: RenderFn = ({ content, vibe, variant }) => {
                         ${text || '<p>Utilizamos materiales de máxima resistencia certificados.</p>'}
                     </div>
                     <div class="feature-cta">
-                        <a href="tel:${(phone || '').replace(/\s+/g, '') || '600000000'}" class="cta-primary">Contactar con un Especialista</a>
+                        <a href="${phoneHref}" class="cta-primary">Contactar con un Especialista</a>
                     </div>
                 </div>
                 <div class="feature-media">

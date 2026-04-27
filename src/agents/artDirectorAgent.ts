@@ -1,11 +1,13 @@
+
 import { BaseAgent, AgentResponse } from './base.js';
-import axios from 'axios';
 import { vault } from '../tools/vault.js';
+import { AIFacade } from '../tools/aiFacade.js';
 import { PageDesignDNA } from '../types/design.js';
 import { safeJsonParse } from '../utils/jsonRecovery.js';
 import { dbManager } from '../db/index.js';
 import { deriveOriginalityScopes, scoreDesignRepetitionRisk, getRecentSiteStructureMemory } from '../originality/index.js';
 import { PAGE_ARCHETYPES } from '../config/pageArchetypes.js';
+import { selectVisualIdentityContract, mapVisualContractToLegacyFamily, mapVisualContractToLegacyHero } from '../config/visualIdentityContracts.js';
 import { buildSeed, pickSeeded, uniqueStrings } from '../utils/designSeed.js';
 
 export interface ArtDirectorInput {
@@ -14,6 +16,22 @@ export interface ArtDirectorInput {
     strategicAnalysis: any;
     city: string;
     niche: string;
+}
+
+
+function normalizeStringArray(value: any): string[] {
+    if (Array.isArray(value)) {
+        return value
+            .map((item) => String(item || '').trim())
+            .filter(Boolean);
+    }
+
+    if (typeof value === 'string') {
+        const normalized = value.trim();
+        return normalized ? [normalized] : [];
+    }
+
+    return [];
 }
 
 function normalizeFamilyId(id: any, seed = 'default'): string {
@@ -59,29 +77,142 @@ function pickMissionAlignedFamily(input: ArtDirectorInput, seed: string): 'edito
     }
 
     if (pageType === 'urgent') {
-        return pickSeeded(['conversion_heavy', 'technical_grid', 'asymmetric_premium'], `${seed}::urgentFamily`) as any;
+        return pickSeeded(['asymmetric_premium', 'technical_grid', 'conversion_heavy'], `${seed}::urgentFamily`) as any;
     }
 
     if (pageType === 'service_area') {
-        return pickSeeded(['local_trust', 'asymmetric_premium', 'minimal_authority'], `${seed}::areaFamily`) as any;
+        return pickSeeded(['asymmetric_premium', 'local_trust', 'minimal_authority'], `${seed}::areaFamily`) as any;
     }
 
     if (isTechnicalLocalService && isTransactional) {
-        return pickSeeded(['technical_grid', 'asymmetric_premium', 'local_trust', 'conversion_heavy'], `${seed}::technicalFamily`) as any;
+        return pickSeeded(['asymmetric_premium', 'asymmetric_premium', 'technical_grid', 'local_trust', 'conversion_heavy'], `${seed}::technicalFamily`) as any;
     }
+
 
     if (isDecorativeService && isTransactional) {
         return pickSeeded(['editorial', 'asymmetric_premium', 'minimal_authority', 'local_trust'], `${seed}::decorativeFamily`) as any;
     }
 
     if (isTransactional) {
-        return pickSeeded(['asymmetric_premium', 'local_trust', 'conversion_heavy', 'minimal_authority'], `${seed}::transactionalFamily`) as any;
+        return pickSeeded(['asymmetric_premium', 'asymmetric_premium', 'local_trust', 'conversion_heavy', 'minimal_authority'], `${seed}::transactionalFamily`) as any;
     }
+
 
     return pickSeeded(
         ['editorial', 'minimal_authority', 'local_trust', 'asymmetric_premium', 'technical_grid', 'conversion_heavy'],
         `${seed}::genericFamily`
     ) as any;
+}
+
+function applyVisualIdentityContract(input: ArtDirectorInput, dna: PageDesignDNA, salt = ''): PageDesignDNA {
+    const contract = selectVisualIdentityContract({
+        niche: input.niche || input.blueprint?.niche,
+        city: input.city || input.blueprint?.city,
+        pageType: input.intentModel?.pageType,
+        primaryIntent: input.intentModel?.primaryIntent,
+        primaryKeyword: input.intentModel?.primaryKeyword,
+        salt
+    });
+
+    const legacyFamily = mapVisualContractToLegacyFamily(contract);
+    const legacyHero = mapVisualContractToLegacyHero(contract);
+
+    dna.family = legacyFamily as any;
+    dna.heroTreatment = legacyHero as any;
+    dna.heroTemplate = legacyHero as any;
+    dna.pageArchetype = contract.pageArchetype as any;
+    dna.visualDialect = contract.visualDialect as any;
+    dna.visualIdentityContract = contract as any;
+    dna.blockDialects = contract.blockDialects as any;
+    dna.layoutSignature = contract.layoutSignature as any;
+
+    if (contract.pageArchetype === 'emergency_dispatch_console') {
+        dna.personality = 'modern_tech' as any;
+        dna.contrastModel = 'dramatic' as any;
+        dna.pageComposition = 'conversion' as any;
+        dna.visualSystem = 'panelled' as any;
+        dna.pageSkeleton = 'emergency-dispatch' as any;
+        dna.ctaStrategy = 'hero-heavy' as any;
+        dna.proofStrategy = 'early' as any;
+        dna.surfaceStyle = 'glass' as any;
+        dna.cardTreatment = 'elevated' as any;
+        dna.navbarTreatment = 'solid' as any;
+        dna.footerTreatment = 'directory' as any;
+        dna.spacingScale = 'compact' as any;
+    } else if (contract.pageArchetype === 'technical_diagnosis_report') {
+        dna.personality = 'modern_tech' as any;
+        dna.contrastModel = 'balanced' as any;
+        dna.pageComposition = 'conversion' as any;
+        dna.visualSystem = 'grid' as any;
+        dna.pageSkeleton = 'technical-diagnosis' as any;
+        dna.ctaStrategy = 'distributed' as any;
+        dna.proofStrategy = 'distributed' as any;
+        dna.surfaceStyle = 'tinted' as any;
+        dna.cardTreatment = 'outlined' as any;
+        dna.navbarTreatment = 'solid' as any;
+        dna.footerTreatment = 'editorial' as any;
+        dna.spacingScale = 'balanced' as any;
+    } else if (contract.pageArchetype === 'local_newspaper_report') {
+        dna.personality = 'editorial' as any;
+        dna.contrastModel = 'soft' as any;
+        dna.pageComposition = 'editorial' as any;
+        dna.visualSystem = 'editorial' as any;
+        dna.pageSkeleton = 'local-newspaper' as any;
+        dna.ctaStrategy = 'distributed' as any;
+        dna.proofStrategy = 'mid' as any;
+        dna.surfaceStyle = 'paper' as any;
+        dna.cardTreatment = 'editorial' as any;
+        dna.navbarTreatment = 'minimal' as any;
+        dna.footerTreatment = 'editorial' as any;
+        dna.spacingScale = 'luxury' as any;
+    } else if (contract.pageArchetype === 'neighborhood_directory_map') {
+        dna.personality = 'organic' as any;
+        dna.contrastModel = 'balanced' as any;
+        dna.pageComposition = 'local_dense' as any;
+        dna.visualSystem = 'panelled' as any;
+        dna.pageSkeleton = 'neighborhood-directory' as any;
+        dna.ctaStrategy = 'distributed' as any;
+        dna.proofStrategy = 'early' as any;
+        dna.surfaceStyle = 'tinted' as any;
+        dna.cardTreatment = 'outlined' as any;
+        dna.navbarTreatment = 'solid' as any;
+        dna.footerTreatment = 'directory' as any;
+        dna.spacingScale = 'balanced' as any;
+    } else {
+        dna.personality = contract.visualDialect.includes('luxury') || contract.visualDialect.includes('showcase') ? 'luxury' as any : (dna.personality || 'editorial');
+        dna.pageComposition = contract.visualDialect.includes('minimal') ? 'editorial' as any : (dna.pageComposition || 'trust_first' as any);
+        dna.visualSystem = contract.visualDialect.includes('minimal') ? 'minimal' as any : 'mixed' as any;
+        dna.pageSkeleton = contract.pageArchetype as any;
+        dna.ctaStrategy = 'distributed' as any;
+        dna.proofStrategy = 'distributed' as any;
+        dna.surfaceStyle = contract.layoutSignature.background === 'quiet_white' ? 'flat' as any : 'paper' as any;
+        dna.cardTreatment = contract.layoutSignature.cards === 'portfolio_tiles' ? 'editorial' as any : 'elevated' as any;
+        dna.navbarTreatment = contract.layoutSignature.nav === 'studio_minimal' ? 'minimal' as any : 'glass' as any;
+        dna.footerTreatment = 'editorial' as any;
+        dna.spacingScale = 'luxury' as any;
+    }
+
+    dna.fingerprint = uniqueStrings([
+        ...normalizeStringArray(dna.fingerprint),
+        ...contract.fingerprint,
+        ...Object.values(contract.blockDialects),
+        contract.orderedBlockTypes.join('>')
+    ]);
+
+    dna.seed = {
+        ...(dna.seed || {} as any),
+        compositionFamily: dna.family as any,
+        heroVariant: dna.heroTreatment as any,
+        sectionRhythm: contract.layoutSignature.rhythm.includes('compact') ? 'contrast' as any : (contract.layoutSignature.rhythm.includes('longform') ? 'cinematic' as any : 'alternating' as any),
+        cardStyle: dna.cardTreatment as any,
+        densityProfile: contract.layoutSignature.rhythm.includes('dense') || contract.layoutSignature.rhythm.includes('compact') ? 'compact' as any : (contract.layoutSignature.rhythm.includes('gallery') ? 'rich' as any : 'standard' as any),
+        proofStrategy: dna.proofStrategy as any,
+        ctaModel: dna.ctaStrategy as any,
+        asymmetryLevel: contract.visualDialect.includes('luxury') || contract.visualDialect.includes('showcase') ? 9 : 5,
+        pageSkeleton: dna.pageSkeleton as any
+    };
+
+    return dna;
 }
 
 function hardenCommercialDna(input: ArtDirectorInput, dna: PageDesignDNA, seed: string): PageDesignDNA {
@@ -111,15 +242,18 @@ function hardenCommercialDna(input: ArtDirectorInput, dna: PageDesignDNA, seed: 
         dna.personality = dna.family === 'local_trust' ? 'organic' : (dna.family === 'asymmetric_premium' ? 'luxury' : 'modern_tech');
         dna.pageComposition = pageType === 'service_area' ? 'trust_first' : 'conversion';
         dna.visualSystem = dna.family === 'local_trust' ? 'panelled' : (dna.family === 'asymmetric_premium' ? 'mixed' : 'grid');
-        dna.pageSkeleton = pageType === 'urgent' ? 'premium-showcase' : (pageType === 'service_area' ? 'local-directory' : 'conversion-funnel');
-        dna.heroTreatment = pickSeeded(['proof_first', 'split'], `${seed}::technicalHero`);
+        dna.pageSkeleton = pageType === 'service_area'
+            ? 'local-directory'
+            : (pageType === 'comparison' ? 'technical-comparison' : 'premium-showcase');
+        dna.heroTreatment = pickSeeded(['split', 'proof_first', 'stacked'], `${seed}::technicalHero`);
         dna.heroTemplate = dna.heroTreatment;
-        dna.surfaceStyle = 'tinted';
-        dna.cardTreatment = dna.family === 'asymmetric_premium' ? 'elevated' : 'outlined';
-        dna.navbarTreatment = 'glass';
-        dna.footerTreatment = 'minimal';
+        dna.surfaceStyle = dna.family === 'asymmetric_premium' ? 'paper' : 'tinted';
+        dna.cardTreatment = dna.family === 'asymmetric_premium' ? 'editorial' : 'elevated';
+        dna.navbarTreatment = dna.family === 'asymmetric_premium' ? 'glass' : 'solid';
+        dna.footerTreatment = 'editorial';
         dna.ornamentPolicy = dna.ornamentPolicy === 'none' ? 'subtle' : (dna.ornamentPolicy || 'subtle');
-        dna.spacingScale = dna.spacingScale === 'compact' ? 'balanced' : (dna.spacingScale || 'balanced');
+        dna.spacingScale = dna.family === 'asymmetric_premium' ? 'luxury' : (dna.spacingScale === 'compact' ? 'balanced' : (dna.spacingScale || 'luxury'));
+
     } else if (isDecorativeService) {
         dna.personality = dna.family === 'asymmetric_premium' ? 'luxury' : 'editorial';
         dna.pageComposition = pickSeeded(['editorial', 'trust_first'], `${seed}::decorativeComposition`) as any;
@@ -155,7 +289,7 @@ function hardenCommercialDna(input: ArtDirectorInput, dna: PageDesignDNA, seed: 
     }
 
     dna.fingerprint = uniqueStrings([
-        ...(dna.fingerprint || []),
+        ...normalizeStringArray(dna.fingerprint),
         dna.family,
         dna.heroTreatment,
         dna.pageComposition,
@@ -212,10 +346,10 @@ function buildSeededFallbackDna(input: ArtDirectorInput): PageDesignDNA {
         cadencePattern: archetype.cadencePattern as any,
         proofStrategy: archetype.proofStrategy as any,
         ctaStrategy: archetype.ctaStrategy as any,
-        surfaceStyle: pickSeeded(['flat', 'tinted', 'glass', 'paper'], `${seed}::surface`) as any,
-        cardTreatment: pickSeeded(['elevated', 'outlined', 'flat', 'editorial'], `${seed}::cards`) as any,
-        navbarTreatment: pickSeeded(['solid', 'glass', 'minimal'], `${seed}::nav`) as any,
-        footerTreatment: pickSeeded(['directory', 'minimal', 'editorial'], `${seed}::footer`) as any,
+        surfaceStyle: (family === 'asymmetric_premium' ? pickSeeded(['paper', 'tinted'], `${seed}::surface`) : pickSeeded(['flat', 'tinted', 'glass', 'paper'], `${seed}::surface`)) as any,
+        cardTreatment: (family === 'asymmetric_premium' ? pickSeeded(['editorial', 'elevated'], `${seed}::cards`) : pickSeeded(['elevated', 'outlined', 'flat', 'editorial'], `${seed}::cards`)) as any,
+        navbarTreatment: (family === 'asymmetric_premium' ? 'solid' : pickSeeded(['solid', 'glass', 'minimal'], `${seed}::nav`)) as any,
+        footerTreatment: (family === 'asymmetric_premium' ? 'editorial' : pickSeeded(['directory', 'minimal', 'editorial'], `${seed}::footer`)) as any,
         ornamentPolicy: pickSeeded(['none', 'subtle', 'hero_only', 'hero_and_cta'], `${seed}::ornament`) as any,
         spacingScale: pickSeeded(['compact', 'balanced', 'luxury'], `${seed}::spacing`) as any,
         sectionCadence: archetype.cadencePattern === 'calm' ? 'calm' : archetype.cadencePattern === 'cinematic' ? 'cinematic' : 'alternating',
@@ -273,6 +407,36 @@ export class ArtDirectorAgent extends BaseAgent {
             heroTreatment: r.hero_signature,
             blockVariantSequence: JSON.parse(r.block_variants_json || '[]')
         }));
+
+        const pageType = String(input.intentModel?.pageType || '').toLowerCase();
+        const primaryIntent = String(input.intentModel?.primaryIntent || '').toLowerCase();
+        const shouldUseDeterministicDna = (() => {
+            const force = String(process.env.ART_DIRECTOR_FORCE_DETERMINISTIC || '').toLowerCase() === 'true';
+            const explicitLlm = String(process.env.ART_DIRECTOR_USE_LLM || '').toLowerCase() === 'true';
+            const commercialPage = primaryIntent === 'transactional' || primaryIntent === 'commercial'
+                || ['service', 'urgent', 'service_area', 'comparison', 'category', 'home_local'].includes(pageType);
+            if (force) return true;
+            if (explicitLlm) return false;
+            return commercialPage && Array.isArray(input.blueprint?.sections) && input.blueprint.sections.length > 0;
+        })();
+
+        if (shouldUseDeterministicDna) {
+            const fallbackDna = buildSeededFallbackDna(input) as PageDesignDNA;
+            const seed = buildSeed(
+                input.blueprint?.niche,
+                input.blueprint?.city,
+                input.intentModel?.pageType,
+                input.intentModel?.primaryKeyword
+            );
+            hardenCommercialDna(input, fallbackDna, seed);
+            applyVisualIdentityContract(input, fallbackDna, seed);
+            await this.logThought('[FASTPATH] Visual DNA resolved in deterministic mode.');
+            return {
+                success: true,
+                data: fallbackDna,
+                thoughts: `DNA Visual definido de forma determinista: ${fallbackDna.personality} con familia ${fallbackDna.family}.`
+            };
+        }
 
         const prompt = `
 Eres el Director de Arte Senior. Tu misión es definir el ADN VISUAL (PageDesignDNA) para una página premium.
@@ -343,7 +507,7 @@ OOUTPUT DESEADO (JSON):
     "sectionRhythm": "calm | alternating | contrast | cinematic",
     "cardStyle": "elevated | outlined | flat | editorial",
     "densityProfile": "compact | standard | rich",
-    "proofStyle": "early | mid | distributed",
+    "proofStrategy": "early | mid | distributed",
     "ctaModel": "terminal | distributed | hero-heavy",
     "asymmetryLevel": "number (0-10)",
     "pageSkeleton": "string (debe coincidir con pageSkeleton)"
@@ -352,15 +516,6 @@ OOUTPUT DESEADO (JSON):
 `;
 
         try {
-            const ollamaUrl = vault.OLLAMA_URL || 'http://localhost:11434';
-
-            const res = await axios.post(`${ollamaUrl}/api/generate`, {
-                model: this.model,
-                prompt,
-                stream: false,
-                format: 'json'
-            }, { timeout: 180000 });
-
             const seed = buildSeed(
                 input.blueprint?.niche,
                 input.blueprint?.city,
@@ -368,14 +523,24 @@ OOUTPUT DESEADO (JSON):
                 input.intentModel?.primaryKeyword
             );
 
-            const dna = safeJsonParse<PageDesignDNA>(res.data.response, buildSeededFallbackDna(input));
+            const rawResponse = await AIFacade.callOllama(this.name, prompt, this.model, {
+                json: true,
+                timeoutMs: 90000,
+                numPredict: 1400,
+                temperature: 0.3,
+                maxRetries: 0,
+                fallbackResponse: () => JSON.stringify(buildSeededFallbackDna(input))
+            });
 
+            const dna = safeJsonParse<PageDesignDNA>(rawResponse, buildSeededFallbackDna(input));
+
+            dna.fingerprint = normalizeStringArray(dna.fingerprint);
             dna.family = normalizeFamilyId(dna.family, `${seed}::family`) as any;
             dna.heroTreatment = (dna.heroTreatment || dna.heroTemplate || 'split') as any;
             dna.heroTemplate = (dna.heroTemplate || dna.heroTreatment || 'split') as any;
             dna.pageSkeleton = dna.pageSkeleton || input.blueprint?.page_skeleton || 'conversion-funnel';
             dna.fingerprint = uniqueStrings([
-                ...(dna.fingerprint || []),
+                ...normalizeStringArray(dna.fingerprint),
                 dna.family,
                 dna.heroTreatment,
                 dna.pageComposition,
@@ -386,13 +551,14 @@ OOUTPUT DESEADO (JSON):
             ]);
 
             hardenCommercialDna(input, dna, seed);
+            applyVisualIdentityContract(input, dna, seed);
 
             const repetitionScore = await scoreDesignRepetitionRisk(db, scopes, {
                 heroSignature: dna.heroTreatment,
                 blockVariants: dna.tensionCurve || [],
-                blockSequence: (dna.fingerprint || []).slice(0, 5),
+                blockSequence: normalizeStringArray(dna.fingerprint).slice(0, 5),
                 structural: {
-                    order: dna.fingerprint || [],
+                    order: normalizeStringArray(dna.fingerprint),
                     shells: [],
                     composition: dna.pageComposition || 'conversion',
                     cadence: dna.sectionCadence || 'alternating'
@@ -431,8 +597,9 @@ OOUTPUT DESEADO (JSON):
                 dna.visualSystem = rerolled.visualSystem;
                 dna.sectionFlow = rerolled.sectionFlow;
                 dna.seed = rerolled.seed;
-                dna.fingerprint = rerolled.fingerprint;
+                dna.fingerprint = normalizeStringArray(rerolled.fingerprint);
                 hardenCommercialDna(input, dna, `${seed}::rerolled`);
+                applyVisualIdentityContract(input, dna, `${seed}::rerolled`);
             }
             return {
                 success: true,
@@ -442,6 +609,7 @@ OOUTPUT DESEADO (JSON):
         } catch (error: any) {
             this.logThought(`Error in Art Director: ${error.message}. Using emergency visual DNA.`);
             const fallbackDna = buildSeededFallbackDna(input) as PageDesignDNA;
+            applyVisualIdentityContract(input, fallbackDna, 'emergency');
             (fallbackDna as any).degraded = true;
             (fallbackDna as any).degradationReason = 'art_director_llm_failure';
 

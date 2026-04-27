@@ -92,6 +92,11 @@ export interface BlockSemanticsPlaybook {
   };
 }
 
+export interface NicheExampleBank {
+  good: string[];
+  bad: string[];
+}
+
 export interface NichePlaybook {
   id: SupportedNicheId;
   displayName: string;
@@ -111,6 +116,7 @@ export interface NichePlaybook {
   toneProfile: ToneProfile;
   legalRiskPolicy: LegalRiskPolicy;
   blockSemantics: BlockSemanticsPlaybook;
+  examples?: NicheExampleBank;
 }
 
 export interface AgentPlaybookContext {

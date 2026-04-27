@@ -1,29 +1,80 @@
+# Dependencies
 node_modules/
 .env
+.env.tmp
+.env.local
+.env.production
+.bot_profiles/
+
+# Build and Source artifacts
 dist/
 build/
-.bot_profiles/
-playwright-report/
-test-results/
+src/**/*.js
+src/**/*.js.map
+!src/**/*.ts
+
+# Database and state
 maestro.db
 maestro.db-journal
+maestro.db-shm
+maestro.db-wal
 database.sqlite
+*.db
+*.sqlite
+*.sqlite3
+maestro.db
+
+# Logs and Reports
 *.log
-.DS_Store
-
-# Large binaries and logs
-OllamaSetup.exe
-resultado_ts.txt
+*.txt
+*.csv
+*.md
+!README.md
+!docs/**/*.md
+!implementation_plan.md
 ollama_prompts.log
-all_files.txt
-file_list.txt
-FILES.txt
-tsc_output.txt
+agent_logs_export.txt
+tsc_output*.txt
 
-# Temporary and output directories
+# Backups and legacy files
 backups/
-output_sites/
-tmp/
-assets_generated/
+src_backup*/
+backup_src_*/
+*.bak
+*.bak_*
+*.bak-*
+*.orig
+*.old
+legacy/
 parche/
-logs_/
+
+# Generated outputs and artifacts
+output_sites/
+scripts/output_sites/
+scripts/public_static/
+public_static/
+test_results/
+debug_runs/
+assets_generated/
+playwright-report/
+test-results/
+
+# Temporary / Scratch
+tmp/
+scratch/
+tmp_*
+debug_*
+finalize_*
+repair_*
+
+# Test and flow scripts in root (moving to tools/ later)
+test_*.ts
+run_*.ts
+monitor_*.ts
+*.patch
+
+# System
+.DS_Store
+.vscode/
+.idea/
+OllamaSetup.exe

@@ -18,11 +18,12 @@ import {
 import { getRecentEditorialMemory } from './editorialMemory.js';
 import { getRecentSiteStructureMemory } from './siteStructureMemory.js';
 import { getRecentVisualMemory } from './visualMemory.js';
+import { getDesignLearningGuidance } from './designLearning.js';
 
 function parseJsonArray(raw: any): string[] {
   if (!raw) return [];
   try {
-    const parsed = JSON.parse(raw);
+    const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
     return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
@@ -31,7 +32,7 @@ function parseJsonArray(raw: any): string[] {
 
 function overlap(a: string[], b: string[]): number {
   const set = new Set(a);
-  return b.filter(item => set.has(item)).length;
+  return b.filter((item) => set.has(item)).length;
 }
 
 function buildCollisionFrequency(current: string[], rows: any[], field: string): Map<string, number> {
@@ -68,15 +69,20 @@ export async function runSiteOriginalityGate(input: {
   window?: number;
 }): Promise<SiteOriginalityGateResult> {
   const snapshot = buildSnapshotFromPlan({ mission: input.mission, pagePlan: input.pagePlan, pageId: input.pageId });
-  const scopes = snapshot.scopes.map(scope => scope.key);
+  const scopes = snapshot.scopes.map((scope) => scope.key);
   const limit = input.window || 24;
-
   const niche = input.mission.niche;
 
-  const [visualRows, editorialRows, structureRows] = await Promise.all([
+  const [visualRows, editorialRows, structureRows, designGuidance] = await Promise.all([
     getRecentVisualMemory(input.db, scopes, limit, niche),
     getRecentEditorialMemory(input.db, scopes, limit, niche),
-    getRecentSiteStructureMemory(input.db, scopes, limit, niche)
+    getRecentSiteStructureMemory(input.db, scopes, limit, niche),
+    getDesignLearningGuidance({
+      db: input.db,
+      scopes,
+      niche,
+      pageType: snapshot.pageType
+    })
   ]);
 
   const issues: OriginalityIssue[] = [];
@@ -90,7 +96,7 @@ export async function runSiteOriginalityGate(input: {
   const ctaPattern = getCtaPatternSignatureFromHtml(input.html);
   const faqStructure = getFaqStructureSignatureFromHtml(input.html);
 
-  const exactSequenceCollision = structureRows.find(row => JSON.stringify(parseJsonArray(row.block_sequence_json)) === JSON.stringify(snapshot.blockSequence));
+  const exactSequenceCollision = structureRows.find((row) => JSON.stringify(parseJsonArray(row.block_sequence_json)) === JSON.stringify(snapshot.blockSequence));
   if (exactSequenceCollision) {
     pushIssue(issues, {
       code: 'SITE_BLOCK_SEQUENCE_COLLISION',
@@ -102,7 +108,7 @@ export async function runSiteOriginalityGate(input: {
     scoreDelta -= 24;
   }
 
-  const sameCombo = structureRows.find(row => row.hero_signature === snapshot.heroSignature && row.nav_signature === navPattern && row.cta_signature === ctaPattern);
+  const sameCombo = structureRows.find((row) => row.hero_signature === snapshot.heroSignature && row.nav_signature === navPattern && row.cta_signature === ctaPattern);
   if (sameCombo) {
     pushIssue(issues, {
       code: 'SITE_HERO_NAV_CTA_COLLISION',
@@ -114,7 +120,7 @@ export async function runSiteOriginalityGate(input: {
     scoreDelta -= 26;
   }
 
-  const repeatedNav = visualRows.filter(row => row.nav_pattern_signature === navPattern).length;
+  const repeatedNav = visualRows.filter((row) => row.nav_pattern_signature === navPattern).length;
   if (repeatedNav >= 3) {
     pushIssue(issues, {
       code: 'SITE_NAV_REPETITION',
@@ -126,7 +132,7 @@ export async function runSiteOriginalityGate(input: {
     scoreDelta -= 7;
   }
 
-  const repeatedCta = visualRows.filter(row => row.cta_pattern_signature === ctaPattern).length;
+  const repeatedCta = visualRows.filter((row) => row.cta_pattern_signature === ctaPattern).length;
   if (repeatedCta >= 3) {
     pushIssue(issues, {
       code: 'SITE_CTA_REPETITION',
@@ -138,7 +144,7 @@ export async function runSiteOriginalityGate(input: {
     scoreDelta -= 7;
   }
 
-  const repeatedFaqStructure = structureRows.filter(row => row.faq_structure_signature === faqStructure).length;
+  const repeatedFaqStructure = structureRows.filter((row) => row.faq_structure_signature === faqStructure).length;
   if (repeatedFaqStructure >= 2 && faqStructure) {
     pushIssue(issues, {
       code: 'SITE_FAQ_STRUCTURE_REPETITION',
@@ -204,8 +210,46 @@ export async function runSiteOriginalityGate(input: {
     scoreDelta -= 16;
   }
 
+  const family = String(input.pagePlan.design?.dna?.family || '').trim();
+  const heroTreatment = String(input.pagePlan.design?.dna?.heroTreatment || input.pagePlan.layoutContract?.heroTemplate || '').trim();
+  const currentVariants = Array.from(new Set((snapshot.blockVariants || []).filter(Boolean))) as string[];
+
+  if (family && designGuidance.avoidFamilies.includes(family)) {
+    pushIssue(issues, {
+      code: 'SITE_DESIGN_FAMILY_UNDERPERFORMING',
+      severity: 'error',
+      message: 'La familia visual seleccionada ya presenta mal rendimiento en este scope según la memoria de diseño.',
+      penalty: 10,
+      evidence: [family]
+    });
+    scoreDelta -= 10;
+  }
+
+  if (heroTreatment && designGuidance.avoidHeroTreatments.includes(heroTreatment)) {
+    pushIssue(issues, {
+      code: 'SITE_HERO_TREATMENT_UNDERPERFORMING',
+      severity: 'warning',
+      message: 'El tratamiento de hero elegido aparece asociado a salidas visuales débiles en este scope.',
+      penalty: 6,
+      evidence: [heroTreatment]
+    });
+    scoreDelta -= 6;
+  }
+
+  const badVariantsUsed = currentVariants.filter((variant) => designGuidance.avoidVisualVariants.includes(variant));
+  if (badVariantsUsed.length >= 2) {
+    pushIssue(issues, {
+      code: 'SITE_BAD_VARIANTS_REUSED',
+      severity: 'warning',
+      message: 'La página reutiliza variantes visuales marcadas como problemáticas por el aprendizaje visual.',
+      penalty: 6,
+      evidence: badVariantsUsed.slice(0, 6)
+    });
+    scoreDelta -= 6;
+  }
+
   return {
-    passed: !issues.some(issue => issue.severity === 'critical'),
+    passed: !issues.some((issue) => issue.severity === 'critical'),
     scoreDelta,
     issues: issues.sort((a, b) => b.penalty - a.penalty)
   };

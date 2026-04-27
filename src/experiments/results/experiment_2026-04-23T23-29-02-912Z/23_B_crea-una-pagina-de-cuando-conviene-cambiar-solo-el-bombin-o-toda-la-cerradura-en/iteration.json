@@ -1,0 +1,35 @@
+{
+  "iterationId": "23",
+  "block": "B",
+  "command": "crea una página de cuándo conviene cambiar solo el bombín o toda la cerradura en Getafe",
+  "note": "Producción real controlada",
+  "jobId": "mission-1776998174163",
+  "timestamp": "2026-04-24T02:45:23.131Z",
+  "durationSeconds": 548.97,
+  "mission": {
+    "id": "mission-1776998174163",
+    "niche": "cuando conviene cambiar solo bombin o toda cerradura",
+    "status": "COMPLETED",
+    "created_at": "2026-04-24 02:36:14",
+    "city": null
+  },
+  "review": null,
+  "metrics": {
+    "missionStatus": "COMPLETED",
+    "reviewStatus": null,
+    "score": null,
+    "qualityGateScore": null,
+    "qualityGateFailed": false,
+    "technicalValidationFailed": false,
+    "technicalIssues": [],
+    "issueCount": 0,
+    "issues": [],
+    "writerFallbacks": 0,
+    "correctorFallback": false,
+    "coherenceWarnings": 0,
+    "placeholderWarnings": 0,
+    "modelUsage": [],
+    "totalLogs": 35,
+    "publishabilityHint": "requiere_revision"
+  }
+}

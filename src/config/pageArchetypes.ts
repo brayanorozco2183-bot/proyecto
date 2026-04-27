@@ -23,9 +23,9 @@ export const PAGE_ARCHETYPES: Record<string, PageArchetype[]> = {
                 'services_grid',
                 'trust_band',
                 'process_steps',
-                'price_guidance',
                 'local_proof',
                 'map',
+                'price_guidance',
                 'faq',
                 'cta_panel'
             ]
@@ -66,6 +66,25 @@ export const PAGE_ARCHETYPES: Record<string, PageArchetype[]> = {
                 'process_steps',
                 'price_guidance',
                 'faq',
+                'cta_panel'
+            ]
+        },
+        {
+            id: 'cluster_compass',
+            heroTemplate: 'centered',
+            pageSkeleton: 'local-directory',
+            pageComposition: 'trust_first',
+            cadencePattern: 'calm',
+            proofStrategy: 'early',
+            ctaStrategy: 'distributed',
+            orderedBlockTypes: [
+                'local_proof',
+                'map',
+                'services_grid',
+                'faq',
+                'process_steps',
+                'trust_band',
+                'price_guidance',
                 'cta_panel'
             ]
         },
@@ -144,6 +163,23 @@ export const PAGE_ARCHETYPES: Record<string, PageArchetype[]> = {
                 'services_grid',
                 'trust_band',
                 'faq',
+                'cta_panel'
+            ]
+        },
+        {
+            id: 'cluster_hub_local',
+            heroTemplate: 'proof_first',
+            pageSkeleton: 'local-directory',
+            pageComposition: 'trust_first',
+            cadencePattern: 'calm',
+            proofStrategy: 'distributed',
+            ctaStrategy: 'distributed',
+            orderedBlockTypes: [
+                'local_proof',
+                'map',
+                'trust_band',
+                'faq',
+                'services_grid',
                 'cta_panel'
             ]
         },

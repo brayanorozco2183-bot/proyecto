@@ -1,10 +1,55 @@
 # Plan de Refinamiento Diseño Corporativo (V7.1)
 
 El objetivo es elevar la plantilla generada por `ContentArchitectAgent` de un diseño moderno genérico a un diseño **Premium, Autoridad Nacional y Corporativo Minimalista**.
+# Plan: Debugging Interactivo Fase a Fase (Pipeline Gravity)
 
-Todo el trabajo se realizará **exclusivamente** editando las reglas CSS y atributos `style` dentro del método genérico `buildTemplate` en `architect.ts`, respetando el 100% de la lógica y arquitectura actual (cero alteraciones en el TypeScript subyacente o peticiones al LLM).
+El usuario desea ejecutar el pipeline de forma individual, deteniéndose tras cada fase. Para lograr esto sin romper la integridad del sistema, implementaremos un controlador de estado persistente que permita pausar y reanudar la misión.
 
-## Cambios Estilísticos a Aplicar
+## Cambios Propuestos
+
+### 1. Refactorización del Pipeline
+#### [MODIFY] [contentGenerationPipeline.ts](file:///C:/Users/Bryan/Desktop/pruebaGravity/src/pipelines/contentGenerationPipeline.ts)
+- Exponer los métodos de fase (e.g., `runResearchPhase`, `runNormalizationPhase`) de forma pública.
+- Asegurar que cada fase acepte su input específico y devuelva un objeto transferible.
+
+### 2. Controlador de Misión Persistente
+#### [NEW] [missionController.ts](file:///C:/Users/Bryan/Desktop/pruebaGravity/src/orchestrator/missionController.ts)
+- Una nueva clase que gestiona un archivo `mission_state.json` en la carpeta de la misión.
+- Métodos: `loadState()`, `saveState()`, `executeNextStep()`.
+
+### 3. Script Interactivo CLI
+#### [NEW] [interactive_mission.ts](file:///C:/Users/Bryan/Desktop/pruebaGravity/scripts/step_mission.ts)
+- Script que permite ejecutar:
+  - `npm run step -- --phase research` -> Genera `state_research.json`.
+  - `npm run step -- --phase planning` -> Lee el anterior y genera el siguiente.
+  - O simplemente un bucle que espera entrada de teclado para continuar.
+
+### 4. Corrección de Etiquetas
+- Cambiar la etiqueta `3.1__undefined` a `3.1__planning` en el logger de artefactos.
+
+## Mapa Técnico de Entradas/Salidas
+
+| Fase | Comando Soportado | Entrada Esperada | Salida (Artefacto) |
+| :--- | :--- | :--- | :--- |
+| **1: Research** | `--phase 1` | `GenerationMission` | `ResearchContext` |
+| **2: Normalization** | `--phase 2` | `ResearchContext` | `NormalizedContext` |
+| **3: Planning** | `--phase 3` | `NormalizedContext` | `PagePlan` |
+| **4: Writing** | `--phase 4` | `PagePlan` + `Context` | `ContentDraft` |
+| **5: Correction** | `--phase 5` | `ContentDraft` | `CorrectedDraft` |
+| **7: Enrichment** | `--phase 7` | `CorrectedDraft` | `EnrichedDraft` |
+| **8: Assembly** | `--phase 8` | `EnrichedDraft` + `Plan` | `RenderedPage` (HTML) |
+| **9-12: Audit** | `--phase 9` | `RenderedPage` | `PipelineResult` |
+
+## Plan de Verificación
+
+1. **Ejecución Paso a Paso**: Realizar una misión de "Cerrajeros en Getafe" ejecutando los comandos de fase de 1 al 12 individualmente.
+2. **Validación de Persistencia**: Confirmar que los archivos `.json` de estado se crean correctamente entre fases.
+3. **Walkthrough**: Documentar el proceso exacto para que el usuario pueda repetirlo.
+
+## Preguntas Abiertas
+- ¿Prefieres que el script cree archivos separados para cada fase (ej: `state_p1.json`, `state_p2.json`) o que sobrescriba un único `current_state.json`?
+
+## Cambios Estilísticos a Aplicar (CSS)
 
 1. **Paleta de Colores Corporativa (Menos es Más)**:
    - Primary: `#0A192F` (Navy muy oscuro y serio, no azul eléctrico).

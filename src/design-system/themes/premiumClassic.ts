@@ -1,3 +1,4 @@
+
 import type { DesignSystemTheme } from '../types.js';
 import {
     DEFAULT_BREAKPOINTS,
@@ -13,7 +14,7 @@ import {
 export const premiumClassic: DesignSystemTheme = {
     id: 'premiumClassic',
     name: 'Premium Classic',
-    description: 'Sistema premium con contraste sobrio, hero split y superficies elegantes.',
+    description: 'Sistema premium con navegación oscura, hero inmersiva y superficies editoriales elegantes.',
     tokens: {
         colors: neutralInk,
         typography: premiumTypography,
@@ -31,7 +32,7 @@ export const premiumClassic: DesignSystemTheme = {
             borderWidth: '1px',
             fontCase: 'normal',
             fontWeight: 700,
-            primaryFill: 'text',
+            primaryFill: 'accent',
             secondaryFill: 'surface',
             ghostUnderline: true
         },
@@ -46,8 +47,8 @@ export const premiumClassic: DesignSystemTheme = {
         shadowPolicy: 'soft',
         verticalRhythm: 'spacious',
         hero: {
-            template: 'split',
-            disposition: 'content_left',
+            template: 'grid',
+            disposition: 'content_center',
             maxTrustBullets: 3,
             maxPrimaryCtas: 1,
             allowSecondaryCta: true,
@@ -65,7 +66,7 @@ export const premiumClassic: DesignSystemTheme = {
     },
     compatibility: {
         recommendedFamilies: ['asymmetric_premium'],
-        pageCompositions: ['editorial', 'trust_first'],
+        pageCompositions: ['conversion', 'editorial', 'trust_first'],
         cadencePatterns: ['cinematic', 'contrast-bursts'],
         preferredHeroTreatments: ['split', 'proof_first'],
         densityBias: 'standard'

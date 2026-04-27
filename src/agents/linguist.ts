@@ -1,4 +1,6 @@
 import { BaseAgent, AgentResponse } from './base.js';
+import * as cheerio from 'cheerio';
+import { parseStrictServiceCommand } from '../input/strictCommandContract.js';
 
 export interface LinguistInput {
   command: string;
@@ -17,63 +19,14 @@ export interface LinguistOutput {
   mode?: string;
   language: 'es';
   raw_command: string;
+  command_focus?: string;
 }
 
 const SPANISH_CITIES = [
   'Madrid','Barcelona','Valencia','Sevilla','Zaragoza','Málaga','Murcia','Palma','Bilbao','Alicante',
-  'Córdoba','Valladolid','Vigo','Gijón','Hospitalet','A Coruña','Granada','Vitoria','Elche','Oviedo'
+  'Córdoba','Valladolid','Vigo','Gijón','Hospitalet','A Coruña','Granada','Vitoria','Elche','Oviedo',
+  'Getafe','Móstoles','Alcorcón','Leganés','Fuenlabrada','Parla','Alcobendas','Torrejón de Ardoz'
 ];
-
-function unique<T>(values: T[]): T[] {
-  return [...new Set(values)];
-}
-
-function detectScope(command: string): ParsedScope {
-  const c = command.toLowerCase();
-  if (/barrios|distritos|zonas|vecindarios/.test(c)) return 'neighborhoods';
-  if (/municipios|pueblos|localidades/.test(c)) return 'municipalities';
-  if (/provincias/.test(c)) return 'provinces';
-  if (/comunidades\s+aut[oó]nomas/.test(c)) return 'autonomous_communities';
-  if (/pais|pa[ií]s|nacional/.test(c)) return 'country';
-  return 'auto';
-}
-
-function detectCluster(command: string): boolean {
-  return /cluster|barrios|distritos|zonas|municipios|muchas\s+paginas|muchas\s+p[aá]ginas|varias\s+paginas|varias\s+p[aá]ginas/.test(command.toLowerCase());
-}
-
-function extractLocations(command: string): string[] {
-  const matches: string[] = [];
-
-  for (const city of SPANISH_CITIES) {
-    const regex = new RegExp(`\\b${city.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
-    if (regex.test(command)) matches.push(city);
-  }
-
-  const enMatch = command.match(/\ben\s+([A-ZÁÉÍÓÚÑ][\p{L}'’\-\s]{1,40}?)(?:\s+\b(?:familia|family|arquetipo|archetype|modo|mode|en|para|desde|con)\b|$)/iu);
-  if (enMatch?.[1]) {
-    const cleaned = enMatch[1].trim().replace(/[.,;:!?]+$/g, '');
-    if (cleaned.length >= 2) matches.push(cleaned);
-  }
-
-  return unique(matches);
-}
-
-function extractNiche(command: string): string {
-  const cleaned = command
-    .replace(/^(quiero|necesito|crea|crear|genera|genera?me|haz|lanza|monta|produce)\s+/i, '')
-    .replace(/\b(un|una|el|la)\b/gi, ' ')
-    .replace(/\b(cluster|web|pagina|página|sitio|landing|lands|paginas|páginas)\b/gi, ' ')
-    .replace(/\b(familia|family|modo|mode|archetype|arquetipo)\s+[\w_-]+\b/gi, ' ')
-    .replace(/\b(en|para|desde)\b[\s\S]*$/i, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  if (cleaned) return cleaned;
-
-  const fallback = command.match(/(?:de|sobre)\s+([\p{L}\s-]{3,40})/iu)?.[1]?.trim();
-  return fallback || 'servicios locales';
-}
 
 export class LinguistAgent extends BaseAgent {
   constructor() {
@@ -86,9 +39,8 @@ export class LinguistAgent extends BaseAgent {
   }
 
   async execute(input: LinguistInput): Promise<AgentResponse<LinguistOutput>> {
-    const command = String(input?.command || '').trim();
-
-    if (!command) {
+    const rawCommand = String(input?.command || '').trim();
+    if (!rawCommand) {
       return {
         success: false,
         error: 'No se recibió ningún comando para interpretar.',
@@ -96,44 +48,77 @@ export class LinguistAgent extends BaseAgent {
       };
     }
 
-    const locations = extractLocations(command);
-    const output: LinguistOutput = {
-      niche: extractNiche(command),
-      locations: locations.length ? locations : ['Valencia'],
-      is_cluster: detectCluster(command),
-      scope: detectScope(command),
-      language: 'es',
-      raw_command: command,
-      publish_mode: /borrador|draft/i.test(command) ? 'draft' : 'publish',
-      site_type: /wordpress/i.test(command) ? 'wordpress' : 'static',
-      archetype: command.match(/\b(?:familia|family|arquetipo|archetype)\s+([\w_-]+)\b/i)?.[1],
-      mode: command.match(/\b(?:modo|mode)\s+([\w_-]+)\b/i)?.[1] || (/premium/i.test(command) ? 'premium' : 'standard')
-    };
+    const strictMode = String(process.env.STRICT_COMMAND_MODE || 'true').toLowerCase() !== 'false';
 
-    await this.logThought(`Orden interpretada. Nicho=${output.niche}; ubicaciones=${output.locations.join(', ')}; cluster=${output.is_cluster}; scope=${output.scope}`);
+    try {
+      const parsed = parseStrictServiceCommand(rawCommand);
+      const output: LinguistOutput = {
+        niche: parsed.niche,
+        locations: parsed.locations,
+        is_cluster: parsed.is_cluster,
+        scope: parsed.scope,
+        language: 'es',
+        raw_command: rawCommand,
+        publish_mode: parsed.publish_mode,
+        site_type: parsed.site_type,
+        archetype: parsed.archetype,
+        mode: parsed.mode,
+        command_focus: parsed.topic,
+      };
 
-    return {
-      success: true,
-      data: output,
-      response: `Interpretación: nicho "${output.niche}" en ${output.locations.join(', ')}.` ,
-      thoughts: 'Interpretación del comando completada con heurística local segura.'
-    };
+      await this.logThought(`Orden interpretada en modo estricto. Nicho=${output.niche}; ubicaciones=${output.locations.join(', ')}; focus=${output.command_focus || 'base'}; cluster=${output.is_cluster}; scope=${output.scope}`);
+
+      return {
+        success: true,
+        data: output,
+        response: `Interpretación: nicho "${output.niche}" en ${output.locations.join(', ')}${output.command_focus ? ` sobre ${output.command_focus}` : ''}.`,
+        thoughts: 'Interpretación del comando completada con contrato estricto de entrada.'
+      };
+    } catch (error: any) {
+      await this.logThought(`Orden rechazada por contrato estricto: ${error.message}`);
+      if (strictMode) {
+        return {
+          success: false,
+          error: error.message,
+          thoughts: 'El comando fue rechazado para proteger la estabilidad del pipeline de producción.'
+        };
+      }
+
+      return {
+        success: false,
+        error: error.message,
+        thoughts: 'El comando no pasó el contrato estricto; activa un formato explícito.'
+      };
+    }
   }
 
-  /**
-   * Operative audit to detect linguistic hallucinations or semantic drift.
-   */
-  async auditContent(html: string, city: string): Promise<AgentResponse<{ passed: boolean, issues: string[] }>> {
+  async auditContent(html: string, city: string): Promise<AgentResponse<{ passed: boolean; issues: string[] }>> {
     const issues: string[] = [];
-    const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
 
-    // Check 1: Mandatory city presence (case insensitive)
+    if (typeof html !== 'string' || !html) {
+      return {
+        success: false,
+        error: 'Input HTML must be a non-empty string.',
+        thoughts: 'El auditor lingüístico no pudo procesar la página: el contenido está vacío o no es una cadena.'
+      };
+    }
+
+    const $ = cheerio.load(html);
+    $('script, style, .el-scripts-container').remove();
+
+    const hubs = $('.internal-links-hub, .footer-editorial, .site-header, .site-footer');
+    const hubContent = hubs.text();
+    hubs.remove();
+
+    const cleanBody = $('body');
+    const text = cleanBody.text().replace(/\s+/g, ' ').trim();
+    const fullTextInclHubs = `${text} ${hubContent}`.trim();
+
     const cityRegex = new RegExp(`\\b${city.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
-    if (!cityRegex.test(text)) {
+    if (!cityRegex.test(fullTextInclHubs)) {
       issues.push(`La ciudad "${city}" no aparece mencionada en el texto legible.`);
     }
 
-    // Check 2: Hallucination detection: names of other major cities that shouldn't be here
     const otherCities = SPANISH_CITIES.filter(c => c.toLowerCase() !== city.toLowerCase());
     for (const other of otherCities) {
       const otherRegex = new RegExp(`\\b${other.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
@@ -142,20 +127,18 @@ export class LinguistAgent extends BaseAgent {
       }
     }
 
-    // Check 3: Technical trace leakage
     if (text.includes('{{') || text.includes('[[') || text.includes('__')) {
       issues.push('Se detectaron rastros de tokens de plantillas ({{, [[ o __).');
     }
 
     const passed = issues.length === 0;
-
-    await this.logThought(`Auditoría lingüística para ${city}: ${passed ? 'PASSED' : 'FAILED (' + issues.length + ' issues)'}`);
+    await this.logThought(`Auditoría lingüística para ${city}: ${passed ? 'PASSED' : `FAILED (${issues.length} issues)`}`);
 
     return {
       success: true,
       data: { passed, issues },
-      thoughts: passed 
-        ? 'El contenido cumple con los mínimos de integridad lingüística local.' 
+      thoughts: passed
+        ? 'El contenido cumple con los mínimos de integridad lingüística local.'
         : `Se detectaron ${issues.length} problemas de integridad lingüística.`
     };
   }

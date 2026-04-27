@@ -11,6 +11,7 @@ import { faqBlock } from './faq/index.js';
 import { ctaPanelBlock } from './ctaPanel/index.js';
 import { comparisonTableBlock } from './comparisonTable/index.js';
 import { mapBlock } from './map/index.js';
+import { renderInternalLinkingBlock } from './shared/internalLinking.js';
 
 export * from './types.js';
 export * from './shared.js';
@@ -38,7 +39,13 @@ export const blockRegistry = {
   trust_band: trustBandBlock.render,
   price_guidance: priceGuidanceBlock.render,
   comparison_table: comparisonTableBlock.render,
-  map: mapBlock.render
+  map: mapBlock.render,
+  authority_note: (input: BlockRendererInput) => input.content.html || '',
+  internal_linking: (input: BlockRendererInput) =>
+    renderInternalLinkingBlock(
+      input,
+      (input.content as any)?.links || input.seo?.metadata?.internalLinks || input.payload?.links || []
+    )
 } as const;
 
 export function renderBlock(input: BlockRendererInput): string {

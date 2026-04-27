@@ -1,0 +1,35 @@
+{
+  "iterationId": "27",
+  "block": "C",
+  "command": "crea una página de bombines de seguridad para vivienda en Getafe",
+  "note": "Validación de mejora acumulada",
+  "jobId": "mission-1777000186854",
+  "timestamp": "2026-04-24T03:17:19.868Z",
+  "durationSeconds": 453.02,
+  "mission": {
+    "id": "mission-1777000186854",
+    "niche": "cerrajeros bombines de seguridad",
+    "status": "COMPLETED",
+    "created_at": "2026-04-24 03:09:46",
+    "city": null
+  },
+  "review": null,
+  "metrics": {
+    "missionStatus": "COMPLETED",
+    "reviewStatus": null,
+    "score": null,
+    "qualityGateScore": null,
+    "qualityGateFailed": false,
+    "technicalValidationFailed": false,
+    "technicalIssues": [],
+    "issueCount": 0,
+    "issues": [],
+    "writerFallbacks": 0,
+    "correctorFallback": false,
+    "coherenceWarnings": 0,
+    "placeholderWarnings": 0,
+    "modelUsage": [],
+    "totalLogs": 34,
+    "publishabilityHint": "requiere_revision"
+  }
+}

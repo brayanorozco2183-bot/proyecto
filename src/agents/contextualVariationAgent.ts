@@ -79,8 +79,9 @@ Responde SOLO con el JSON.
             const response = await axios.post(`${vault.OLLAMA_URL}/api/generate`, {
                 model: this.model,
                 prompt: prompt,
-                stream: false
-            }, { timeout: 300000 });
+                stream: false,
+                format: 'json'
+            }, { timeout: 90000 });
 
             let result: ContextualVariationResult = {
                 housing_type: "",
@@ -144,3 +145,6 @@ Responde SOLO con el JSON.
         }
     }
 }
+
+
+

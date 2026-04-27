@@ -22,6 +22,52 @@ export function slugify(input: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+
+function cleanAreaName(raw: string, mission: MissionLike): string {
+  const city = normalize(mission.city);
+  const niche = normalize(mission.niche);
+  const original = String(raw || '').trim();
+  if (!original) return '';
+
+  let out = original
+    .replace(/^zona\s+de\s+/i, '')
+    .replace(/^area\s+de\s+/i, '')
+    .replace(/^barrios?\s+de\s+/i, '')
+    .replace(/^distritos?\s+de\s+/i, '')
+    .trim();
+
+  const lowered = normalize(out);
+  const escapedNiche = mission.niche.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const slugNichePattern = slugify(mission.niche).replace(/-/g, '[-\\s]+');
+  const nichePrefixes = [
+    new RegExp(`^${slugNichePattern}\\s+en\\s+`, 'i'),
+    new RegExp(`^${escapedNiche}\\s+en\\s+`, 'i'),
+  ];
+
+  for (const rx of nichePrefixes) {
+    out = out.replace(rx, '').trim();
+  }
+
+  if (normalize(out) === city || normalize(out) === niche) return mission.city;
+  return out;
+}
+
+function uniqueClusterItems(items: ClusterItemInput[] = []): ClusterItemInput[] {
+  const seen = new Set<string>();
+  const out: ClusterItemInput[] = [];
+  for (const item of items) {
+    const key = `${normalize(item?.name || '')}::${sanitizeSubPath(item?.sub_path || '')}`;
+    if (!normalize(item?.name || '') || seen.has(key)) continue;
+    seen.add(key);
+    out.push(item);
+  }
+  return out;
+}
+
+function sanitizeSubPath(value: string): string {
+  return String(value || '').replace(/^\/+|\/+$/g, '').trim();
+}
+
 function uniqueById<T extends { id: string }>(items: T[]): T[] {
   const seen = new Set<string>();
   return items.filter((item) => {
@@ -110,8 +156,9 @@ function clusterItemToNode(
 }
 
 function geoItemToNode(item: ClusterItemInput, mission: MissionLike, primaryServiceId: string): SiteNode {
+  const areaName = cleanAreaName(item.name, mission) || mission.city;
   const normalizedCity = normalize(mission.city);
-  const normalizedArea = normalize(item.name);
+  const normalizedArea = normalize(areaName);
   const looksLikeCity = normalizedCity === normalizedArea;
 
   if (looksLikeCity) {
@@ -130,16 +177,16 @@ function geoItemToNode(item: ClusterItemInput, mission: MissionLike, primaryServ
   }
 
   return makeNode({
-    id: `area:${slugify(mission.niche)}:${slugify(item.name)}:${slugify(mission.city)}`,
+    id: `area:${slugify(mission.niche)}:${slugify(areaName)}:${slugify(mission.city)}`,
     type: 'service_area',
     keyword: mission.niche,
     city: mission.city,
     parent: primaryServiceId,
-    areaName: item.name,
+    areaName,
     serviceName: mission.niche,
     clusterSource: 'geo',
     funnelStage: 'BOFU',
-    title: `${mission.niche} en ${item.name}`,
+    title: `${mission.niche} en ${areaName}`,
     slug: item.sub_path ? `/${item.sub_path.replace(/^\/+|\/+$/g, '')}/` : undefined,
     priority: 70,
   });
@@ -214,11 +261,11 @@ export function buildSiteNodes(mission: MissionLike): SiteNode[] {
     }),
   ];
 
-  for (const geo of mission.cluster_data?.geo || []) {
+  for (const geo of uniqueClusterItems(mission.cluster_data?.geo || [])) {
     nodes.push(geoItemToNode(geo, mission, primaryServiceId));
   }
 
-  for (const topical of mission.cluster_data?.topical || []) {
+  for (const topical of uniqueClusterItems(mission.cluster_data?.topical || [])) {
     nodes.push(clusterItemToNode(topical, mission, primaryServiceId));
   }
 

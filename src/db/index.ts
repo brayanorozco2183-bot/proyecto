@@ -2,10 +2,12 @@ import { open, Database } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import { vault } from '../tools/vault.js';
 import { installOriginalitySchema } from '../originality/schema.js';
+import { installLearningSchema } from '../learning/schema.js';
 
 /**
  * DBManager handles the local persistence layer.
- * Professional schema design for Local SEO data.
+ * This version also installs learning/originality extensions so the
+ * pipeline can accumulate curated lessons, exemplars and reserved fingerprints.
  */
 export class DBManager {
   private db?: Database;
@@ -18,11 +20,18 @@ export class DBManager {
 
     console.log(`[DB] Database connected at: ${vault.DATABASE_PATH}`);
 
-    // Create Tables
+    await this.db.exec(`
+      PRAGMA journal_mode = WAL;
+      PRAGMA synchronous = NORMAL;
+      PRAGMA foreign_keys = ON;
+      PRAGMA busy_timeout = 8000;
+    `);
+
     await this.db.exec(`
       CREATE TABLE IF NOT EXISTS missions (
         id TEXT PRIMARY KEY,
         niche TEXT,
+        city TEXT,
         status TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       );
@@ -43,53 +52,32 @@ export class DBManager {
       );
     `);
 
-    // Migración On-the-fly para bases de datos existentes
-    try {
-      await this.db.exec(`ALTER TABLE city_data ADD COLUMN competitor_metrics TEXT;`);
-    } catch (e) { /* Ignorar si ya existe */ }
+    const safeAlter = async (sql: string) => {
+      try {
+        await this.db!.exec(sql);
+      } catch {
+        // ignore migrations already applied
+      }
+    };
 
-    try {
-      await this.db.exec(`ALTER TABLE city_data ADD COLUMN keyword_report TEXT;`);
-    } catch (e) { /* Ignorar si ya existe */ }
-
-    try {
-      await this.db.exec(`ALTER TABLE city_data ADD COLUMN nap_data TEXT;`);
-    } catch (e) { /* Ignorar si ya existe */ }
-
-    try {
-      await this.db.exec(`ALTER TABLE city_data ADD COLUMN published_url TEXT;`);
-    } catch (e) { /* Ignorar si ya existe */ }
-
-    try {
-      await this.db.exec(`ALTER TABLE city_data ADD COLUMN quality_score INTEGER DEFAULT 0;`);
-    } catch (e) { /* Ignorar si ya existe */ }
-
-    // Migraciones para site_settings (FTP Support)
-    try {
-      await this.db.exec(`ALTER TABLE site_settings ADD COLUMN ftp_host TEXT;`);
-    } catch (e) { }
-    try {
-      await this.db.exec(`ALTER TABLE site_settings ADD COLUMN ftp_user TEXT;`);
-    } catch (e) { }
-    try {
-      await this.db.exec(`ALTER TABLE site_settings ADD COLUMN ftp_pass TEXT;`);
-    } catch (e) { }
-    try {
-      await this.db.exec(`ALTER TABLE site_settings ADD COLUMN ftp_port INTEGER DEFAULT 22;`);
-    } catch (e) { }
-    try {
-      await this.db.exec(`ALTER TABLE site_settings ADD COLUMN ftp_path TEXT;`);
-    } catch (e) { }
-    try {
-      await this.db.exec(`ALTER TABLE site_settings ADD COLUMN enable_wordpress INTEGER DEFAULT 0;`);
-    } catch (e) { }
+    await safeAlter(`ALTER TABLE city_data ADD COLUMN competitor_metrics TEXT;`);
+    await safeAlter(`ALTER TABLE city_data ADD COLUMN keyword_report TEXT;`);
+    await safeAlter(`ALTER TABLE city_data ADD COLUMN nap_data TEXT;`);
+    await safeAlter(`ALTER TABLE city_data ADD COLUMN published_url TEXT;`);
+    await safeAlter(`ALTER TABLE city_data ADD COLUMN quality_score INTEGER DEFAULT 0;`);
+    await safeAlter(`ALTER TABLE missions ADD COLUMN city TEXT;`);
+    await safeAlter(`ALTER TABLE site_settings ADD COLUMN ftp_host TEXT;`);
+    await safeAlter(`ALTER TABLE site_settings ADD COLUMN ftp_user TEXT;`);
+    await safeAlter(`ALTER TABLE site_settings ADD COLUMN ftp_pass TEXT;`);
+    await safeAlter(`ALTER TABLE site_settings ADD COLUMN ftp_port INTEGER DEFAULT 22;`);
+    await safeAlter(`ALTER TABLE site_settings ADD COLUMN ftp_path TEXT;`);
+    await safeAlter(`ALTER TABLE site_settings ADD COLUMN enable_wordpress INTEGER DEFAULT 0;`);
 
     await this.db.exec(`
-
       CREATE TABLE IF NOT EXISTS assets (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         city_data_id INTEGER,
-        type TEXT, -- 'image', 'json-ld', 'post'
+        type TEXT,
         path TEXT,
         remote_url TEXT,
         FOREIGN KEY(city_data_id) REFERENCES city_data(id)
@@ -119,7 +107,7 @@ export class DBManager {
         site_url TEXT,
         auth_user TEXT,
         auth_pass TEXT,
-        site_type TEXT, -- 'wordpress', 'static'
+        site_type TEXT,
         ftp_host TEXT,
         ftp_user TEXT,
         ftp_pass TEXT,
@@ -131,7 +119,7 @@ export class DBManager {
       CREATE TABLE IF NOT EXISTS agent_knowledge (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         agent_id TEXT,
-        category TEXT, -- 'brand_voice', 'forbidden_terms', 'technical_rules'
+        category TEXT,
         content TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       );
@@ -172,16 +160,17 @@ export class DBManager {
       );
     `);
 
-    await installOriginalitySchema(this.db);
-    console.log('[DB] Professional schema initialized.');
+    await installOriginalitySchema(this.db as any);
+    await installLearningSchema(this.db as any);
+    console.log('[DB] Professional schema initialized with originality + learning extensions.');
   }
 
   async getSiteDesign(siteUrl: string): Promise<any> {
     const db = await this.getDB();
-    return await db.get('SELECT * FROM site_design WHERE site_url = ?', [siteUrl]);
+    return db.get('SELECT * FROM site_design WHERE site_url = ?', [siteUrl]);
   }
 
-  async updateSiteDesign(siteUrl: string, design: { css_base: string, primary_color: string, secondary_color: string, font_family: string }): Promise<void> {
+  async updateSiteDesign(siteUrl: string, design: { css_base: string; primary_color: string; secondary_color: string; font_family: string }): Promise<void> {
     const db = await this.getDB();
     await db.run(`
       INSERT INTO site_design (site_url, css_base, primary_color, secondary_color, font_family)

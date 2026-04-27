@@ -5,7 +5,7 @@ function resolveItems(input: BlockRendererInput) {
   const items = input.content.items || [];
   return items.length
     ? items
-    : deriveFallbackItems(input.content.h3s, 'Criterio comparativo listo para hidratarse.');
+    : deriveFallbackItems(input.content.h3s, 'Comparativa útil sobre alcance, proceso y criterios que conviene revisar.');
 }
 
 const matrixClean = (input: BlockRendererInput): string => {

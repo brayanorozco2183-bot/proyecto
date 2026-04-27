@@ -1,0 +1,35 @@
+{
+  "iterationId": "16",
+  "block": "B",
+  "command": "crea una página de apertura de puertas en viviendas y negocios en Getafe",
+  "note": "Producción real controlada",
+  "jobId": "mission-1776994337084",
+  "timestamp": "2026-04-24T01:46:29.579Z",
+  "durationSeconds": 852.5,
+  "mission": {
+    "id": "mission-1776994337084",
+    "niche": "cerrajeros apertura de puertas",
+    "status": "COMPLETED",
+    "created_at": "2026-04-24 01:32:17",
+    "city": null
+  },
+  "review": null,
+  "metrics": {
+    "missionStatus": "COMPLETED",
+    "reviewStatus": null,
+    "score": null,
+    "qualityGateScore": null,
+    "qualityGateFailed": false,
+    "technicalValidationFailed": false,
+    "technicalIssues": [],
+    "issueCount": 0,
+    "issues": [],
+    "writerFallbacks": 0,
+    "correctorFallback": false,
+    "coherenceWarnings": 0,
+    "placeholderWarnings": 0,
+    "modelUsage": [],
+    "totalLogs": 44,
+    "publishabilityHint": "requiere_revision"
+  }
+}

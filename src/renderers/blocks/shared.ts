@@ -23,14 +23,25 @@ export function sanitizeToken(value: string | undefined | null, fallback = 'defa
   return cleaned || fallback;
 }
 
+export function normalizeUsablePhone(phone?: string | number | null): string {
+  if (!phone) return '';
+  const str = String(phone).trim();
+  const lower = str.toLowerCase();
+  if (lower === 'no disponible' || lower === 'nodisponible' || lower === 'unknown' || lower === 'undefined') {
+    return '';
+  }
+  return str;
+}
+
 export function toTelHref(phone?: string, fallback = '#contacto'): string {
-  if (!phone) return fallback;
-  const digits = String(phone).replace(/[^\d+]/g, '');
+  const safePhone = normalizeUsablePhone(phone);
+  if (!safePhone) return fallback;
+  const digits = String(safePhone).replace(/[^\d+]/g, '');
   return digits ? `tel:${digits}` : fallback;
 }
 
 export function resolvePhone(context?: BlockContext, localPhone?: string): string {
-  return localPhone || context?.phone || '';
+  return normalizeUsablePhone(localPhone) || normalizeUsablePhone(context?.phone) || '';
 }
 
 export function renderParagraphs(paragraphs: string[] | undefined | null, className = 'block__intro'): string {
@@ -173,7 +184,7 @@ export function wrapHeroBlock(input: BlockRendererInput, innerHtml: string, extr
 
 export function deriveFallbackItems(
   titles: string[] | undefined | null,
-  body = 'Contenido listo para hidratarse desde semantic.items.'
+  body = 'Explicamos el criterio de trabajo, el alcance real y qué conviene revisar antes de tomar una decisión.'
 ): Array<{ title: string; body: string; meta?: string[] }> {
   return safeArray(titles)
     .filter(Boolean)

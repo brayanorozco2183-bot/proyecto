@@ -1,0 +1,35 @@
+{
+  "iterationId": "11",
+  "block": "B",
+  "command": "crea una página de apertura urgente de puertas en Getafe",
+  "note": "Producción real controlada",
+  "jobId": "mission-1776991812920",
+  "timestamp": "2026-04-24T00:58:42.167Z",
+  "durationSeconds": 509.25,
+  "mission": {
+    "id": "mission-1776991812920",
+    "niche": "cerrajeros apertura urgente de puertas",
+    "status": "COMPLETED",
+    "created_at": "2026-04-24 00:50:12",
+    "city": null
+  },
+  "review": null,
+  "metrics": {
+    "missionStatus": "COMPLETED",
+    "reviewStatus": null,
+    "score": null,
+    "qualityGateScore": null,
+    "qualityGateFailed": false,
+    "technicalValidationFailed": false,
+    "technicalIssues": [],
+    "issueCount": 0,
+    "issues": [],
+    "writerFallbacks": 0,
+    "correctorFallback": false,
+    "coherenceWarnings": 0,
+    "placeholderWarnings": 0,
+    "modelUsage": [],
+    "totalLogs": 24,
+    "publishabilityHint": "requiere_revision"
+  }
+}

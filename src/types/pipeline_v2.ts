@@ -287,23 +287,40 @@ export interface ObservabilityMetadata {
 export interface PostDeployAuditResult {
     passed: boolean;
     url: string;
+    html_path?: string;
     lighthouse?: any;
     schema_valid: boolean;
     broken_links: string[];
+    issues?: string[];
+    notes?: string[];
 }
 
 export interface PipelineResult {
-    html: string;
-    metadata: {
+    success: boolean;
+    data?: {
+        html: string;
+        html_path: string;
+        word_count: number;
+        score: number;
+        notes: string[];
+        status: 'published' | 'draft' | 'premium' | 'needs_review' | 'critical_error_soft';
+        url: string;
         h1: string;
-        totalWords: number;
-        sectionsCount: number;
-        qaScore: number;
-        issues: string[];
-        observability: ObservabilityMetadata;
-        audit?: PostDeployAuditResult;
-        faqs?: { question: string; answer: string }[];
+        faqs: { question: string; answer: string }[];
+        metadata: {
+            h1: string;
+            total_words: number;
+            sectionsCount?: number;
+            qaScore: number;
+            issues: string[];
+            observability: ObservabilityMetadata;
+            audit?: PostDeployAuditResult;
+            [key: string]: any;
+        };
+        observability?: ObservabilityMetadata;
     };
+    error?: string;
+    observability?: ObservabilityMetadata;
 }
 
 export interface GenerationMission {
@@ -340,4 +357,5 @@ export interface GenerationMission {
     };
     designOverrides?: any;
     mode?: 'production' | 'sandbox';
+    debugMode?: boolean;
 }

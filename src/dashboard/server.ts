@@ -9,11 +9,13 @@ import { vault } from '../tools/vault.js';
 import { SeoMasterLogic } from './seo-master-logic.js';
 import fs from 'fs/promises';
 import path from 'path';
+import { dashboardSecurity, validateDashboardCommandPayload, validateAgentInteractPayload } from './security.js';
 const getOrchestrator = async () => orchestrator;
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
+app.use(dashboardSecurity());
 const PORT = process.env.DASHBOARD_PORT || 8081;
 
 // Serve generated sites as static files at root
@@ -21,14 +23,17 @@ app.use(express.static(path.join(process.cwd(), 'output_sites')));
 
 
 app.post('/api/command', async (req: Request, res: Response) => {
-    const { command, publish_mode, site_type, is_cluster, scope, enable_wordpress } = req.body;
+    const validation = validateDashboardCommandPayload(req.body);
+    if (!validation.ok) return res.status(400).json({ success: false, error: validation.error });
+    req.body = validation.value;
+    const { command, publish_mode, site_type, is_cluster, scope, enable_wordpress, debug_mode } = req.body;
 
     const resolvedSiteType = site_type || 'static';
     const resolvedEnableWordpress = resolvedSiteType === 'wordpress' && enable_wordpress === true;
 
     console.log(
         `[Dashboard API] Command received: ${command} ` +
-        `(mode: ${publish_mode}, type: ${resolvedSiteType}, wp: ${resolvedEnableWordpress}, cluster: ${is_cluster}, scope: ${scope})`
+        `(mode: ${publish_mode}, type: ${resolvedSiteType}, wp: ${resolvedEnableWordpress}, cluster: ${is_cluster}, scope: ${scope}, debug: ${debug_mode})`
     );
 
     try {
@@ -37,7 +42,8 @@ app.post('/api/command', async (req: Request, res: Response) => {
             site_type: resolvedSiteType,
             enable_wordpress: resolvedEnableWordpress,
             is_cluster: is_cluster || false,
-            scope: scope || 'auto'
+            scope: scope || 'auto',
+            debug_mode: debug_mode || false
         });
         res.json(result);
     } catch (err: any) {
@@ -112,6 +118,9 @@ app.get('/api/logs', async (req: Request, res: Response) => {
 });
 
 app.post('/api/agent/interact', async (req: Request, res: Response) => {
+    const validation = validateAgentInteractPayload(req.body);
+    if (!validation.ok) return res.status(400).json({ success: false, error: validation.error });
+    req.body = validation.value;
     const { role, input, sessionId: clientSessionId } = req.body;
     const sessionId = clientSessionId || `playground-${Date.now()}`;
 

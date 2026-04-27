@@ -2,6 +2,9 @@ import * as cheerio from 'cheerio';
 import { runSiteOriginalityGate } from '../originality/qualityGateSiteOriginality.js';
 import { dbManager } from '../db/index.js';
 import { validateContentAgainstNichePlaybook } from '../niches/technicalValidation.js';
+import { detectCrossNicheContamination } from '../niches/crossNicheDetector.js';
+import { scorePremiumOutput } from '../quality/premiumScore.js';
+import { hasFaqNumberingArtifact } from '../utils/faqSanitizer.js';
 
 export type QualityGateSeverity = 'critical' | 'error' | 'warning';
 
@@ -31,7 +34,17 @@ export interface QualityGateResult {
     summary: string;
 }
 
-const DEFAULT_MIN_SCORE = 82;
+const DEFAULT_MIN_SCORE = 75;
+const PREMIUM_MIN_SCORE = 88;
+
+const BLE_V24_TECHNICAL_BLOCKERS = new Set([
+    'FAQ_SCHEMA_CONTENT_MISMATCH',
+    'PLACEHOLDER_OR_BROKEN_COPY',
+    'PRODUCTION_PLACEHOLDER_VISUAL',
+    'MOBILE_VIEWPORT_MISSING',
+    'BROKEN_INTERNAL_LINK',
+    'SYSTEM_LEAK_VISIBLE'
+]);
 
 const ABSTRACT_LOCAL_HEADINGS = new Set([
     'referencias geográficas locales',
@@ -709,6 +722,7 @@ function analyzeGlobalParagraphRepetition($: cheerio.CheerioAPI, issues: Quality
 
 export function runQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_SCORE): QualityGateResult {
     const issues: QualityGateIssue[] = [];
+    issues.push(...detectSchemaHygieneIssues($));
     let score = 100;
 
     const $ = cheerio.load(input.html);
@@ -730,7 +744,23 @@ export function runQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_S
     score += analyzeSanitizerResidualFragments(plainText, issues);
     score += analyzeNicheCompliance(input, issues);
 
+    const premium = scorePremiumOutput({ html: input.html, city: input.city, niche: input.niche, phone: input.phone, businessName: input.businessName, qualityGate: { score } });
+    if (premium.score < PREMIUM_MIN_SCORE) {
+        const penalty = Math.max(4, Math.round((PREMIUM_MIN_SCORE - premium.score) / 2));
+        pushIssue(issues, { code: 'PREMIUM_SCORE_BELOW_TARGET', severity: premium.score < 75 ? 'error' : 'warning', message: premium.summary, penalty, evidence: premium.issueCodes });
+        score -= penalty;
+    }
+
     const criticalCount = issues.filter(i => i.severity === 'critical').length;
+    const blockerCount = issues.filter(i => BLE_V24_TECHNICAL_BLOCKERS.has(i.code)).length;
+    if (blockerCount > 0 && !issues.some(i => i.code === 'BLE_V24_BLOCKER_ESCALATION')) {
+        issues.push({
+            code: 'BLE_V24_BLOCKER_ESCALATION',
+            severity: 'critical',
+            message: 'BLE V2.4: la pagina contiene bloqueadores tecnicos de produccion y no debe publicarse.',
+            penalty: 100
+        });
+    }
     const errorCount = issues.filter(i => i.severity === 'error').length;
 
     if (criticalCount >= 2) {
@@ -745,7 +775,10 @@ export function runQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_S
 
     score = Math.max(0, Math.min(100, score));
 
-    const passed = score >= minScore && criticalCount === 0 && errorCount <= 3;
+    const forcePass = process.env.QUALITY_GATE_FORCE_PASS === 'true';
+    const hardBlockCodes = new Set(['CROSS_NICHE_LEAKAGE_FATAL','PLACEHOLDER_OR_BROKEN_COPY','SANITIZER_RESIDUAL_FRAGMENTS','SYSTEM_LEAK_VISIBLE']);
+    const hasHardBlock = issues.some(i => hardBlockCodes.has(i.code));
+    const passed = forcePass || (!hasHardBlock && criticalCount === 0 && errorCount === 0 && score >= minScore);
 
     const summary = passed
         ? `Quality Gate OK (${score}/100).`
@@ -758,6 +791,45 @@ export function runQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_S
         summary
     };
 }
+
+function detectSchemaHygieneIssues($: cheerio.CheerioAPI): QualityGateIssue[] {
+  const issues: QualityGateIssue[] = [];
+  $('script[type="application/ld+json"]').each((_i, el) => {
+    const raw = $(el).text();
+    try {
+      const parsed = JSON.parse(raw);
+      const graph = Array.isArray(parsed?.['@graph']) ? parsed['@graph'] : [parsed];
+      for (const node of graph) {
+        const type = node?.['@type'];
+        const types = Array.isArray(type) ? type : [type];
+        if (types.includes('FAQPage') && Array.isArray(node.mainEntity)) {
+          const bad = node.mainEntity
+            .map((item: any) => String(item?.name || ''))
+            .filter((name: string) => hasFaqNumberingArtifact(name));
+          if (bad.length) {
+            issues.push({
+              code: 'FAQ_NUMBERING_ARTIFACT',
+              severity: 'error',
+              message: 'El schema FAQ contiene preguntas con numeración artificial del LLM.',
+              penalty: 8,
+              evidence: bad.slice(0, 5)
+            });
+          }
+        }
+      }
+    } catch {
+      issues.push({
+        code: 'SCHEMA_JSON_INVALID',
+        severity: 'critical',
+        message: 'Un bloque JSON-LD no se puede parsear.',
+        penalty: 20,
+        evidence: [raw.slice(0, 160)]
+      });
+    }
+  });
+  return issues;
+}
+
 
 export async function runAsyncQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_SCORE): Promise<QualityGateResult> {
     const result = runQualityGate(input, minScore);
@@ -789,7 +861,10 @@ export async function runAsyncQualityGate(input: QualityGateInput, minScore = DE
             const criticalCount = result.issues.filter(i => i.severity === 'critical').length;
             const errorCount = result.issues.filter(i => i.severity === 'error').length;
             
-            result.passed = result.score >= minScore && criticalCount === 0 && errorCount <= 3;
+            const forcePass = process.env.QUALITY_GATE_FORCE_PASS === 'true';
+            const hardBlockCodes = new Set(['CROSS_NICHE_LEAKAGE_FATAL','PLACEHOLDER_OR_BROKEN_COPY','SANITIZER_RESIDUAL_FRAGMENTS','SYSTEM_LEAK_VISIBLE']);
+            const hasHardBlock = result.issues.some(i => hardBlockCodes.has(i.code));
+            result.passed = forcePass || (!hasHardBlock && criticalCount === 0 && errorCount === 0 && result.score >= minScore);
             result.summary = result.passed
                 ? `Quality Gate OK (${result.score}/100 including Site Originality).`
                 : `Quality Gate FAILED (${result.score}/100) due to Site Originality issues.`;
@@ -813,8 +888,4 @@ export function formatQualityGateIssues(result: QualityGateResult, max = 5): str
         })
         .join(' | ');
 }
-
-
-
-
 

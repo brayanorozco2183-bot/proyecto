@@ -31,6 +31,11 @@ export interface PageDesignDNA {
   visualSystem: 'grid' | 'editorial' | 'panelled' | 'minimal' | 'mixed';
   pageSkeleton?: string;
   heroTemplate?: string;
+  visualIdentityContract?: any;
+  pageArchetype?: string;
+  visualDialect?: string;
+  blockDialects?: Record<string, string>;
+  layoutSignature?: Record<string, string>;
   cadencePattern?: string;
   proofStrategy?: string;
   ctaStrategy?: string;

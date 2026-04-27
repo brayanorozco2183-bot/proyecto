@@ -50,22 +50,6 @@ export function prepareClusterArtifacts(
   const autoBlocks = buildAutomaticInternalLinkBlocks(linkPlan, graph, mission);
   linkPlan.autoBlocks = autoBlocks;
 
-  if (!autoBlocks.length) {
-    linkPlan.upward = undefined;
-    linkPlan.lateral = undefined;
-    linkPlan.bofu = undefined;
-    linkPlan.supporting = [];
-    linkPlan.selected = [];
-    linkPlan.all = [];
-    linkPlan.grouped = {
-      relatedServices: [],
-      relatedAreas: [],
-      relatedGuides: [],
-      relatedFaqs: [],
-      moneyPages: [],
-    };
-  }
-
   return {
     graph,
     currentNodeId,
@@ -91,30 +75,33 @@ export function attachInternalLinkingToPlan<T extends PlanLike>(
   };
 }
 
+function isInternalLinkBlock(block: SimpleContentBlock): boolean {
+  return Boolean(block?.metadata?.internal_link_block)
+    || String(block?.metadata?.block_type || '').toLowerCase() === 'internal_linking'
+    || String(block?.blockType || block?.type || '').toLowerCase() === 'internal_linking'
+    || String(block?.id || '').includes('internal-links');
+}
+
 export function injectAutomaticLinkBlocks<T extends DraftLike>(draft: T, autoBlocks: SimpleContentBlock[]): T {
-  if (!autoBlocks.length) return draft;
+  if (!Array.isArray(draft?.blocks) || !autoBlocks.length) return draft;
 
-  const existingAutoBlockIds = new Set(
-    draft.blocks
-      .filter((block) => Boolean(block.metadata?.internal_link_block))
-      .map((block) => String(block.id)),
-  );
+  const existing = draft.blocks.filter(isInternalLinkBlock);
+  const incoming = autoBlocks.filter(isInternalLinkBlock);
+  if (!incoming.length) return draft;
 
-  const blocksToInject = autoBlocks.filter((block) => !existingAutoBlockIds.has(String(block.id)));
-  if (!blocksToInject.length) return draft;
-
-  const blocks = [...draft.blocks];
-  const firstCtaIndex = blocks.findIndex((block) => String(block.metadata?.block_type || '') === 'cta_panel');
-
-  if (firstCtaIndex === -1) {
-    blocks.push(...blocksToInject);
-  } else {
-    blocks.splice(firstCtaIndex, 0, ...blocksToInject);
-  }
+  const withoutExisting = draft.blocks.filter((block) => !isInternalLinkBlock(block));
+  const insertionIndex = withoutExisting.findIndex((block) => String(block?.metadata?.block_type || '') === 'cta_panel');
+  const merged = insertionIndex === -1
+    ? [...withoutExisting, ...incoming]
+    : [
+        ...withoutExisting.slice(0, insertionIndex),
+        ...incoming,
+        ...withoutExisting.slice(insertionIndex),
+      ];
 
   return {
     ...draft,
-    blocks,
+    blocks: merged,
   };
 }
 
@@ -122,10 +109,28 @@ export function validatePlanInternalLinking(plan: PlanLike, html?: string): stri
   const graph = plan.internalLinking?.graph;
   const currentNodeId = plan.internalLinking?.currentNodeId;
   const linkPlan = plan.internalLinking?.linkPlan;
-  if (!graph || !currentNodeId || !linkPlan) return ['Internal linking no inicializado en el plan.'];
+
+  const issues: string[] = [];
+  if (!graph || !currentNodeId || !linkPlan) {
+    issues.push('Internal linking no inicializado en el plan.');
+    return issues;
+  }
 
   const currentNode = graph.nodes.find((node) => node.id === currentNodeId);
-  if (!currentNode) return ['No se encontró el nodo actual dentro del grafo.'];
+  if (!currentNode) issues.push('No se encontró el nodo actual dentro del grafo.');
 
-  return validateInternalLinkCoverage(linkPlan, currentNode, html).issues;
+  if (!plan.internalLinking?.autoBlocks?.length) {
+    issues.push('No se generó bloque automático de interlinking.');
+  }
+
+  if (html) {
+    if (!/internal-links-hub/i.test(html)) issues.push('El HTML final no contiene el hub de interlinking.');
+    const itemCount = (html.match(/internal-links-item/gi) || []).length;
+    if (itemCount < 1) issues.push('El hub de interlinking no contiene enlaces renderizados.');
+    const moneyCount = (html.match(/internal-links-item--money/gi) || []).length;
+    if (itemCount > 0 && moneyCount < 1) issues.push('El hub de interlinking no contiene enlace visible a la money page.');
+  }
+
+  const coverage = currentNode ? validateInternalLinkCoverage(linkPlan, currentNode, html) : { issues: [] as string[] };
+  return [...issues, ...(coverage.issues || [])];
 }

@@ -55,73 +55,77 @@ export function editorialPostProcessHtml(
     const forbiddenTerms = (pack?.forbiddenTerms || []).map((term) => normalizeForCompare(String(term || ''))).filter(Boolean);
     const seenText = new Set<string>();
 
-    $('p, li, td').each((_: number, el: any) => {
-        const cleaned = stripTraceArtifacts($(el).text());
-        const key = normalizeForCompare(cleaned);
+    let cityMentions = 0;
+    let brandMentions = 0;
+    const MAX_CITY_BODY = 12; // More generous for body text
+    const MAX_BRAND_BODY = input.maxBrandMentions || 6;
 
-        if (!cleaned || !key) {
-            $(el).remove();
+    const cityRegex = input.city ? new RegExp(`\\b${input.city}\\b`, 'gi') : null;
+    const brandRegex = input.brand ? new RegExp(`\\b${input.brand}\\b`, 'gi') : null;
+
+    $('h1, h2, h3, h4, p, li, td, summary, .faq-answer').each((_: number, el: any) => {
+        const $el = $(el);
+        // SKIP if it's a structural container that we should not flatten
+        if ($el.hasClass('internal-links-item') || $el.closest('.internal-links-grid, .internal-links-hub').length > 0) {
             return;
         }
 
-        if (forbiddenTerms.some((term) => key.includes(term))) {
-            $(el).remove();
-            return;
-        }
+        const inUtilityZone = $el.closest('footer, header, nav, .site-header, .footer-editorial, .site-footer').length > 0;
+        
+        // We iterate over actual text nodes to avoid destroying child tags (<a>, <strong>, etc.)
+        $el.contents().each((_j, node) => {
+            if (node.type !== 'text') return;
 
-        if (key.length > 20 && seenText.has(key)) {
-            $(el).remove();
-            return;
-        }
+            const originalText = (node as any).data || '';
+            const cleaned = stripTraceArtifacts(originalText);
+            const key = normalizeForCompare(cleaned);
 
-        seenText.add(key);
-        $(el).text(cleaned);
+            if (!cleaned || !key) {
+                // If it's just trace artifacts or empty, we clean it
+                (node as any).data = '';
+                return;
+            }
+
+            // 1. Exact duplicate check (only for meaningful lengths)
+            if (key.length > 30 && seenText.has(key)) {
+                (node as any).data = '';
+                return;
+            }
+            if (key.length > 30) seenText.add(key);
+
+            // 2. Mention Capping
+            let processedText = cleaned;
+            if (cityRegex && input.city) {
+                processedText = processedText.replace(cityRegex, (match) => {
+                    cityMentions++;
+                    return cityMentions > MAX_CITY_BODY ? '' : match;
+                });
+            }
+            if (brandRegex && input.brand) {
+                processedText = processedText.replace(brandRegex, (match) => {
+                    brandMentions++;
+                    return brandMentions > MAX_BRAND_BODY ? '' : match;
+                });
+            }
+
+            (node as any).data = processedText.replace(/\s{2,}/g, ' ');
+        });
+
+        // 3. Forbidden terms check (entire element removal if found in text)
+        const fullText = normalizeForCompare($el.text());
+        if (forbiddenTerms.some((term) => fullText.includes(term))) {
+            $el.remove();
+        }
     });
 
+    // Special handling for FAQ items to avoid leaving empty items
     $('details.faq-item').each((_: number, el: any) => {
-        const summary = stripTraceArtifacts($(el).find('summary').first().text());
-        const answer = stripTraceArtifacts($(el).find('p').first().text());
-        const combo = normalizeForCompare(`${summary} ${answer}`);
-
-        if (!summary || !answer || (combo.length > 20 && seenText.has(`faq:${combo}`))) {
+        if ($(el).text().trim().length < 5) {
             $(el).remove();
-            return;
         }
-
-        seenText.add(`faq:${combo}`);
-        $(el).find('summary').first().text(summary);
-        $(el).find('p').first().text(answer);
     });
 
     out = $.html();
-
-    const cityMentions = (out.match(new RegExp(input.city, 'gi')) || []).length;
-    if (cityMentions > 6) {
-        let remaining = 6;
-        out = out.replace(new RegExp(input.city, 'gi'), (match) => {
-            if (remaining > 0) {
-                remaining--;
-                return match;
-            }
-            return '';
-        });
-    }
-
-    if (input.brand) {
-        const brandRegex = new RegExp(input.brand, 'gi');
-        const mentions = (out.match(brandRegex) || []).length;
-        if (mentions > input.maxBrandMentions) {
-            let remaining = input.maxBrandMentions;
-            out = out.replace(brandRegex, (match) => {
-                if (remaining > 0) {
-                    remaining--;
-                    return match;
-                }
-                return '';
-            });
-        }
-    }
-
     if (input.phone) {
         const genericPattern = /9\d[\s.-]?\d{2,3}[\s.-]?\d{2,3}[\s.-]?\d{2,3}/g;
         const intlPattern = /\+34\s*9\d[\s.-]?\d{2,3}[\s.-]?\d{2,3}[\s.-]?\d{2,3}/g;
@@ -151,3 +155,4 @@ export function editorialPostProcessHtml(
 
     return out;
 }
+

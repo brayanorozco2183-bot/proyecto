@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
 /**
- * World-class Agent Base Definition
- * Every agent must follow this protocol to ensure robustness and transparency.
+ * World-class Agent Base Definition.
+ * This version keeps backwards compatibility and adds prompt augmentation
+ * from curated lessons/exemplars stored in SQLite.
  */
 export interface AgentResponse<T> {
   success: boolean;
@@ -39,14 +40,8 @@ export abstract class BaseAgent {
     this.technicalBrief = brief;
   }
 
-  /**
-   * Primary execution method for any agent mission.
-   */
   abstract execute(input: any): Promise<AgentResponse<any>>;
 
-  /**
-   * Logging for the Maestro Dashboard
-   */
   public async logThought(thought: string): Promise<void> {
     console.log(`[${this.name}] Thinking: ${thought}`);
     if (this.missionId) {
@@ -58,37 +53,37 @@ export abstract class BaseAgent {
       );
     }
   }
-  /**
-   * Loads global and specific guardrails for this agent.
-   * Now with dynamic sanitization to avoid literal examples.
-   */
-  public async getPersistentKnowledge(context?: { city?: string, niche?: string, brand?: string }): Promise<string> {
+
+  public async log(message: string): Promise<void> {
+    return this.logThought(message);
+  }
+
+  public async getPersistentKnowledge(context?: { city?: string; niche?: string; brand?: string }): Promise<string> {
     const { dbManager } = await import('../db/index.js');
     const db = await dbManager.getDB();
-    const rules = await db.all(
+    const rules = await db.all<any[]>(
       'SELECT content FROM agent_knowledge WHERE agent_id = ? OR agent_id = "global"',
       [this.name]
     );
 
-    if (rules.length === 0) return '';
+    if (!rules.length) return '';
 
-    let content = rules.map(r => r.content).join('\n\n');
+    let content = rules.map((r) => r.content).join('\n\n');
 
-    // --- SANITIZACIÓN DINÁMICA DE EJEMPLOS ---
     if (context?.city) {
       const cityVariants = [
         /M[áàäâa]laga/gi, /Soria/gi, /Valencia/gi, /Madrid/gi, /Barcelona/gi,
         /Catedral/gi, /Plaza Mayor/gi, /Puerta del Sol/gi
       ];
-      cityVariants.forEach(regex => {
+      cityVariants.forEach((regex) => {
         content = content.replace(regex, context.city!);
       });
 
-      // --- FILTRO DE CERTIFICACIONES DE EJEMPLO ---
       const certVariants = [/ISO\s?\d*/gi, /ISO Calidad/gi, /Certificado Profesional/gi];
-      certVariants.forEach(regex => {
+      certVariants.forEach((regex) => {
         content = content.replace(regex, '{{CERTIFICACION_REAL}}');
       });
+
       const fakeAuthorityVariants = [
         /Ministerio del Interior/gi,
         /técnicos federados/gi,
@@ -96,11 +91,9 @@ export abstract class BaseAgent {
         /certificación oficial/gi,
         /normativa europea/gi
       ];
-
-      fakeAuthorityVariants.forEach(regex => {
+      fakeAuthorityVariants.forEach((regex) => {
         content = content.replace(regex, '{{VERIFICAR_AUTORIDAD_REAL}}');
       });
-
 
       content = content.replace(/Q\d+/g, '{{ID_WIKIDATA_LOCAL}}');
       content = content.replace(/{{CIUDAD}}/g, context.city);
@@ -109,7 +102,7 @@ export abstract class BaseAgent {
 
     if (context?.brand || context?.niche) {
       const brands = [/KeyPro/gi, /ServiHogar/gi, /TechSEO/gi];
-      brands.forEach(regex => {
+      brands.forEach((regex) => {
         content = content.replace(regex, context?.brand || '{{MARCA_LOCAL}}');
       });
       if (context?.brand) {
@@ -120,12 +113,8 @@ export abstract class BaseAgent {
 
     if (context?.niche) {
       const currentNiche = String(context.niche || '').trim();
-
-      // Solo resolvemos placeholders explícitos del nicho actual.
       content = content.replace(/{{NICHE}}/g, currentNiche);
 
-      // Nunca conviertas ejemplos de otros oficios en el nicho actual:
-      // eso fabrica contaminación semántica falsa.
       const foreignSecurityTerms = [
         /\bcerraduras?\b/gi,
         /\bbomb[ií]n(?:es)?\b/gi,
@@ -141,8 +130,6 @@ export abstract class BaseAgent {
         /\bintrusiones?\b/gi
       ];
 
-      // En nichos que no sean cerrajería, neutralizamos ejemplos ajenos;
-      // no los mutamos al nicho actual.
       if (!/cerraj|cerradur|bomb[ií]n|cilindr|cerroj|ganzu|antibumping|llave|candado|cierrapuertas|control\s+de\s+acceso/i.test(currentNiche)) {
         const sentenceDetectors = [
           ...foreignSecurityTerms,
@@ -170,7 +157,6 @@ export abstract class BaseAgent {
             .join(' ');
         }
 
-        // Limpieza de restos tras neutralización.
         content = content
           .replace(/\s{2,}/g, ' ')
           .replace(/\s+([,.;:])/g, '$1')
@@ -180,7 +166,7 @@ export abstract class BaseAgent {
 
     return `
     🚨 REGLAS DE CONOCIMIENTO PERSISTENTE (GUARDA-RAILES) 🚨:
-    ORDEN TEMPORAL: Los datos de ejemplo detectados arriba (como ciudades o marcas fijas) han sido sanitizados. 
+    ORDEN TEMPORAL: Los datos de ejemplo detectados arriba han sido sanitizados.
     Usa solo la información de la misión actual: ${context?.niche || 'N/A'} en ${context?.city || 'N/A'}.
 
     ${content}
@@ -189,9 +175,10 @@ export abstract class BaseAgent {
     `;
   }
 
-  /**
-   * Cleans common placeholder patterns from generated content.
-   */
+  public async getRelevantKnowledge(context?: { city?: string; niche?: string; brand?: string }): Promise<string> {
+    return this.getPersistentKnowledge(context);
+  }
+
   public sanitizePlaceholders(content: string): string {
     if (!content) return content;
 
@@ -199,7 +186,8 @@ export abstract class BaseAgent {
       .replace(/\[\s*provisional\s*\]/gi, '')
       .replace(/\[\s*\]/g, '')
       .replace(/\[[a-zA-Z\s\u00C0-\u017F0-9_-]+\]/gi, '')
-      .replace(/\{{2,}[^{}]+\}{2,}/g, '')
+      .replace(/\[{2,}[^\]]+\]{2,}/g, '')
+      .replace(/__[^_\n]{2,}__/g, '')
       .replace(/\$\{[^}]+\}/g, '')
       .replace(/<%[^%]+%>/g, '')
       .replace(/\(REQUERIDO\)/gi, '')
@@ -210,16 +198,127 @@ export abstract class BaseAgent {
       .trim();
   }
 
-  /**
-   * Universal sanitizer for LLM outputs.
-   */
-  /**
-   * Universal AI Interaction Point.
-   * Redirects to AIFacade to handle Ollama fallbacks.
-   */
-  protected async callModel(prompt: string, model?: string): Promise<string> {
+  protected sanitizeModelOutput(content: string): string {
+    if (!content) return content;
+    const cleaned = content
+      .replace(/^(claro|aquí tienes|seguro|entendido|he preparado|esta es|un placer|espero que)[\s\S]*?:\s*\n/i, '')
+      .replace(/<(thought|thinking)>[\s\S]*?<\/\1>/gi, '')
+      .replace(/```[a-z]*\n/gi, '')
+      .replace(/```/g, '')
+      .trim();
+
+    return this.sanitizePlaceholders(cleaned);
+  }
+
+  protected stripTraceArtifacts(text: string): string {
+    return (text || '')
+      .replace(/\[OBJECT_MAP\]/gi, '')
+      .replace(/\[DEBUG:.*?\]/gi, '')
+      .replace(/TR-[A-Z0-9]{4,}/g, '')
+      .replace(/\{trace:.*?\}/gi, '')
+      .replace(/\[{2,}[^\]]+\]{2,}/g, '')
+      .replace(/__[^_\n]{2,}__/g, '')
+      .trim();
+  }
+
+  protected async callModel(
+    prompt: string,
+    model?: string,
+    options?: {
+      json?: boolean;
+      timeoutMs?: number;
+      numPredict?: number;
+      temperature?: number;
+      maxRetries?: number;
+      fallbackResponse?: string | (() => string);
+    }
+  ): Promise<string> {
     const { AIFacade } = await import('../tools/aiFacade.js');
-    return AIFacade.callOllama(this.name, prompt, model || this.model);
+    const { resolveModelForAgent } = await import('../ai/modelRouter.js');
+
+    const routingDecision = resolveModelForAgent(this.name, model || this.model);
+    const finalModel = routingDecision.selectedModel;
+
+    let finalPrompt = prompt;
+    try {
+      const { dbManager } = await import('../db/index.js');
+      const db = await dbManager.getDB();
+      const { augmentPromptWithLearnedContext } = await import('../learning/promptAugmenter.js');
+      const augmentation = await augmentPromptWithLearnedContext(db as any, this.name, prompt);
+      finalPrompt = augmentation.prompt;
+    } catch {
+      finalPrompt = prompt;
+    }
+
+    const raw = await AIFacade.callOllama(this.name, finalPrompt, finalModel, options);
+    return typeof raw === 'string' ? raw : JSON.stringify(raw);
+  }
+
+  /**
+   * Records a mission failure for persistent learning.
+   */
+  public async rememberFailure(input: {
+    errorMessage: string;
+    failureType: string;
+    niche?: string;
+    city?: string;
+    scopeKey?: string;
+    lessonTitle?: string;
+    lessonText?: string;
+  }): Promise<void> {
+    try {
+      const { agentMemoryStore } = await import('../ai/agentMemory.js');
+      await agentMemoryStore.recordFailure({
+        agentName: this.name,
+        model: this.model,
+        errorMessage: input.errorMessage,
+        failureType: input.failureType,
+        niche: input.niche,
+        city: input.city,
+        scopeKey: input.scopeKey,
+      });
+
+      if (input.lessonTitle && input.lessonText) {
+        await this.rememberLesson({
+          title: input.lessonTitle,
+          lesson: input.lessonText,
+          severity: 'major',
+          lessonType: 'failure_recovery',
+          niche: input.niche,
+          city: input.city,
+        });
+      }
+    } catch (e) {
+      console.error(`[${this.name}] Failed to record failure in memory:`, e);
+    }
+  }
+
+  /**
+   * Records a curated lesson for future prompt augmentation.
+   */
+  public async rememberLesson(input: {
+    title: string;
+    lesson: string;
+    severity?: string;
+    lessonType?: string;
+    niche?: string;
+    city?: string;
+    scopeKey?: string;
+  }): Promise<void> {
+    try {
+      const { agentMemoryStore } = await import('../ai/agentMemory.js');
+      await agentMemoryStore.recordLesson({
+        agentName: this.name,
+        title: input.title,
+        lesson: input.lesson,
+        severity: (input.severity as any) || 'minor',
+        lessonType: input.lessonType || 'quality',
+        niche: input.niche,
+        city: input.city,
+        scopeKey: input.scopeKey,
+      });
+    } catch (e) {
+      console.error(`[${this.name}] Failed to record lesson in memory:`, e);
+    }
   }
 }
-

@@ -1,0 +1,331 @@
+[
+  {
+    "id": 25838,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "Misión Iniciada Core: Atacando nicho de que influye en 2 destinos.",
+    "timestamp": "2026-04-24 02:24:24"
+  },
+  {
+    "id": 25839,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] SERP listo para Getafe. Resultados orgánicos: 10. Iniciando auditoría competitiva...",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25840,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Iniciando auditoría profunda de competidores. Candidatos limpios: 10 de 10.",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25841,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.urban15.es/como-es-vivir-en/getafe",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25842,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://homiii.com/6-motivos-por-los-cuales-getafe-es-un-buen-lugar-para-vivir",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25843,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://homiii.com",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25844,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://russpain.com/es/noticias/getafe-en-2025-crecimiento-explosivo-de-la-poblacion-y-los-secretos-del-atractivo-de-la-ciudad-324148",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25845,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://russpain.com",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25846,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://turrillogs.es/es/descubre-getafe-un-lugar-repleto-de-oportunidades",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25847,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://turrillogs.es",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25848,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.urban15.es",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25849,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.idealista.com/news/inmobiliario/vivienda/2023/12/26/810017-vivir-en-getafe-donde-vivir-coste-de-vida-y-mejores-barrios",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25850,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.idealista.com",
+    "timestamp": "2026-04-24 02:24:32"
+  },
+  {
+    "id": 25851,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditoría útil: 6 aceptadas, 3 rechazadas por baja relevancia o baja señal local.",
+    "timestamp": "2026-04-24 02:24:40"
+  },
+  {
+    "id": 25852,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Iniciando síntesis estratégica para Getafe con 6 auditorías profundas.",
+    "timestamp": "2026-04-24 02:24:40"
+  },
+  {
+    "id": 25853,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Sintetizando Estatuto de Dominación para \"que influye\" en \"Getafe\". Confianza: high",
+    "timestamp": "2026-04-24 02:24:40"
+  },
+  {
+    "id": 25854,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FASTPATH] Strategy resolved in deterministic mode for Getafe.",
+    "timestamp": "2026-04-24 02:24:40"
+  },
+  {
+    "id": 25855,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Síntesis estratégica finalizada para Getafe en 6ms.",
+    "timestamp": "2026-04-24 02:24:40"
+  },
+  {
+    "id": 25856,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Resolviendo identidad NAP para Getafe...",
+    "timestamp": "2026-04-24 02:24:40"
+  },
+  {
+    "id": 25857,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "NAP_Guardian_01",
+    "thought": "Verifying deterministic NAP identity for que influye in Getafe",
+    "timestamp": "2026-04-24 02:24:40"
+  },
+  {
+    "id": 25858,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] NAP finalizado para Getafe en 3ms.",
+    "timestamp": "2026-04-24 02:24:40"
+  },
+  {
+    "id": 25859,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Lanzando pipeline de contenido para Getafe...",
+    "timestamp": "2026-04-24 02:24:40"
+  },
+  {
+    "id": 25860,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Sentinel_Observer_14",
+    "thought": "Sentinel beat ejecutado. Degraded=false.",
+    "timestamp": "2026-04-24 02:29:02"
+  },
+  {
+    "id": 25861,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Pipeline de contenido completado para Getafe en 340405ms.",
+    "timestamp": "2026-04-24 02:30:20"
+  },
+  {
+    "id": 25862,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "❌ Generación falló para Getafe. No niche playbook found for \"que influye\"",
+    "timestamp": "2026-04-24 02:30:20"
+  },
+  {
+    "id": 25863,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] SERP listo para el presupuesto de un cerrajero. Resultados orgánicos: 10. Iniciando auditoría competitiva...",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25864,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Iniciando auditoría profunda de competidores. Candidatos limpios: 9 de 10.",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25865,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeroseuskadi.com/factores-presupuestos-cerrajeria-urgente",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25866,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://verto5.com/presupuestos/guia-de-costos-y-precios-de-cerrajeria-de-emergencia",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25867,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://verto5.com",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25868,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeroseuskadi.com",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25869,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeroencadiz.com/guia-actualizada-de-precios-de-cerrajeria-cuanto-cuesta-un-cerrajero",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25870,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeroencadiz.com",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25871,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosreyes24h.com",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25872,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://mitocerrajeros.com",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25873,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosreyes24h.com/cuanto-cuesta-un-cerrajero",
+    "timestamp": "2026-04-24 02:30:27"
+  },
+  {
+    "id": 25874,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditoría útil: 6 aceptadas, 1 rechazadas por baja relevancia o baja señal local.",
+    "timestamp": "2026-04-24 02:30:38"
+  },
+  {
+    "id": 25875,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Iniciando síntesis estratégica para el presupuesto de un cerrajero con 6 auditorías profundas.",
+    "timestamp": "2026-04-24 02:30:39"
+  },
+  {
+    "id": 25876,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Sintetizando Estatuto de Dominación para \"que influye\" en \"el presupuesto de un cerrajero\". Confianza: high",
+    "timestamp": "2026-04-24 02:30:39"
+  },
+  {
+    "id": 25877,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FASTPATH] Strategy resolved in deterministic mode for el presupuesto de un cerrajero.",
+    "timestamp": "2026-04-24 02:30:39"
+  },
+  {
+    "id": 25878,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Síntesis estratégica finalizada para el presupuesto de un cerrajero en 7ms.",
+    "timestamp": "2026-04-24 02:30:39"
+  },
+  {
+    "id": 25879,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Resolviendo identidad NAP para el presupuesto de un cerrajero...",
+    "timestamp": "2026-04-24 02:30:39"
+  },
+  {
+    "id": 25880,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "NAP_Guardian_01",
+    "thought": "Verifying deterministic NAP identity for que influye in el presupuesto de un cerrajero",
+    "timestamp": "2026-04-24 02:30:39"
+  },
+  {
+    "id": 25881,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] NAP finalizado para el presupuesto de un cerrajero en 4ms.",
+    "timestamp": "2026-04-24 02:30:39"
+  },
+  {
+    "id": 25882,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Lanzando pipeline de contenido para el presupuesto de un cerrajero...",
+    "timestamp": "2026-04-24 02:30:39"
+  },
+  {
+    "id": 25883,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Pipeline de contenido completado para el presupuesto de un cerrajero en 335138ms.",
+    "timestamp": "2026-04-24 02:36:14"
+  },
+  {
+    "id": 25884,
+    "mission_id": "mission-1776997464892",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "❌ Generación falló para el presupuesto de un cerrajero. No niche playbook found for \"que influye\"",
+    "timestamp": "2026-04-24 02:36:14"
+  }
+]

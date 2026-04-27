@@ -1,0 +1,247 @@
+[
+  {
+    "id": 26113,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "Misión Iniciada Core: Atacando nicho de como decidir entre reparar o sustituir cerradura en 1 destinos.",
+    "timestamp": "2026-04-24 03:32:12"
+  },
+  {
+    "id": 26114,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] SERP listo para Getafe. Resultados orgánicos: 10. Iniciando auditoría competitiva...",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26115,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Iniciando auditoría profunda de competidores. Candidatos limpios: 10 de 10.",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26116,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://arcassoler.net/cerraduras-de-seguridad-getafe",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26117,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.dismaur.com/servicios/reparaciones/getafe",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26118,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.dismaur.com",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26119,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://jmtecnic.com",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26120,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.cerrajerosgetafe-24horas.com",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26121,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://jmtecnic.com/cerrajero/blog.asp",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26122,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://jmtecnic.com/cerrajero/blog.asp%3Fen%3DGetafe-118",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26123,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeriasoler.es",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26124,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://arcassoler.net",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26125,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeriasoler.es/cerrajeros-getafe",
+    "timestamp": "2026-04-24 03:32:19"
+  },
+  {
+    "id": 26126,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditoría útil: 6 aceptadas, 3 rechazadas por baja relevancia o baja señal local.",
+    "timestamp": "2026-04-24 03:32:28"
+  },
+  {
+    "id": 26127,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Iniciando síntesis estratégica para Getafe con 6 auditorías profundas.",
+    "timestamp": "2026-04-24 03:32:28"
+  },
+  {
+    "id": 26128,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Sintetizando Estatuto de Dominación para \"como decidir entre reparar o sustituir cerradura\" en \"Getafe\". Confianza: high",
+    "timestamp": "2026-04-24 03:32:28"
+  },
+  {
+    "id": 26129,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Consultando modelo estratégico (qwen2.5:1.5b) para Getafe.",
+    "timestamp": "2026-04-24 03:32:28"
+  },
+  {
+    "id": 26130,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Estrategia resuelta para Getafe. Tipo=guide.",
+    "timestamp": "2026-04-24 03:33:08"
+  },
+  {
+    "id": 26131,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Síntesis estratégica finalizada para Getafe en 40132ms.",
+    "timestamp": "2026-04-24 03:33:08"
+  },
+  {
+    "id": 26132,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Resolviendo identidad NAP para Getafe...",
+    "timestamp": "2026-04-24 03:33:08"
+  },
+  {
+    "id": 26133,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "NAP_Guardian_01",
+    "thought": "Verifying deterministic NAP identity for como decidir entre reparar o sustituir cerradura in Getafe",
+    "timestamp": "2026-04-24 03:33:08"
+  },
+  {
+    "id": 26134,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] NAP finalizado para Getafe en 2ms.",
+    "timestamp": "2026-04-24 03:33:08"
+  },
+  {
+    "id": 26135,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Lanzando pipeline de contenido para Getafe...",
+    "timestamp": "2026-04-24 03:33:08"
+  },
+  {
+    "id": 26136,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Pipeline de contenido completado para Getafe en 399329ms.",
+    "timestamp": "2026-04-24 03:39:48"
+  },
+  {
+    "id": 26137,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[V7] Generando assets técnicos programáticos para como decidir entre reparar o sustituir cerradura en Getafe",
+    "timestamp": "2026-04-24 03:39:48"
+  },
+  {
+    "id": 26138,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] Comprobando enlace: https://www.getafe.es/",
+    "timestamp": "2026-04-24 03:39:48"
+  },
+  {
+    "id": 26139,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] ✅ Enlace VIVO: https://www.getafe.es/",
+    "timestamp": "2026-04-24 03:39:49"
+  },
+  {
+    "id": 26140,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] Comprobando enlace: https://www.ocu.org/",
+    "timestamp": "2026-04-24 03:39:49"
+  },
+  {
+    "id": 26141,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] ✅ Enlace VIVO: https://www.ocu.org/",
+    "timestamp": "2026-04-24 03:39:50"
+  },
+  {
+    "id": 26142,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] Comprobando enlace: https://www.policia.es/",
+    "timestamp": "2026-04-24 03:39:50"
+  },
+  {
+    "id": 26143,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] ✅ Enlace VIVO: https://www.policia.es/",
+    "timestamp": "2026-04-24 03:39:50"
+  },
+  {
+    "id": 26144,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Quality_Auditor_10",
+    "thought": "[EEAT Audit] Verificando señales negativas para Getafe...",
+    "timestamp": "2026-04-24 03:39:50"
+  },
+  {
+    "id": 26145,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Linguist_Interpreter_08",
+    "thought": "Auditoría lingüística para Getafe: PASSED",
+    "timestamp": "2026-04-24 03:39:50"
+  },
+  {
+    "id": 26146,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Quality_Auditor_10",
+    "thought": "[QualityScore] Final Score for Getafe: 54/100",
+    "timestamp": "2026-04-24 03:39:50"
+  },
+  {
+    "id": 26147,
+    "mission_id": "mission-1777001532174",
+    "agent_name": "Static_Deploy_09",
+    "thought": "Generating static site for como decidir entre reparar o sustituir cerradura in Getafe (Cluster: como-decidir-entre-reparar-o-sustituir-cerradura-getafe)",
+    "timestamp": "2026-04-24 03:39:50"
+  }
+]

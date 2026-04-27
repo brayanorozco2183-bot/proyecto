@@ -1,32 +1,41 @@
 import fs from 'fs';
 import path from 'path';
-import { InternalLinkPlan, LinkCandidate, MissionLike, SimpleContentBlock, SiteGraph, SiteNode } from './types.js';
+import { InternalLinkPlan, MissionLike, SimpleContentBlock, SiteGraph, SiteNode } from './types.js';
+import { getCanonicalNicheLabel } from '../niches/agentAdapters.js';
+
+type LinkRelation = 'money' | 'supporting' | 'lateral' | 'upward';
 
 interface GeneratedRoute {
-  publicHref: string;
   filePath: string;
+  publicHref: string;
   relativeDir: string;
   parts: string[];
+  label: string;
 }
 
-interface OutputContext {
-  currentFilePath: string;
-  currentPublicHref: string;
-  clusterFolder?: string;
+interface HubLink {
+  text: string;
+  url: string;
+  relation: LinkRelation;
+  description: string;
+  badge: string;
 }
 
-function dedupeLinks(links: LinkCandidate[]): LinkCandidate[] {
-  const seen = new Set<string>();
-  return links.filter((link) => {
-    const key = `${String(link.targetId || '').trim()}::${String(link.targetSlug || '').trim()}`;
-    if (!String(link.targetSlug || '').trim() || seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+function normalizeText(value: any): string {
+  return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
-function escapeHtml(value: string): string {
-  return String(value || '')
+function slugify(value: any): string {
+  return normalizeText(value)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'pagina';
+}
+
+function escapeHtml(value = ''): string {
+  return String(value)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -34,230 +43,8 @@ function escapeHtml(value: string): string {
     .replace(/'/g, '&#39;');
 }
 
-function normalizeText(value: string): string {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim();
-}
-
-function sanitizePathToken(value: string): string {
-  return String(value || '')
-    .trim()
-    .toLowerCase()
-    .replace(/\\/g, '/')
-    .replace(/^\/+|\/+$/g, '')
-    .replace(/\s+/g, '-');
-}
-
-function humanizeSlug(value: string): string {
-  return String(value || '')
-    .replace(/^\/+|\/+$/g, '')
-    .split('/')
-    .filter(Boolean)
-    .map((part) =>
-      part
-        .split('-')
-        .filter(Boolean)
-        .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
-        .join(' ')
-    )
-    .join(' / ');
-}
-
-function normalizeInternalHref(href: string): string | null {
-  const raw = String(href || '').trim();
-  if (!raw || raw.startsWith('#')) return null;
-
-  const normalizePath = (value: string): string | null => {
-    let out = String(value || '').trim();
-    if (!out) return null;
-
-    out = out
-      .replace(/\/index\.html\/?$/i, '/')
-      .replace(/([^:])\/\/+?/g, '$1/')
-      .replace(/\s+/g, '');
-
-    if (out.startsWith('./')) out = out.slice(1);
-    if (out.startsWith('/..')) out = out.slice(1);
-    if (!out.startsWith('/') && !out.startsWith('.')) out = `/${out}`;
-
-    const hashOrQuery = out.search(/[?#]/);
-    if (hashOrQuery !== -1) out = out.slice(0, hashOrQuery);
-
-    if (!out.endsWith('/')) out = `${out}/`;
-
-    if (/^\/[A-ZÁÉÍÓÚÑ][^?#]*-expertos\/?$/i.test(out)) return null;
-    if (/^\/[A-ZÁÉÍÓÚÑ][^?#]*-urgente\/?$/i.test(out)) return null;
-
-    return out;
-  };
-
-  if (/^(\/|\.\/|\.\.\/)/.test(raw)) {
-    return normalizePath(raw);
-  }
-
-  if (/^https?:\/\//i.test(raw)) {
-    try {
-      const url = new URL(raw);
-      return normalizePath(url.pathname || '/');
-    } catch {
-      return null;
-    }
-  }
-
-  return null;
-}
-
-function outputRoot(): string {
-  return path.join(process.cwd(), 'output_sites');
-}
-
-function getClusterFolder(mission?: MissionLike): string | undefined {
-  const raw = mission?.cluster_folder_name || mission?.clusterFolderName;
-  const normalized = sanitizePathToken(raw || '');
-  return normalized || undefined;
-}
-
-function buildOutputContext(mission?: MissionLike): OutputContext | null {
-  if (!mission?.niche || !mission?.city) return null;
-
-  const clusterFolder = getClusterFolder(mission);
-  const basePath = clusterFolder || `${sanitizePathToken(mission.niche)}-${sanitizePathToken(mission.city)}`;
-  const subPath = sanitizePathToken(mission.subPath || '');
-  const finalPath = subPath ? path.posix.join(basePath, subPath) : basePath;
-
-  return {
-    currentFilePath: path.join(outputRoot(), finalPath, 'index.html'),
-    currentPublicHref: `/${finalPath.replace(/^\/+|\/+$/g, '')}/`,
-    clusterFolder,
-  };
-}
-
-function scanGeneratedRoutes(clusterFolder?: string): GeneratedRoute[] {
-  const root = outputRoot();
-  if (!fs.existsSync(root)) return [];
-
-  const found: GeneratedRoute[] = [];
-
-  const walk = (dir: string) => {
-    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-      const full = path.join(dir, entry.name);
-
-      if (entry.isDirectory()) {
-        walk(full);
-        continue;
-      }
-
-      if (!entry.isFile() || entry.name.toLowerCase() !== 'index.html') continue;
-
-      const relDir = path.relative(root, path.dirname(full)).replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
-      const publicHref = relDir ? `/${relDir}/` : '/';
-      const parts = relDir ? relDir.split('/').filter(Boolean) : [];
-
-      if (clusterFolder && parts[0] !== clusterFolder) {
-        continue;
-      }
-
-      found.push({
-        publicHref,
-        filePath: full,
-        relativeDir: relDir,
-        parts,
-      });
-    }
-  };
-
-  walk(root);
-
-  return found.sort((a, b) => a.publicHref.localeCompare(b.publicHref));
-}
-
-function routeTailParts(route: GeneratedRoute, clusterFolder?: string): string[] {
-  if (clusterFolder && route.parts[0] === clusterFolder) {
-    return route.parts.slice(1);
-  }
-  return route.parts;
-}
-
-function buildHrefAliases(targetHref: string, clusterFolder?: string): string[] {
-  const normalized = normalizeInternalHref(targetHref);
-  if (!normalized) return [];
-
-  if (normalized === '/') return ['/'];
-
-  const rel = normalized.replace(/^\/+|\/+$/g, '');
-  const parts = rel.split('/').filter(Boolean);
-  const aliases = new Set<string>([normalized]);
-
-  if (clusterFolder) {
-    aliases.add(`/${path.posix.join(clusterFolder, rel)}/`);
-  }
-
-  if (parts.length > 1) {
-    aliases.add(`/${parts.join('-')}/`);
-    aliases.add(`/${parts[parts.length - 1]}/`);
-
-    if (clusterFolder) {
-      aliases.add(`/${path.posix.join(clusterFolder, parts.join('-'))}/`);
-      aliases.add(`/${path.posix.join(clusterFolder, parts[parts.length - 1])}/`);
-    }
-  }
-
-  return Array.from(aliases)
-    .map((value) => normalizeInternalHref(value))
-    .filter((value): value is string => Boolean(value));
-}
-
-function scoreRouteMatch(route: GeneratedRoute, targetHref: string, clusterFolder?: string): number {
-  const normalized = normalizeInternalHref(targetHref);
-  if (!normalized) return 0;
-
-  const targetParts = normalized.split('/').filter(Boolean);
-  const tail = routeTailParts(route, clusterFolder);
-
-  let score = 0;
-
-  if (route.publicHref === normalized) score += 50;
-  if (clusterFolder && route.parts[0] === clusterFolder) score += 8;
-  if (tail.join('/') === targetParts.join('/')) score += 40;
-  if (tail.join('-') === targetParts.join('-')) score += 24;
-
-  const targetLast = targetParts[targetParts.length - 1];
-  const tailLast = tail[tail.length - 1];
-
-  if (targetLast && tailLast && targetLast === tailLast) score += 12;
-  if (tail.length === 1 && targetParts.length > 1 && tail[0] === targetLast) score += 10;
-
-  return score;
-}
-
-function resolveGeneratedRoute(targetHref: string, routes: GeneratedRoute[], mission?: MissionLike): GeneratedRoute | null {
-  const clusterFolder = getClusterFolder(mission);
-  const aliases = buildHrefAliases(targetHref, clusterFolder);
-  if (!aliases.length) return null;
-
-  const exact = routes.filter((route) => aliases.includes(route.publicHref));
-  if (exact.length === 1) return exact[0];
-  if (exact.length > 1) {
-    exact.sort((a, b) => scoreRouteMatch(b, targetHref, clusterFolder) - scoreRouteMatch(a, targetHref, clusterFolder));
-    return exact[0];
-  }
-
-  const ranked = routes
-    .map((route) => ({
-      route,
-      score: scoreRouteMatch(route, targetHref, clusterFolder),
-    }))
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score || a.route.publicHref.localeCompare(b.route.publicHref));
-
-  return ranked[0]?.route || null;
-}
-
 function countWords(html: string): number {
-  return html
+  return String(html || '')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
@@ -265,378 +52,281 @@ function countWords(html: string): number {
     .filter(Boolean).length;
 }
 
-function buildBlock(id: string, h2: string, html: string, blockType: string): SimpleContentBlock {
+function clusterFolderFromMission(mission?: MissionLike): string {
+  const explicit =
+    (mission as any)?.clusterFolderName ||
+    (mission as any)?.cluster_folder_name ||
+    (mission as any)?.clusterFolder ||
+    '';
+  if (normalizeText(explicit)) return slugify(explicit);
+
+  const niche = slugify((mission as any)?.niche || '');
+  const city = slugify((mission as any)?.city || '');
+  if (niche && city) return `${niche}-${city}`;
+  return niche || city || 'sitio';
+}
+
+function normalizeMissionSubPath(value: any): string {
+  const raw = normalizeText(value || '').replace(/\\/g, '/');
+  if (!raw || raw === 'index.html' || raw === './index.html') return '';
+  return raw.replace(/^\/+|\/+$/g, '').replace(/\/index\.html$/i, '');
+}
+
+function currentPublicHrefFromMission(mission?: MissionLike): string {
+  const folder = clusterFolderFromMission(mission);
+  const subPath = normalizeMissionSubPath((mission as any)?.subPath || (mission as any)?.sub_path || '');
+  const base = `/${folder}${subPath ? `/${subPath}` : ''}/index.html`.replace(/\/{2,}/g, '/');
+  return base;
+}
+
+function resolveOutputRoot(): string {
+  return path.join(process.cwd(), 'output_sites');
+}
+
+function normalizeHumanLabel(value: string): string {
+  const cleaned = normalizeText(value)
+    .replace(/\bde de\b/gi, 'de')
+    .replace(/\bde\s+(cerrajeros|fontaneros|electricistas|carpinteros|pintores)\b/gi, '$1')
+    .replace(/\bservicios?\b/gi, '')
+    .replace(/\bt[eé]cnicos?\b/gi, '')
+    .replace(/\bdelegaci[oó]n\b/gi, '')
+    .replace(/\bpagina\b/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+
+  const titled = cleaned
+    .split(' ')
+    .filter(Boolean)
+    .map((word) => {
+      const lower = word.toLowerCase();
+      if (['de', 'en', 'y', 'la', 'el', 'los', 'las', 'del'].includes(lower)) return lower;
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    })
+    .join(' ')
+    .trim();
+
+  return titled;
+}
+
+function scanGeneratedRoutes(root = resolveOutputRoot()): GeneratedRoute[] {
+  if (!fs.existsSync(root)) return [];
+
+  const routes: GeneratedRoute[] = [];
+
+  const visit = (dir: string): void => {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        visit(full);
+        continue;
+      }
+      if (!entry.isFile() || entry.name.toLowerCase() !== 'index.html') continue;
+
+      const relative = path.relative(root, full).replace(/\\/g, '/');
+      const relativeDir = path.dirname(relative).replace(/\\/g, '/');
+      const publicHref = `/${relativeDir.replace(/\/+$/g, '')}/index.html`.replace(/\/{2,}/g, '/');
+      const parts = publicHref.split('/').filter(Boolean);
+      const source = parts[parts.length - 2] || parts[0] || publicHref;
+
+      routes.push({
+        filePath: full,
+        publicHref,
+        relativeDir,
+        parts,
+        label: normalizeHumanLabel(source.replace(/-/g, ' ')) || 'Página relacionada',
+      });
+    }
+  };
+
+  visit(root);
+
+  const dedup = new Map<string, GeneratedRoute>();
+  for (const route of routes) {
+    if (!dedup.has(route.publicHref)) dedup.set(route.publicHref, route);
+  }
+  return [...dedup.values()];
+}
+
+function calculateRelativePath(fromHref: string, toHref: string): string {
+  if (!toHref || toHref.startsWith('#') || toHref.startsWith('http')) return toHref;
+
+  const fromParts = fromHref.split('/').filter(Boolean);
+  const toParts = toHref.split('/').filter(Boolean);
+  const fromDirParts = fromParts.slice(0, -1);
+
+  let common = 0;
+  while (common < fromDirParts.length && common < toParts.length && fromDirParts[common] === toParts[common]) {
+    common += 1;
+  }
+
+  const up = Math.max(0, fromDirParts.length - common);
+  const down = toParts.slice(common).join('/');
+  const prefix = up === 0 ? './' : '../'.repeat(up);
+  return `${prefix}${down}`.replace(/([^:])\/\/+?/g, '$1/').replace(/\/index\.html\/+$/i, '/index.html');
+}
+
+function uniqueBy<T>(items: T[], keyFn: (item: T) => string): T[] {
+  const seen = new Set<string>();
+  const out: T[] = [];
+  for (const item of items) {
+    const key = keyFn(item);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(item);
+  }
+  return out;
+}
+
+function sameHref(a?: string, b?: string): boolean {
+  return normalizeText(a || '').replace(/\/+$/g, '') === normalizeText(b || '').replace(/\/+$/g, '');
+}
+
+function findCurrentNode(plan: InternalLinkPlan, graph?: SiteGraph): SiteNode | undefined {
+  return graph?.nodes?.find((node) => node.id === plan.currentNodeId);
+}
+
+function filterRoutesForCluster(routes: GeneratedRoute[], mission?: MissionLike): GeneratedRoute[] {
+  const folder = clusterFolderFromMission(mission);
+  return routes.filter((route) => route.parts[0] === folder);
+}
+
+function buildHubLink(text: string, url: string, relation: LinkRelation, description: string, badge: string, currentHref: string): HubLink {
+  let finalUrl = url;
+  if (finalUrl && !finalUrl.startsWith('#') && !finalUrl.startsWith('http')) {
+    const normalized = finalUrl.endsWith('index.html') ? finalUrl : `${finalUrl.replace(/\/+$/g, '')}/index.html`;
+    finalUrl = calculateRelativePath(currentHref, normalized);
+  }
+
+  return {
+    text: normalizeHumanLabel(text) || 'Página relacionada',
+    url: finalUrl,
+    relation,
+    description,
+    badge,
+  };
+}
+
+function buildLinksFromCluster(plan: InternalLinkPlan, graph?: SiteGraph, mission?: MissionLike): HubLink[] {
+  const currentNode = findCurrentNode(plan, graph);
+  const currentHref = currentPublicHrefFromMission(mission);
+  const routes = filterRoutesForCluster(scanGeneratedRoutes(), mission);
+  const nicheLabel = normalizeText(getCanonicalNicheLabel((mission as any)?.niche || currentNode?.keyword || 'servicio'));
+  const city = normalizeText((mission as any)?.city || currentNode?.city || 'tu zona');
+
+  const rootMoneyHref = `/${clusterFolderFromMission(mission)}/index.html`;
+  const moneyRoute = routes
+    .sort((a, b) => a.parts.length - b.parts.length || a.publicHref.localeCompare(b.publicHref))
+    .find((route) => sameHref(route.publicHref, rootMoneyHref)) || routes
+      .sort((a, b) => a.parts.length - b.parts.length || a.publicHref.localeCompare(b.publicHref))[0];
+
+  const links: HubLink[] = [];
+
+  if (moneyRoute || mission) {
+    const moneyHref = moneyRoute?.publicHref || rootMoneyHref || currentHref;
+    links.push(
+      buildHubLink(
+        `Página principal de ${nicheLabel} en ${city}`,
+        moneyHref,
+        'money',
+        `Abre la página principal para ver la referencia general del servicio, la cobertura y el contexto base del proyecto en ${city}.`,
+        'Página principal',
+        currentHref,
+      )
+    );
+  }
+
+  const siblingRoutes = routes
+    .filter((route) => !sameHref(route.publicHref, currentHref) && !sameHref(route.publicHref, moneyRoute?.publicHref))
+    .slice(0, 2);
+
+  siblingRoutes.forEach((route, index) => {
+    links.push(
+      buildHubLink(
+        route.label,
+        route.publicHref,
+        index === 0 ? 'supporting' : 'lateral',
+        index === 0
+          ? `Consulta otra página ya generada del mismo proyecto para ampliar contexto y revisar una variante útil relacionada con este servicio en ${city}.`
+          : `Continúa la navegación con otra página del mismo proyecto para profundizar en un caso complementario o en otra cobertura útil en ${city}.`,
+        index === 0 ? 'Página relacionada' : 'Navegación adicional',
+        currentHref,
+      )
+    );
+  });
+
+  if (!links.length) {
+    const fallbackMoneyHref = `/${clusterFolderFromMission(mission)}/index.html`;
+    links.push(
+      buildHubLink(
+        `Página principal de ${nicheLabel} en ${city}`,
+        fallbackMoneyHref,
+        'money',
+        `Accede a la página de referencia principal del proyecto para mantener una navegación clara y coherente en ${city}.`,
+        'Referencia',
+        currentHref,
+      )
+    );
+  }
+
+  return uniqueBy(links, (link) => `${link.url}|${link.text.toLowerCase()}`).slice(0, 3);
+}
+
+function renderHubHtml(title: string, intro: string, links: HubLink[]): string {
+  const isSingle = links.length === 1;
+  const cards = links.map((link) => {
+    const safeUrl = link.url || '#';
+    const isMoney = link.relation === 'money';
+    return `
+    <li class="internal-links-item internal-links-item--${link.relation} ${link.relation === 'money' ? 'internal-links-item--priority' : ''}">
+      <span class="internal-links-item__kicker">${escapeHtml(link.badge)}</span>
+      <h3 class="internal-links-item__title">${escapeHtml(link.text)}</h3>
+      <p class="internal-links-item__description">${escapeHtml(link.description)}</p>
+      <a href="${escapeHtml(safeUrl)}" class="internal-links-item__anchor" aria-label="Navegar a ${escapeHtml(link.text)}">
+        <span class="internal-links-item__cta">Abrir página <span aria-hidden="true">→</span></span>
+      </a>
+    </li>`;
+  }).join('');
+
+  return `
+    <section class="internal-links-hub internal-links-hub--premium section-shell" aria-labelledby="internal-links-title">
+      <div class="el-container">
+        <header class="block__header internal-links-hub__header">
+          <span class="block__eyebrow">Red de soporte</span>
+          <h2 id="internal-links-title" class="block__title">${escapeHtml(title)}</h2>
+          <p class="block__subtitle">${escapeHtml(intro)}</p>
+        </header>
+        <div class="internal-links-grid-wrapper">
+          <ul class="internal-links-grid ${isSingle ? 'internal-links-grid--single' : ''}" role="list">
+            ${cards}
+          </ul>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function buildBlock(id: string, h2: string, html: string, links: HubLink[]): SimpleContentBlock {
   return {
     id,
     h2,
     html,
     wordCount: countWords(html),
+    type: 'internal_linking',
+    blockType: 'internal_linking',
     metadata: {
-      block_type: blockType,
+      block_type: 'internal_linking',
       section_id: id,
       internal_link_block: true,
+      internalLinks: links.map((link) => ({
+        text: link.text,
+        url: link.url,
+        relation: link.relation,
+        description: link.description,
+        badge: link.badge,
+      })),
     },
   };
-}
-
-function getCurrentNode(plan: InternalLinkPlan, graph?: SiteGraph): SiteNode | undefined {
-  return graph?.nodes.find((node) => node.id === plan.currentNodeId);
-}
-
-function toRelativeHref(targetFilePath: string, currentFilePath: string): string {
-  const currentDir = path.dirname(currentFilePath);
-  const targetDir = path.dirname(targetFilePath);
-
-  let relative = path.relative(currentDir, targetDir).replace(/\\/g, '/');
-  if (!relative) return './';
-
-  if (!relative.endsWith('/')) {
-    relative = `${relative}/`;
-  }
-
-  if (!relative.startsWith('.')) {
-    relative = `./${relative}`;
-  }
-
-  return relative;
-}
-
-function toAreaLink(
-  currentNode: SiteNode,
-  candidate: SiteNode,
-  routes: GeneratedRoute[],
-  currentFilePath: string,
-  mission?: MissionLike,
-): LinkCandidate | null {
-  const targetRoute = resolveGeneratedRoute(candidate.slug || '', routes, mission);
-  if (!targetRoute) return null;
-
-  const areaName = String(candidate.areaName || '').trim();
-  if (!areaName) return null;
-
-  return {
-    targetId: candidate.id,
-    targetSlug: toRelativeHref(targetRoute.filePath, currentFilePath),
-    targetKeyword: String(candidate.keyword || currentNode.keyword || ''),
-    targetTitle: String(candidate.title || `${currentNode.keyword} en ${areaName}`),
-    direction: 'lateral',
-    score: 100,
-    anchor: `${currentNode.keyword} en ${areaName}`,
-    reason: 'Solo se enlazan barrios hermanos cuando la ruta de destino ya existe físicamente en output_sites.',
-    rule: 'same_service_nearby_areas',
-    targetType: 'service_area',
-    targetSubtype: candidate.pageSubtype,
-  };
-}
-
-function buildAreaSiblingLinks(
-  currentNode: SiteNode,
-  graph: SiteGraph | undefined,
-  routes: GeneratedRoute[],
-  currentFilePath: string,
-  mission?: MissionLike,
-): LinkCandidate[] {
-  if (!graph || currentNode.type !== 'service_area') return [];
-
-  const city = normalizeText(currentNode.city || '');
-  const keyword = normalizeText(currentNode.keyword || '');
-
-  const siblings = graph.nodes.filter((node) =>
-    node.id !== currentNode.id &&
-    node.type === 'service_area' &&
-    normalizeText(node.city || '') === city &&
-    normalizeText(node.keyword || '') === keyword
-  );
-
-  return dedupeLinks(
-    siblings
-      .map((node) => toAreaLink(currentNode, node, routes, currentFilePath, mission))
-      .filter((value): value is LinkCandidate => Boolean(value))
-  ).slice(0, 4);
-}
-
-function buildClusterImmediateChildRoutes(
-  routes: GeneratedRoute[],
-  currentPublicHref: string,
-  clusterFolder?: string,
-): GeneratedRoute[] {
-  if (!clusterFolder) return [];
-
-  return routes
-    .filter((route) => route.parts[0] === clusterFolder && route.parts.length === 2)
-    .filter((route) => route.publicHref !== currentPublicHref)
-    .slice(0, 12);
-}
-
-function buildHomeCityLinks(
-  currentNode: SiteNode,
-  routes: GeneratedRoute[],
-  currentPublicHref: string,
-  mission?: MissionLike,
-): LinkCandidate[] {
-  const clusterFolder = getClusterFolder(mission);
-  const clusterChildren = buildClusterImmediateChildRoutes(routes, currentPublicHref, clusterFolder);
-
-  if (clusterChildren.length > 0) {
-    return dedupeLinks(
-      clusterChildren.map((route) => {
-        const citySegment = route.parts[1];
-        const cityLabel = humanizeSlug(citySegment);
-        return {
-          targetId: `generated:city:${citySegment}`,
-          targetSlug: route.publicHref,
-          targetKeyword: cityLabel,
-          targetTitle: cityLabel,
-          direction: 'lateral' as const,
-          score: 100,
-          anchor: cityLabel,
-          reason: 'Se muestran únicamente hubs locales ya generados y resueltos desde la ruta real del cluster.',
-          rule: 'service_to_city',
-          targetType: 'home_local' as const,
-          targetSubtype: 'city_hub' as const,
-        };
-      }),
-    ).slice(0, 4);
-  }
-
-  const currentSlug = normalizeInternalHref(currentNode.slug || '');
-  if (!currentSlug) return [];
-
-  const currentParts = currentSlug.split('/').filter(Boolean);
-  if (currentParts.length !== 1) return [];
-
-  const currentCity = currentParts[0];
-
-  return dedupeLinks(
-    routes
-      .filter((route) => route.parts.length === 1 && route.parts[0] !== currentCity)
-      .map((route) => {
-        const cityLabel = humanizeSlug(route.parts[0]);
-        return {
-          targetId: `generated:city:${route.parts[0]}`,
-          targetSlug: route.publicHref,
-          targetKeyword: cityLabel,
-          targetTitle: cityLabel,
-          direction: 'lateral' as const,
-          score: 100,
-          anchor: cityLabel,
-          reason: 'Se muestran únicamente hubs locales ya generados y disponibles en producción.',
-          rule: 'service_to_city',
-          targetType: 'home_local' as const,
-          targetSubtype: 'city_hub' as const,
-        };
-      }),
-  ).slice(0, 4);
-}
-
-function buildCrossCityServiceLinks(
-  currentNode: SiteNode,
-  routes: GeneratedRoute[],
-  currentPublicHref: string,
-  mission?: MissionLike,
-): LinkCandidate[] {
-  const clusterFolder = getClusterFolder(mission);
-  const clusterChildren = buildClusterImmediateChildRoutes(routes, currentPublicHref, clusterFolder);
-
-  if (clusterChildren.length > 0) {
-    return dedupeLinks(
-      clusterChildren.map((route) => {
-        const citySegment = route.parts[1];
-        const cityLabel = humanizeSlug(citySegment);
-        return {
-          targetId: `generated:service:${sanitizePathToken(currentNode.keyword)}:${citySegment}`,
-          targetSlug: route.publicHref,
-          targetKeyword: String(currentNode.keyword || ''),
-          targetTitle: `${currentNode.keyword} en ${cityLabel}`,
-          direction: 'lateral' as const,
-          score: 100,
-          anchor: `${currentNode.keyword} en ${cityLabel}`,
-          reason: 'Solo se enlazan landings ya generadas y detectadas en la estructura real del cluster.',
-          rule: 'same_city_related_services',
-          targetType: 'service' as const,
-          targetSubtype: 'primary' as const,
-        };
-      }),
-    ).slice(0, 4);
-  }
-
-  const currentSlug = normalizeInternalHref(currentNode.slug || '');
-  if (!currentSlug) return [];
-
-  const currentParts = currentSlug.split('/').filter(Boolean);
-  const normCurrent = (currentParts.length === 1 && currentParts[0].includes('-'))
-    ? currentParts[0].split('-')
-    : currentParts;
-
-  if (normCurrent.length !== 2) return [];
-
-  const [serviceSegment, currentCitySegment] = normCurrent;
-
-  return dedupeLinks(
-    routes
-      .filter((route) => {
-        const tail = routeTailParts(route);
-        const normFound = (tail.length === 1 && tail[0].includes('-'))
-          ? tail[0].split('-')
-          : tail;
-
-        return normFound.length === 2 && normFound[0] === serviceSegment && normFound[1] !== currentCitySegment;
-      })
-      .map((route) => {
-        const tail = routeTailParts(route);
-        const normFound = (tail.length === 1 && tail[0].includes('-'))
-          ? tail[0].split('-')
-          : tail;
-        const cityLabel = humanizeSlug(normFound[1]);
-        return {
-          targetId: `generated:service:${serviceSegment}:${normFound[1]}`,
-          targetSlug: route.publicHref,
-          targetKeyword: String(currentNode.keyword || ''),
-          targetTitle: `${currentNode.keyword} en ${cityLabel}`,
-          direction: 'lateral' as const,
-          score: 100,
-          anchor: `${currentNode.keyword} en ${cityLabel}`,
-          reason: 'Solo se enlazan landings del mismo servicio cuando la página de destino ya existe físicamente.',
-          rule: 'same_city_related_services',
-          targetType: 'service' as const,
-          targetSubtype: 'primary' as const,
-        };
-      }),
-  ).slice(0, 4);
-}
-
-function absolutizedLinksToRelative(
-  links: LinkCandidate[],
-  routes: GeneratedRoute[],
-  currentFilePath: string,
-  mission?: MissionLike,
-): LinkCandidate[] {
-  return dedupeLinks(
-    links
-      .map((link) => {
-        const targetRoute = resolveGeneratedRoute(link.targetSlug, routes, mission);
-        if (!targetRoute) return null;
-
-        return {
-          ...link,
-          targetSlug: toRelativeHref(targetRoute.filePath, currentFilePath),
-        };
-      })
-      .filter((value): value is LinkCandidate => Boolean(value)),
-  );
-}
-
-function renderBandHtml(title: string, intro: string, links: LinkCandidate[], bandClass: string): string {
-  const linksHtml = links.map(link => `
-    <li class="internal-links-item">
-      <a href="${escapeHtml(link.targetSlug)}" class="link-card" title="${escapeHtml(link.reason)}">
-        <div class="link-card__content">
-          <span class="link-card__title">${escapeHtml(link.anchor)}</span>
-          <span class="link-card__desc">Ver delegación técnica</span>
-        </div>
-        <span class="link-card__icon" aria-hidden="true">→</span>
-      </a>
-    </li>
-  `).join('');
-
-  return `
-    <div class="internal-links-hub ${bandClass}">
-      <header class="block__header">
-        <span class="block__eyebrow">Presencia Nacional</span>
-        <h2 class="block__title">${escapeHtml(title)}</h2>
-        <p class="block__subtitle">${escapeHtml(intro)}</p>
-      </header>
-
-      <ul class="internal-links-grid">
-        ${linksHtml}
-      </ul>
-
-      <style>
-        .internal-links-hub {
-          padding: 4rem 2rem;
-          background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.03) 0%, rgba(var(--primary-rgb), 0.01) 100%);
-          border-radius: 2rem;
-          border: 1px solid rgba(var(--primary-rgb), 0.08);
-          margin: 4rem 0;
-        }
-        .block__header { margin-bottom: 3rem; text-align: center; }
-        .block__eyebrow { 
-          display: inline-block;
-          padding: 0.5rem 1rem;
-          background: rgba(var(--primary-rgb), 0.1);
-          color: var(--primary);
-          border-radius: 999px;
-          font-weight: 700;
-          font-size: 0.85rem;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          margin-bottom: 1rem;
-        }
-        .block__title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; color: var(--text); }
-        .block__subtitle { color: var(--muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
-
-        .internal-links-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 1.5rem;
-          list-style: none;
-          padding: 0;
-        }
-
-        .link-card {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 1.5rem;
-          background: rgba(255, 255, 255, 0.7);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.5);
-          border-radius: 1.25rem;
-          text-decoration: none;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-
-        .link-card:hover {
-          transform: translateY(-5px) scale(1.02);
-          background: #ffffff;
-          border-color: var(--primary);
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .link-card__title {
-          display: block;
-          font-size: 1.15rem;
-          font-weight: 700;
-          color: var(--text);
-          margin-bottom: 0.25rem;
-        }
-
-        .link-card__desc {
-          display: block;
-          font-size: 0.85rem;
-          color: var(--muted);
-          font-weight: 500;
-        }
-
-        .link-card__icon {
-          font-size: 1.5rem;
-          color: var(--primary);
-          transition: transform 0.3s ease;
-        }
-
-        .link-card:hover .link-card__icon {
-          transform: translateX(5px);
-        }
-
-        @media (max-width: 768px) {
-          .block__title { font-size: 2rem; }
-          .internal-links-hub { padding: 2rem 1rem; }
-        }
-      </style>
-    </div>
-  `.trim();
 }
 
 export function buildAutomaticInternalLinkBlocks(
@@ -644,80 +334,21 @@ export function buildAutomaticInternalLinkBlocks(
   graph?: SiteGraph,
   mission?: MissionLike,
 ): SimpleContentBlock[] {
-  const currentNode = getCurrentNode(plan, graph);
-  if (!currentNode) return [];
+  const currentNode = findCurrentNode(plan, graph);
+  if (!currentNode && !mission) return [];
 
-  const outputContext = buildOutputContext(mission);
-  const routes = scanGeneratedRoutes(outputContext?.clusterFolder);
-  if (!routes.length || !outputContext) return [];
+  let city = normalizeText((mission as any)?.city || currentNode?.city || '');
+  if (!city || city.length < 2) city = 'tu zona';
 
-  if (currentNode.type === 'service_area') {
-    const siblingAreaLinks = buildAreaSiblingLinks(currentNode, graph, routes, outputContext.currentFilePath, mission);
-    if (!siblingAreaLinks.length) return [];
+  let niche = normalizeText(getCanonicalNicheLabel((mission as any)?.niche || currentNode?.keyword || 'servicio'));
+  if (!niche || niche.length < 2) niche = 'servicio especializado';
+  const links = buildLinksFromCluster(plan, graph, mission);
+  if (!links.length) return [];
 
-    const city = String(currentNode.city || plan.currentCity || 'la ciudad');
-    return [
-      buildBlock(
-        'internal-links-contextual',
-        `Otros barrios de ${city}`,
-        renderBandHtml(
-          `Cobertura Extendida en ${city}`,
-          'Contamos con técnicos distribuidos estratégicamente para enlazar solo páginas de zonas que ya existen dentro del cluster publicado.',
-          siblingAreaLinks,
-          'internal-links-hub--areas'
-        ),
-        'authority_note',
-      ),
-    ];
-  }
+  const title = links.length >= 3 ? 'Páginas recomendadas dentro del proyecto' : 'Página principal y navegación relacionada';
+  const intro = links.length >= 3
+    ? `Aquí puedes abrir la página principal y otras páginas ya generadas del mismo proyecto para moverte con contexto y sin perder el hilo de navegación en ${city}.`
+    : `Aquí tienes la página principal del proyecto para mantener una navegación clara y siempre disponible en ${city}.`;
 
-  if (currentNode.type === 'home_local') {
-    const cityLinks = absolutizedLinksToRelative(
-      buildHomeCityLinks(currentNode, routes, outputContext.currentPublicHref, mission),
-      routes,
-      outputContext.currentFilePath,
-      mission,
-    );
-    if (!cityLinks.length) return [];
-
-    return [
-      buildBlock(
-        'internal-links-contextual',
-        'Nuestras sedes principales',
-        renderBandHtml(
-          'Centros de Operaciones Regionales',
-          'Este bloque solo aparece cuando el sistema encuentra otras rutas reales ya generadas dentro de la estructura publicada.',
-          cityLinks,
-          'internal-links-hub--cities'
-        ),
-        'authority_note',
-      ),
-    ];
-  }
-
-  if (currentNode.type === 'service' && currentNode.pageSubtype === 'primary') {
-    const crossCityLinks = absolutizedLinksToRelative(
-      buildCrossCityServiceLinks(currentNode, routes, outputContext.currentPublicHref, mission),
-      routes,
-      outputContext.currentFilePath,
-      mission,
-    );
-    if (!crossCityLinks.length) return [];
-
-    return [
-      buildBlock(
-        'internal-links-contextual',
-        'Expertos en otras ciudades',
-        renderBandHtml(
-          `Disponibilidad de ${currentNode.keyword} por Región`,
-          `Los enlaces de esta banda se resuelven contra rutas existentes en output_sites para evitar slugs inventados o destinos rotos.`,
-          crossCityLinks,
-          'internal-links-hub--cross-city'
-        ),
-        'authority_note',
-      ),
-    ];
-  }
-
-  return [];
+  return [buildBlock('internal-links-contextual', title, renderHubHtml(title, intro, links), links)];
 }

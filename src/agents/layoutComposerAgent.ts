@@ -1,10 +1,12 @@
 import { BaseAgent, AgentResponse } from './base.js';
 import axios from 'axios';
 import { vault } from '../tools/vault.js';
+import { AIFacade } from '../tools/aiFacade.js';
 import { safeJsonParse, pickAllowed, pickBoolean } from '../utils/jsonRecovery.js';
 import { scoreDesignRepetitionRisk as scoreRepetitionRisk, deriveOriginalityScopes } from '../originality/index.js';
 import { dbManager } from '../db/index.js';
 import { PAGE_ARCHETYPES } from '../config/pageArchetypes.js';
+import { selectVisualIdentityContract } from '../config/visualIdentityContracts.js';
 import { buildSeed, pickSeeded } from '../utils/designSeed.js';
 import {
     SectionLayoutContract,
@@ -120,13 +122,34 @@ const ALLOWED_HERO_TEMPLATES = ['split', 'centered', 'proof-first', 'form-first'
 const ALLOWED_CADENCE_PATTERNS = ['alternating', 'stacked', 'contrast-bursts', 'cinematic', 'calm'] as const;
 const ALLOWED_PROOF_STRATEGIES = ['early', 'mid', 'distributed', 'none'] as const;
 const ALLOWED_CTA_STRATEGIES = ['terminal', 'distributed', 'hero-heavy', 'minimal'] as const;
-const ALLOWED_PAGE_SKELETONS = ['editorial-longform', 'conversion-funnel', 'local-directory', 'premium-showcase', 'technical-comparison'] as const;
+const ALLOWED_PAGE_SKELETONS = ['editorial-longform', 'conversion-funnel', 'local-directory', 'premium-showcase', 'technical-comparison', 'emergency-dispatch', 'technical-diagnosis', 'local-newspaper', 'neighborhood-directory', 'premium_studio_case', 'minimal_quote_first', 'before_after_showcase'] as const;
 const ALLOWED_PATTERNS = [
     'hero_split_left', 'hero_split_right', 'hero_center_stack', 'hero_proof_first', 'hero_cta_heavy',
     'section_banded', 'section_panelled', 'section_editorial', 'section_zigzag', 'section_dense_grid',
     'section_minimal', 'section_two_column_story', 'section_stacked_cards', 'section_comparison_table',
-    'section_quote_proof', 'cta_inline', 'cta_floating', 'cta_terminal', 'mosaic', 'directory', 'timeline'
+    'section_quote_proof', 'cta_inline', 'cta_floating', 'cta_terminal', 'mosaic', 'directory', 'timeline', 'diagnostic_rows', 'coverage_map_panel', 'dispatch_timeline', 'compact_decision_tree', 'status_console', 'icon_table', 'evidence_panel', 'inspection_protocol', 'report_qa', 'estimate_matrix', 'feature_article', 'editorial_service_rows', 'neighborhood_notes', 'masonry_tiles', 'atelier_steps', 'cards_faq', 'area_directory_rows', 'large_zone_map', 'horizontal_rows', 'minimal_columns', 'before_after_tiles'
 ] as const;
+
+
+function orderSectionsByVisualIdentity(sections: BlueprintSectionRef[], preferredBlockTypes: string[]): string[] {
+    const remaining = [...sections];
+    const ordered: string[] = [];
+    for (const preferred of preferredBlockTypes || []) {
+        const index = remaining.findIndex((section) => String(section.block_type || section.format || '').toLowerCase() === preferred);
+        if (index >= 0) {
+            ordered.push(remaining[index].section_id);
+            remaining.splice(index, 1);
+        }
+    }
+    for (const section of remaining) ordered.push(section.section_id);
+    return ordered.filter(Boolean);
+}
+
+function patternForDialect(dialect: string | undefined, fallback: string): string {
+    const allowed = new Set<string>(ALLOWED_PATTERNS as readonly string[] as any);
+    if (!dialect) return fallback;
+    return allowed.has(dialect) ? dialect : fallback;
+}
 
 function avoidAdjacentRepetition(contract: LayoutContract, orderedSections: { section_id: string }[]): void {
     let prevShell: string | null = null;
@@ -260,6 +283,7 @@ export class LayoutComposerAgent extends BaseAgent {
         const archetypes = PAGE_ARCHETYPES[pageType] || PAGE_ARCHETYPES.service;
         const seed = buildSeed(input.niche, input.city, pageType, input.dna?.family, input.dna?.heroTreatment);
         const fallbackArchetype = pickSeeded(archetypes, seed);
+        const visualIdentity = input.dna?.visualIdentityContract || selectVisualIdentityContract({ niche: input.niche, city: input.city, pageType, primaryIntent: input.dna?.primaryIntent, salt: seed });
 
         const pageComposition = input.dna?.pageComposition || fallbackArchetype.pageComposition;
         const heroTreatment = input.dna?.heroTreatment || fallbackArchetype.heroTemplate;
@@ -346,19 +370,9 @@ JSON SCHEMA:
 `;
 
         try {
-            const ollamaUrl = vault.OLLAMA_URL || 'http://localhost:11434';
-            const res = await axios.post(
-                `${ollamaUrl}/api/generate`,
-                {
-                    model: this.model,
-                    prompt,
-                    stream: false,
-                    format: 'json'
-                },
-                { timeout: 180000 }
-            );
+            const responseText = await AIFacade.callOllama(this.name, prompt, this.model, { json: true });
 
-            const raw = safeJsonParse<RawLayoutContract>(res.data.response, {
+            const raw = safeJsonParse<RawLayoutContract>(responseText, {
                 pageComposition,
                 visualRhythm: 'dynamic',
                 widthAlternation: true,
@@ -379,7 +393,7 @@ JSON SCHEMA:
                 cadencePattern: pickAllowed(raw.cadencePattern as any, ALLOWED_CADENCE_PATTERNS, 'alternating'),
                 proofStrategy: pickAllowed(raw.proofStrategy as any, ALLOWED_PROOF_STRATEGIES, (input.dna?.seed?.proofStyle as any) || 'distributed'),
                 ctaStrategy: pickAllowed(raw.ctaStrategy as any, ALLOWED_CTA_STRATEGIES, (input.dna?.seed?.ctaModel as any) || 'terminal'),
-                orderedSectionIds: Array.isArray(raw.orderedSectionIds) ? raw.orderedSectionIds : sections.map(s => s.section_id),
+                orderedSectionIds: orderSectionsByVisualIdentity(sections, visualIdentity?.orderedBlockTypes || fallbackArchetype.orderedBlockTypes),
                 sections: {}
             };
 
@@ -388,6 +402,9 @@ JSON SCHEMA:
                 const fallback = defaultSectionContract(sectionType, family);
                 const rawSection = raw.sections?.[section.section_id];
                 const normalized = normalizeSectionContract(rawSection, fallback);
+                const blockDialect = visualIdentity?.blockDialects?.[String(sectionType).toLowerCase()];
+                normalized.visualVariant = blockDialect || normalized.visualVariant;
+                normalized.pattern = patternForDialect(blockDialect, normalized.pattern);
 
                 // Seed-based overrides
                 if (input.dna?.seed?.densityProfile) {

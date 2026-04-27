@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-04-23T23:29:02.919Z",
+  "config": {
+    "publishMode": "draft",
+    "options": {
+      "site_type": "static",
+      "debug_mode": true,
+      "enable_wordpress": false,
+      "is_cluster": false,
+      "scope": "auto"
+    },
+    "pollMs": 3000,
+    "timeoutMs": 1500000,
+    "pauseBetweenBlocks": false,
+    "resultsRoot": "C:\\Users\\Bryan\\Desktop\\pruebaGravity\\src\\experiments\\results"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "iterationId": "20",
+  "block": "B",
+  "command": "crea una página de cerrajeros 24 horas en Getafe",
+  "note": "Producción real controlada",
+  "jobId": "mission-1776996584131",
+  "timestamp": "2026-04-24T02:16:40.774Z",
+  "durationSeconds": 416.65,
+  "mission": {
+    "id": "mission-1776996584131",
+    "niche": "cerrajeros 24 horas",
+    "status": "COMPLETED",
+    "created_at": "2026-04-24 02:09:44",
+    "city": null
+  },
+  "review": null,
+  "metrics": {
+    "missionStatus": "COMPLETED",
+    "reviewStatus": null,
+    "score": null,
+    "qualityGateScore": null,
+    "qualityGateFailed": false,
+    "technicalValidationFailed": false,
+    "technicalIssues": [],
+    "issueCount": 0,
+    "issues": [],
+    "writerFallbacks": 0,
+    "correctorFallback": false,
+    "coherenceWarnings": 0,
+    "placeholderWarnings": 0,
+    "modelUsage": [],
+    "totalLogs": 24,
+    "publishabilityHint": "requiere_revision"
+  }
+}

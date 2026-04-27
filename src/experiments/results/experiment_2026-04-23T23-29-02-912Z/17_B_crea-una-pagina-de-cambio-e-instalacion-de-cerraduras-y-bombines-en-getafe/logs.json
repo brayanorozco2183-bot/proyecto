@@ -1,0 +1,240 @@
+[
+  {
+    "id": 25693,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "Misión Iniciada Core: Atacando nicho de cerrajeros cambio e instalacion de cerraduras y bombines en 1 destinos.",
+    "timestamp": "2026-04-24 01:46:29"
+  },
+  {
+    "id": 25694,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] SERP listo para Getafe. Resultados orgánicos: 10. Iniciando auditoría competitiva...",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25695,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Iniciando auditoría profunda de competidores. Candidatos limpios: 10 de 10.",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25696,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.lomejordelbarrio.com/getafe/cerrajeros",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25697,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeriasoler.es",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25698,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrapid.com/cerrajeros-getafe",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25699,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrapid.com",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25700,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosadmifin.com/cerrajeros-getafe",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25701,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosadmifin.com",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25702,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://servicioxpress.com/cerrajero-getafe",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25703,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeros24horasexpress.com",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25704,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosgetafe.plus",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25705,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeriasoler.es/cerrajeros-getafe",
+    "timestamp": "2026-04-24 01:46:36"
+  },
+  {
+    "id": 25706,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditoría útil: 6 aceptadas, 4 rechazadas por baja relevancia o baja señal local.",
+    "timestamp": "2026-04-24 01:46:49"
+  },
+  {
+    "id": 25707,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Iniciando síntesis estratégica para Getafe con 6 auditorías profundas.",
+    "timestamp": "2026-04-24 01:46:49"
+  },
+  {
+    "id": 25708,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Sintetizando Estatuto de Dominación para \"cerrajeros cambio e instalacion de cerraduras y bombines\" en \"Getafe\". Confianza: high",
+    "timestamp": "2026-04-24 01:46:49"
+  },
+  {
+    "id": 25709,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FASTPATH] Strategy resolved in deterministic mode for Getafe.",
+    "timestamp": "2026-04-24 01:46:49"
+  },
+  {
+    "id": 25710,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Síntesis estratégica finalizada para Getafe en 6ms.",
+    "timestamp": "2026-04-24 01:46:49"
+  },
+  {
+    "id": 25711,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Resolviendo identidad NAP para Getafe...",
+    "timestamp": "2026-04-24 01:46:49"
+  },
+  {
+    "id": 25712,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "NAP_Guardian_01",
+    "thought": "Verifying deterministic NAP identity for cerrajeros cambio e instalacion de cerraduras y bombines in Getafe",
+    "timestamp": "2026-04-24 01:46:49"
+  },
+  {
+    "id": 25713,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] NAP finalizado para Getafe en 1ms.",
+    "timestamp": "2026-04-24 01:46:49"
+  },
+  {
+    "id": 25714,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Lanzando pipeline de contenido para Getafe...",
+    "timestamp": "2026-04-24 01:46:49"
+  },
+  {
+    "id": 25715,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Pipeline de contenido completado para Getafe en 479864ms.",
+    "timestamp": "2026-04-24 01:54:49"
+  },
+  {
+    "id": 25716,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[V7] Generando assets técnicos programáticos para cerrajeros cambio e instalacion de cerraduras y bombines en Getafe",
+    "timestamp": "2026-04-24 01:54:49"
+  },
+  {
+    "id": 25717,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] Comprobando enlace: https://www.getafe.es/",
+    "timestamp": "2026-04-24 01:54:49"
+  },
+  {
+    "id": 25718,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] ✅ Enlace VIVO: https://www.getafe.es/",
+    "timestamp": "2026-04-24 01:54:50"
+  },
+  {
+    "id": 25719,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] Comprobando enlace: https://www.ocu.org/",
+    "timestamp": "2026-04-24 01:54:50"
+  },
+  {
+    "id": 25720,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] ✅ Enlace VIVO: https://www.ocu.org/",
+    "timestamp": "2026-04-24 01:54:50"
+  },
+  {
+    "id": 25721,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] Comprobando enlace: https://www.policia.es/",
+    "timestamp": "2026-04-24 01:54:50"
+  },
+  {
+    "id": 25722,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Technical_Specialist_05",
+    "thought": "[VERIFY] ✅ Enlace VIVO: https://www.policia.es/",
+    "timestamp": "2026-04-24 01:54:51"
+  },
+  {
+    "id": 25723,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Quality_Auditor_10",
+    "thought": "[EEAT Audit] Verificando señales negativas para Getafe...",
+    "timestamp": "2026-04-24 01:54:51"
+  },
+  {
+    "id": 25724,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Linguist_Interpreter_08",
+    "thought": "Auditoría lingüística para Getafe: PASSED",
+    "timestamp": "2026-04-24 01:54:51"
+  },
+  {
+    "id": 25725,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Quality_Auditor_10",
+    "thought": "[QualityScore] Final Score for Getafe: 82/100",
+    "timestamp": "2026-04-24 01:54:51"
+  },
+  {
+    "id": 25726,
+    "mission_id": "mission-1776995189590",
+    "agent_name": "Static_Deploy_09",
+    "thought": "Generating static site for cerrajeros cambio e instalacion de cerraduras y bombines in Getafe (Cluster: cerrajeros-cambio-e-instalacion-de-cerraduras-y-bombines-getafe)",
+    "timestamp": "2026-04-24 01:54:51"
+  }
+]

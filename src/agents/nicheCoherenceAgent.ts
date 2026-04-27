@@ -1,11 +1,14 @@
 import { BaseAgent, AgentResponse } from './base.js';
-import axios from 'axios';
 import { vault } from '../tools/vault.js';
+import { AIFacade } from '../tools/aiFacade.js';
+import { guardRenderedHtml } from '../utils/renderOutputGuard.js';
+import { detectCrossNicheContamination } from '../niches/crossNicheDetector.js';
 
 export interface CoherenceInput {
     html: string;
     niche: string;
     city: string;
+    blockType?: string;
 }
 
 export interface CoherenceResult {
@@ -28,6 +31,30 @@ export class NicheCoherenceAgent extends BaseAgent {
         );
     }
 
+    private normalizeNicheName(niche: string): string {
+        return String(niche || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    private isGenericOrUnknownNiche(niche: string): boolean {
+        const normalized = this.normalizeNicheName(niche);
+        if (!normalized) return true;
+        return /^(servicios? locales?|servicios? profesionales?|servicios? generales?|profesionales?|especialistas?|empresa local|negocio local|soluciones locales?|multi ?servicio|multiservicio[s]?|home services?)$/.test(normalized);
+    }
+
+    private shouldBypassLlm(input: CoherenceInput): boolean {
+        const forceAll = String(vault.COHERENCE_FORCE_DETERMINISTIC || '').toLowerCase() === 'true';
+        const genericNiche = this.isGenericOrUnknownNiche(input.niche);
+        const html = String(input.html || '');
+        const htmlIsLarge = html.length > 12000;
+        const hasManySemanticBlocks = (html.match(/data-block-type=/g) || []).length >= 4;
+        return forceAll || genericNiche || htmlIsLarge || hasManySemanticBlocks;
+    }
+
     private getSystemPrompt(context: { niche: string, city: string }): string {
         return `Eres un auditor técnico experto en el nicho de ${context.niche} en ${context.city}.
 Tu misión es realizar una "cirugía semántica" sobre el código HTML que recibirás para eliminar alucinaciones de la IA, errores técnicos y redundancias.
@@ -37,7 +64,7 @@ Tu misión es realizar una "cirugía semántica" sobre el código HTML que recib
 2. **CLASES CSS SAGRADAS**: PROHIBIDO cambiar, añadir o eliminar clases CSS. No uses "site-headername", "block-sectionheader", "blocktitle" ni ninguna otra clase que no esté en el HTML original.
 3. **MANTENER ATRIBUTOS**: No toques IDs, hrefs ni atributos data-*.
 4. **FOCO TÉCNICO**: Usa terminología correcta de ${context.niche}. Elimina menciones a temas irrelevantes (clima, política, fauna).
-5. **ANTI-CONTAMINACIÓN DE OFICIO**: Elimina terminología, piezas, averías, ejemplos o procesos propios de otros gremios. Si el nicho es fontanería, no pueden aparecer conceptos de cerrajería; si es cerrajería, no pueden aparecer conceptos de climatización, etc.
+5. **ANTI-CONTAMINACIÓN DE OFICIO**: Elimina terminología, piezas, averías, ejemplos o procesos propios de otros gremios.
 6. **SIN FRASES INVEROSÍMILES**: Si una frase suena genérica, robótica o físicamente incoherente para el oficio, reescríbela con lenguaje natural del gremio.
 
 [REGLAS TÉCNICAS Y NORMAS DE MARCA (OBLIGATORIO)]:
@@ -52,7 +79,17 @@ ${this.technicalBrief || 'Sin normas técnicas adicionales.'}
     async execute(input: CoherenceInput): Promise<AgentResponse<CoherenceResult>> {
         await this.logThought(`Auditoría de coherencia para ${input.niche} en ${input.city}`);
 
-        const prompt = `${this.getSystemPrompt({ niche: input.niche, city: input.city })}
+        try {
+            if (this.shouldBypassLlm(input)) {
+                await this.logThought(`[FASTPATH] Auditoria de coherencia omitida para nicho genérico: ${input.niche}`);
+                return {
+                    success: true,
+                    data: { html: input.html.trim(), changesMade: false },
+                    thoughts: 'Determinismo Master: Coherencia implícita en nicho genérico.'
+                };
+            }
+
+            const prompt = `${this.getSystemPrompt({ niche: input.niche, city: input.city })}
 
         HTML A CORREGIR:
         ${input.html}
@@ -60,8 +97,12 @@ ${this.technicalBrief || 'Sin normas técnicas adicionales.'}
         RESPONDE SOLO CON EL HTML CORREGIDO.
         `;
 
-        try {
-            let correctedHtml = await this.callModel(prompt);
+            const response = await AIFacade.callOllama(this.name, prompt, this.model, {
+                json: false,
+                timeoutMs: vault.COHERENCE_TIMEOUT_MS
+            });
+
+            let correctedHtml = response || "";
 
             // Clean markdown artifacts
             correctedHtml = correctedHtml.replace(/```html/g, '').replace(/```/g, '').trim();
@@ -93,24 +134,60 @@ ${this.technicalBrief || 'Sin normas técnicas adicionales.'}
                 correctedHtml = input.html;
             }
 
-            const changesMade = correctedHtml.trim() !== input.html.trim();
-
             // Extra safety: if rogue classes appear after correction, revert.
             if (/\bsite-headername\b|\bblock-sectionheader\b|\bblocktitle\b|\bel-breadcrumbslink\b|\bherotitle\b|\bherosubtitle\b/i.test(correctedHtml)) {
                 correctedHtml = input.html;
             }
 
+            const guarded = guardRenderedHtml(input.html, correctedHtml);
+            let finalHtml = guarded.html.trim();
+
+            const originalRisk = detectCrossNicheContamination({
+                niche: input.niche,
+                city: input.city,
+                blockType: input.blockType,
+                html: input.html
+            });
+            const correctedRisk = detectCrossNicheContamination({
+                niche: input.niche,
+                city: input.city,
+                blockType: input.blockType,
+                html: finalHtml
+            });
+
+            if (correctedRisk.shouldRegenerate || correctedRisk.score > (originalRisk.score + 8)) {
+                await this.logThought(`[NICHE_ISOLATION] Revirtiendo auditoría de coherencia por contaminación cross-niche. Original=${originalRisk.score}, corregido=${correctedRisk.score}`);
+                await this.rememberLesson({
+                    title: 'Auditoría revoca cambios que añaden contaminación',
+                    lesson: `El LLM empeoró la pureza de nicho de score ${originalRisk.score} a ${correctedRisk.score}. Los cambios han sido descartados.`,
+                    severity: 'warning',
+                    lessonType: 'safety',
+                    niche: input.niche,
+                    city: input.city,
+                });
+                finalHtml = input.html.trim();
+            }
+
+            const changesMade = finalHtml !== input.html.trim();
+
             return {
                 success: true,
-                data: { html: correctedHtml.trim(), changesMade },
-                thoughts: `Revision completada. Cambios realizados: ${changesMade}. Safe: ${newLen >= origLen * 0.60}`
+                data: { html: finalHtml, changesMade },
+                thoughts: `Revision completada. Cambios realizados: ${changesMade}. Safe: ${newLen >= origLen * 0.60}. Guard reverted: ${guarded.reverted}. CrossNiche=${correctedRisk.severity}/${correctedRisk.score}`
             };
 
         } catch (error: any) {
             await this.logThought(`[ERROR] en Auditor de Coherencia: ${error.message}`);
+            await this.rememberFailure({
+                errorMessage: error.message,
+                failureType: 'llm_fallback',
+                niche: input.niche,
+                city: input.city,
+            });
             return {
-                success: false,
-                thoughts: "Error durante la auditoría de coherencia.",
+                success: true, // Graceful recovery
+                data: { html: input.html, changesMade: false },
+                thoughts: "Error durante la auditoría de coherencia. Devolviendo original por seguridad.",
                 error: error.message
             };
         }

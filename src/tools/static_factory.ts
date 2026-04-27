@@ -1,6 +1,156 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+const IMAGE_FILE_RX = /\.(?:png|jpe?g|webp|gif|svg|avif)$/i;
+
+function minifyInlineCss(css: string): string {
+    return String(css || '')
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([{}:;,>])\s*/g, '$1')
+        .replace(/;}/g, '}')
+        .trim();
+}
+
+function minifyHtmlForStaticDelivery(html: string): string {
+    let out = String(html || '');
+    if (!out) return out;
+
+    out = out.replace(/<!--[\s\S]*?-->/g, (match) => {
+        return /^<!--\[if|<!\[endif\]-->$/i.test(match.trim()) ? match : '';
+    });
+
+    out = out.replace(/<style([^>]*)>([\s\S]*?)<\/style>/gi, (_m, attrs, css) => {
+        return `<style${attrs}>${minifyInlineCss(css)}</style>`;
+    });
+
+    out = out
+        .replace(/>\s+</g, '><')
+        .replace(/\n{2,}/g, '\n')
+        .trim();
+
+    return out;
+}
+
+
+
+function assertNoPublishLeaks(html: string): void {
+    const raw = String(html || '');
+    const patterns = [
+        /\{\{.*?\}\}|\[\[.*?\]\]|__[^_]+__|\$\{.*?\}/i,
+        /\ben\s*[\.,!?;:]/i,
+        /\bidentity\s*,/i,
+        /\bundefined\b|\bnull\b|\[object Object\]/i
+    ];
+    const hit = patterns.find((pattern) => pattern.test(raw));
+    if (hit) {
+        throw new Error(`StaticFactory publish blocked by unresolved output leak: ${hit}`);
+    }
+}
+
+function sanitizeOutputPathToken(value?: string): string {
+    return String(value || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim()
+        .replace(/\\/g, '/')
+        .replace(/^\/+|\/+$/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .toLowerCase();
+}
+
+function sanitizeNestedOutputPath(value?: string): string {
+    return String(value || '')
+        .split(/[\/]+/g)
+        .map(segment => sanitizeOutputPathToken(segment))
+        .filter(Boolean)
+        .join('/');
+}
+
+function legacyOutputToken(value?: string): string {
+    return String(value || '')
+        .trim()
+        .replace(/\\/g, '/')
+        .replace(/^\/+|\/+$/g, '')
+        .replace(/\s+/g, '-')
+        .toLowerCase();
+}
+
+function comparableToken(value?: string): string {
+    return sanitizeOutputPathToken(value).replace(/-/g, '');
+}
+
+async function listFilesRecursive(dir: string): Promise<string[]> {
+    try {
+        const entries = await fs.readdir(dir, { withFileTypes: true });
+        const files = await Promise.all(entries.map(async (entry) => {
+            const full = path.join(dir, entry.name);
+            if (entry.isDirectory()) return listFilesRecursive(full);
+            return [full];
+        }));
+        return files.flat();
+    } catch {
+        return [];
+    }
+}
+
+async function pruneLegacyAliasDirectory(rootDir: string, normalizedRelativePath: string, legacyRelativePath: string): Promise<void> {
+    const normalized = String(normalizedRelativePath || '').replace(/^\/+|\/+$/g, '');
+    const legacy = String(legacyRelativePath || '').replace(/^\/+|\/+$/g, '');
+    if (!normalized || !legacy || normalized === legacy) return;
+
+    const targetDir = path.join(rootDir, normalized);
+    const legacyDir = path.join(rootDir, legacy);
+
+    try {
+        const [targetStat, legacyStat] = await Promise.all([
+            fs.stat(targetDir).catch(() => null),
+            fs.stat(legacyDir).catch(() => null)
+        ]);
+        if (!targetStat?.isDirectory() || !legacyStat?.isDirectory()) return;
+
+        const files = await listFilesRecursive(legacyDir);
+        const containsImages = files.some(file => IMAGE_FILE_RX.test(file));
+        if (containsImages) return;
+
+        await fs.rm(legacyDir, { recursive: true, force: true });
+        console.log(`[StaticFactory] Removed legacy alias directory without images: ${legacyDir}`);
+    } catch (error: any) {
+        console.warn(`[StaticFactory] Could not prune legacy alias ${legacyDir}: ${error.message}`);
+    }
+}
+
+
+async function pruneComparableAliasDirectories(rootDir: string, normalizedRelativePath: string): Promise<void> {
+    const segments = String(normalizedRelativePath || '').split(/[\/]+/g).filter(Boolean);
+    if (!segments.length) return;
+
+    let currentRoot = rootDir;
+    for (const segment of segments) {
+        try {
+            const entries = await fs.readdir(currentRoot, { withFileTypes: true });
+            for (const entry of entries) {
+                if (!entry.isDirectory()) continue;
+                if (entry.name === segment) continue;
+                if (comparableToken(entry.name) !== comparableToken(segment)) continue;
+
+                const aliasDir = path.join(currentRoot, entry.name);
+                const files = await listFilesRecursive(aliasDir);
+                const containsImages = files.some(file => IMAGE_FILE_RX.test(file));
+                if (containsImages) continue;
+
+                await fs.rm(aliasDir, { recursive: true, force: true });
+                console.log(`[StaticFactory] Removed comparable alias directory without images: ${aliasDir}`);
+            }
+        } catch {
+            return;
+        }
+
+        currentRoot = path.join(currentRoot, segment);
+    }
+}
+
 /**
  * StaticFactory - The 2026 Performance Engine.
  * Generates ultra-lightweight, SEO-perfect static pages.
@@ -8,6 +158,7 @@ import path from 'path';
 export class StaticFactory {
     private templateDir = path.join(process.cwd(), 'templates');
     private outputDir = path.join(process.cwd(), 'output_sites');
+    private publicStaticDir = path.join(process.cwd(), 'public-static');
 
     async generatePage(data: {
         city: string;
@@ -18,10 +169,21 @@ export class StaticFactory {
         subPath?: string;
         clusterFolderName?: string;
     }): Promise<string> {
-        const basePath = data.clusterFolderName || `${data.niche.toLowerCase()}-${data.city.toLowerCase()}`;
-        const finalPath = data.subPath ? path.join(basePath, data.subPath.toLowerCase().replace(/\s+/g, '-')) : basePath;
+        const normalizedBasePath = sanitizeOutputPathToken(data.clusterFolderName)
+            || `${sanitizeOutputPathToken(data.niche)}-${sanitizeOutputPathToken(data.city)}`;
+        const normalizedSubPath = sanitizeNestedOutputPath(data.subPath);
+        const finalPath = normalizedSubPath ? path.join(normalizedBasePath, normalizedSubPath) : normalizedBasePath;
+
+        const legacyBasePath = data.clusterFolderName
+            ? legacyOutputToken(data.clusterFolderName)
+            : `${String(data.niche || '').toLowerCase()}-${String(data.city || '').toLowerCase()}`;
+        const legacySubPath = data.subPath ? legacyOutputToken(data.subPath) : '';
+        const legacyFinalPath = legacySubPath ? path.join(legacyBasePath, legacySubPath) : legacyBasePath;
+
         const sitePath = path.join(this.outputDir, finalPath);
+        const publicStaticPath = path.join(this.publicStaticDir, finalPath);
         await fs.mkdir(sitePath, { recursive: true });
+        await fs.mkdir(publicStaticPath, { recursive: true });
 
         // Si el contenido ya es un documento HTML completo (Premium Templates), lo usamos directamente
         let html = data.content;
@@ -90,8 +252,19 @@ export class StaticFactory {
             `;
         }
 
+        assertNoPublishLeaks(html);
+        html = minifyHtmlForStaticDelivery(html);
+
         const filePath = path.join(sitePath, 'index.html');
+        const publicStaticFilePath = path.join(publicStaticPath, 'index.html');
         await fs.writeFile(filePath, html);
+        await fs.writeFile(publicStaticFilePath, html);
+
+        await pruneLegacyAliasDirectory(this.outputDir, finalPath, legacyFinalPath);
+        await pruneLegacyAliasDirectory(this.publicStaticDir, finalPath, legacyFinalPath);
+        await pruneComparableAliasDirectories(this.outputDir, finalPath);
+        await pruneComparableAliasDirectories(this.publicStaticDir, finalPath);
+
         return sitePath;
     }
 }

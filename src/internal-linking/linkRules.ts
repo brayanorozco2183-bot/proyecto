@@ -31,6 +31,22 @@ function makeEdge(
   return { from, to, rule, direction, score, anchor, rationale };
 }
 
+function composeLocalAnchor(base: string, city?: string): string {
+  const cleanBase = String(base || '').replace(/\s+/g, ' ').trim();
+  const cleanCity = String(city || '').replace(/\s+/g, ' ').trim();
+  if (!cleanBase) return cleanCity;
+  if (!cleanCity) return cleanBase;
+
+  const baseNorm = normalize(cleanBase);
+  const cityNorm = normalize(cleanCity);
+  if (!cityNorm) return cleanBase;
+  if (baseNorm === cityNorm || baseNorm.endsWith(` en ${cityNorm}`) || baseNorm.includes(` ${cityNorm}`)) {
+    return cleanBase;
+  }
+
+  return `${cleanBase} en ${cleanCity}`;
+}
+
 export function buildHeuristicEdges(nodes: SiteNode[]): SiteEdge[] {
   const edges: SiteEdge[] = [];
   const map = byId(nodes);
@@ -58,8 +74,8 @@ export function buildHeuristicEdges(nodes: SiteNode[]): SiteEdge[] {
             sub.pageSubtype === 'urgent' ? 'bofu' : 'downward',
             sub.pageSubtype === 'urgent' ? 97 : 88,
             sub.pageSubtype === 'urgent'
-              ? `Urgencias de ${service.keyword} en ${service.city}`
-              : `${sub.keyword} en ${service.city}`,
+              ? composeLocalAnchor(`Urgencias de ${service.keyword}`, service.city)
+              : composeLocalAnchor(sub.keyword, service.city),
             'El servicio principal debe alimentar subservicios y versiones de alta intención.',
           ),
         );
@@ -95,7 +111,7 @@ export function buildHeuristicEdges(nodes: SiteNode[]): SiteEdge[] {
           'city_to_areas',
           'downward',
           84,
-          `${area.areaName || area.keyword} en ${home.city}`,
+          composeLocalAnchor(area.areaName || area.keyword, home.city),
           'La home local debe bajar a barrios y zonas de servicio.',
         ),
       );
@@ -114,7 +130,7 @@ export function buildHeuristicEdges(nodes: SiteNode[]): SiteEdge[] {
           'area_to_service',
           'upward',
           96,
-          `${parent.keyword} en ${parent.city}`,
+          composeLocalAnchor(parent.keyword, parent.city),
           'Cada página de barrio debe enlazar a la página principal del servicio en la misma ciudad.',
         ),
       );
@@ -133,7 +149,7 @@ export function buildHeuristicEdges(nodes: SiteNode[]): SiteEdge[] {
           'urgent_to_service',
           'upward',
           99,
-          `${parent.keyword} en ${parent.city}`,
+          composeLocalAnchor(parent.keyword, parent.city),
           'La urgencia debe devolver autoridad al servicio principal.',
         ),
       );
@@ -152,7 +168,7 @@ export function buildHeuristicEdges(nodes: SiteNode[]): SiteEdge[] {
           'guide_to_money_page',
           'bofu',
           100,
-          `${parent.keyword} en ${parent.city}`,
+          composeLocalAnchor(parent.keyword, parent.city),
           'Toda guía debe empujar a una money page transaccional.',
         ),
       );
@@ -171,7 +187,7 @@ export function buildHeuristicEdges(nodes: SiteNode[]): SiteEdge[] {
           'faq_to_service',
           'bofu',
           98,
-          `${parent.keyword} en ${parent.city}`,
+          composeLocalAnchor(parent.keyword, parent.city),
           'Las FAQ deben llevar a una página BOFU de contratación.',
         ),
       );
@@ -190,7 +206,7 @@ export function buildHeuristicEdges(nodes: SiteNode[]): SiteEdge[] {
           'comparison_to_service',
           'bofu',
           99,
-          `${parent.keyword} en ${parent.city}`,
+          composeLocalAnchor(parent.keyword, parent.city),
           'Las comparativas deben cerrar hacia la página de servicio.',
         ),
       );
@@ -217,34 +233,6 @@ export function buildHeuristicEdges(nodes: SiteNode[]): SiteEdge[] {
       );
     }
   }
-
-  // same city related services
-  /*
-  for (const service of serviceNodes) {
-    const related = serviceNodes.filter(
-      (node) =>
-        node.id !== service.id &&
-        node.city === service.city &&
-        node.pageSubtype !== 'urgent' &&
-        service.pageSubtype !== 'urgent',
-    );
-
-    for (const rel of related.slice(0, 4)) {
-      pushEdge(
-        edges,
-        makeEdge(
-          service.id,
-          rel.id,
-          'same_city_related_services',
-          'lateral',
-          74,
-          `${rel.keyword} en ${rel.city}`,
-          'Servicios relacionados dentro de la misma ciudad deben compartir autoridad lateral.',
-        ),
-      );
-    }
-  }
-  */
 
   return edges.sort((a, b) => b.score - a.score);
 }

@@ -1,0 +1,35 @@
+{
+  "iterationId": "02",
+  "block": "A",
+  "command": "crea una página de cerrajeros en Getafe",
+  "note": "Estabilidad pura: misma money page",
+  "jobId": "mission-1776987414007",
+  "timestamp": "2026-04-23T23:45:39.458Z",
+  "durationSeconds": 525.45,
+  "mission": {
+    "id": "mission-1776987414007",
+    "niche": "cerrajeros",
+    "status": "COMPLETED",
+    "created_at": "2026-04-23 23:36:54",
+    "city": null
+  },
+  "review": null,
+  "metrics": {
+    "missionStatus": "COMPLETED",
+    "reviewStatus": null,
+    "score": null,
+    "qualityGateScore": null,
+    "qualityGateFailed": false,
+    "technicalValidationFailed": false,
+    "technicalIssues": [],
+    "issueCount": 0,
+    "issues": [],
+    "writerFallbacks": 0,
+    "correctorFallback": false,
+    "coherenceWarnings": 0,
+    "placeholderWarnings": 0,
+    "modelUsage": [],
+    "totalLogs": 34,
+    "publishabilityHint": "requiere_revision"
+  }
+}

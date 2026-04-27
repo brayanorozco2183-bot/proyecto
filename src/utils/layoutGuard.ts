@@ -502,14 +502,10 @@ export function autoFixLayoutHtml(html: string, context: LayoutValidationContext
         }
     });
 
-    // 6. Accessible & Visual Integrity
-    const badCaptions = ['Intervención técnica real.', 'Imagen de referencia.', 'Profesional trabajando.'];
+    // 6. Accessible & Visual Integrity - Figcaption Removal
     $('figcaption').each((_: any, el: any) => {
-        const text = normalizeVisibleText($(el).text().trim());
-        if (badCaptions.includes(text) || text.length < 10) {
-            const contextText = `${context.niche || 'Servicio'} especializado en ${normalizedCity || 'la localidad'}.`;
-            $(el).text(contextText);
-        }
+        // Systemic removal of captions to prevent residual placeholder text
+        $(el).remove();
     });
 
     $('img').each((_: any, el: any) => {
@@ -559,17 +555,24 @@ export function autoFixLayoutHtml(html: string, context: LayoutValidationContext
             return;
         }
 
-        let normalizedHref = href
-            .replace(/\/index\.html\/?$/i, '/')
-            .replace(/([^:])\/\/+?/g, '$1/')
-            .replace(/\s+/g, '');
-
-        if (normalizedHref.startsWith('./')) normalizedHref = normalizedHref.slice(1);
-        if (!normalizedHref.startsWith('/') && !normalizedHref.startsWith('#') && !normalizedHref.startsWith('mailto:') && !normalizedHref.startsWith('tel:')) {
+        let normalizedHref = href;
+        normalizedHref = normalizedHref.replace(/([^:])\/\/+?/g, '$1/');
+        
+        // Disabled index.html stripping for local navigation compatibility
+        // normalizedHref = normalizedHref.replace(/\/index\.html$/i, '/');
+        if (normalizedHref.startsWith('/../') || normalizedHref.startsWith('/./')) {
+            normalizedHref = normalizedHref.slice(1);
+        }
+        if (!normalizedHref.startsWith('/') && !normalizedHref.startsWith('.') && !normalizedHref.startsWith('#') && !normalizedHref.startsWith('mailto:') && !normalizedHref.startsWith('tel:')) {
             normalizedHref = `/${normalizedHref}`;
         }
 
+        if (normalizedHref.endsWith('/') && !normalizedHref.includes('#') && !normalizedHref.startsWith('http')) {
+            normalizedHref += 'index.html';
+        }
+
         $(el).attr('href', normalizedHref);
+
     });
 
     // 9. Remove empty sidebars but ENRICH thin trust sections
@@ -638,8 +641,3 @@ export function autoFixLayoutHtml(html: string, context: LayoutValidationContext
     // 13. Placeholder sweep
     return $.html().replace(/{{.*?}}|\[\[.*?\]\]|\[object Object\]|undefined|null/g, '');
 }
-
-
-
-
-

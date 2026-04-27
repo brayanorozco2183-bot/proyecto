@@ -1,4 +1,3 @@
-
 import { SectionSemanticData } from '../agents/contentWriterAgent.js';
 import { SectionRenderContract } from '../types/design.js';
 
@@ -86,6 +85,7 @@ export interface RenderSemanticSectionOpts {
     totalSections?: number;
     isFirst?: boolean;
     isLast?: boolean;
+    city?: string;
 }
 
 function escapeHtml(value: string = ''): string {
@@ -104,6 +104,22 @@ function stripHtml(value: string = ''): string {
 function safeArray<T>(value: T[] | undefined | null): T[] {
     return Array.isArray(value) ? value : [];
 }
+
+
+function sanitizeClassToken(value: any, fallback = 'default'): string {
+    const cleaned = String(value || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .trim();
+
+    if (!cleaned || cleaned === 'undefined' || cleaned === 'null') {
+        return fallback;
+    }
+
+    return cleaned;
+}
+
 
 function toTelHref(phone?: string): string {
     if (!phone) return '#contacto';
@@ -277,13 +293,13 @@ function buildSectionClasses(opts: RenderSemanticSectionOpts, resolved: {
 
     if (opts.sectionContract) {
         sectionClasses.push('has-contract');
-        sectionClasses.push(`contract-shell-${opts.sectionContract.shell}`);
-        sectionClasses.push(`contract-flow-${opts.sectionContract.flow}`);
-        sectionClasses.push(`contract-density-${opts.sectionContract.density}`);
-        sectionClasses.push(`contract-emphasis-${opts.sectionContract.emphasis}`);
-        sectionClasses.push(`contract-card-${opts.sectionContract.cardStyle}`);
-        sectionClasses.push(`contract-ornament-${opts.sectionContract.ornamentLevel}`);
-        sectionClasses.push(`mobile-pattern-${opts.sectionContract.mobilePattern}`);
+        sectionClasses.push(`contract-shell-${sanitizeClassToken(opts.sectionContract.shell, 'plain')}`);
+        sectionClasses.push(`contract-flow-${sanitizeClassToken(opts.sectionContract.flow, 'stack')}`);
+        sectionClasses.push(`contract-density-${sanitizeClassToken(opts.sectionContract.density, 'standard')}`);
+        sectionClasses.push(`contract-emphasis-${sanitizeClassToken(opts.sectionContract.emphasis, 'content')}`);
+        sectionClasses.push(`contract-card-${sanitizeClassToken(opts.sectionContract.cardStyle, 'flat')}`);
+        sectionClasses.push(`contract-ornament-${sanitizeClassToken(opts.sectionContract.ornamentLevel, 'none')}`);
+        sectionClasses.push(`mobile-pattern-${sanitizeClassToken(opts.sectionContract.mobilePattern, 'stack')}`);
     }
 
     return sectionClasses
@@ -466,6 +482,9 @@ function renderFaqColumns(semantic: SectionSemanticData): string {
 function renderMapSection(semantic: SectionSemanticData, opts: RenderSemanticSectionOpts): string {
     const note = semantic.mapNote ? `<p class="map-note">${semantic.mapNote}</p>` : '';
     const intro = renderParagraphs(safeArray(semantic.intro));
+    const city = opts.city || 'España';
+    const query = encodeURIComponent(city);
+    const mapUrl = `https://www.google.com/maps?q=${query}&output=embed`;
 
     if (opts.pageSkeleton === 'local-directory') {
         return `
@@ -475,8 +494,15 @@ function renderMapSection(semantic: SectionSemanticData, opts: RenderSemanticSec
                 ${note}
             </div>
             <div class="map-directory__visual">
-                <div class="map-placeholder">
-                    <div class="map-placeholder__inner">Mapa / cobertura local</div>
+                <div class="map-frame-wrapper" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:1rem;box-shadow:var(--shadow-soft);">
+                    <iframe 
+                        src="${mapUrl}" 
+                        width="100%" 
+                        height="100%" 
+                        style="position:absolute;top:0;left:0;border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
                 </div>
             </div>
         </div>`;
@@ -486,8 +512,15 @@ function renderMapSection(semantic: SectionSemanticData, opts: RenderSemanticSec
     <div class="map-block">
         ${intro}
         ${note}
-        <div class="map-placeholder">
-            <div class="map-placeholder__inner">Mapa / ubicación</div>
+        <div class="map-frame-wrapper" style="position:relative;padding-bottom:45%;height:0;overflow:hidden;border-radius:1rem;box-shadow:var(--shadow-soft);margin-top:2rem;">
+            <iframe 
+                src="${mapUrl}" 
+                width="100%" 
+                height="100%" 
+                style="position:absolute;top:0;left:0;border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
         </div>
     </div>`;
 }
@@ -514,9 +547,11 @@ function wrapSection(
     classes: string,
     opts: RenderSemanticSectionOpts
 ): string {
-    const eyebrow = opts.sectionContract?.eyebrow || opts.blockType || '';
-    const eyebrowValue = String(eyebrow || '').trim().toLowerCase();
-    const safeEyebrow = eyebrowValue && !['generic', 'hero', 'undefined', 'null'].includes(eyebrowValue) ? `<span class="block__eyebrow">${escapeHtml(String(eyebrow))}</span>` : '';
+    const eyebrow = opts.sectionContract?.eyebrow || '';
+    const eyebrowValue = String(eyebrow || '').trim();
+    const isInternalLabel = /^(generic|hero|services_grid|faq|urgency_panel|local_proof|trust_band|process_steps|cta_panel|price_guidance|map|case_story|before_after|objections|micro_cta|comparison_table|directory|mosaic|timeline|stacked_cards|two_column_story|quote_proof|cta_inline|undefined|null)$/i.test(eyebrowValue);
+    
+    const safeEyebrow = eyebrowValue && !isInternalLabel ? `<span class="block__eyebrow">${escapeHtml(eyebrowValue)}</span>` : '';
     const shellClass = opts.sectionContract?.shell ? `shell-${opts.sectionContract.shell}` : '';
     const densityClass = opts.sectionContract?.density ? `density-${opts.sectionContract.density}` : '';
 
@@ -856,3 +891,4 @@ export function renderSemanticSection(
         }
     }
 }
+

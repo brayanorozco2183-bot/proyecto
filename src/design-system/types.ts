@@ -12,6 +12,7 @@ export type DensityBias = 'compact' | 'standard' | 'rich';
 export type SectionBlockType =
     | 'hero_trust'
     | 'services_grid'
+    | 'urgency_panel'
     | 'local_proof'
     | 'trust_band'
     | 'process_steps'
@@ -19,11 +20,15 @@ export type SectionBlockType =
     | 'faq'
     | 'cta_panel'
     | 'comparison_table'
-    | 'map';
+    | 'map'
+    | 'authority_note'
+    | 'internal_linking';
 
 export interface GeneratedSection {
     sectionId?: string;
-    blockType?: SectionBlockType;
+    id?: string;
+    blockType?: SectionBlockType | string;
+    type?: SectionBlockType | string;
     h2: string;
     h3s?: string[];
     html: string;

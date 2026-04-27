@@ -1,17 +1,26 @@
 import { requireNichePlaybook } from './playbookLoader.js';
 import { buildBlockPayload } from './playbookSelectors.js';
+import { buildSeed, rotateSeeded } from '../utils/designSeed.js';
 
-export function resolveBlockPlaybookPayload(niche: string, blockType: string) {
+export function resolveBlockPlaybookPayload(niche: string, blockType: string, scope = '') {
   const playbook = requireNichePlaybook(niche);
-  return buildBlockPayload(playbook, blockType);
+  return buildBlockPayload(playbook, blockType, scope);
 }
 
-export function hydrateSemanticDraftFromPlaybook(niche: string, blockType: string) {
-  const payload = resolveBlockPlaybookPayload(niche, blockType);
+function pickIntroVariant(options: string[], niche: string, blockType: string, city = ''): string {
+  return rotateSeeded(options, buildSeed(niche, city, blockType, 'intro_variant'))[0] || options[0] || '';
+}
+
+export function hydrateSemanticDraftFromPlaybook(niche: string, blockType: string, city = '') {
+  const payload = resolveBlockPlaybookPayload(niche, blockType, city);
 
   if (blockType === 'services_grid') {
     return {
-      intro: [`Bloques de servicio y situaciones reales que suelen activar una contratación de ${niche}.`],
+      intro: [pickIntroVariant([
+        `Casos habituales y decisiones técnicas que suelen activar un servicio de ${niche}.`,
+        `Servicios y situaciones frecuentes que conviene ordenar con criterio antes de intervenir.`,
+        `Qué suele resolver un servicio de ${niche} cuando el problema exige diagnóstico y ejecución clara.`
+      ], niche, blockType, city)],
       items: payload.services || [],
       trustBullets: payload.trustBullets || [],
       decisionFactors: payload.decisionFactors || [],
@@ -21,7 +30,11 @@ export function hydrateSemanticDraftFromPlaybook(niche: string, blockType: strin
 
   if (blockType === 'process_steps') {
     return {
-      intro: [`Secuencia operativa que conviene seguir para resolver ${niche} con criterio y sin improvisaciones.`],
+      intro: [pickIntroVariant([
+        `Secuencia de trabajo que conviene seguir para resolver ${niche} con criterio y sin improvisaciones.`,
+        `Pasos que ayudan a organizar ${niche} con una lógica de diagnóstico, intervención y revisión final.`,
+        `Proceso recomendado para ejecutar ${niche} de forma ordenada y con menos margen para rehacer trabajo.`
+      ], niche, blockType, city)],
       items: payload.services || [],
       decisionFactors: payload.decisionFactors || [],
       commonMistakes: payload.commonMistakes || []
@@ -30,7 +43,11 @@ export function hydrateSemanticDraftFromPlaybook(niche: string, blockType: strin
 
   if (blockType === 'faq') {
     return {
-      intro: [`Objeciones y dudas que suelen aparecer antes de contratar un servicio de ${niche}.`],
+      intro: [pickIntroVariant([
+        `Dudas habituales que conviene resolver antes de contratar un servicio de ${niche}.`,
+        `Preguntas frecuentes que ayudan a valorar alcance, proceso y expectativas realistas.`,
+        `Respuestas útiles para entender qué cambia según el caso y qué conviene confirmar antes de empezar.`
+      ], niche, blockType, city)],
       faqItems: payload.faqItems || [],
       trustBullets: payload.trustBullets || []
     };
@@ -38,7 +55,11 @@ export function hydrateSemanticDraftFromPlaybook(niche: string, blockType: strin
 
   if (blockType === 'price_guidance') {
     return {
-      intro: [`Variables que mueven el presupuesto y conviene explicar con claridad antes de intervenir.`],
+      intro: [pickIntroVariant([
+        `Factores que mueven el presupuesto y conviene explicar con claridad antes de intervenir.`,
+        `Variables que cambian el alcance del trabajo y por tanto la valoración final del servicio.`,
+        `Puntos que influyen en el presupuesto cuando el acceso, las piezas o el estado previo no son iguales en todos los casos.`
+      ], niche, blockType, city)],
       decisionFactors: payload.decisionFactors || [],
       commonMistakes: payload.commonMistakes || [],
       table: payload.priceRows

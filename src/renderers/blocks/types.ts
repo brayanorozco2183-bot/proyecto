@@ -14,7 +14,9 @@ export type BlockType =
   | 'faq'
   | 'cta_panel'
   | 'comparison_table'
-  | 'map';
+  | 'map'
+  | 'authority_note'
+  | 'internal_linking';
 
 export type PreferredFormat = 'cards' | 'bullets' | 'prose' | 'faq' | 'trust_cards' | 'table';
 export type LayoutHint =
@@ -97,6 +99,7 @@ export interface BlockRendererInput {
   seo: any;
   design: DesignSystemTheme;
   local: any;
+  payload?: any;
   contract?: Partial<SectionRenderContract>;
 }
 

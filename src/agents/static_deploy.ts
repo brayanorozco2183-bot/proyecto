@@ -1,3 +1,4 @@
+
 import { BaseAgent, AgentResponse } from './base.js';
 import { staticFactory } from '../tools/static_factory.js';
 import Client from 'ssh2-sftp-client';
@@ -27,7 +28,11 @@ export class StaticDeployAgent extends BaseAgent {
 
         try {
             const localFilePath = await staticFactory.generatePage(input);
+            const publicStaticPath = localFilePath.includes(`${path.sep}output_sites${path.sep}`)
+                ? localFilePath.replace(`${path.sep}output_sites${path.sep}`, `${path.sep}public-static${path.sep}`)
+                : path.join(process.cwd(), 'public-static');
             await this.logThought(`Static site ready at: ${localFilePath}`);
+            await this.logThought(`Public-static mirror ready at: ${publicStaticPath}`);
 
             // If FTP/SFTP credentials are provided, attempt upload
             if (input.ftpCreds && input.ftpCreds.host && input.ftpCreds.user) {
@@ -60,6 +65,7 @@ export class StaticDeployAgent extends BaseAgent {
                 success: true,
                 data: {
                     deploy_path: localFilePath,
+                    public_static_path: publicStaticPath,
                     type: 'static_html',
                     performance_score: 100,
                     published_url: input.ftpCreds?.host ? `https://${input.ftpCreds.host}${input.clusterFolderName ? '/' + input.clusterFolderName : ''}${input.subPath ? '/' + input.subPath : ''}/index.html` : undefined

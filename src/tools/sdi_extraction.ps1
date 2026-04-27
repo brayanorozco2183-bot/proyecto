@@ -28,12 +28,12 @@ Start-Process $chromePath -ArgumentList "--incognito", "$urlGoogle"
 
 # Esperamos a que cargue la página de resultados
 Write-Host "Esperando a Google..." -ForegroundColor Green
-Start-Sleep -Seconds 8
+Start-Sleep -Seconds 3
 
 # --- EL 'ATRACO' AL CÓDIGO FUENTE ---
 Write-Host "Extrayendo datos de la página..." -ForegroundColor Yellow
 [System.Windows.Forms.SendKeys]::SendWait("^u") # Ver código (Ctrl + U)
-Start-Sleep -Seconds 4
+Start-Sleep -Seconds 1.5
 [System.Windows.Forms.SendKeys]::SendWait("^a") # Seleccionar todo (Ctrl + A)
 Start-Sleep -Milliseconds 800
 [System.Windows.Forms.SendKeys]::SendWait("^c") # Copiar (Ctrl + C)

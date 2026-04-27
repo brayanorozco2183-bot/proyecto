@@ -1,10 +1,15 @@
 import { dbManager } from '../db/index.js';
 import { recordEditorialMemory } from './editorialMemory.js';
 import { recordSiteStructureMemory } from './siteStructureMemory.js';
-import { buildSnapshotFromPlan, firstWordsSignature, getParagraphSignaturesFromHtml } from './signatures.js';
+import {
+  buildSnapshotFromPlan,
+  firstWordsSignature,
+  getParagraphSignaturesFromHtml
+} from './signatures.js';
 import { installOriginalitySchema } from './schema.js';
 import { recordVisualMemory } from './visualMemory.js';
 import { assessOriginalityBeforeRender, buildOriginalityDirective } from './originalityPlanner.js';
+import { inferAndRecordDesignLearning } from './designLearning.js';
 import { MissionLike, PagePlanLike } from './types.js';
 
 export async function ensureOriginalitySchema(): Promise<void> {
@@ -49,7 +54,7 @@ export async function recordOriginalityAfterRender(input: {
   await Promise.all([
     recordVisualMemory(db as any, {
       pageId: snapshot.pageId,
-      clusterScopes: snapshot.scopes.map(scope => scope.key),
+      clusterScopes: snapshot.scopes.map((scope) => scope.key),
       city: snapshot.city,
       niche: snapshot.niche,
       pageType: snapshot.pageType,
@@ -63,7 +68,7 @@ export async function recordOriginalityAfterRender(input: {
     }),
     recordEditorialMemory(db as any, {
       pageId: snapshot.pageId,
-      clusterScopes: snapshot.scopes.map(scope => scope.key),
+      clusterScopes: snapshot.scopes.map((scope) => scope.key),
       city: snapshot.city,
       niche: snapshot.niche,
       pageType: snapshot.pageType,
@@ -76,7 +81,7 @@ export async function recordOriginalityAfterRender(input: {
     }),
     recordSiteStructureMemory(db as any, {
       pageId: snapshot.pageId,
-      clusterScopes: snapshot.scopes.map(scope => scope.key),
+      clusterScopes: snapshot.scopes.map((scope) => scope.key),
       city: snapshot.city,
       niche: snapshot.niche,
       pageType: snapshot.pageType,
@@ -90,4 +95,12 @@ export async function recordOriginalityAfterRender(input: {
       structural: snapshot.structural
     })
   ]);
+
+  await inferAndRecordDesignLearning({
+    db: db as any,
+    mission: input.mission,
+    pagePlan: input.pagePlan,
+    html: input.html,
+    pageId: input.pageId
+  });
 }

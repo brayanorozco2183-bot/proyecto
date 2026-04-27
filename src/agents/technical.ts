@@ -1,3 +1,4 @@
+
 import { BaseAgent, AgentResponse } from './base.js';
 import axios from 'axios';
 
@@ -14,6 +15,22 @@ export class TechnicalLeadAgent extends BaseAgent {
     /**
      * Verifies if a URL returns HTTP 200. Used to filter out 404 authority links.
      */
+
+    private normalizePhone(phone?: string): string {
+        const raw = String(phone || '').trim();
+        if (!raw) return '';
+        if (/(?:consultar|pendiente|no\s+disponible|n\/d|sin\s+telefono)/i.test(raw)) return '';
+
+        const hasPlus = raw.startsWith('+');
+        const digits = raw.replace(/\D/g, '');
+
+        if (digits.length < 9 || digits.length > 15) return '';
+        if (/^(\d)\1+$/.test(digits)) return '';
+        if (!hasPlus && digits.length === 11 && digits.startsWith('34')) return `+${digits}`;
+
+        return hasPlus ? `+${digits}` : digits;
+    }
+
     private async verifyUrl(url: string): Promise<boolean> {
         try {
             const res = await axios.get(url, {
@@ -48,7 +65,7 @@ export class TechnicalLeadAgent extends BaseAgent {
         let meta_title = `${input.niche} en ${input.city} | ${main_entity}`;
         
         const entities_str = input.entities?.slice(0, 2).join(', ');
-        let meta_description = `Expertos en ${input.niche} en ${input.city}. ${entities_str ? entities_str + '. ' : ''}Servicio profesional, rápido y con garantía local en toda la zona de ${input.city}. ¡Llámanos!`.substring(0, 160);
+        let meta_description = `Servicio de ${input.niche} en ${input.city}. ${entities_str ? entities_str + '. ' : ''}Proceso claro, cobertura real y orientación útil antes de contratar.`.substring(0, 160);
 
         // ENFORCE TECHNICAL RULES from brief
         if (this.technicalBrief) {
@@ -59,8 +76,8 @@ export class TechnicalLeadAgent extends BaseAgent {
 
         // ── 2. JSON-LD LocalBusiness (100% plantilla TypeScript) ──
         const napData = input.business_data || {};
-        const phone = napData.phone || "+34 900 000 000";
-        const addressName = napData.address || "Centro Ciudad";
+        const phone = this.normalizePhone(napData.phone);
+        const addressName = String(napData.address || input.city || "").trim() || input.city;
         const companyName = napData.business_name || `${input.niche} en ${input.city}`;
 
         // Price Range enforcement
@@ -69,28 +86,32 @@ export class TechnicalLeadAgent extends BaseAgent {
             priceRange = "Consultar"; // Or keep it generic €€
         }
 
-        const graph: any[] = [
-            {
-                "@type": ["LocalBusiness", "Service"],
-                "@id": `#organization`,
-                "name": companyName,
-                "description": meta_description,
-                "url": `./`,
-                "telephone": phone,
-                "priceRange": priceRange,
-                "openingHours": "Mo-Su 00:00-23:59",
-                "areaServed": input.city,
-                "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": addressName,
-                    "addressLocality": input.city,
-                    "addressCountry": "ES"
-                },
-                "hasMap": `https://maps.google.com/?q=${encodeURIComponent(companyName + ' ' + input.city)}`,
-                "sameAs": [
-                    `https://maps.google.com/?q=${encodeURIComponent(companyName + ' ' + input.city)}`
-                ]
+        const organizationNode: any = {
+            "@type": ["LocalBusiness", "Service"],
+            "@id": `#organization`,
+            "name": companyName,
+            "description": meta_description,
+            "url": `./`,
+            "priceRange": priceRange,
+                        "areaServed": input.city,
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": addressName,
+                "addressLocality": input.city,
+                "addressCountry": "ES"
             },
+            "hasMap": `https://maps.google.com/?q=${encodeURIComponent(companyName + ' ' + input.city)}`,
+            "sameAs": [
+                `https://maps.google.com/?q=${encodeURIComponent(companyName + ' ' + input.city)}`
+            ]
+        };
+
+        if (phone) {
+            organizationNode.telephone = phone;
+        }
+
+        const graph: any[] = [
+            organizationNode,
             {
                 "@type": "Service",
                 "serviceType": `Servicio de ${input.niche} Profesional`,
@@ -123,7 +144,6 @@ export class TechnicalLeadAgent extends BaseAgent {
         // ── 4. Verificación real de enlaces (sin inventar) ──
         const candidateLinks = [
             { label: `Ayuntamiento de ${input.city}`, url: `https://www.${slug}.es/` },
-            { label: `Portal de Turismo de ${input.city}`, url: `https://turismo.${slug}.es/` },
             { label: 'Seguridad en el Hogar - OCU', url: 'https://www.ocu.org/' },
             { label: 'Consejos de Seguridad - Policía Nacional', url: 'https://www.policia.es/' },
             { label: 'Información de España - Spain.info', url: 'https://www.spain.info/' }

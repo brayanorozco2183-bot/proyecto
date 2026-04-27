@@ -59,6 +59,98 @@ export interface CompetitorAudit {
     externalLinks: number;
 }
 
+function normalizeSerpUrl(raw: string): string | null {
+    try {
+        const url = new URL(String(raw || '').trim().replace(/[).,;]+$/, ''));
+        url.hash = '';
+        const pathname = url.pathname === '/' ? '' : url.pathname.replace(/\/+$/, '');
+        return `${url.protocol}//${url.host}${pathname}${url.search}`;
+    } catch {
+        return null;
+    }
+}
+
+
+const CITY_SIGNAL_LEXICON = [
+    'madrid', 'barcelona', 'valencia', 'sevilla', 'zaragoza', 'malaga', 'murcia', 'alicante', 'bilbao', 'valladolid',
+    'cordoba', 'granada', 'vigo', 'gijon', 'oviedo', 'santander', 'pamplona', 'toledo', 'getafe', 'mostoles', 'leganes'
+];
+
+function normalizeMissionToken(value: string): string {
+    return String(value || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
+
+function detectServiceFamily(value: string): string | null {
+    const normalized = normalizeMissionToken(value);
+    if (!normalized) return null;
+
+    const families: Array<[string, RegExp]> = [
+        ['cerrajeros', /cerraj|cerradur|bombin|cilindr|antibumping|llave|candado/],
+        ['fontaneros', /fontan|plomer|desatas|tuber|fuga|grifo/],
+        ['electricistas', /electric|cuadro-electrico|enchufe|cableado|iluminacion/],
+        ['carpinteros', /carpint|ebanist|madera|armario|puerta-de-madera|tarima/],
+        ['pintores', /pintor|pintura|barniz|lacado|fachada|decor/]
+    ];
+
+    for (const [family, pattern] of families) {
+        if (pattern.test(normalized)) return family;
+    }
+
+    return null;
+}
+
+function hasForeignCitySignal(raw: string, city: string): boolean {
+    const haystack = normalizeMissionToken(raw);
+    const target = normalizeMissionToken(city);
+    if (!haystack || !target) return false;
+
+    return CITY_SIGNAL_LEXICON.some((candidate) => {
+        if (candidate === target) return false;
+        return haystack.includes(candidate);
+    });
+}
+
+function filterMissionRelevantUrls(urls: string[], query: string, city: string): string[] {
+    const intendedFamily = detectServiceFamily(query);
+
+    return urls.filter((url) => {
+        const normalized = normalizeSerpUrl(url);
+        if (!normalized || isBannedSerpUrl(normalized)) return false;
+
+        const urlFamily = detectServiceFamily(normalized);
+        if (intendedFamily && urlFamily && intendedFamily !== urlFamily) {
+            return false;
+        }
+
+        if (hasForeignCitySignal(normalized, city)) {
+            return false;
+        }
+
+        return true;
+    });
+}
+
+function isBannedSerpUrl(raw: string): boolean {
+    const normalized = normalizeSerpUrl(raw);
+    if (!normalized) return true;
+
+    try {
+        const hostname = new URL(normalized).hostname.toLowerCase();
+        if (/(^|\.)google\./.test(hostname)) return true;
+        if (/(^|\.)(schema\.org|w3\.org)$/.test(hostname)) return true;
+        if (/(^|\.)(facebook\.com|twitter\.com|instagram\.com|linkedin\.com|youtube\.com|pinterest\.com)$/.test(hostname)) return true;
+        if (/(^|\.)(gstatic\.com|googleusercontent\.com)$/.test(hostname)) return true;
+        return false;
+    } catch {
+        return true;
+    }
+}
+
 /**
  * SERPManager - The World-Class 'Military Grade' Stealth Engine (V6 - 2026 Behavioral AI).
  */
@@ -201,21 +293,51 @@ export class SERPManager {
         return new Promise((resolve) => {
             const scriptPath = path.join(process.cwd(), 'src', 'tools', 'sdi_extraction.ps1');
             const psCommand = `powershell -ExecutionPolicy Bypass -File "${scriptPath}" -query "${query}" -city "${city}"`;
+            const outputFile = path.join(process.env.TEMP || '', 'google_serp_results.txt');
+
+            if (fs.existsSync(outputFile)) {
+                try {
+                    fs.unlinkSync(outputFile);
+                } catch {
+                    // ignore stale result cleanup errors
+                }
+            }
 
             exec(psCommand, async (error: any, stdout: string, stderr: string) => {
-                const outputFile = path.join(process.env.TEMP || '', 'google_serp_results.txt');
 
                 if (fs.existsSync(outputFile)) {
                     const content = fs.readFileSync(outputFile, 'utf8');
+                    const banned = ['w3.org', 'schema.org', 'facebook.com', 'twitter.com', 'instagram.com', 'linkedin.com', 'youtube.com', 'pinterest.com'];
+                    const seen = new Set<string>();
                     const links = content.split('\n')
                         .map(l => l.trim())
-                        .map(l => l.replace(/[).,;]+$/, '')) // Sanitize common stray characters at end of URL
+                        .map(l => l.replace(/[).,;]+$/, ''))
+                        .map(l => l.replace(/[?#].*$/, ''))
+                        .map(l => l.replace(/\/+$/, ''))
                         .filter(l => {
-                            const banned = ['w3.org', 'google.com', 'schema.org', 'facebook.com', 'twitter.com', 'instagram.com', 'linkedin.com', 'youtube.com', 'pinterest.com'];
-                            return l.startsWith('http') && l.length > 10 && !banned.some(domain => l.includes(domain));
+                            if (!l.startsWith('http') || l.length <= 10) return false;
+                            try {
+                                const parsed = new URL(l);
+                                const host = parsed.hostname.toLowerCase();
+                                if (/(^|\.)google\.[a-z.]+$/i.test(host)) return false;
+                                if (banned.some(domain => host === domain || host.endsWith(`.${domain}`))) return false;
+                                const key = `${parsed.protocol}//${host}${parsed.pathname.replace(/\/+$/, '')}`;
+                                if (seen.has(key)) return false;
+                                seen.add(key);
+                                return true;
+                            } catch {
+                                return false;
+                            }
                         });
 
-                    const organic: LocalSearchResult[] = links.slice(0, 10).map((link, i) => ({
+                    const missionSafeLinks = filterMissionRelevantUrls(links, fullQuery, city);
+                    const selectedLinks = (missionSafeLinks.length ? missionSafeLinks : links).slice(0, 10);
+
+                    if (missionSafeLinks.length !== links.length) {
+                        console.log(`[STEALTH] Filtrado de relevancia aplicado. ${missionSafeLinks.length}/${links.length} enlaces compatibles con ${fullQuery}.`);
+                    }
+
+                    const organic: LocalSearchResult[] = selectedLinks.map((link, i) => ({
                         title: `Resultado SDI ${i + 1}`,
                         link: link,
                         snippet: 'Capturado vía Inyección de Teclas (SDI)',
@@ -235,7 +357,7 @@ export class SERPManager {
         });
     }
 
-    async auditCompetitorSite(url: string): Promise<CompetitorAudit | null> {
+    async auditCompetitor(url: string): Promise<CompetitorAudit | null> {
         await ensureScraperDeps();
         let browser: any = null;
         let page: Page | null = null;
@@ -266,8 +388,8 @@ export class SERPManager {
                 const cleanUrl = url.trim().replace(/[).,;]+$/, '');
                 // Racing with a hard death timer to prevent CDP hang
                 await Promise.race([
-                    page.goto(cleanUrl, { waitUntil: 'domcontentloaded', timeout: 15000 }),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error('HARD_TIMEOUT')), 18000))
+                    page.goto(cleanUrl, { waitUntil: 'domcontentloaded', timeout: 30000 }),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('HARD_TIMEOUT')), 35000))
                 ]);
             } catch (e: any) {
                 console.warn(`[STEALTH] Navigation skip [${url}]: ${e.message}`);
@@ -313,3 +435,5 @@ export class SERPManager {
     }
 }
 export const serpManager = new SERPManager();
+
+

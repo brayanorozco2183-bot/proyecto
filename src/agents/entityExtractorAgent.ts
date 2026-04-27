@@ -1,7 +1,9 @@
+
 import { BaseAgent, AgentResponse } from './base.js';
-import axios from 'axios';
 import { vault } from '../tools/vault.js';
+import { AIFacade } from '../tools/aiFacade.js';
 import { CompetitorAudit, LocalSearchResult } from '../tools/scraper.js';
+import { safeJsonParse } from '../utils/jsonRecovery.js';
 
 export interface EntityExtractorInput {
     keyword: string;
@@ -15,10 +17,47 @@ export interface EntityExtractionResult {
     entities: string[];
 }
 
+function normalize(value: any): string {
+    return String(value || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}\s-]/gu, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+const FAMILY_ENTITY_BOOSTS: Record<string, string[]> = {
+    carpinteros: ['muebles a medida', 'armarios empotrados', 'vestidores', 'melamina', 'madera maciza', 'herrajes', 'bisagras', 'barnizado', 'lacado', 'tarima flotante', 'parqué', 'ebanistería', 'puertas de interior', 'medición en obra'],
+    cerrajeros: ['bombín', 'cerradura', 'cilindro', 'escudo protector', 'amaestramiento'],
+    fontaneros: ['tubería', 'desagüe', 'grifería', 'cisterna', 'latiguillo'],
+};
+
+function detectFamily(keyword: string): string | null {
+    const normalized = normalize(keyword);
+    if (/carpint|ebanist|madera|armario|vestidor|tarima/.test(normalized)) return 'carpinteros';
+    if (/cerraj|cerradur|bombin|cilindr|llave/.test(normalized)) return 'cerrajeros';
+    if (/fontan|tuber|grifo|desatas|fuga/.test(normalized)) return 'fontaneros';
+    return null;
+}
+
+function uniqueEntities(items: string[], limit = 16): string[] {
+    const seen = new Set<string>();
+    const out: string[] = [];
+    for (const raw of items || []) {
+        const cleaned = String(raw || '').replace(/^[-•*]\s*/, '').replace(/\s+/g, ' ').trim();
+        const key = normalize(cleaned);
+        if (!cleaned || cleaned.length < 3 || key.length < 3 || seen.has(key)) continue;
+        if (/^(madrid|espana|españa|presupuesto|rapido|rápido|urgente|barato|servicio|servicios|empresa|profesional|profesionales)$/i.test(cleaned)) continue;
+        seen.add(key);
+        out.push(cleaned);
+        if (out.length >= limit) break;
+    }
+    return out;
+}
+
 /**
  * EntityExtractorAgent - Especialista en Semántica Técnica.
- * Extrae entidades (marcas, modelos, conceptos clave) del contenido TOP10
- * para enriquecer la relevancia temática del texto generado.
  */
 export class EntityExtractorAgent extends BaseAgent {
     constructor() {
@@ -26,116 +65,99 @@ export class EntityExtractorAgent extends BaseAgent {
             'Entity_Extractor',
             'Semantic Semantic Engineer',
             'Ingeniero Semántico',
-            'Experto en extraer entidades clave (marcas, modelos, conceptos técnicos) desde los resultados de Google.',
+            'Experto en extraer entidades clave (materiales, procesos, soluciones y conceptos técnicos) desde los resultados de Google.',
             vault.OLLAMA_MODEL_RESEARCH
         );
     }
 
+    private buildDeterministicEntities(input: EntityExtractorInput): string[] {
+        const { organic, audits } = input.serpData;
+        const candidates: string[] = [];
+        const keywordTokens = normalize(input.keyword).split(' ');
+        const family = detectFamily(input.keyword);
+
+        for (const item of organic || []) {
+            candidates.push(...String(item.title || '').split(/[|,·–—]/g));
+            candidates.push(...String(item.snippet || '').split(/[.,;:]/g));
+        }
+
+        for (const audit of audits || []) {
+            candidates.push(audit.title || '');
+            candidates.push(...(audit.h1s || []));
+            candidates.push(...(audit.h2s || []));
+            candidates.push(...(audit.h3s || []).slice(0, 10));
+        }
+
+        const extracted = uniqueEntities(
+            [
+                ...candidates
+                    .flatMap((text) => String(text || '').split(/[|,.;:()\/]+/g))
+                    .map((text) => text.trim())
+                    .filter((text) => {
+                        const normalized = normalize(text);
+                        if (!normalized) return false;
+                        if (keywordTokens.some((token) => token && normalized === token)) return false;
+                        if (normalized.split(' ').length > 6) return false;
+                        return /(madera|melamina|lacado|barnizado|armarios|vestidores|herrajes|bisagras|tarima|parque|parqué|ebanisteria|ebanistería|puertas|cocinas|bano|baño|medicion|medición|instalacion|instalación|restauracion|restauración)/i.test(normalized);
+                    }),
+                ...(family ? (FAMILY_ENTITY_BOOSTS[family] || []) : [])
+            ],
+            16
+        );
+
+        return extracted;
+    }
+
     async execute(input: EntityExtractorInput): Promise<AgentResponse<EntityExtractionResult>> {
         await this.logThought(`Extrayendo entidades semánticas para la keyword: "${input.keyword}"`);
-
         const { organic, audits } = input.serpData;
 
         if ((!organic || organic.length === 0) && (!audits || audits.length === 0)) {
             return {
                 success: false,
-                thoughts: "No hay datos SERP o de auditoría para extraer entidades.",
-                error: "Insufficient data for entity extraction."
+                thoughts: 'No hay datos SERP o de auditoría para extraer entidades.',
+                error: 'Insufficient data for entity extraction.'
             };
         }
 
-        // Construir contexto a partir de los títulos, snippets y encabezados
-        const titles = organic.map(r => r.title).join('\n');
-        const snippets = organic.map(r => r.snippet).join('\n');
-        const h1s = audits.flatMap(a => a.h1s).join(', ');
-        const h2s = audits.flatMap(a => a.h2s).slice(0, 20).join(', ');
+        const deterministic = this.buildDeterministicEntities(input);
+        if (deterministic.length >= 10) {
+            await this.logThought(`Extracción determinista completada. ${deterministic.length} entidades encontradas.`);
+            return { success: true, data: { entities: deterministic }, thoughts: `Extracción determinista completada. ${deterministic.length} entidades.` };
+        }
 
         const prompt = `
-        Eres un Ingeniero Semántico Experto en SEO. Tu objetivo es extraer "entidades técnicas" de los siguientes textos extraídos del TOP 10 de Google para la keyword: "${input.keyword}".
+Devuelve SOLO JSON válido.
+Extrae entidades semánticas útiles para SEO local del nicho "${input.keyword}".
+No inventes marcas. No añadas ciudades ni claims comerciales.
+Prioriza: materiales, acabados, piezas, procesos, soluciones y criterios técnicos.
+Descarta: urgente, barato, 24 horas, empresa, profesional, Madrid.
 
-        Las entidades son: Marcas específicas, Tipos técnicos puntuales, o conceptos muy de nicho (ej. Puerta acorazada, escudo magnético).
-        
-        REGLA DE FILTRADO COMERCIAL:
-        - Al extraer entidades, ignora explícitamente palabras transaccionales genéricas de competidores (ej. 'barato', 'rápido', '24h', 'urgente'). Extrae única y exclusivamente sustantivos técnicos tangibles (herramientas, marcas, normativas, componentes físicos).
+TÍTULOS Y SNIPPETS:
+${(organic || []).map((item) => `- ${item.title} :: ${item.snippet}`).join('\n')}
 
-        Ignora palabras genéricas como "barato", "rápido", "urgente", "24 horas", "provincia", "ciudad".
+HEADINGS DE COMPETIDORES:
+${(audits || []).map((audit) => `- ${audit.title}\n  H1: ${(audit.h1s || []).join(' | ')}\n  H2: ${(audit.h2s || []).slice(0, 8).join(' | ')}`).join('\n')}
 
-        IMPORTANTE: OBLIGATORIAMENTE debes incluir y priorizar en tu lista final al menos 3 marcas líderes reales del sector para el nicho "${input.keyword}". Si no aparecen explícitamente en el texto base, añade marcas que sean de conocimiento general para este sector específico.
-
-        DATOS DISPONIBLES:
-        Títulos:
-        ${titles}
-
-        Snippets:
-        ${snippets}
-
-        Encabezados Competidores:
-        H1s: ${h1s}
-        H2s: ${h2s}
-
-        Extrae una lista de las 10 a 15 entidades más repetidas o relevantes para posicionar semánticamente este tema de forma profesional.
-
-        ESTRUCTURA DE RESPUESTA REQUERIDA (SOLO JSON):
-        {
-          "entities": ["entidad 1", "entidad 2", "..."]
-        }
-        ⚠️ DEVUELVE EXCLUSIVAMENTE UN JSON VÁLIDO. SIN TEXTO ANTES NI DESPUÉS.
-        `;
+Salida:
+{"entities":["string"]}
+`.trim();
 
         try {
-            this.logThought(`Enviando prompt a Ollama (${this.model}) para extracción de entidades...`);
-
-            const response = await axios.post(`${vault.OLLAMA_URL}/api/generate`, {
-                model: this.model,
-                prompt: prompt,
-                stream: false
-            }, { timeout: 300000 }); // 5 min timeout
-
-            let entitiesResult: EntityExtractionResult = { entities: [] };
-            const rawText = response.data.response || "";
-
-            try {
-                // Limpieza básica de markdown JSON si lo hay
-                let cleanText = rawText;
-                if (cleanText.includes('```json')) {
-                    cleanText = cleanText.split('```json')[1].split('```')[0].trim();
-                } else if (cleanText.includes('```')) {
-                    cleanText = cleanText.split('```')[1].trim();
-                }
-
-                const parsed = JSON.parse(cleanText);
-                if (parsed.entities && Array.isArray(parsed.entities)) {
-                    entitiesResult.entities = parsed.entities;
-                }
-            } catch (jsonError) {
-                // Fallback heurístico si falla el JSON
-                await this.logThought(`[RESCATE] Fallo el parsing JSON. Intentando extraer array por Regex...`);
-                const arrayMatch = rawText.match(/\[(.*?)\]/s);
-                if (arrayMatch && arrayMatch[1]) {
-                    const items = arrayMatch[1].split(',')
-                        .map((s: string) => s.replace(/["']/g, '').trim())
-                        .filter((s: string) => s.length > 0);
-                    entitiesResult.entities = items;
-                } else {
-                    throw new Error("No se pudo extraer JSON ni Array válido.");
-                }
-            }
-
-            await this.logThought(`Extracción completada. ${entitiesResult.entities.length} entidades encontradas.`);
-
-            return {
-                success: true,
-                data: entitiesResult,
-                thoughts: "Se han extraído con éxito las entidades técnicas más relevantes del mercado actual."
-            };
-
+            const raw = await AIFacade.callOllama(this.name, prompt, this.model, {
+                json: true,
+                timeoutMs: 45000,
+                numPredict: 400,
+                temperature: 0.1,
+                maxRetries: 0,
+                fallbackResponse: () => JSON.stringify({ entities: deterministic })
+            });
+            const parsed = safeJsonParse<{ entities: string[] }>(raw, { entities: deterministic });
+            const entities = uniqueEntities([...(parsed.entities || []), ...deterministic], 14);
+            await this.logThought(`Extracción completada. ${entities.length} entidades encontradas.`);
+            return { success: entities.length > 0, data: { entities }, thoughts: `Extracción completada. ${entities.length} entidades.` };
         } catch (error: any) {
-            await this.logThought(`[ERROR] Fallo en la extracción de entidades: ${error.message}`);
-            return {
-                success: false,
-                thoughts: "Hubo un error de comunicación con el LLM o procesando los datos.",
-                error: error.message
-            };
+            return { success: true, data: { entities: deterministic }, thoughts: `RECUPERACIÓN: entidades deterministas (${deterministic.length}).` };
         }
     }
 }

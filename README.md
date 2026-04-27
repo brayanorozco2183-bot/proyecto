@@ -79,3 +79,24 @@ The dashboard provides a visual interface to:
 
 ---
 *Created with ❤️ for SEO automation.*
+
+## BLE V2.4 Hardening
+
+Este proyecto separa ahora uso de laboratorio y uso de produccion. Antes de publicar o exponer el dashboard ejecuta:
+
+```bash
+npm run typecheck
+npm run audit:security
+npm run audit:hardening
+npm run prepare:production
+```
+
+Variables minimas de produccion:
+
+- `NODE_ENV=production`
+- `DASHBOARD_AUTH_TOKEN` obligatorio si el dashboard esta expuesto
+- `PIPELINE_SOFT_MODE=false`
+- `DEBUG_MODE=false`
+- `QUALITY_AUDIT_FAIL_OPEN=false`
+
+Los artefactos generados, bases de datos, scratch y backups no deben formar parte del paquete principal de produccion. Usa `npm run prepare:production` para auditarlo en modo dry-run.

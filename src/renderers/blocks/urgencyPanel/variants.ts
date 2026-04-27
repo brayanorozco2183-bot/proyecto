@@ -1,4 +1,4 @@
-import { renderBullets, renderCta, renderInlinePills, renderParagraphs, renderSectionHeading, wrapSectionBlock } from '../shared.js';
+import { normalizeUsablePhone, renderBullets, renderCta, renderInlinePills, renderParagraphs, renderSectionHeading, wrapSectionBlock } from '../shared.js';
 import type { BlockRendererInput } from '../types.js';
 
 function renderUrgencySignals(input: BlockRendererInput): string {
@@ -7,7 +7,7 @@ function renderUrgencySignals(input: BlockRendererInput): string {
 }
 
 const sidebarAlert = (input: BlockRendererInput): string => {
-  const phone = input.content?.cta?.phone || input.local?.phone || '';
+  const phone = normalizeUsablePhone(input.content?.cta?.phone || input.local?.phone || '');
   return wrapSectionBlock(
     input,
     `
@@ -19,7 +19,7 @@ const sidebarAlert = (input: BlockRendererInput): string => {
         </div>
         <aside class="urgency-layout__action">
           <div class="section-cta section-cta--high section-cta--terminal card--strong-border">
-            ${renderCta({ text: phone || 'Llamar ahora', phone }, input.local, input)}
+            ${renderCta({ text: phone ? 'Llamar ahora' : 'Solicitar atención', phone }, input.local, input)}
           </div>
         </aside>
       </div>
@@ -29,7 +29,7 @@ const sidebarAlert = (input: BlockRendererInput): string => {
 };
 
 const statusBanner = (input: BlockRendererInput): string => {
-  const phone = input.content?.cta?.phone || input.local?.phone || '';
+  const phone = normalizeUsablePhone(input.content?.cta?.phone || input.local?.phone || '');
   return wrapSectionBlock(
     input,
     `
@@ -45,7 +45,7 @@ const statusBanner = (input: BlockRendererInput): string => {
           ${renderUrgencySignals(input)}
         </div>
         <div class="urgency-banner__cta">
-          ${renderCta({ text: phone || 'Llamar ahora', phone }, input.local, input)}
+          ${renderCta({ text: phone ? 'Llamar ahora' : 'Solicitar atención', phone }, input.local, input)}
         </div>
       </div>
     `,
@@ -54,7 +54,7 @@ const statusBanner = (input: BlockRendererInput): string => {
 };
 
 const commandCenter = (input: BlockRendererInput): string => {
-  const phone = input.content?.cta?.phone || input.local?.phone || '';
+  const phone = normalizeUsablePhone(input.content?.cta?.phone || input.local?.phone || '');
   return wrapSectionBlock(
     input,
     `
@@ -75,7 +75,7 @@ const commandCenter = (input: BlockRendererInput): string => {
           <span class="urgency-banner__statnote">disponibilidad</span>
         </div>
         <div class="urgency-banner__cta">
-          ${renderCta({ text: phone || 'Llamar ahora', phone }, input.local, input)}
+          ${renderCta({ text: phone ? 'Llamar ahora' : 'Solicitar atención', phone }, input.local, input)}
         </div>
       </div>
     `,

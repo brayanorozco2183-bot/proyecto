@@ -1,0 +1,170 @@
+[
+  {
+    "id": 25527,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "Misión Iniciada Core: Atacando nicho de cerrajeros cambio de cerradura tras perdida de llaves en 1 destinos.",
+    "timestamp": "2026-04-24 00:58:42"
+  },
+  {
+    "id": 25528,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] SERP listo para Getafe. Resultados orgánicos: 10. Iniciando auditoría competitiva...",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25529,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Iniciando auditoría profunda de competidores. Candidatos limpios: 10 de 10.",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25530,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.rapidfix.es/problema/cerrajero/cambio-cerradura/getafe",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25531,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://servicioxpress.com",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25532,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.rapidfix.es",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25533,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrapid.com",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25534,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrapid.com/cerrajeros-getafe",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25535,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://elitekey.es/getafe",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25536,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://elitekey.es",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25537,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeros24horasexpress.com",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25538,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://servicioxpress.com/cerrajero-getafe",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25539,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosgetafe.plus",
+    "timestamp": "2026-04-24 00:58:49"
+  },
+  {
+    "id": 25540,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditoría útil: 6 aceptadas, 4 rechazadas por baja relevancia o baja señal local.",
+    "timestamp": "2026-04-24 00:58:57"
+  },
+  {
+    "id": 25541,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Iniciando síntesis estratégica para Getafe con 6 auditorías profundas.",
+    "timestamp": "2026-04-24 00:58:57"
+  },
+  {
+    "id": 25542,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Sintetizando Estatuto de Dominación para \"cerrajeros cambio de cerradura tras perdida de llaves\" en \"Getafe\". Confianza: high",
+    "timestamp": "2026-04-24 00:58:57"
+  },
+  {
+    "id": 25543,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FASTPATH] Strategy resolved in deterministic mode for Getafe.",
+    "timestamp": "2026-04-24 00:58:57"
+  },
+  {
+    "id": 25544,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Síntesis estratégica finalizada para Getafe en 13ms.",
+    "timestamp": "2026-04-24 00:58:57"
+  },
+  {
+    "id": 25545,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Resolviendo identidad NAP para Getafe...",
+    "timestamp": "2026-04-24 00:58:57"
+  },
+  {
+    "id": 25546,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "NAP_Guardian_01",
+    "thought": "Verifying deterministic NAP identity for cerrajeros cambio de cerradura tras perdida de llaves in Getafe",
+    "timestamp": "2026-04-24 00:58:57"
+  },
+  {
+    "id": 25547,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] NAP finalizado para Getafe en 3ms.",
+    "timestamp": "2026-04-24 00:58:57"
+  },
+  {
+    "id": 25548,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Lanzando pipeline de contenido para Getafe...",
+    "timestamp": "2026-04-24 00:58:57"
+  },
+  {
+    "id": 25549,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Pipeline de contenido completado para Getafe en 466037ms.",
+    "timestamp": "2026-04-24 01:06:43"
+  },
+  {
+    "id": 25550,
+    "mission_id": "mission-1776992322179",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "❌ Generación falló para Getafe. Render completeness failed: BROKEN_LOCAL_FRAGMENT",
+    "timestamp": "2026-04-24 01:06:43"
+  }
+]

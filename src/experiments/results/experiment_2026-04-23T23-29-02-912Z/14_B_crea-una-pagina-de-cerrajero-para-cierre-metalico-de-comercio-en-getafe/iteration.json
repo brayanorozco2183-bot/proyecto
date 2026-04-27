@@ -1,0 +1,35 @@
+{
+  "iterationId": "14",
+  "block": "B",
+  "command": "crea una página de cerrajero para cierre metálico de comercio en Getafe",
+  "note": "Producción real controlada",
+  "jobId": "mission-1776993419893",
+  "timestamp": "2026-04-24T01:25:22.161Z",
+  "durationSeconds": 502.27,
+  "mission": {
+    "id": "mission-1776993419893",
+    "niche": "cerrajero",
+    "status": "COMPLETED",
+    "created_at": "2026-04-24 01:16:59",
+    "city": null
+  },
+  "review": null,
+  "metrics": {
+    "missionStatus": "COMPLETED",
+    "reviewStatus": null,
+    "score": null,
+    "qualityGateScore": null,
+    "qualityGateFailed": false,
+    "technicalValidationFailed": false,
+    "technicalIssues": [],
+    "issueCount": 0,
+    "issues": [],
+    "writerFallbacks": 0,
+    "correctorFallback": false,
+    "coherenceWarnings": 0,
+    "placeholderWarnings": 0,
+    "modelUsage": [],
+    "totalLogs": 24,
+    "publishabilityHint": "requiere_revision"
+  }
+}

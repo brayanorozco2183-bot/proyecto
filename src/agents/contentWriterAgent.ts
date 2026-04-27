@@ -1,5 +1,6 @@
 import { BaseAgent, AgentResponse } from './base.js';
 import axios from 'axios';
+import { AIFacade } from '../tools/aiFacade.js';
 import { vault } from '../tools/vault.js';
 import { PageProfile } from './contentVarietyAgent.js';
 import { IntentModel } from '../types/pipeline_v2.js';
@@ -9,6 +10,8 @@ import { renderSemanticSection } from '../renderers/sectionSemanticRenderer.js';
 import { SectionRenderContract } from '../types/design.js';
 import { buildWriterInjection } from '../niches/agentAdapters.js';
 import { hydrateSemanticDraftFromPlaybook } from '../niches/blockContent.js';
+import { detectCrossNicheContamination } from '../niches/crossNicheDetector.js';
+import { getRulesByCategory } from '../knowledge-packs/governanceRules.js';
 
 export interface WriterInput {
     niche: string;
@@ -155,218 +158,375 @@ export class ContentWriterAgent extends BaseAgent {
         "todo se realiza bajo control"
     ];
 
+    private truncate(value: any, max = 400): string {
+        const text = String(value || '').replace(/\s+/g, ' ').trim();
+        return text.length > max ? `${text.slice(0, max)}…` : text;
+    }
+
     private normalizeCityName(city: string): string {
-        if (!city) return city;
-        return city
+        const val = String(city || '').trim();
+        if (!val) return 'esta localidad';
+        return val
             .split(/\s+/)
             .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
             .join(' ');
     }
 
-    private isLocksmithLikeNiche(niche: string): boolean {
-        return /cerraj|cerradur|bomb[ií]n|cilindr|cerroj|ganzu|antibumping|llave|candado|cierrapuertas|control\s+de\s+acceso/i.test(String(niche || '').toLowerCase());
+    private normalizeNicheName(niche: string): string {
+        return String(niche || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
     }
 
-    private getCrossNicheForbiddenTerms(niche: string): RegExp[] {
-        if (this.isLocksmithLikeNiche(niche)) {
-            return [];
-        }
-
-        return [
-            /intrusi(?:[oó]|&[oO]acute;)n[a-z&;]*/gi,
-            /ganzu(?:[aá]|&[aA]acute;)s?[a-z&;]*/gi,
-            /antibumping/gi,
-            /fichet/gi,
-            /dierre/gi,
-            /tesa/gi,
-            /amaestramiento[a-z&;]*/gi,
-            /bomb(?:[ií]|&[iI]acute;)n(?:es)?[a-z&;]*/gi,
-            /desahucio[a-z&;]*/gi,
-            /cerradur[a-z&;]*/gi,
-            /cerrajer(?:[ií]|&[iI]acute;)a[a-z&;]*/gi,
-            /incopiables?[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])cilindro[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])escudo[a-z&;]*\s+magn(?:[eé]|&[eE]acute;)tico[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])extractor[a-z&;]*\s+de\s+cilindro[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])apertura[a-z&;]*\s+sin\s+dañ[oa]s/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])apertura[a-z&;]*\s+de\s+veh(?:[ií]|&[iI]acute;)culo[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])apertura[a-z&;]*\s+judicial[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])caja[a-z&;]*\s+fuerte[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])llave[a-z&;]*\s+maestra[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])control[a-z&;]*\s+de\s+acceso[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])mirilla[a-z&;]*\s+digital[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])barra[a-z&;]*\s+antip(?:[aá]|&[aA]acute;)nico[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])sistema[a-z&;]*\s+de\s+cierre[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])escudo[a-z&;]*\s+protector[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])ataque[a-z&;]*\s+externo[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])copias?\s+no\s+autorizadas?/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])realizar\s+duplicados?/gi,
-            /vulnerabilidades?\s+en\s+sistemas?\s+de/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])sistema[a-z&;]*\s+de\s+acceso[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])cierre[a-z&;]*\s+de\s+seguridad[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])cierres?\s+de\s+seguridad[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])nivel\s+de\s+riesgo[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])protecci[oó]n\s+de\s+su\s+propiedad[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])an[aá]lisis\s+de\s+seguridad[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])emergencia\s+de\s+seguridad[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])t[eé]cnicas?\s+avanzadas?\s+de\s+seguridad[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])actos?\s+vand[aá]licos?[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])robos?\s+nocturnos?[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])prevenir\s+robos?[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])cumplimiento\s+normativo\s+en\s+sus\s+accesos?[a-z&;]*/gi,
-            /(?:^|[^a-z&;áéíóúñA-ZÁÉÍÓÚÑ])necesidades?\s+de\s+seguridad\s+locales?[a-z&;]*/gi,
-            /\bcierrapuertas\b/gi,
-            /\bmuelles?\s+cierrapuertas\b/gi,
-            /\bblindajes?\b/gi,
-            /\bpuertas?\s+de\s+trastero\b/gi,
-            /\bpuertas?\s+autom[aá]ticas\b/gi,
-            /\bcancelas?\b/gi,
-            /\bpomos?\b/gi,
-            /\bmanillas?\b/gi,
-            /\brepuestos?\s+originales?\b/gi,
-            /\bmecanismos?\s+de\s+seguridad\b/gi,
-            /\bauditor[ií]as?\s+de\s+seguridad\b/gi,
-            /\bpuertas?\s+de\s+acceso\b/gi,
-            /\btrasteros?\b/gi
-        ];
+    private isGenericOrUnknownNiche(niche: string): boolean {
+        const normalized = this.normalizeNicheName(niche);
+        if (!normalized) return true;
+        return /^(servicios? locales?|servicios? profesionales?|servicios? generales?|profesionales?|especialistas?|empresa local|negocio local|soluciones locales?|multi ?servicio|multiservicio[s]?|home services?)$/.test(normalized);
     }
 
-    private sanitizeSemanticForNiche<T = any>(semantic: T, niche: string): T {
-        const forbidden = this.getCrossNicheForbiddenTerms(niche);
-        const detectors = forbidden.map((rx) => new RegExp(rx.source, rx.flags.replace(/g/g, '')));
+    private shouldBypassLlmForSection(input: WriterInput, writerBrief: string, semanticSeed: any): boolean {
+        const forceAll = String(vault.WRITER_FORCE_DETERMINISTIC || '').toLowerCase() === 'true';
+        const disableOnMissingPlaybook = String(vault.WRITER_DISABLE_LLM_ON_MISSING_PLAYBOOK || 'true').toLowerCase() !== 'false';
+        const genericNiche = this.isGenericOrUnknownNiche(input.niche);
+        const missingPlaybook = !writerBrief || !semanticSeed;
 
-        const cleanText = (value: string): string => {
-            let out = String(value || '');
+        if (forceAll) return true;
+        
+        // FORZAR SIEMPRE IA PARA CONTENIDO PREMIUM (ELIMINAR FASTPATH POR DEFECTO)
+        return false;
+    }
 
-            out = out.replace(/\s*\((?:TR|TK|AQ)-[a-z0-9]+\)\.?/gi, '');
-
-            if (detectors.length > 0) {
-                out = this.splitSentences(out)
-                    .filter((sentence) => !detectors.some((rx) => rx.test(sentence)))
-                    .join(' ');
-            }
-
-            out = out
-                .replace(/\b(?:seguridad certificada|compromiso profesional directo|uso de sistemas avanzados|calidad verificada|con total garant[ií]a t[eé]cnica)\b/gi, '')
-                .replace(/\band profesionalidad\b/gi, 'y profesionalidad')
-                .replace(/\bde forma\s+(?:especializado|profesional|de confianza|excepcional|l[ií]der)\b/gi, '')
-                .replace(/\bla un\b/gi, 'un')
-                .replace(/\bcostee-efectiva\b/gi, 'rentable')
-                .replace(/\s{2,}/g, ' ')
-                .replace(/\s+([,.;:])/g, '$1')
-                .trim();
-
-            return out;
+    private getWriterTimeouts() {
+        // En hardware limitado, damos 120s para asegurar calidad
+        const primary = Number(vault.WRITER_TIMEOUT_MS || 120000);
+        const retry = Number(vault.WRITER_RETRY_TIMEOUT_MS || 60000);
+        return {
+            primary: Number.isFinite(primary) && primary > 0 ? primary : 120000,
+            retry: Number.isFinite(retry) && retry > 0 ? retry : 60000
         };
-
-        const walk = (node: any): any => {
-            if (typeof node === 'string') return cleanText(node);
-            if (Array.isArray(node)) return node.map(walk).filter(Boolean);
-            if (node && typeof node === 'object') {
-                return Object.fromEntries(
-                    Object.entries(node)
-                        .map(([k, v]) => [k, walk(v)])
-                        .filter(([, v]) => v !== '' && v !== null && v !== undefined)
-                );
-            }
-            return node;
-        };
-
-        return walk(semantic);
     }
 
-    private semanticHasCrossNicheLeak(semantic: SectionSemanticData, niche: string): boolean {
-        const detectors = this.getCrossNicheForbiddenTerms(niche)
-            .map((rx) => new RegExp(rx.source, rx.flags.replace(/g/g, '')));
+    private finalizeWriterHtml(semantic: SectionSemanticData, input: WriterInput): { html: string; wordCount: number } {
+        const realPhone = input.local_nap.phone;
+        const phonePattern = /(?:\+34|0034|34)?[\s.-]?[6789](?:[\s.-]?\d){8}/g;
 
-        if (!detectors.length) return false;
+        const html = renderSemanticSection(semantic, {
+            blockType: input.blockType,
+            sectionId: input.section_id,
+            sectionH2: input.contentOnly ? undefined : input.section_h2,
+            contentOnly: input.contentOnly,
+            layoutHint: input.layout_hint as any,
+            visualVariant: (input as any).visual_variant,
+            visualWeight: input.visual_weight,
+            emphasis: input.emphasis,
+            pageComposition: input.pageProfile?.page_composition,
+            visualSystem: (input.pageProfile?.designDNA as any)?.visualSystem,
+            sectionShell: (input as any).visual_spec?.sectionShell || 'plain',
+            commonMistakes: semantic.commonMistakes,
+            decisionFactors: semantic.decisionFactors,
+            pageSkeleton: input.pageSkeleton as any,
+            heroTemplate: input.heroTemplate as any,
+            cadencePattern: input.cadencePattern as any,
+            proofStrategy: input.proofStrategy as any,
+            ctaStrategy: input.ctaStrategy as any,
+            sectionPattern: input.sectionPattern as any,
+            sectionContract: input.sectionContract
+        });
 
-        const values: string[] = [];
-        const walk = (node: any) => {
-            if (typeof node === 'string') {
-                values.push(node);
-                return;
+        const finalHtml = html.replace(phonePattern, (match: string) => {
+            const compactMatch = match.replace(/\D/g, '');
+            const compactReal = realPhone.replace(/\D/g, '');
+            if (compactMatch.slice(-9) !== compactReal.slice(-9)) {
+                return realPhone;
             }
-            if (Array.isArray(node)) {
-                node.forEach(walk);
-                return;
-            }
-            if (node && typeof node === 'object') {
-                Object.values(node).forEach(walk);
-            }
-        };
-
-        walk(semantic);
-
-        return values.some((value) => detectors.some((rx) => rx.test(String(value || ''))));
-    }
-
-    private buildEmergencySemanticFallback(input: WriterInput, semanticSeed?: SectionSemanticData | null): SectionSemanticData {
-        const city = this.normalizeCityName(input.city);
-        const requestedH3s = Array.isArray(input.subsections_h3) ? input.subsections_h3.filter(Boolean) : [];
-        const safeIntroLine = `En ${city}, abordamos ${input.niche.toLowerCase()} con diagnóstico previo, ejecución ordenada y verificación final para evitar soluciones improvisadas.`;
-
-        if (semanticSeed) {
-            return this.sanitizeSemanticOutput({
-                ...semanticSeed,
-                h2: input.section_h2,
-                cta: { text: 'Contactar ahora', phone: input.local_nap.phone }
-            }, input);
-        }
-
-        if (input.blockType === 'faq') {
-            const faqItems = requestedH3s.slice(0, 3).map((question, index) => ({
-                question: question.endsWith('?') ? question : `${question}?`,
-                answer: index === 0
-                    ? `Explicamos el alcance del trabajo, revisamos el punto exacto de la incidencia y planteamos la alternativa más estable para ${city}.`
-                    : `La respuesta depende del tipo de avería, del acceso al punto de trabajo y del material afectado, pero siempre se plantea con criterio técnico y presupuesto claro.`
-            }));
-
-            return {
-                h2: input.section_h2,
-                intro: [safeIntroLine],
-                faqItems,
-                trustBullets: ['Diagnóstico claro', 'Atención local', 'Garantía por escrito cuando corresponde'],
-                cta: { text: 'Contactar ahora', phone: input.local_nap.phone }
-            };
-        }
-
-        if (['services_grid', 'process_steps', 'local_proof', 'trust_band'].includes(input.blockType || '')) {
-            const items = (requestedH3s.length ? requestedH3s : [input.section_h2]).slice(0, 4).map((title) => ({
-                title,
-                body: this.buildFallbackBodyFromTitle(title, input)
-            }));
-
-            return {
-                h2: input.section_h2,
-                intro: [safeIntroLine],
-                items,
-                trustBullets: ['Diagnóstico claro', 'Atención local', 'Intervención ordenada'],
-                cta: { text: 'Contactar ahora', phone: input.local_nap.phone }
-            };
-        }
+            return match;
+        });
 
         return {
-            h2: input.section_h2,
-            intro: [safeIntroLine],
-            bullets: ['Diagnóstico claro', 'Procedimiento ordenado', 'Verificación final'],
-            cta: { text: 'Contactar ahora', phone: input.local_nap.phone }
+            html: finalHtml,
+            wordCount: finalHtml.split(/\s+/).filter(Boolean).length
+        };
+    }
+
+    
+private buildFaqAnswer(question: string, input: WriterInput, variant: number): string {
+        const city = this.normalizeCityName(input.city);
+        const niche = input.niche.toLowerCase();
+        const q = this.normalizeNicheName(question);
+        const localAreas = this.getAllowedLocalAreas(input, 2);
+        const areaHint = localAreas.length ? `, también en zonas como ${localAreas.join(' y ')}` : '';
+
+        if (/madera|material/.test(q)) {
+            return `Depende del uso, de la humedad ambiental y del acabado buscado. En ${city}, lo razonable es comparar melamina de alta densidad, DM lacado y madera maciza según resistencia, mantenimiento y presupuesto${areaHint}.`;
+        }
+
+        if (/tiempo|cuanto tarda|cuánto tarda|plazo|entrega/.test(q)) {
+            return `El plazo cambia por la complejidad del diseño, las mediciones reales en obra, el acabado elegido y la carga de taller. En ${city}, lo prudente es dar un rango tras visita técnica, no una fecha cerrada sin revisar el caso.`;
+        }
+
+        if (/humedad|sol|danad|dañad|reparar|restaurar|sustituir/.test(q)) {
+            return `Muchas piezas se pueden recuperar con lijado, ajuste, refuerzo o barnizado, pero otras conviene sustituirlas si la estructura ya no está estable. En ${city}, la decisión depende del estado real de la madera, de los herrajes y del uso diario del mueble o cerramiento.`;
+        }
+
+        if (/garantia|garantía/.test(q)) {
+            return `Lo importante es que la garantía quede por escrito y que se detalle qué cubre la fabricación, el montaje y los ajustes posteriores. En ${city}, una propuesta seria también deja claro qué depende del material elegido y qué debe verificarse en obra antes de cerrar el presupuesto.`;
+        }
+
+        if (/presupuesto|cuanto|cuánto|precio|coste|tarifa/.test(q)) {
+            return `El presupuesto cambia por medidas reales, material base, complejidad del diseño, acabados y calidad de herrajes. En ${city}, comparar propuestas tiene más sentido cuando te desglosan fabricación, instalación y remates que cuando te dan una cifra universal por teléfono.`;
+        }
+
+        if (/cobertura|zona|barrios|tambien atendeis|también atendéis/.test(q)) {
+            return `Sí, siempre que la agenda y el tipo de trabajo encajen con la logística real. En ${city}, lo habitual es confirmar desplazamiento, medición previa y si el caso requiere taller, montaje en obra o ambas cosas${areaHint}.`;
+        }
+
+        const genericAnswers = [
+            `En ${city}, este tipo de ${niche} se valora mejor cuando te explican el proceso, los materiales y lo que realmente condiciona el resultado final.`,
+            `La mejor decisión suele salir de una visita técnica o de una revisión previa de medidas, uso previsto y estado actual de la instalación en ${city}.`,
+            `Para ${niche} en ${city}, conviene priorizar criterio técnico, materiales adecuados y una propuesta clara por escrito antes que promesas absolutas.`
+        ];
+
+        return genericAnswers[variant % genericAnswers.length];
+    }
+
+    private buildDeterministicSectionResult(input: WriterInput, semanticSeed?: SectionSemanticData | null, reason = 'fastpath'): AgentResponse<WriterResult> {
+        let semantic = this.buildEmergencySemanticFallback(input, semanticSeed);
+        semantic = this.sanitizeSemanticOutput(semantic, input);
+        const finalized = this.finalizeWriterHtml(semantic, input);
+        return {
+            success: true,
+            data: { semantic, html: finalized.html, wordCount: finalized.wordCount },
+            thoughts: `Modo determinista activado para ${input.blockType}. Reason=${reason}. Words=${finalized.wordCount}.`
         };
     }
 
     private buildNeutralCoverageLine(city: string): string {
-        return `Cobertura operativa en ${city} con desplazamiento ajustado al tipo de trabajo, la complejidad de la intervención y la franja horaria.`;
+        return `Cobertura operativa en ${city} con planificación por zonas, validación previa del tipo de incidencia y una propuesta ajustada al alcance real.`;
+    }
+
+
+    private getAllowedLocalAreas(input: WriterInput, limit = 6): string[] {
+        const city = this.normalizeCityName(input.city);
+        const seen = new Set<string>();
+        const out: string[] = [];
+
+        for (const value of input.allowedLocalEntities || []) {
+            const cleaned = String(value || '').replace(/^.*?\ben\s+/i, '').replace(/\s+/g, ' ').trim();
+            const key = cleaned.toLowerCase();
+            if (!cleaned || cleaned === city || seen.has(key)) continue;
+            seen.add(key);
+            out.push(cleaned);
+            if (out.length >= limit) break;
+        }
+
+        return out;
+    }
+
+    private getInternalLinkHints(input: WriterInput, limit = 3): string[] {
+        const raw = input.sectionBrief?.internalLinksToMention || [];
+        const seen = new Set<string>();
+        const out: string[] = [];
+        for (const value of raw) {
+            const cleaned = String(value || '').replace(/\s+/g, ' ').trim();
+            const key = cleaned.toLowerCase();
+            if (!cleaned || seen.has(key)) continue;
+            seen.add(key);
+            out.push(cleaned);
+            if (out.length >= limit) break;
+        }
+        return out;
+    }
+
+    private looksLikeSemanticPlaceholder(text: string): boolean {
+        const value = String(text || '').replace(/\s+/g, ' ').trim();
+        if (!value) return true;
+        return /^(explicaci[oó]n clara del criterio|la respuesta depende del punto exacto|en [a-záéíóúñ\s]+, cuando hablamos de |para abordar |al organizar la intervenci[oó]n|recomienda\b|habla de\b|define\b|aclara\b|la seguridad en tu hogar|nuestro equipo est[aá] preparado|getafe, un pueblo tranquilo|cerrajeros expertos como nosotros|la confianza en los servicios de cerrajer[ií]a)/i.test(value);
+    }
+
+    private hashString(value: string): number {
+        let hash = 0;
+        for (let i = 0; i < value.length; i++) {
+            hash = ((hash << 5) - hash) + value.charCodeAt(i);
+            hash |= 0;
+        }
+        return Math.abs(hash);
+    }
+
+    private pickDeterministicVariant(options: string[], seed: string, fallback = ''): string {
+        const pool = Array.isArray(options) ? options.filter(Boolean) : [];
+        if (!pool.length) return fallback;
+        const index = this.hashString(seed) % pool.length;
+        return pool[index] || fallback || pool[0];
+    }
+
+    private getPlaybook(input: WriterInput): any {
+        return input.contextual_data?.nichePlaybook?.playbook || input.contextual_data?.playbook || null;
+    }
+
+    private getTopicSignalTerms(input: WriterInput): string[] {
+        const playbook = this.getPlaybook(input);
+        const values = [
+            input.niche,
+            input.intentModel?.primaryKeyword,
+            ...(Array.isArray(input.subsections_h3) ? input.subsections_h3 : []),
+            ...(Array.isArray(playbook?.aliases) ? playbook.aliases : []),
+            ...(Array.isArray(playbook?.allowedVocabulary) ? playbook.allowedVocabulary : []),
+            ...(Array.isArray(playbook?.coreServices) ? playbook.coreServices : [])
+        ];
+
+        const normalized = values
+            .map((value: any) => this.normalizeNicheName(String(value || '')))
+            .filter((value: string) => value.length >= 4);
+
+        return Array.from(new Set(normalized));
+    }
+
+    private containsTopicSignal(text: string, input: WriterInput): boolean {
+        const normalizedText = this.normalizeNicheName(text);
+        if (!normalizedText) return false;
+
+        return this.getTopicSignalTerms(input).some((term) => normalizedText.includes(term));
+    }
+
+    private detectWriterFamily(niche: string): string {
+        const normalized = this.normalizeNicheName(niche);
+        if (/carpint|ebanist|madera|armario|vestidor|tarima/.test(normalized)) return 'carpinteros';
+        if (/cerraj|cerradur|bombin|cilindr|llave|persiana|blindad/.test(normalized)) return 'cerrajeros';
+        if (/fontan|tuber|grifo|fuga|desatas/.test(normalized)) return 'fontaneros';
+        if (/electric|enchufe|cableado|cuadro/.test(normalized)) return 'electricistas';
+        return 'generic';
+    }
+
+    private buildLocalSeoAddition(input: WriterInput, mode: 'body' | 'faq' | 'intro', salt = ''): string {
+        const city = this.normalizeCityName(input.city);
+        const niche = String(input.niche || '').trim().toLowerCase();
+        const playbook = this.getPlaybook(input);
+        const decisionLabels = (Array.isArray(playbook?.decisionCriteria) ? playbook.decisionCriteria : [])
+            .map((item: any) => String(item?.label || '').trim().toLowerCase())
+            .filter(Boolean);
+        const trustLabels = (Array.isArray(playbook?.validTrustSignals) ? playbook.validTrustSignals : [])
+            .map((item: any) => String(item?.label || '').trim())
+            .filter(Boolean);
+        const localAreas = this.getAllowedLocalAreas(input, 2);
+        const blockType = String(input.blockType || 'generic');
+        const family = this.detectWriterFamily(niche);
+        const areaHint = localAreas.length ? ` en zonas como ${localAreas.join(' y ')}` : '';
+        const safeDecisionPair = decisionLabels.slice(0, 2).join(' y ');
+        const safeTrustPair = trustLabels.slice(0, 2).join(' y ');
+
+        const familyPools: Record<string, Partial<Record<string, Partial<Record<'body' | 'faq' | 'intro', string[]>>>>> = {
+            carpinteros: {
+                services_grid: {
+                    body: [
+                        `En ${city}, esta parte del trabajo se valora mejor cuando se explican medidas reales, materiales, herrajes y ajustes finales${areaHint}.`,
+                        `En ${city}, conviene diferenciar entre fabricar a medida, adaptar una pieza existente o restaurar solo la parte dañada antes de presupuestar.`
+                    ]
+                },
+                process_steps: {
+                    intro: [`En ${city}, un proceso serio de carpintería empieza por medición en obra y definición de materiales antes de fabricar o montar.`],
+                    body: [
+                        `En ${city}, ordenar el trabajo en medición, preparación de piezas, montaje y comprobación final evita rehacer cortes, remates y ajustes.`,
+                        `En ${city}, revisar holguras, herrajes y nivelación al terminar evita que un mueble o una puerta quede bien solo el primer día.`
+                    ]
+                },
+                local_proof: {
+                    intro: [
+                        `En ${city}, la cobertura útil no depende de frases genéricas, sino de cómo se coordinan visita, medición, fabricación y montaje${areaHint}.`
+                    ],
+                    body: [
+                        `En ${city}, hablar de cobertura real implica explicar cuándo hace falta visita previa, cuándo basta con validación inicial y cómo se organiza el montaje según el tipo de proyecto.`
+                    ]
+                },
+                price_guidance: {
+                    intro: [`En ${city}, una guía de presupuesto útil no da cifras universales: aclara qué cambian las medidas, el material, el acabado y los herrajes.`],
+                    body: [
+                        `En ${city}, comparar propuestas tiene más sentido cuando separan fabricación, instalación, remates y posibles ajustes en obra.`
+                    ]
+                },
+                local_proof: {
+                    intro: [
+                        `En ${city}, nuestra logística operativa nos permite cubrir con solvencia tanto el centro como los barrios periféricos, asegurando que cada aviso cuente con técnicos que conocen bien la zona.`,
+                        `La asistencia en ${city} se organiza siguiendo protocolos de proximidad; esto nos permite optimizar desplazamientos y ofrecer una respuesta técnica coherente con las necesidades del municipio.`
+                    ]
+                },
+                faq: [
+                    `En ${city}, la solución técnica ideal siempre se valida tras una inspección directa, priorizando la durabilidad y el uso de materiales que cumplan con los estándares de calidad del sector.`,
+                    `Resolver cualquier duda en ${city} antes de empezar es parte de nuestro compromiso; entender los factores que influyen en el resultado ayuda a tomar decisiones más inteligentes.`
+                ]
+            },
+            home_local: {
+                local_proof: {
+                    intro: [
+                        `Nuestra presencia técnica en ${city} está consolidada mediante una red de especialistas locales preparados para intervenir con materiales específicos y herramientas de última generación.`,
+                        `Entendemos que un servicio de proximidad en ${city} exige no solo rapidez, sino un conocimiento profundo de la tipología de viviendas y locales de la zona para ofrecer soluciones reales.`
+                    ]
+                },
+                trust_band: {
+                    body: [
+                        `La confianza en ${city} no se promete, se demuestra mediante procesos transparentes, garantías firmadas y un seguimiento técnico que asegura la satisfacción tras cada servicio.`,
+                        `En ${city}, cada intervención se documenta y se garantiza, protegiendo al cliente mediante el uso exclusivo de componentes certificados y mano de obra cualificada.`
+                    ]
+                },
+                cta_panel: {
+                    intro: [`Para recibir una orientación técnica honesta sobre su caso en ${city}, el primer paso es contactar para coordinar una valoración sin compromiso ajustada a sus necesidades.`]
+                }
+            },
+            generic: {
+                local_proof: {
+                    intro: [`La cobertura técnica en ${city} se define por la cercanía operativa y la capacidad de movilización de recursos especializados hacia cualquier punto de la localidad o zonas limítrofes.`]
+                },
+                trust_band: {
+                    body: [`Consolidamos nuestra autoridad en ${city} mediante la aplicación estricta de normativas técnicas y el uso de señales de confianza verificables en cada proyecto.`]
+                }
+            }
+        };
+
+                const blockPool = familyPools[family]?.[blockType]?.[mode] || familyPools.generic?.[blockType]?.[mode] || [];
+        return this.pickDeterministicVariant(
+            blockPool,
+            `${input.section_id || input.section_h2}|${blockType}|${mode}|${salt}|${safeDecisionPair}|${safeTrustPair}`,
+            ''
+        ).replace(/\s+/g, ' ').trim();
+    }
+
+    private ensureLocalSeoContext(text: string, input: WriterInput, mode: 'body' | 'faq' | 'intro' | 'bullet' = 'body', salt = ''): string {
+        const city = this.normalizeCityName(input.city);
+        const niche = String(input.niche || '').trim().toLowerCase();
+        let out = String(text || '').replace(/\s+/g, ' ').trim();
+        if (!out) return out;
+
+        const hasCity = new RegExp(`\\b${this.escapeRegex(city)}\\b`, 'i').test(out);
+        const hasNiche = niche ? new RegExp(`\\b${this.escapeRegex(niche)}\\b`, 'i').test(out) : false;
+        const hasTopicSignal = hasNiche || this.containsTopicSignal(out, input);
+
+        if (mode === 'bullet') {
+            if (!hasCity && out.length <= 36) {
+                return `${out} · ${city}`.replace(/\s+/g, ' ').trim();
+            }
+            return out;
+        }
+
+        const shouldInject = mode === 'intro'
+            ? !hasCity
+            : (!hasCity && !hasTopicSignal);
+
+        if (!shouldInject) {
+            return out;
+        }
+
+        const addition = this.buildLocalSeoAddition(input, mode, salt);
+        if (addition && !out.toLowerCase().includes(addition.toLowerCase())) {
+            out = `${out} ${addition}`.replace(/\s+/g, ' ').trim();
+        }
+
+        return out;
     }
 
     private escapeRegex(value: string): string {
         return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
-    private stripTraceArtifacts(text: string): string {
-        return String(text || '')
-            .replace(/\s*\((?:TR|REF|ID)-[a-z0-9_-]{4,}\)\.?/gi, '')
-            .replace(/\b(?:TR|REF|ID)-[a-z0-9_-]{4,}\b/gi, '')
-            .trim();
     }
 
     private splitSentences(text: string): string[] {
@@ -436,6 +596,55 @@ export class ContentWriterAgent extends BaseAgent {
             .trim();
     }
 
+
+    private looksLikeGuidanceInstruction(text: string): boolean {
+        const value = String(text || '').trim();
+        if (!value) return false;
+        return /^(explica|describe|diferencia|aclara|prioriza|resume|indica|detalla|recomienda|habla|define|orienta)\b/i.test(value);
+    }
+
+
+private dedupeLocalLabel(text: string, city: string): string {
+    const safeCity = this.normalizeCityName(city);
+    const escapedCity = this.escapeRegex(safeCity);
+    return String(text || '')
+        .replace(new RegExp(`\ben\s+${escapedCity}\s+en\s+${escapedCity}\b`, 'gi'), `en ${safeCity}`)
+        .replace(new RegExp(`\b${escapedCity}\s+en\s+${escapedCity}\b`, 'gi'), safeCity)
+        .replace(new RegExp(`\b${escapedCity}\s+${escapedCity}\b`, 'gi'), safeCity)
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+}
+
+    private sanitizeBulletLabel(text: string, input: WriterInput, trust = false): string {
+        const city = this.normalizeCityName(input.city);
+        let out = this.sanitizeSentence(String(text || ''), city, input.niche)
+            .replace(/\s*·\s*[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/g, '')
+            .replace(new RegExp(`\\b${this.escapeRegex(input.niche)}\\s+en\\s+${this.escapeRegex(city)}\\b`, 'gi'), '')
+            .replace(new RegExp(`\\b${this.escapeRegex(city)}\\s+${this.escapeRegex(input.niche)}\\b`, 'gi'), city)
+            .replace(/\bplanificamos\s+each\s+intervenci[oó]n\b/gi, 'planificamos cada intervención')
+            .replace(/\s{2,}/g, ' ')
+            .replace(/[.;:,]+$/g, '')
+            .trim();
+
+        if (!out) return out;
+
+        if (/^cobertura local$/i.test(out)) return `Cobertura real en ${city}`;
+        if (/^cobertura real$/i.test(out)) return `Cobertura real en ${city}`;
+        if (/^atencion directa$/i.test(out)) return 'Atención directa';
+        if (/^prioridad clara$/i.test(out)) return 'Prioridad operativa clara';
+        if (/^intervencion ordenada$/i.test(out)) return 'Intervención ordenada';
+        if (/^seguimiento claro$/i.test(out)) return 'Seguimiento claro';
+        if (/^planificacion por zonas$/i.test(out)) return 'Planificación por zonas';
+        if (/^presupuesto previo$/i.test(out)) return 'Presupuesto previo';
+        if (/^proceso explicado$/i.test(out)) return 'Proceso explicado';
+
+        if (trust && out.length <= 20 && !new RegExp(`\\b${this.escapeRegex(city)}\\b`, 'i').test(out) && /cobertura|zona|desplazamiento/i.test(out)) {
+            return `${out} en ${city}`;
+        }
+
+        return out;
+    }
+
     private sanitizeSentence(text: string, city: string, niche: string): string {
         if (!text) return text;
 
@@ -454,6 +663,17 @@ export class ContentWriterAgent extends BaseAgent {
             .replace(/\bla seguridad de su hogar o negocio es nuestra prioridad fundamental\b/gi, this.isLocksmithLikeNiche(niche) ? 'protegemos accesos y cerramientos con un enfoque técnico' : 'la fiabilidad de la instalación y la tranquilidad del usuario son una prioridad en cada intervención')
             .replace(/\bdisponemos de la tecnolog[ií]a m[aá]s avanzada del sector actual\b/gi, 'trabajamos con herramienta profesional y procedimientos contrastados')
             .replace(/\bprecios transparentes y presupuestos cerrados\b/gi, 'presupuesto claro antes de intervenir')
+            .replace(/\bcomo los profesionales? de toda la vida\b/gi, 'con un criterio profesional claro')
+            .replace(/\bcomo referentes locales\b/gi, 'con atención local')
+            .replace(/\bespecialistas de toda la vida\b/gi, 'profesionales del oficio')
+            .replace(/\bconocemos cada rinc[oó]n(?: de [a-záéíóúñ\s]+)?\b/gi, 'trabajamos con coordinación local')
+            .replace(/\bnuestro equipo se ha familiarizado con cada rinc[oó]n del barrio\b/gi, 'planificamos cada intervención según el contexto real')
+            .replace(/\bantes,\s*cuando[^.?!]*[.?!]?/gi, '')
+            .replace(/\bcomo profesionales? de toda la vida\b/gi, 'con un criterio profesional claro')
+            .replace(/\bconocer? los secretos? de [a-záéíóúñ\s]+\b/gi, 'trabajar con un criterio técnico adaptado al contexto')
+            .replace(/\bno dudes? en [a-záéíóúñ\s]+\b/gi, 'puedes consultarlo antes de intervenir')
+            .replace(/\bpuedes confiar en que te ayudaremos\b/gi, 'te explicamos cómo abordar el caso')
+            .replace(/\bsoluciones? temporales? ni ef[ií]meras?\b/gi, 'arreglos improvisados')
             .replace(/\bseguridad certificada\b/gi, '')
             .replace(/\bcompromiso profesional directo\b/gi, '')
             .replace(/\buso de sistemas avanzados\b/gi, '')
@@ -462,13 +682,39 @@ export class ContentWriterAgent extends BaseAgent {
             .replace(/\band profesionalidad\b/gi, 'y profesionalidad')
             .replace(/\bla un\b/gi, 'un')
             .replace(/\bcostee-efectiva\b/gi, 'rentable')
-            .replace(/\bvalencia\b/g, normalizedCity === 'Valencia' ? 'Valencia' : 'valencia')
             .replace(/\bde de\b/gi, 'de')
+            .replace(/\bpreguntas?\s+frecces\b/gi, 'Preguntas frecuentes')
+            .replace(/\bcu[aá]nd[ae]\b/gi, 'cuándo')
+            .replace(/\bde el\b/gi, 'del')
+            .replace(/la respuesta a la pregunta ['"“”]?([^'"“”]+)['"“”]?/gi, '$1.')
             .replace(/\bde incluye\b/gi, 'incluye')
             .replace(/\bde la de\b/gi, 'de la')
             .replace(/\bde,\b/gi, ',')
-            .replace(/\.\.+/g, '.')
+            .replace(/\bmadrid\b/gi, normalizedCity.toLowerCase() === 'madrid' ? 'Madrid' : normalizedCity)
+            .replace(/\bbarcelona\b/gi, normalizedCity.toLowerCase() === 'barcelona' ? 'Barcelona' : normalizedCity)
+            .replace(/\bsevilla\b/gi, normalizedCity.toLowerCase() === 'sevilla' ? 'Sevilla' : normalizedCity)
+            .replace(/\bvalencia\b/gi, normalizedCity.toLowerCase() === 'valencia' ? 'Valencia' : normalizedCity)
+            .replace(/\bzaragoza\b/gi, normalizedCity.toLowerCase() === 'zaragoza' ? 'Zaragoza' : normalizedCity)
+            .replace(/\bmalaga\b/gi, normalizedCity.toLowerCase() === 'malaga' ? 'Malaga' : normalizedCity)
+            .replace(/\bm[áà]laga\b/gi, normalizedCity.toLowerCase() === 'malaga' ? 'Málaga' : normalizedCity)
+            .replace(/\bgranada\b/gi, normalizedCity.toLowerCase() === 'granada' ? 'Granada' : normalizedCity)
+            .replace(/\balicante\b/gi, normalizedCity.toLowerCase() === 'alicante' ? 'Alicante' : normalizedCity)
+            .replace(/\bmurcia\b/gi, normalizedCity.toLowerCase() === 'murcia' ? 'Murcia' : normalizedCity)
+            // Bunker Sanitization: Eliminar fugas de planning y fragmentos rotos remanentes
+            // Gravity Heuristic Repair: Arreglar de raíz preposiciones huérfanas y huecos de contexto
+            .replace(/\b(en|de|con|para)\s*([,.;:!?¡¿])/gi, (match, prep, punct) => {
+                return `${prep} ${normalizedCity}${punct}`;
+            })
+            // Reparar casos de 'en' al final de fragmentos o listas sin ciudad
+            .replace(/\b(en|de|con|para)\s*$/i, (match, prep) => `${prep} ${normalizedCity}`)
+            .replace(/\b(en|de|con|para)\s*\.\.\./g, (match, prep) => `${prep} ${normalizedCity}...`)
+            .replace(/\ben\s+es\s+crucial/gi, `en ${normalizedCity} es crucial`)
+            .replace(/\ben\s+conviene/gi, `en ${normalizedCity} conviene`)
+            .replace(/\bclientes\s+en\s*\./gi, `clientes en ${normalizedCity}.`)
+            .replace(/\bcobertura\s+en\s*[,.;:]/gi, `cobertura en ${normalizedCity}.`)
+            .replace(/^[ ,.;:!?¡¿\s]+/, '') // No empezar con basura
             .replace(/\s{2,}/g, ' ')
+            .replace(/\s,\s/g, ', ')
             .trim()
             .replace(new RegExp(`\\b${this.escapeRegex(city)}\\b`, 'gi'), normalizedCity);
     }
@@ -476,14 +722,29 @@ export class ContentWriterAgent extends BaseAgent {
     private isGenericItemTitle(title?: string): boolean {
         const value = (title || '').trim().toLowerCase();
         if (!value) return true;
-        return /^(intervenci[oó]n t[eé]cnica especializada(?: [a-z0-9]+)?|servicio\s+\d+|servicio\s+[abc]|bloque\s+\d+|elemento\s+\d+|punto\s+\d+|soluci[oó]n\s+\d+|servicio de [a-záéíóúñ]+ en [a-záéíóúñ\s]+|intervenci[oó]n profesional en [a-záéíóúñ\s]+|calidad t[eé]cnica en [a-záéíóúñ\s]+|procesos? de [a-záéíóúñ\s]+|metodolog[ií]a aplicada|explicaci[oó]n t[eé]cnica|compromiso local)$/i.test(value);
+        // Block more generic patterns (User Fix)
+        return /^(intervenci[oó]n t[eé]cnica especializada(?: [a-z0-9]+)?|servicio\s+\d+|servicio\s+[abc]|bloque\s+\d+|elemento\s+\d+|punto\s+\d+|soluci[oó]n\s+\d+|servicio de [a-záéíóúñ]+ en [a-záéíóúñ\s]+|intervenci[oó]n profesional en [a-záéíóúñ\s]+|calidad t[eé]cnica en [a-záéíóúñ\s]+|procesos? de [a-záéíóúñ\s]+|metodolog[ií]a aplicada|explicaci[oó]n t[eé]cnica|compromiso local|profesionales cualificados|soluciones de calidad|nuestros servicios)$/i.test(value);
     }
 
     private buildFallbackBodyFromTitle(title: string, input: WriterInput): string {
         const city = this.normalizeCityName(input.city);
         const niche = input.niche.toLowerCase();
+        const normalizedTitle = this.dedupeLocalLabel(String(title || '').trim(), input.city);
+        const localAreas = this.getAllowedLocalAreas(input, 2);
+        const areaA = localAreas[0] || city;
+        const areaB = localAreas[1] || areaA;
+        const linkHint = this.getInternalLinkHints(input, 1)[0];
 
-        return `En ${city}, este bloque de ${niche} se plantea con diagnóstico previo, ejecución ordenada y verificación final para evitar soluciones improvisadas. Antes de intervenir conviene revisar el punto exacto de fallo, el nivel de desgaste y qué alternativa deja una resolución más estable para el usuario.`;
+        const templates = [
+            `En ${city}, ${normalizedTitle.toLowerCase()} se resuelve mejor cuando primero se comprueban el estado real, las medidas útiles y las piezas o materiales que de verdad condicionan el trabajo.`,
+            `Cuando este trabajo afecta a zonas como ${areaA}${areaB && areaB !== areaA ? ` y ${areaB}` : ''}, conviene ordenar desplazamiento, materiales y verificación final para que la actuación de ${niche} no quede a medias.`,
+            `Antes de cerrar ${normalizedTitle.toLowerCase()}, revisamos si compensa ajustar, sustituir o rehacer solo la parte necesaria para que la solución no dependa de un arreglo provisional.`,
+            linkHint
+                ? `Si el caso se parece a ${linkHint.toLowerCase()}, puede ser útil valorar esa línea de trabajo dentro del cluster antes de elegir una intervención más amplia.`
+                : `La clave está en dejar claro qué se hará, qué se valida al terminar y qué seguimiento conviene si el estado previo del punto tratado pide una segunda revisión.`
+        ];
+
+        return this.pickDeterministicVariant(templates, `${normalizedTitle}|${areaA}|${areaB}|${linkHint || ''}|${city}`);
     }
 
     private getRandomNicheTitle(niche: string, city: string): string {
@@ -499,661 +760,409 @@ export class ContentWriterAgent extends BaseAgent {
         return variants[Math.floor(Math.random() * variants.length)];
     }
 
+    private toStringArray(value: unknown): string[] {
+        if (Array.isArray(value)) {
+            return value
+                .flatMap((entry: any) => {
+                    if (entry == null) return [];
+                    if (typeof entry === 'string') return [entry];
+                    if (typeof entry === 'number' || typeof entry === 'boolean') return [String(entry)];
+                    if (typeof entry === 'object') {
+                        if (typeof entry.text === 'string') return [entry.text];
+                        if (typeof entry.body === 'string') return [entry.body];
+                        if (typeof entry.title === 'string') return [entry.title];
+                        if (typeof entry.question === 'string') return [entry.question];
+                        if (typeof entry.answer === 'string') return [entry.answer];
+                    }
+                    return [];
+                })
+                .map((item) => String(item || '').trim())
+                .filter(Boolean);
+        }
+
+        if (typeof value === 'string') {
+            return value
+                .split(/\n+/)
+                .map((item) => item.trim())
+                .filter(Boolean);
+        }
+
+        if (value && typeof value === 'object') {
+            const anyValue = value as any;
+            if (typeof anyValue.text === 'string') return [anyValue.text.trim()].filter(Boolean);
+            if (typeof anyValue.body === 'string') return [anyValue.body.trim()].filter(Boolean);
+            if (typeof anyValue.title === 'string') return [anyValue.title.trim()].filter(Boolean);
+        }
+
+        return [];
+    }
+
+    private toDecisionFactorArray(value: any): Array<{ title: string; body: string }> {
+        if (Array.isArray(value)) {
+            return value.map((item: any) => ({
+                title: typeof item?.title === 'string' ? item.title : (typeof item?.label === 'string' ? item.label : ''),
+                body: typeof item?.body === 'string' ? item.body : (typeof item?.text === 'string' ? item.text : ''),
+            })).filter((item) => item.title || item.body);
+        }
+        if (value && typeof value === 'object') {
+            const entries = Object.entries(value as Record<string, any>).map(([key, body]) => ({
+                title: String(key || '').trim(),
+                body: typeof body === 'string' ? body : (typeof (body as any)?.body === 'string' ? (body as any).body : ''),
+            }));
+            return entries.filter((item) => item.title || item.body);
+        }
+        return [];
+    }
+
+    private normalizeSemanticShape(semantic: SectionSemanticData, input: WriterInput): SectionSemanticData {
+        const normalized: SectionSemanticData = { ...(semantic || {}) };
+
+        normalized.intro = this.toStringArray(normalized.intro);
+        normalized.bullets = this.toStringArray(normalized.bullets);
+        normalized.trustBullets = this.toStringArray(normalized.trustBullets);
+        normalized.commonMistakes = this.toStringArray(normalized.commonMistakes);
+
+        const rawItems = Array.isArray(normalized.items) ? normalized.items : [];
+        normalized.items = rawItems.map((item: any) => ({
+            title: typeof item?.title === 'string'
+                ? item.title
+                : (typeof item?.heading === 'string' ? item.heading : ''),
+            body: typeof item?.body === 'string'
+                ? item.body
+                : (typeof item?.text === 'string' ? item.text : ''),
+            meta: this.toStringArray(item?.meta).slice(0, 3)
+        })).filter((item) => item.title || item.body);
+
+        const rawFaq = Array.isArray(normalized.faqItems) ? normalized.faqItems : [];
+        normalized.faqItems = rawFaq.map((item: any) => ({
+            question: typeof item?.question === 'string'
+                ? item.question
+                : (typeof item?.title === 'string' ? item.title : ''),
+            answer: typeof item?.answer === 'string'
+                ? item.answer
+                : (typeof item?.body === 'string' ? item.body : '')
+        })).filter((item) => item.question || item.answer);
+
+        const rawFactors = this.toDecisionFactorArray(normalized.decisionFactors);
+        normalized.decisionFactors = rawFactors.map((df: any) => ({
+            title: typeof df?.title === 'string' ? df.title : '',
+            body: typeof df?.body === 'string' ? df.body : ''
+        })).filter(df => df.title && df.body);
+
+        if (normalized.cta && typeof normalized.cta === 'object') {
+            normalized.cta = {
+                text: this.normalizeCtaText(normalized.cta.text, input.local_nap.phone),
+                phone: input.local_nap.phone,
+                note: typeof normalized.cta.note === 'string' ? normalized.cta.note : ''
+            };
+        }
+
+        return normalized;
+    }
+
     private sanitizeSemanticOutput(semantic: SectionSemanticData, input: WriterInput): SectionSemanticData {
         const city = this.normalizeCityName(input.city);
-        const requestedH3s = Array.isArray(input.subsections_h3) ? input.subsections_h3.filter(Boolean) : [];
+        const niche = input.niche;
+        const normalized = this.normalizeSemanticShape(semantic, input);
 
-        semantic.h2 = semantic.h2 ? this.sanitizeSentence(semantic.h2, city, input.niche) : input.section_h2;
-        semantic.intro = (semantic.intro || [])
-            .map((paragraph) => this.sanitizeSentence(paragraph, city, input.niche))
-            .filter(Boolean)
-            .slice(0, input.blockType === 'cta_panel' ? 2 : 3);
+        if (normalized.intro) {
+            normalized.intro = normalized.intro
+                .map((text, i) => {
+                    const cleaned = this.ensureLocalSeoContext(this.sanitizeSentence(text, city, niche), input, 'intro', `intro_${i}`);
+                    return (this.looksLikeSemanticPlaceholder(cleaned) || this.looksLikeGuidanceInstruction(cleaned))
+                        ? this.buildLocalSeoAddition(input, 'intro', `intro_${i}`)
+                        : cleaned;
+                })
+                .filter(text => text && !this.looksLikeGuidanceInstruction(text));
+        }
 
-        semantic.items = (semantic.items || []).map((item, index) => {
-            const requestedTitle = requestedH3s[index];
-            let title = (this.isGenericItemTitle(item?.title) && requestedTitle) ? requestedTitle : (item?.title || requestedTitle || '');
-            
-            // Hardening: Si el título sigue siendo genérico tras el intento de sustitución, le inyectamos una variante real
-            if (this.isGenericItemTitle(title)) {
-                title = this.getRandomNicheTitle(input.niche, city);
+        if (normalized.items) {
+            normalized.items = normalized.items.map((item, i) => {
+                const title = this.isGenericItemTitle(item.title)
+                    ? this.getRandomNicheTitle(niche, city)
+                    : this.sanitizeSentence(item.title, city, niche);
+
+                const candidateBody = this.ensureLocalSeoContext(this.sanitizeSentence(item.body, city, niche), input, 'body', `item_${i}`);
+                const body = (this.looksLikeSemanticPlaceholder(item.body) || this.looksLikeGuidanceInstruction(item.body) || this.looksLikeSemanticPlaceholder(candidateBody))
+                    ? this.buildFallbackBodyFromTitle(title, input)
+                    : candidateBody;
+
+                return {
+                    title,
+                    body,
+                    meta: (item.meta || []).map((m: string) => this.sanitizeSentence(m, city, niche)).slice(0, 3)
+                };
+            }).filter(item => item.title && item.body);
+        }
+
+        if (normalized.faqItems) {
+            normalized.faqItems = normalized.faqItems.map((item, i) => ({
+                question: this.sanitizeSentence(item.question, city, niche),
+                answer: (() => {
+                    const candidateAnswer = this.ensureLocalSeoContext(this.sanitizeSentence(item.answer, city, niche), input, 'faq', `faq_${i}`);
+                    return (this.looksLikeSemanticPlaceholder(item.answer) || this.looksLikeGuidanceInstruction(item.answer) || this.looksLikeSemanticPlaceholder(candidateAnswer))
+                        ? this.buildFaqAnswer(item.question, input, i)
+                        : candidateAnswer;
+                })()
+            })).filter(item => item.question && item.answer);
+        }
+
+        if (normalized.bullets) {
+            normalized.bullets = normalized.bullets
+                .map((b) => this.sanitizeBulletLabel(b, input))
+                .filter(b => b.length > 3 && !this.looksLikeGuidanceInstruction(b));
+        }
+
+        if (normalized.trustBullets) {
+            normalized.trustBullets = normalized.trustBullets
+                .map((b) => this.sanitizeBulletLabel(b, input, true))
+                .filter(b => b.length > 3 && !this.looksLikeGuidanceInstruction(b));
+        }
+
+        if (normalized.commonMistakes) {
+            normalized.commonMistakes = normalized.commonMistakes
+                .map((m) => this.sanitizeSentence(m, city, niche))
+                .filter(m => m.length > 3 && !this.looksLikeGuidanceInstruction(m));
+        }
+
+        const safeDecisionFactors = this.toDecisionFactorArray(normalized.decisionFactors);
+        if (safeDecisionFactors.length) {
+            normalized.decisionFactors = safeDecisionFactors.map((df, i) => {
+                const safeTitle = this.sanitizeSentence(df.title, city, niche);
+                const candidateBody = this.ensureLocalSeoContext(this.sanitizeSentence(df.body, city, niche), input, 'body', `df_${i}`);
+                return {
+                    title: safeTitle,
+                    body: (!candidateBody || this.looksLikeSemanticPlaceholder(candidateBody) || this.looksLikeGuidanceInstruction(candidateBody))
+                        ? this.buildFallbackBodyFromTitle(safeTitle || 'Criterio técnico', input)
+                        : candidateBody
+                };
+            }).filter(df => df.title && df.body);
+        } else {
+            normalized.decisionFactors = [];
+        }
+
+        return normalized;
+    }
+
+    private buildEmergencySemanticFallback(input: WriterInput, seed?: SectionSemanticData | null): SectionSemanticData {
+        const city = this.normalizeCityName(input.city);
+        const niche = input.niche;
+        const h3s = Array.isArray(input.subsections_h3) ? input.subsections_h3 : [];
+
+        const base: SectionSemanticData = {
+            sectionId: input.section_id,
+            h2: this.dedupeLocalLabel(input.section_h2, input.city),
+            intro: seed?.intro || [`En ${city}, el servicio de ${niche.toLowerCase()} necesita un enfoque técnico proporcionado al estado real del trabajo, del material y del montaje.`],
+            items: seed?.items || h3s.map(h3 => ({
+                title: h3,
+                body: this.buildFallbackBodyFromTitle(h3, input)
+            })),
+            bullets: seed?.bullets || [],
+            faqItems: seed?.faqItems || [],
+            cta: {
+                text: 'Consultar presupuesto sin compromiso',
+                phone: input.local_nap.phone
             }
-
-            const sanitizedBody = item?.body ? this.sanitizeSentence(item.body, city, input.niche) : '';
-            const body = sanitizedBody || this.buildFallbackBodyFromTitle(title, input);
-
-            return {
-                title: this.sanitizeSentence(title, city, input.niche),
-                body,
-                meta: Array.isArray(item?.meta)
-                    ? Array.from(new Set(item.meta.map((meta) => this.sanitizeSentence(meta, city, input.niche)).filter(Boolean))).slice(0, 3)
-                    : undefined
-            };
-        }).filter(item => item.title || item.body);
-
-        if (requestedH3s.length > semantic.items.length && ['services_grid', 'process_steps', 'local_proof'].includes(input.blockType || '')) {
-            requestedH3s.slice(semantic.items.length).forEach((title) => {
-                semantic.items!.push({
-                    title: this.sanitizeSentence(title, city, input.niche),
-                    body: this.buildFallbackBodyFromTitle(title, input)
-                });
-            });
-        }
-
-        if ((input.blockType === 'services_grid' || input.blockType === 'process_steps' || input.blockType === 'local_proof') && semantic.items.length > 0) {
-            semantic.items = semantic.items.slice(0, Math.max(3, Math.min(semantic.items.length, requestedH3s.length || 4)));
-        }
-
-        semantic.bullets = Array.from(new Set((semantic.bullets || []).map((bullet) => this.sanitizeSentence(bullet, city, input.niche)).filter(Boolean))).slice(0, 6);
-        semantic.trustBullets = Array.from(new Set((semantic.trustBullets || []).map((bullet) => this.sanitizeSentence(bullet, city, input.niche)).filter(Boolean))).slice(0, 5);
-
-        semantic.faqItems = (semantic.faqItems || []).map((item) => ({
-            question: this.sanitizeSentence(item.question, city, input.niche),
-            answer: this.sanitizeSentence(item.answer, city, input.niche)
-        })).filter((item) => item.question && item.answer);
-
-        if (semantic.table?.rows?.length) {
-            semantic.table = {
-                columns: (semantic.table.columns || []).map((column) => this.sanitizeSentence(column, city, input.niche)),
-                rows: semantic.table.rows.map((row) => row.map((cell) => this.sanitizeSentence(cell, city, input.niche)))
-            };
-        }
-
-        semantic.commonMistakes = Array.from(new Set((semantic.commonMistakes || []).map((item) => this.sanitizeSentence(item, city, input.niche)).filter(Boolean))).slice(0, 5);
-        semantic.decisionFactors = (semantic.decisionFactors || []).map((item) => ({
-            title: this.sanitizeSentence(item.title, city, input.niche),
-            body: this.sanitizeSentence(item.body, city, input.niche)
-        })).filter((item) => item.title && item.body);
-
-        semantic.cta = {
-            text: this.normalizeCtaText(this.sanitizeSentence(semantic.cta?.text || 'Contactar ahora', city, input.niche), input.local_nap.phone),
-            phone: input.local_nap.phone,
-            note: semantic.cta?.note ? this.sanitizeSentence(semantic.cta.note, city, input.niche) : undefined
         };
 
-        if (input.blockType === 'map') {
-            semantic.intro = [this.buildNeutralCoverageLine(city)];
-            semantic.mapNote = `Cobertura operativa en ${city}`;
+        if (input.blockType === 'faq' && !base.faqItems?.length) {
+            base.faqItems = h3s.map((q, i) => ({
+                question: q,
+                answer: this.buildFaqAnswer(q, input, i)
+            }));
         }
 
-        semantic = this.sanitizeSemanticForNiche(semantic, input.niche);
-        return semantic;
+        return base;
+    }
+
+    private isLocksmithLikeNiche(niche: string): boolean {
+        const term = String(niche || '').toLowerCase();
+        return /cerraj|caja fuerte|bombin|cerradur|persiana|puerta|blindad|cerrojo|ganzu|antibumping/i.test(term);
+    }
+
+    private looksLikeTraceArtifact(text: string): boolean {
+        return /\[DEBUG\]|\[TRACE\]|\[LOG\]|AI Response:|Writing Phase:|Block Index:/.test(text);
+    }
+
+    private stripTraceArtifacts(text: string): string {
+        return text
+            .split('\n')
+            .filter(line => !this.looksLikeTraceArtifact(line))
+            .join(' ')
+            .trim();
+    }
+
+    private sanitizeModelOutput(text: string): string {
+        return text
+            .replace(/```json|```/g, '')
+            .replace(/(\r\n|\n|\r)/gm, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    private buildSystemPrompt(input: WriterInput, knowledgePack: string): string {
+        const niche = input.niche;
+        const city = this.normalizeCityName(input.city);
+        const cityLower = city.toLowerCase();
+        const nicheLower = niche.toLowerCase();
+        const techBrief = this.truncate(this.technicalBrief, 400);
+        const nicheBrief = this.truncate(this.nicheBrief, 800);
+        const knowledge = this.truncate(knowledgePack, 2000);
+        const entities = (input.entities || []).slice(0, 10).join(', ');
+        const areas = this.getAllowedLocalAreas(input, 4).join(', ');
+        const linkHints = this.getInternalLinkHints(input, 3).join(', ');
+        const governanceRules = getRulesByCategory('Writer').map((r, i) => `${i + 1}. ${r}`).join('\n');
+
+        return `
+Eres un redactor experto en SEO local para el mercado español. Tu misión es generar el contenido semántico para una sección específica de una página de servicios.
+
+NICHO: ${niche}
+CIUDAD: ${city}
+H2 SECCIÓN: ${this.dedupeLocalLabel(input.section_h2, city)}
+H3 SUBSECCIONES: ${input.subsections_h3.join(', ')}
+KEYWORDS/ENTIDADES: ${entities}
+ÁREAS LOCALES: ${areas}
+ENLACES INTERNOS (Anchors sugeridos): ${linkHints}
+
+REGLAS DE ORO (OBLIGATORIAS):
+${governanceRules}
+2. **ESPECIFICIDAD TÉCNICA REAL**: Habla del oficio correcto para el nicho actual. Usa materiales, procesos, piezas y criterios compatibles con ${input.niche}, nunca con otros gremios.
+3. **TONO DE AUTORIDAD**: Escribe como un profesional veterano del nicho actual que explica la realidad técnica del trabajo a un cliente, sin adornos publicitarios.
+4. **LOCALIDAD NATURAL**: Menciona barrios o zonas de ${city} (ej: ${areas}) integrándolos en logística real de visita, medición, desplazamiento y montaje; evita ejemplos fijos de otros oficios.
+5. **SIN PLACEHOLDERS**: No escribas "Factor 1", "Criterio 1", "Placeholder". Genera contenido real y completo.
+6. **PREGUNTAS USUARIO**: ${input.sectionBrief?.userQuestion || '¿Cómo se resuelve mi problema de forma fiable?'}
+7. **REGLA DE PROHIBICIÓN**: ${input.sectionBrief?.prohibitedClaims?.join(', ') || 'Sin tiempos record ni precios cerrados por teléfono.'}
+
+PLAYBOOK TÉCNICO:
+${techBrief}
+
+CONOCIMIENTO NICHO:
+${nicheBrief}
+
+KNOWLEDGE PACK:
+${knowledge}
+
+PACK CERRADO DE NICHO (OBLIGATORIO):
+- Usa solo terminología, piezas, procesos y ejemplos compatibles con ${niche}.
+- Prohibido mezclar oficios, materiales o averías de otros nichos.
+- Si una frase no encaja claramente en el playbook del nicho, no la uses.
+- Ante duda, vuelve a servicios, FAQs, trust signals y criterios de decisión del playbook.
+
+INSTRUCCIONES JSON:
+Devuelve un objeto JSON con esta estructura:
+{
+  "intro": ["Párrafo 1 profundo", "Párrafo 2 de contexto"],
+  "items": [{"title": "Subtítulo H3", "body": "Texto detallado (80-120 palabras)", "meta": ["Dato técnico 1", "Dato 2"]}],
+  "bullets": ["Ventaja técnica 1", "Diferenciador 2"],
+  "faqItems": [{"question": "¿...?", "answer": "Explicación clara y útil"}],
+  "commonMistakes": ["Error 1", "Error 2"],
+  "decisionFactors": [{"title": "Factor 1", "body": "Por qué es importante"}],
+  "cta": {"text": "Llamativa y natural", "note": "Pequeña aclaración de confianza"}
+}
+`;
+    }
+
+
+    private evaluateCrossNicheRisk(input: WriterInput, semantic: SectionSemanticData, html: string) {
+        return detectCrossNicheContamination({
+            niche: input.niche,
+            city: input.city,
+            blockType: input.blockType,
+            html,
+            textFragments: [
+                ...(semantic.intro || []),
+                ...((semantic.items || []).flatMap((item) => [item.title, item.body, ...(item.meta || [])])),
+                ...((semantic.faqItems || []).flatMap((item) => [item.question, item.answer])),
+                ...(semantic.bullets || []),
+                ...(semantic.trustBullets || []),
+                ...(semantic.commonMistakes || []),
+                ...((semantic.decisionFactors || []).flatMap((item) => [item.title, item.body]))
+            ]
+        });
     }
 
     async execute(input: WriterInput): Promise<AgentResponse<WriterResult>> {
-        await this.logThought(`Redactando sección profunda: "${input.section_h2}" (Block: ${input.blockType}) para "${input.city}"`);
+        const city = this.normalizeCityName(input.city);
+        this.log(`Redactando sección [${input.blockType}]: ${this.dedupeLocalLabel(input.section_h2, city)}`);
 
-        const knowledge = await this.getPersistentKnowledge({
-            city: input.city,
-            niche: input.niche,
-            brand: input.local_nap.business_name
-        });
-        const verticalPack = resolveVerticalPack(input.niche);
-        
-        // Use injected briefs from BaseAgent
-        const writerBrief = this.nicheBrief || "";
-        const technicalNorms = this.technicalBrief || "";
-
+        let semanticSeed = null;
         try {
-            if (!writerBrief) {
-                // Fallback if not injected (should not happen in pipeline)
-                (this as any).nicheBrief = buildWriterInjection(input.niche);
+            const writerInjection = buildWriterInjection(input.niche || '');
+            if (writerInjection && input.blockType) {
+                semanticSeed = hydrateSemanticDraftFromPlaybook(
+                    input.niche || '',
+                    input.blockType,
+                    input.city || ''
+                );
             }
         } catch (e) {
-            await this.logThought(`[Warning] No high-fidelity brief for niche ${input.niche}. Using generic baseline.`);
+            this.log(`Warning en pre-hidratación: ${(e as Error).message}`);
         }
 
-        let semanticSeed: any = null;
-        try {
-            semanticSeed = hydrateSemanticDraftFromPlaybook(input.niche, input.blockType || '');
-        } catch (e) {
-            await this.logThought(`[Warning] No semantic seed for niche ${input.niche} / block ${input.blockType}.`);
+        const writerBrief = String(this.nicheBrief || '');
+        if (this.shouldBypassLlmForSection(input, writerBrief, semanticSeed)) {
+            return this.buildDeterministicSectionResult(input, semanticSeed, 'bypass_llm');
         }
-
-        const isFirstSection = input.sectionIndex === 0;
-        const isLastSection = input.sectionIndex === (input.totalSections || 0) - 1;
-        const brandMentionLimit = (isFirstSection || isLastSection) ? 1 : 2;
-        const expansionMode =
-            input.targetWords && input.targetWords >= 320 ? 'deep' :
-                input.targetWords && input.targetWords >= 200 ? 'balanced' :
-                    'compact';
-        // NEW: Format and Density Guidance
-        let blockInstruction = `
-- FORMATO ASIGNADO: ${input.preferred_format || 'prose'}. 
-  * Si es 'cards', genera bloques breves y homogéneos. 
-  * Si es 'bullets', usa una lista estructurada con explicaciones técnicas.
-  * Si es 'table', genera una tabla comparativa útil (SOLO SI SE PIDE 'table').
-  * Si es 'trust_cards', genera 3-4 tarjetas de confianza con título y una frase.
-- DENSIDAD: ${input.content_density || 'standard'}. 
-  * Si es 'compact', evita cualquier relleno y sé directo.
-- FACTUALIDAD: ${input.factuality_level || 'editorial'}. 
-  * Si es 'strict', NO improvises datos, marcas, tiempos o certificaciones.
-- PRIORIDAD MÓVIL: ${input.mobile_priority || 'normal'}. 
-- LAYOUT HINT: ${input.layout_hint || 'auto'}.
-  * split_feature: apertura fuerte + bloques claramente contrastados.
-  * boxed_content: bloques o tarjetas bien separadas.
-  * full_width_text: narrativa más corrida y limpia.
-  * minimal_centered: texto más breve, directo y escaneable.
-  * two_column_trust: estructura orientada a prueba/confianza.
-- PATTERN HINT: ${input.pattern_hint || 'none'}.
-  * Es un patrón compositivo interno y NO sustituye el layout base.
-  * Ejemplos válidos: proof_stack, trust_strip, timeline_story, authority_band.
-  * Úsalo solo para modular el orden interno del contenido, no para cambiar la semántica del bloque.
-- PESO VISUAL: ${input.visual_weight || 'medium'}.
-  * light: menos bloques, menos enumeraciones, lectura limpia.
-  * medium: equilibrio entre texto y estructura.
-  * heavy: más densidad visual, listas, tarjetas, elementos de conversión.
-
-- ÉNFASIS: ${input.emphasis || 'content'}.
-  * content: prioriza explicación técnica y claridad.
-  * trust: prioriza pruebas, garantías por escrito, transparencia y señales de confianza.
-  * cta: prioriza urgencia, contacto y avance a conversión sin sonar agresivo.
-  * Si es 'high', usa frases más cortas y párrafos de máximo 3 líneas.
-- ENTIDADES PERMITIDAS: ${(input.allowedLocalEntities || []).join(', ')}.
-- REGLA DE MAPA: Si es un bloque de mapa, el copy debe ser NEUTRO y orientativo (sin claims de tiempo).
-- CLAIMS PROHIBIDOS: "20 minutos", "menos de 20 minutos", "inmediato garantizado", "garantía de 10 años", "precio cerrado" (salvo dato real).
-- OBJETIVO DE LONGITUD: ${input.targetWords || 180} palabras aproximadas.
-- MODO DE EXPANSIÓN: ${expansionMode}.
-
-REGLAS DE EXPANSIÓN SIN RELLENO:
-- Si el modo es 'compact', responde con precisión y alta densidad.
-- Si el modo es 'balanced', añade contexto técnico, criterios de decisión y una o dos objeciones frecuentes.
-- Si el modo es 'deep', desarrolla la sección con capas reales:
-  1. explicación técnica,
-  2. variantes o casos frecuentes,
-  3. señales de riesgo o errores comunes,
-  4. criterios de elección profesional,
-  5. micro-prueba o garantía operativa sin inventar datos.
-- Nunca repitas la misma idea con sinónimos.
-- Cada párrafo o ítem debe aportar un ángulo nuevo.
-- Si faltan datos verificables, profundiza con proceso, diagnóstico, escenarios y recomendaciones, no con afirmaciones vacías.
-
-`;
-
-        const dynamicTarget = input.targetWords || 250;
-        const angle = input.pageProfile?.editorial_angle || 'transparencia-total';
-        const introStyle = input.introduction_style || 'explicación técnica';
-        const structType = input.structure_type || 'bloques de valor';
-
-        const nuanceEngines: Record<string, string> = {
-            'legado-local': `NUANCE: Enfoque en LEGADO Y TRADICIÓN. 
-                - Menciona barrios específicos de ${input.city} de forma natural.
-                - Usa frases como "como los profesionales de toda la vida", "conocemos cada rincón de ${input.city}".
-                - Prioriza historias de "antes vs ahora" en las explicaciones técnicas.`,
-            'fiabilidad-extrema': `NUANCE: Enfoque en FIABILIDAD TÉCNICA Y PREVENCIÓN DE DAÑOS ESTRUCTURALES.
-    - Habla de estabilidad, durabilidad, ajuste correcto, resistencia al uso y prevención de averías.
-    - El tono debe ser serio, preventivo y enfocado en evitar problemas futuros e inconvenientes.
-    - Explica por qué una solución bien ejecutada reduce incidencias y mejora el resultado final sin recurrir a temáticas ajenas al oficio.`,
-            'elite-tecnica': `NUANCE: Enfoque en EXCELENCIA TÉCNICA Y MAESTRÍA.
-    - Menciona procesos y herramientas genéricas del oficio, nunca herramientas exclusivas de otro nicho.
-    - El tono debe ser didáctico pero técnico, como un maestro explicando su oficio.
-    - Enfócate en la precisión del ajuste, la calidad del material y el acabado final.`,
-            'rapidez-critica': `NUANCE: Enfoque en LOGÍSTICA Y VELOCIDAD DE RESPUESTA.
-                - Usa un ritmo de frases más cortas y dinámicas. 
-                - Enfócate en la paz mental que da la rapidez, la disponibilidad en ${input.city} y la optimización de rutas.
-                - Frases clave: "tiempo de respuesta optimizado", "asistencia en minutos", "solución inmediata".`,
-            'transparencia-total': `NUANCE: Enfoque en ÉTICA Y HONESTIDAD PROFESIONAL.
-                - Explica el "por qué" de las tarifas (sin dar precios).
-                - Habla de "presupuestos cerrados antes de empezar", "sin sorpresas en factura".
-                - El tono debe ser humano, educativo y honesto (accountability focus).`
-        };
-
-        const writingStyleInstruction = `
-- TIPO DE BLOQUE (CRÍTICO): ${input.blockType}
-${blockInstruction}
-- ÁNGULO EDITORIAL (OBLIGATORIO): ${angle.toUpperCase()}
-- ESTILO DE INTRODUCCIÓN (OBLIGATORIO): ${introStyle}
-- TIPO DE ESTRUCTURA (OBLIGATORIO): ${structType}
-- NUANCE ACTIVA: ${nuanceEngines[angle] || nuanceEngines['transparencia-total']}
-
-REGLAS DE TONO (IMPRESCINDIBLE):
-- Si es 'narrative' o 'authority_note': Usa un tono directo y profesional, sin auto-bombo. Habla de compromiso, procesos y ética, no de "somos los mejores".
-- Si es 'local_proof': Limítate a 1 párrafo de contexto y 3 evidencias concretas (barrios, logística).
-- PROHIBIDO USAR ESTAS FRASES (BOILERPLATE DETECTADO): "¿Buscas...", "Nuestra metodología se adapta...", "Contamos con la experiencia necesaria...", "servicio profesional", "soluciones a medida", "amplia gama de servicios".
-
-- TARGET DE LONGITUD: Esta sección DEBE tener aproximadamente ${dynamicTarget} palabras.
-- VOCABULARIO CRÍTICO: Usa ÚNICAMENTE terminología estrictamente perteneciente al oficio de "${input.niche}".
-- PROHIBIDO ABSOLUTO: Bajo ningún concepto hables de "seguridad", "protección anti-robos", "sistemas de acceso" ni "intrusiones" si el nicho no es explícitamente de cerrajería de seguridad. Manten el vocabulario alineado a ${input.niche}.
-- MARCAS: no inventes marcas ni materiales concretos si no vienen dados por el contexto.
-- DETALLE TÉCNICO: Prioriza naturalidad y claridad comercial. Evita el "fluff" SEO innecesario.
-`;
-
-        if (input.blockType === 'map') {
-            const normalizedCity = this.normalizeCityName(input.city);
-            const mapSemantic: SectionSemanticData = {
-                sectionId: input.section_id || 'mapa',
-                h2: input.section_h2,
-                intro: [this.buildNeutralCoverageLine(normalizedCity)],
-                mapNote: `Cobertura operativa en ${normalizedCity}`,
-                mapEmbedUrl: input.local_nap.mapEmbedUrl
-            };
-            return {
-                success: true,
-                data: {
-                    semantic: mapSemantic,
-                    html: renderSemanticSection(mapSemantic, {
-                        blockType: input.blockType,
-                        sectionId: input.section_id,
-                        sectionH2: input.contentOnly ? undefined : input.section_h2,
-                        contentOnly: input.contentOnly,
-                        layoutHint: input.layout_hint as any,
-                        patternHint: input.pattern_hint,
-                        visualVariant: (input as any).visual_variant,
-                        visualWeight: input.visual_weight,
-                        emphasis: input.emphasis,
-                        pageComposition: input.pageProfile?.page_composition,
-                        visualSystem: (input.pageProfile?.designDNA as any)?.visualSystem,
-                        sectionShell: (input as any).visual_spec?.sectionShell || 'plain',
-                        pageSkeleton: input.pageSkeleton as any,
-                        heroTemplate: input.heroTemplate as any,
-                        cadencePattern: input.cadencePattern as any,
-                        proofStrategy: input.proofStrategy as any,
-                        ctaStrategy: input.ctaStrategy as any,
-                        sectionPattern: input.sectionPattern as any
-                    }),
-                    wordCount: 45
-                },
-                thoughts: "Neutral map block with systemic semantic structure."
-            };
-        }
-
-        const nicheLabel = input.niche.charAt(0).toUpperCase() + input.niche.slice(1);
-        const prompt = `
-Actúa como un redactor Senior especializado en SEO Local y conversión. Tu misión es redactar una sección específica para una página de servicios de ${input.niche} en ${input.city}.
-PROHIBIDO EL CONTENIDO DE RELLENO. Prioriza la claridad comercial y el valor técnico sobre la longitud artificial.
-
-OBJETIVO DE ESTE BLOQUE: ${input.sectionBrief?.objective || 'Redacción técnica de alta autoridad'}
-PREGUNTA DEL USUARIO A RESOLVER: ${input.sectionBrief?.userQuestion || input.section_h2}
-
-${knowledge}
-
-[REGLAS TÉCNICAS Y NORMAS DE NEGOCIO (OBLIGATORIO)]:
-${technicalNorms}
-- REGLA DE ENTROPÍA CLUSTER: Queda terminantemente prohibido empezar más de 2 párrafos o cards con la misma palabra o fórmula (Ej: No uses "En...", "Nuestros...", "Contamos..." como inicio sistemático). Varía la estructura sintáctica en cada bloque.
-
-DATOS DE MISIÓN:
-- **NICHE**: ${input.niche}
-- **CITY**: ${input.city}
-- **BUSINESS**: ${input.local_nap.business_name}
-- **GEO CONTEXT**: ${(input.contextual_data as any)?.geoData?.neighborhoods?.join(', ') || 'General city coverage'}
-
-[BRIEF DEL NICHO]:
-${writerBrief}
-
-SEMILLA SEMIESTRUCTURADA DEL PLAYBOOK (Usa esto como base o referencia fuerte):
-${JSON.stringify(semanticSeed, null, 2)}
-
-- TELÉFONO ÚNICO Y OBLIGATORIO: ${input.local_nap.phone}
-  - [CRÍTICO] Está TERMINANTEMENTE PROHIBIDO usar cualquier número que no sea el proporcionado arriba. No uses números de ejemplo ni variaciones.
-  - [CRÍTICO] Si usas un número incorrecto, la página será rechazada por el sistema de auditoría técnica.
-
-${input.contentOnly ?
-                `Escribe SOLO EL CUERPO (párrafos, listas, h3, tarjetas o tabla según el formato ${input.preferred_format}) para la sección "${input.section_h2}". PROHIBIDO incluir el tag <h2>.` :
-                `Escribe el contenido para la sección "${input.section_h2}". NO incluyas el tag <h2>, ya lo añadirá el sistema automáticamente.`
-            }
-
-SUB-SECCIONES- **H3 REQUERIDOS**: Es OBLIGATORIO incluir todos los H3 solicitados: ${(input.subsections_h3 || []).join(', ')}. Cada H3 debe tener al menos 2 párrafos de contenido detallado.
-- **NEUTRALIDAD DE MARCA**: PROHIBIDO mencionar marcas específicas del sector "${input.niche}". Usa términos genéricos como "marcas líderes", "componentes certificados" o "materiales de alta calidad".
-- **ESTO ES UNA LANDING PREMIUM**: Usa un tono profesional, técnico y autoritario. Evita frases genéricas.
-- **REGLAS DE PROFUNDIDAD CRÍTICAS**:
-1. Longitud Objetivo para esta sección: ${dynamicTarget} palabras (No exceder significativamente).
-2. Formato de salida: JSON SEMÁNTICO VÁLIDO, no HTML.
-3. Debes devolver una estructura adaptada al blockType.
-4. No inventes campos fuera del esquema.
-5. Prohibido: frases de relleno vacías. Todo debe ser información técnica o local útil.
-6. Desarrollo equilibrado: Asegura que cada H3 tenga al menos 2 párrafos de explicación técnica o una lista/tabla de apoyo.
-
-REGLA DE ATAQUE DIRECTO (Anti-Fluff):
-- PROHIBIDO empezar secciones o párrafos con: "Bienvenido a...", "En este artículo...", "Si estás buscando...", "Nuestra empresa...", "En [Ciudad]...", "Descubre cómo...", "En la actualidad", "Es importante destacar", "Comprender esto es vital".
-- NUNCA repitas el texto del H2/H3 exacto en la primera frase del párrafo que le sigue.
-- La primera oración de cada párrafo debe contener un dato técnico, un beneficio directo o una entidad de nicho. Prohibido el preámbulo vacío.
-
-- **BLACK-LIST EDITORIAL (PROHIBIDO ABSOLUTO)**: No uses NUNCA estas frases o sus variaciones cercanas:
-  ${this.FORBIDDEN_BOILERPLATE.map(p => `* "${p}"`).join('\n  ')}
-
-${writingStyleInstruction}
-
-REGLA DE IDIOMA: [CRÍTICO] TODO el texto debe ser en ESPAÑOL DE ESPAÑA. Prohibido incluir caracteres chinos, reflexiones de la IA en otros idiomas o textos de relleno al final de los bloques.
-
-REGLA DE CIUDAD: [CRÍTICO] Solo menciona barrios, distritos o zonas específicas si vienen en las entidades permitidas o son de conocimiento general verificado para ${input.city}. NO inventes barrios.
-
-REGLA DE TELÉFONO [MÁXIMA PRIORIDAD]: Es obligatorio que el teléfono "${input.local_nap.phone}" aparezca al menos una vez en cada bloque. 
-Está TOTALMENTE PROHIBIDO usar números de ejemplo, números con "123", o cualquier número que no sea el proporcionado arriba. No uses "96 123 45 67" ni variaciones.
-Si el texto generado no contiene el teléfono "${input.local_nap.phone}", la generación será nula.
-
-REGLA DE GARANTÍA Y PRECIOS: [CRÍTICO] Prohibido mencionar años específicos (ej: "10 años"). Usa "garantía por escrito". Prohibido mencionar precios concretos. Usa "precios justos" o "tarifas competitivas". Si generas una tabla, NO incluyas columnas de garantía con valores numéricos.
-RESPONDE SOLO JSON VÁLIDO.
-
-REGLAS DE DIFERENCIACIÓN OBLIGATORIAS:
-- PROHIBIDO reutilizar aperturas genéricas como "Nuestro equipo de especialistas...", "Como expertos en...", "Ofrecemos servicios de...".
-- PROHIBIDO reutilizar cierres como "Estamos listos para atender su llamada...", "No dude en contactar...", "Confíe en nosotros...".
-- Cada sección debe arrancar con una estrategia distinta: diagnóstico, objeción, criterio técnico, caso frecuente, error habitual, señal local o decisión comparativa.
-- Cada bloque debe tener un ángulo editorial ÚNICO. No repitas el mismo beneficio principal en dos bloques distintos.
-- No repitas la misma estructura de frase en dos tarjetas consecutivas.
-- Si generas listas de servicios, alterna entre:
-  1) beneficio + situación de uso
-  2) problema + solución
-  3) criterio técnico + resultado
-- FAQ:
-  - CADA RESPUESTA DEBE TENER UN PATRÓN DISTINTO Y APORTAR VALOR TÉCNICO:
-    a) Respuesta directa + Matriz técnico (ej: "Depende de la severidad del problema, pero usualmente...")
-    b) Advertencia + Recomendación (ej: "No intente forzar la instalación, ya que podría dañar el componente...")
-    c) Caso frecuente + Criterio de decisión (ej: "Si el síntoma persiste tras el reinicio, la causa suele ser...")
-    d) Desmitificación de coste (ej: "Muchos clientes temen un desembolso elevado, pero en este escenario...")
-  - PRIORIDAD DE PREGUNTAS: Objeciones reales (tiempo, precio, garantía, disponibilidad, tipo de avería). Prohibido preguntas genéricas normativas.
-  - PROHIBIDO: Respuestas de una sola línea o extremadamente genéricas.
-  - prohibido usar la frase "La transparencia en los costes y la calidad de los materiales son los pilares..."
-- Local proof:
-  - Objetivo: 1 párrafo local potente + 3 evidencias concretas.
-  - prohibido repetir "Atendemos de forma inmediata en todos los barrios..."
-  - Evita cards abstractas como "logística específica del área" o "casos habituales".
-
-Para services_grid:
-{
-  "intro": ["párrafo 1", "párrafo 2"],
-  "items": [
-    { "title": "Servicio 1", "body": "..." }
-  ],
-  "trustBullets": ["...", "..."],
-  "cta": { "text": "Llamar ahora", "phone": "${input.local_nap.phone}" }
-}
-
-Para faq:
-{
-  "intro": ["..."],
-  "faqItems": [
-    { "question": "...", "answer": "..." }
-  ],
-  "cta": { "text": "Consultar disponibilidad", "phone": "${input.local_nap.phone}" }
-}
-
-Para price_guidance:
-{
-  "intro": ["..."],
-  "table": {
-    "columns": ["Situación", "Compromiso", "Ventaja"],
-    "rows": [["...", "...", "..."]]
-  },
-  "cta": { "text": "Solicitar presupuesto", "phone": "${input.local_nap.phone}" }
-}`;
 
         try {
-            let rawResponse = await this.callModel(prompt);
-            let semantic: SectionSemanticData = safeJsonParse<SectionSemanticData>(rawResponse, {
-                intro: [],
-                items: [],
-                cta: { text: 'Contactar ahora', phone: input.local_nap.phone }
+            const { primary: timeoutMs } = this.getWriterTimeouts();
+            const knowledge = await this.getRelevantKnowledge(input.niche, input.city, [input.section_h2, ...input.subsections_h3]);
+            const systemPrompt = this.buildSystemPrompt(input, knowledge);
+
+            const startTime = Date.now();
+            const response = await this.callModel(systemPrompt, this.model, {
+                temperature: 0.3,
+                numPredict: 2500,
+                timeoutMs: timeoutMs,
+                json: true
             });
 
-            semantic = this.sanitizeSemanticForNiche(semantic, input.niche);
+            const duration = Date.now() - startTime;
+            let semantic = safeJsonParse(response) as SectionSemanticData;
 
-            // Robust Fallback: Si el LLM falla en items pero tenemos semilla, la usamos
-            if (semanticSeed && (!semantic.items?.length && !semantic.faqItems?.length && !semantic.table?.rows?.length)) {
-                console.log(`[Writer] LLM output weak. Hydrating from Niche Playbook seed for block ${input.blockType}.`);
-                semantic = { ...semanticSeed, ...semantic };
-            }
-
-            // --- AUTO-RETRY IF TOO SHORT OR EMPTY ---
-            const jsonWordCount = JSON.stringify(semantic).split(/\s+/).length;
-            const hasItems = (semantic.items?.length || 0) > 0 || (semantic.faqItems?.length || 0) > 0 || (semantic.table?.rows?.length || 0) > 0;
-
-            if (jsonWordCount < 40 || !hasItems) {
-                this.logThought(`Section too short (${jsonWordCount} words) or empty items. Retrying with Force-Abundance...`);
-                const retryPrompt = `${prompt}\n\n[CRÍTICO] TU RESPUESTA ANTERIOR FUE RECHAZADA POR SER DEMASIADO CORTA. \nDebes redactar AL MENOS 4 elementos detallados en el array 'items' o 'faqItems', con al menos 2 párrafos de 40 palabras cada uno. NO ESCATIMES EN DETALLES.`;
-
-                rawResponse = await this.callModel(retryPrompt);
-                semantic = safeJsonParse<SectionSemanticData>(rawResponse, semantic);
-            }
-
-            // Fallback to raw if still problematic
-            if (!semantic.intro?.length && !hasItems) {
-                semantic.intro = [this.sanitizeModelOutput(rawResponse)];
+            if (!semantic || (!semantic.intro?.length && !semantic.items?.length)) {
+                throw new Error('Invalid semantic response from LLM');
             }
 
             semantic = this.sanitizeSemanticOutput(semantic, input);
+            const finalized = this.finalizeWriterHtml(semantic, input);
+            const crossNicheReport = this.evaluateCrossNicheRisk(input, semantic, finalized.html);
 
-            if (this.semanticHasCrossNicheLeak(semantic, input.niche)) {
-                await this.logThought(`[Writer] Cross-niche semantic leak detected in block ${input.blockType}. Rebuilding deterministic fallback.`);
-                semantic = this.buildEmergencySemanticFallback(input, semanticSeed);
-                semantic = this.sanitizeSemanticOutput(semantic, input);
+            if (crossNicheReport.shouldRegenerate || crossNicheReport.severity === 'fatal') {
+                await this.logThought(`[NICHE_ISOLATION] Contaminación detectada en ${input.blockType}: ${crossNicheReport.summary}. Activando fallback determinista.`);
+                await this.rememberLesson({
+                    title: 'Contaminación de nicho crítica revertida',
+                    lesson: `Draft de ${input.blockType} rechazado. Motivos: ${(crossNicheReport.reasons || []).join(', ')}. No mezclar entidades ajenas al nicho.`,
+                    severity: 'fatal',
+                    lessonType: 'safety',
+                    niche: input.niche,
+                    city: input.city,
+                });
+                return this.buildDeterministicSectionResult(input, semanticSeed, `cross_niche_${crossNicheReport.severity}`);
             }
 
-            // --- LLM SAFETY WASH (PHONE) ---
-            const realPhone = input.local_nap.phone;
-            // Catch most variations of 9-digit Spanish landlines with spaces/dots/dashes
-            const phonePattern = /(?:\+34|0034|34)?[\s.-]?[6789](?:[\s.-]?\d){8}/g;
-            const html = renderSemanticSection(semantic, {
-                blockType: input.blockType,
-                sectionId: input.section_id,
-                sectionH2: input.contentOnly ? undefined : input.section_h2,
-                contentOnly: input.contentOnly,
-                layoutHint: input.layout_hint as any,
-                visualVariant: (input as any).visual_variant,
-                visualWeight: input.visual_weight,
-                emphasis: input.emphasis,
-                pageComposition: input.pageProfile?.page_composition,
-                visualSystem: (input.pageProfile?.designDNA as any)?.visualSystem,
-                sectionShell: (input as any).visual_spec?.sectionShell || 'plain',
-                commonMistakes: semantic.commonMistakes,
-                decisionFactors: semantic.decisionFactors,
-                pageSkeleton: input.pageSkeleton as any,
-                heroTemplate: input.heroTemplate as any,
-                cadencePattern: input.cadencePattern as any,
-                proofStrategy: input.proofStrategy as any,
-                ctaStrategy: input.ctaStrategy as any,
-                sectionPattern: input.sectionPattern as any,
-                sectionContract: input.sectionContract
-            });
-
-            const count = JSON.stringify(semantic).split(/\s+/).length;
-            let finalHtml = html.replace(phonePattern, (match: string) => {
-                const compactMatch = match.replace(/\D/g, '');
-                const compactReal = realPhone.replace(/\D/g, '');
-                // Replace if the last 9 digits (the actual local number) do not match
-                if (compactMatch.slice(-9) !== compactReal.slice(-9)) {
-                    return realPhone;
-                }
-                return match;
-            });
-
-            // --- VALIDACIÓN POST-REDACCIÓN ---
-            const issues: string[] = [];
-            const lowHtml = finalHtml.toLowerCase();
-
-            // 1. Manejo de H2: El renderer ya añade el H2 si no es contentOnly.
-            if (input.contentOnly && lowHtml.includes('<h2')) {
-                issues.push('ERROR: El writer incluyó un H2 en modo contentOnly (duplicidad detectada).');
+            if (crossNicheReport.severity === 'major') {
+                await this.logThought(`[NICHE_ISOLATION] Riesgo major en ${input.blockType}, pero se conserva el draft al no ser contaminación fatal. ${crossNicheReport.summary}`);
             }
-            // Eliminado el bloque que forzaba el H2 manual porque el renderer de secciones lo gestiona.
-
-            // 2. Debe incluir H3 si se pidieron
-            for (const h3 of input.subsections_h3 || []) {
-                if (!lowHtml.includes(h3.toLowerCase().substring(0, 5))) {
-                    issues.push(`Falta H3 requerido: ${h3}`);
-                }
-            }
-
-            // 3. Mínimo de utilidad (umbral reducido para mayor tolerancia en bloques de acción)
-            const finalWordCount = finalHtml.split(/\s+/).length;
-            const absoluteMinFactor = (input.blockType === 'urgency_panel' || input.blockType === 'cta_panel') ? 0.08 : 0.25;
-            const absoluteMin = Math.floor(dynamicTarget * absoluteMinFactor);
-            if (finalWordCount < absoluteMin) issues.push(`Pobreza editorial crítica (${finalWordCount}/${absoluteMin} palabras).`);
-
-            // 4. Frases vacías / Placeholders
-            if (lowHtml.includes('contenido experto sobre') || lowHtml.includes('texto optimizado para')) {
-                issues.push('Presencia de frases placeholder detectada.');
-            }
-            if (/intervenci[oó]n t[eé]cnica especializada|servicio\s+[abc]|servicio\s+\d+/i.test(finalHtml)) {
-                issues.push('Se detectaron títulos genéricos de marcador en items o cards.');
-            }
-
-            // 5. CTA final
-            if (isLastSection && !lowHtml.includes('tel:') && !lowHtml.includes('cta-link')) {
-                issues.push('CTA final ausente o detectado como vacío.');
-            }
-
-            if (issues.length > 0) {
-                this.logThought(`[QA Interno] Advertencias en sección: ${issues.join(' | ')}`);
-            }
-
-            // Success is now based on meeting a reasonable floor and being technical, even if some H3s are missed.
-            const meetsFloor = finalWordCount >= absoluteMin * 0.7;
-            const isSafe = !issues.includes('ERROR: El writer incluyó un H2 en modo contentOnly (duplicidad detectada).') &&
-                !issues.includes('Presencia de frases placeholder detectada.');
-
-            return {
-                success: meetsFloor && isSafe,
-                data: { semantic, html: finalHtml, wordCount: finalWordCount },
-                thoughts: `Redactado: ${input.blockType}. Words: ${finalWordCount}. Issues QA: ${issues.length}. Status: ${meetsFloor && isSafe ? 'PASS' : 'RETRY'}`
-            };
-
-        } catch (error: any) {
-            await this.logThought(`[RESCATE] Ollama falló en redacción de "${input.section_h2}": ${error.message}. Generando contenido de emergencia.`);
-
-            const niche = input.niche || 'Profesionales';
-            const city = input.city || 'tu zona';
-            const phone = input.local_nap.phone;
-            const pack = resolveVerticalPack(niche);
-
-            // Recursive variable replacement helper
-            const sanitize = (val: string) => (val || '').replace(/\${city}/g, city).replace(/\${niche}/g, niche);
-
-            const technical = (pack.technicalConcepts.length > 0 ? pack.technicalConcepts : ['servicios técnicos especializados', 'soluciones profesionales']).map(sanitize);
-            const trust = (pack.trustSignals.length > 0 ? pack.trustSignals : ['atención 24/7', 'presupuesto sin compromiso']).map(sanitize);
-
-            const fallbackSemantic: SectionSemanticData = {
-                intro: [
-                    `${niche} en ${city} demanda un enfoque técnico especializado y el uso de componentes con certificación de calidad.`,
-                    `Nuestras intervenciones técnicas en el área de ${city} priorizan la durabilidad estructural y el cumplimiento de los estándares de seguridad vigentes.`,
-                    `Analizamos cada instalación en ${city} para aplicar soluciones específicas que garanticen la estabilidad operativa a largo plazo.`
-                ],
-                items: technical.map((concept, idx) => {
-                    const templates = [
-                        `Ejecutamos procesos de ${concept} bajo normativas de seguridad rigurosas. En el entorno de ${city}, nos enfocamos en el ajuste técnico para maximizar la vida útil.`,
-                        `La resolución de incidencias en ${concept} requiere un diagnóstico pormenorizado. Empleamos componentes homologados para un rendimiento óptimo en ${city}.`,
-                        `Auditamos cada fase de ${concept} en ${city} para asegurar la trazabilidad de la intervención y la idoneidad de los materiales.`,
-                        `Nuestra operativa en ${concept} integra estándares industriales específicos para ${city}, velando por que cada detalle reciba atención técnica.`
-                    ];
-                    return {
-                        title: concept.charAt(0).toUpperCase() + concept.slice(1),
-                        body: templates[idx % templates.length]
-                    };
-                }),
-                trustBullets: [
-                    ...trust.map(t => t.charAt(0).toUpperCase() + t.slice(1)),
-                    `Certificación técnica verificada en ${city}`,
-                    'Presupuesto analítico detallado',
-                    'Cumplimiento estricto de normativa industrial'
-                ],
-                cta: { text: "Solicitar evaluación técnica", phone: phone }
-            };
-
-            // Customization based on block type
-            if (input.blockType === 'faq') {
-                fallbackSemantic.intro = [`Resolvemos las dudas técnicas y logísticas más frecuentes sobre nuestros servicios de ${niche.toLowerCase()} en ${city}.`];
-                fallbackSemantic.faqItems = [
-                    {
-                        question: `¿Cuál es el tiempo de respuesta para servicios en ${city}?`,
-                        answer: `Contamos con técnicos distribuidos en puntos estratégicos de ${city} para optimizar los traslados. La disponibilidad se gestiona en tiempo real para asegurar una atención ágil en toda la zona geográfica.`
-                    },
-                    {
-                        question: `¿El presupuesto proporcionado para ${city} es vinculante?`,
-                        answer: `Emitimos una valoración técnica previa. Para mayor transparencia, el especialista confirma el diagnóstico in situ en ${city} y presenta el presupuesto detallado antes de proceder con la reparación.`
-                    },
-                    {
-                        question: `¿Qué tipo de garantía ofrecéis por los trabajos realizados en ${city}?`,
-                        answer: `Todos nuestros servicios de ${niche.toLowerCase()} en ${city} cuentan con garantía por escrito que cubre tanto la mano de obra como los materiales instalados, cumpliendo estrictamente con la normativa vigente.`
-                    },
-                    {
-                        question: `¿Tenéis disponibilidad inmediata en todos los barrios de ${city}?`,
-                        answer: `Sí, mantenemos disponibilidad de guardia según la franja y la urgencia en ${city}. Cubrimos todos los distritos y áreas metropolitanas, asegurando que siempre haya un profesional disponible cerca de usted.`
-                    }
-                ];
-            } else if (input.blockType === 'urgency_panel') {
-                fallbackSemantic.intro = [
-                    `Atención técnica prioritaria para incidencias de ${niche.toLowerCase()} en ${city} que no pueden esperar.`,
-                    `Nuestra infraestructura logística está diseñada para dar respuesta a averías críticas en cualquier punto de ${city} con la máxima celeridad.`
-                ];
-                fallbackSemantic.items = [
-                    { title: "Diagnóstico Rápido", body: `Evaluamos la gravedad de la situación en ${city} para asignar el técnico más cercano y el equipamiento específico necesario para una solución definitiva.` },
-                    { title: "Unidades Móviles", body: `Nuestros vehículos en ${city} están equipados con un stock completo de repuestos y herramientas de precisión para resolver la mayoría de servicios en una sola visita.` },
-                    { title: "Seguridad Garantizada", body: `Priorizamos la integridad de su instalación en ${city}, aplicando técnicas no invasivas siempre que sea posible para evitar daños colaterales durante la reparación.` }
-                ];
-            } else if (input.blockType === 'cta_panel' || input.blockType === 'micro_cta') {
-                fallbackSemantic.intro = [
-                    `Contacte ahora con un especialista in ${niche.toLowerCase()} para resolver su problema en ${city} de forma profesional y transparente.`,
-                    `Estamos disponibles para asesorarle sobre la mejor solución técnica para su caso particular en ${city}.`
-                ];
-                fallbackSemantic.items = [
-                    { title: "Atención Directa", body: `Llame al ${phone} y un técnico cualificado le atenderá personalmente para coordinar la visita a su ubicación en ${city}.` }
-                ];
-            } else if (input.blockType === 'comparison_table' || input.blockType === 'price_guidance') {
-                fallbackSemantic.intro = [
-                    `Entienda los factores que determinan la calidad de un servicio técnico de ${niche.toLowerCase()} en ${city}.`,
-                    `Comparamos los estándares de nuestra metodología frente a las soluciones genéricas del mercado en ${city}.`
-                ];
-                fallbackSemantic.table = {
-                    columns: ["Factor Crítico", "Nuestro Estándar", "Beneficio"],
-                    rows: [
-                        ["Materiales", "Componentes Homologados", "Mayor durabilidad del sistema"],
-                        ["Mano de Obra", "Técnicos Especialistas", "Ejecución precisa y segura"],
-                        ["Garantía", "Certificado por Escrito", "Tranquilidad total post-servicio"],
-                        ["Transparencia", "Presupuesto previo", "Sin sorpresas en la factura final"]
-                    ]
-                };
-            } else if (input.blockType === 'local_proof') {
-                fallbackSemantic.intro = [
-                    `Nuestra presencia técnica en ${city} nos permite ofrecer una cobertura real y efectiva en todos los distritos.`,
-                    `Conocemos las tipologías de instalaciones más comunes en cada zona de ${city}, lo que agiliza el diagnóstico y la reparación.`
-                ];
-                fallbackSemantic.items = [
-                    { title: "Evidencia de Proximidad", body: `Contamos con técnicos residentes en ${city}, lo que reduce las esperas y asegura un conocimiento exhaustivo de la zona geográfica.` },
-                    { title: "Adaptación al Entorno", body: `Nuestra metodología contempla las normativas específicas de ${city} y las necesidades particulares de sus diferentes núcleos urbanos.` },
-                    { title: "Capacidad de Respuesta", body: `La distribución estratégica de nuestras unidades en ${city} garantiza que siempre podamos atender servicios urgentes y programados.` }
-                ];
-            } else if (input.blockType === 'process_steps' || input.blockType === 'timeline') {
-                fallbackSemantic.intro = [
-                    `Un proceso estructurado para garantizar resultados de calidad en cada intervención de ${niche.toLowerCase()} en ${city}.`,
-                    `Seguimos protocolos estrictos desde el primer contacto hasta la finalización del trabajo en ${city}.`
-                ];
-                fallbackSemantic.items = [
-                    { title: "Diagnóstico", body: `Analizamos el estado de su instalación en ${city} para proponer la solución más eficiente y duradera.` },
-                    { title: "Presupuesto", body: `Presentamos una valoración detallada y transparente antes de iniciar cualquier acción técnica en ${city}.` },
-                    { title: "Ejecución", body: `Realizamos el trabajo de ${niche.toLowerCase()} utilizando herramientas de precisión y materiales de alta gama en su ubicación de ${city}.` },
-                    { title: "Control", body: `Verificamos el correcto funcionamiento de la reparación en ${city} antes de dar por finalizado el servicio.` },
-                    { title: "Documentación y Garantía", body: `Entregamos la factura detallada y el certificado de garantía operativa para su total tranquilidad en ${city}.` }
-                ];
-            }
-
-            const fallbackHtml = renderSemanticSection(fallbackSemantic, {
-                blockType: input.blockType,
-                sectionId: input.section_id,
-                sectionH2: input.section_h2,
-                contentOnly: input.contentOnly,
-                layoutHint: input.layout_hint as any,
-                visualVariant: (input as any).visual_variant,
-                visualWeight: input.visual_weight,
-                emphasis: input.emphasis,
-                pageComposition: input.pageProfile?.page_composition,
-                visualSystem: (input.pageProfile?.designDNA as any)?.visualSystem,
-                sectionShell: (input as any).visual_spec?.sectionShell || 'plain',
-                pageSkeleton: input.pageSkeleton as any,
-                heroTemplate: input.heroTemplate as any,
-                cadencePattern: input.cadencePattern as any,
-                proofStrategy: input.proofStrategy as any,
-                ctaStrategy: input.ctaStrategy as any,
-                sectionPattern: input.sectionPattern as any
-            });
 
             return {
                 success: true,
-                data: { semantic: fallbackSemantic, html: fallbackHtml, wordCount: 150 },
-                thoughts: "Ollama Error Fallback: Semantic recovery from playbook patterns."
+                data: { semantic, html: finalized.html, wordCount: finalized.wordCount },
+                thoughts: `Sección generada con LLM (${duration}ms). Wordcount: ${finalized.wordCount}. CrossNiche=${crossNicheReport.severity}/${crossNicheReport.score}.`
             };
+
+        } catch (error: any) {
+            this.log(`Fallo en redacción LLM (${input.section_h2}): ${error.message}. Activando fallback.`);
+            await this.rememberFailure({
+                errorMessage: error.message,
+                failureType: 'llm_fallback',
+                niche: input.niche,
+                city: input.city,
+                lessonTitle: 'Caída a fallback determinista',
+                lessonText: `Se generó timeout o error de estructura al atacar el H2: ${input.section_h2}. Se requiere mayor simplificación.`,
+            });
+            return this.buildDeterministicSectionResult(input, semanticSeed, 'llm_failure');
         }
     }
 }
-
-
-
-
 

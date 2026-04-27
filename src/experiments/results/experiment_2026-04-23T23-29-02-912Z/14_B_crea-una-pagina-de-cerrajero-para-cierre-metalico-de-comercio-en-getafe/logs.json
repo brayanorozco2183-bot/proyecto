@@ -1,0 +1,170 @@
+[
+  {
+    "id": 25587,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "Misión Iniciada Core: Atacando nicho de cerrajero en 1 destinos.",
+    "timestamp": "2026-04-24 01:16:59"
+  },
+  {
+    "id": 25588,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] SERP listo para Getafe. Resultados orgánicos: 10. Iniciando auditoría competitiva...",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25589,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Iniciando auditoría profunda de competidores. Candidatos limpios: 10 de 10.",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25590,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.lomejordelbarrio.com/getafe/cerrajeros",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25591,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeriasoler.es",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25592,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://www.cerrajerosgetafe-24horas.com",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25593,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosgetafe.plus/%23Cerrajeros_en_Getafe_24_horas",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25594,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosgetafe.plus/%23Servicios_de_cerrajeria_en_Getafe",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25595,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosgetafe.plus/%23Sobre_nosotros",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25596,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: http://www.cerrajeroavanza.es",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25597,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeros24horasexpress.com",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25598,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajerosgetafe.plus",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25599,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditing competitor at: https://cerrajeriasoler.es/cerrajeros-getafe",
+    "timestamp": "2026-04-24 01:17:07"
+  },
+  {
+    "id": 25600,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "Competitor_Audit_Agent",
+    "thought": "Auditoría útil: 6 aceptadas, 1 rechazadas por baja relevancia o baja señal local.",
+    "timestamp": "2026-04-24 01:17:16"
+  },
+  {
+    "id": 25601,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Iniciando síntesis estratégica para Getafe con 6 auditorías profundas.",
+    "timestamp": "2026-04-24 01:17:16"
+  },
+  {
+    "id": 25602,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[INTEL] Sintetizando Estatuto de Dominación para \"cerrajero\" en \"Getafe\". Confianza: high",
+    "timestamp": "2026-04-24 01:17:16"
+  },
+  {
+    "id": 25603,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FASTPATH] Strategy resolved in deterministic mode for Getafe.",
+    "timestamp": "2026-04-24 01:17:16"
+  },
+  {
+    "id": 25604,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Síntesis estratégica finalizada para Getafe en 19ms.",
+    "timestamp": "2026-04-24 01:17:16"
+  },
+  {
+    "id": 25605,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Resolviendo identidad NAP para Getafe...",
+    "timestamp": "2026-04-24 01:17:16"
+  },
+  {
+    "id": 25606,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "NAP_Guardian_01",
+    "thought": "Verifying deterministic NAP identity for cerrajero in Getafe",
+    "timestamp": "2026-04-24 01:17:16"
+  },
+  {
+    "id": 25607,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] NAP finalizado para Getafe en 2ms.",
+    "timestamp": "2026-04-24 01:17:16"
+  },
+  {
+    "id": 25608,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Lanzando pipeline de contenido para Getafe...",
+    "timestamp": "2026-04-24 01:17:16"
+  },
+  {
+    "id": 25609,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "[FLOW] Pipeline de contenido completado para Getafe en 485834ms.",
+    "timestamp": "2026-04-24 01:25:22"
+  },
+  {
+    "id": 25610,
+    "mission_id": "mission-1776993419893",
+    "agent_name": "SEO_Analyst_01",
+    "thought": "❌ Generación falló para Getafe. Render completeness failed: BROKEN_LOCAL_FRAGMENT",
+    "timestamp": "2026-04-24 01:25:22"
+  }
+]

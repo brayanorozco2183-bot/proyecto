@@ -1,3 +1,4 @@
+
 import { BaseAgent, AgentResponse } from './base.js';
 import { CompetitorAudit } from '../tools/scraper.js';
 
@@ -9,10 +10,30 @@ export interface SERPGapAnalysis {
     entities_detected: string[];
 }
 
-/**
- * SERPGapAgent - The Content Gap Specialist.
- * Analyzes top competitors to find what they are missing and identify content opportunities.
- */
+function normalize(value: any): string {
+    return String(value || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}\s-]/gu, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+function unique(items: string[], limit = 12): string[] {
+    const seen = new Set<string>();
+    const out: string[] = [];
+    for (const item of items || []) {
+        const cleaned = String(item || '').replace(/^[-•*]\s*/, '').replace(/\s+/g, ' ').trim();
+        const key = normalize(cleaned);
+        if (!cleaned || !key || seen.has(key)) continue;
+        seen.add(key);
+        out.push(cleaned);
+        if (out.length >= limit) break;
+    }
+    return out;
+}
+
 export class SERPGapAgent extends BaseAgent {
     constructor() {
         super(
@@ -26,87 +47,59 @@ export class SERPGapAgent extends BaseAgent {
     async execute(input: { keyword: string, audits: CompetitorAudit[] }): Promise<AgentResponse<SERPGapAnalysis>> {
         await this.logThought(`Analizando brechas de contenido para la palabra clave: ${input.keyword}`);
 
-        if (!input.audits || input.audits.length === 0) {
+        const useful = (input.audits || []).filter((audit) => Number(audit?.wordCount || 0) >= 120);
+        if (!useful.length) {
             return {
                 success: false,
-                thoughts: "No hay datos de competidores para analizar.",
-                error: "No competitor audits provided."
+                thoughts: 'No hay datos de competidores útiles para analizar.',
+                error: 'No competitor audits provided.'
             };
         }
 
-        // 1. Calcular longitud media
-        const totalWords = input.audits.reduce((acc, audit) => acc + (audit.wordCount || 0), 0);
-        const averageWordCount = Math.round(totalWords / input.audits.length);
+        const average_word_count = Math.round(useful.reduce((acc, audit) => acc + Number(audit.wordCount || 0), 0) / useful.length);
+        const common_headings = unique(useful.flatMap((audit) => [...(audit.h1s || []), ...(audit.h2s || [])])
+            .filter(Boolean)
+            .filter((heading) => !/^(inicio|contacto|blog|sobre nosotros|cookies|aviso legal|preguntas frecuentes)$/i.test(String(heading || '').trim())), 12);
 
-        // 2. Extraer encabezados comunes y entidades (heurística básica + LLM)
-        const allHeadings = input.audits.flatMap(a => [...a.h1s, ...a.h2s, ...a.h3s]);
+        const haystack = normalize(JSON.stringify(useful));
+        const schema_detected = unique([
+            /faq/i.test(haystack) ? 'FAQPage' : '',
+            /service|servicio/i.test(haystack) ? 'Service' : '',
+            /localbusiness|negocio local/i.test(haystack) ? 'LocalBusiness' : '',
+        ].filter(Boolean), 5);
 
-        // Usaremos el LLM para el análisis profundo
-        const analysisPrompt = `
-        Como experto en SEO y estrategia de contenido, analiza los siguientes datos del TOP 10 para la keyword: "${input.keyword}".
-        
-        DATOS DE COMPETIDORES:
-        ${JSON.stringify(input.audits.map(a => ({
-            title: a.title,
-            headings: [...a.h1s, ...a.h2s, ...a.h3s].slice(0, 15),
-            description: a.description
-        })), null, 2)}
+        const keyword = normalize(input.keyword);
+        const missing_topics: string[] = [];
+        const entities_detected: string[] = [];
 
-        LONGITUD MEDIA ACTUAL: ${averageWordCount} palabras.
+        const opportunityMap: Array<{ topic: string; pattern: RegExp }> = [
+            { topic: 'pruebas de confianza verificables repartidas por la página', pattern: /(garantia por escrito|garantía por escrito|factura detallada|materiales certificados|taller propio)/i },
+            { topic: 'respuestas FAQ tomadas del playbook y no preguntas genéricas', pattern: /(armario empotrado|mueble a medida|sol o humedad|instalacion de puertas|instalación de puertas)/i },
+            { topic: 'proceso de medición y diagnóstico previo', pattern: /(medicion|medición|diagnostico|diagnóstico|visita tecnica|visita técnica)/i },
+            { topic: 'factores que cambian el presupuesto', pattern: /(presupuesto|precio|factores|comparar propuestas)/i },
+            { topic: 'materiales y acabados recomendados', pattern: /(melamina|madera maciza|lacado|barnizado|acabados)/i },
+            { topic: 'garantía por escrito y alcance de la instalación', pattern: /(garantia|garantía|instalacion|instalación)/i },
+            { topic: 'zonas de cobertura y logística real', pattern: /(madrid|barrios|zonas|cobertura|desplazamiento)/i },
+            { topic: 'errores comunes antes de contratar', pattern: /(errores|fallos|conviene revisar|que evitar|qué evitar)/i },
+            { topic: 'reparar o sustituir según el estado real', pattern: /(reparar|sustituir|restaurar|renovar)/i },
+        ];
 
-        TAREA:
-        1. Identifica los encabezados (temas) más comunes.
-        2. Detecta qué tipos de Schema podrían estar usando (basado en el contenido: LocalBusiness, FAQPage, Article, etc.).
-        3. Identifica ENTIDADES (conceptos clave) que se repiten.
-        4. CRÍTICO: Detecta TEMAS QUE FALTAN. ¿Qué preguntas o sub-temas no están cubriendo estos competidores que serían valiosos para el usuario?
-
-        Responde ÚNICAMENTE en formato JSON con la siguiente estructura:
-        {
-          "common_headings": ["h1/h2 común 1", "..."],
-          "schema_detected": ["tipo1", "..."],
-          "entities_detected": ["entidad1", "..."],
-          "missing_topics": ["tema faltante 1", "..."],
-          "thoughts": "Breve explicación de por qué estos temas faltan"
+        for (const item of opportunityMap) {
+            if (!item.pattern.test(haystack)) missing_topics.push(item.topic);
         }
-        `;
 
-        try {
-            // Nota: En un sistema real, aquí llamaríamos al modelo (Ollama/OpenAI)
-            // Para esta implementación, simularemos la llamada al modelo integrando el prompt en los thoughts
-            // y devolviendo una respuesta estructurada que el sistema pueda procesar.
+        const entityPattern = /(madera maciza|melamina|dm lacado|lacado|barnizado|vestidores|armarios empotrados|herrajes|bisagras|parque|parqué|tarima flotante|ebanisteria|ebanistería)/gi;
+        entities_detected.push(...Array.from(haystack.matchAll(entityPattern)).map((m) => m[1]));
 
-            // Simulamos la respuesta del LLM (en una implementación real usaríamos un LLM client)
-            await this.logThought("Solicitando análisis semántico al modelo...");
+        const result: SERPGapAnalysis = {
+            average_word_count,
+            common_headings,
+            schema_detected,
+            missing_topics: unique(missing_topics.length ? missing_topics : [`resolver mejor la intención de ${keyword}`, 'añadir criterios técnicos verificables'], 8),
+            entities_detected: unique(entities_detected, 12)
+        };
 
-            // Aquí iría la llamada: const response = await llm.chat(analysisPrompt);
-            // Pero como estamos en el Agente Base, seguiremos el patrón de pensamiento.
-
-            const analysis: SERPGapAnalysis = {
-                average_word_count: averageWordCount,
-                common_headings: Array.from(new Set(allHeadings)).slice(0, 10),
-                schema_detected: ["LocalBusiness", "FAQPage"], // Hardcoded por ahora o inferido
-                missing_topics: [
-                    "Comparativa de precios detallada",
-                    "Garantías específicas del servicio",
-                    "Preguntas sobre normativas locales vigentes"
-                ],
-                entities_detected: [input.keyword, "servicio 24h", "profesionales"]
-            };
-
-            await this.logThought(`Análisis completado. Encontradas ${analysis.missing_topics.length} brechas de contenido.`);
-
-            return {
-                success: true,
-                data: analysis,
-                thoughts: "El análisis muestra que los competidores se centran en servicios básicos. Hay una oportunidad clara en temas de normativa y desglose de presupuestos."
-            };
-
-        } catch (error: any) {
-            return {
-                success: false,
-                thoughts: `Error durante el análisis: ${error.message}`,
-                error: error.message
-            };
-        }
+        await this.logThought(`Análisis completado. Encontradas ${result.missing_topics.length} brechas de contenido.`);
+        return { success: true, data: result, thoughts: `Brechas detectadas: ${result.missing_topics.length}.` };
     }
 }

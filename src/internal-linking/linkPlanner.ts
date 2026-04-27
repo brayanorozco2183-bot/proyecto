@@ -76,6 +76,55 @@ function pickPreferredLateral(candidates: LinkCandidate[], currentNode: SiteNode
   return laterals[0];
 }
 
+
+function toArchitectLink(candidate: LinkCandidate): ArchitectAvailableLink {
+  return {
+    slug: candidate.targetSlug,
+    anchor: candidate.anchor,
+    keyword: candidate.targetKeyword,
+    targetType: candidate.targetType,
+    direction: candidate.direction,
+    reason: candidate.reason,
+  };
+}
+
+function extractAreaName(candidate: LinkCandidate): string | null {
+  if (candidate.targetType !== 'service_area') return null;
+  const source = String(candidate.targetTitle || candidate.anchor || candidate.targetKeyword || '').trim();
+  if (!source) return null;
+
+  const direct = source.match(/\ben\s+(.+)$/i);
+  const cleaned = (direct?.[1] || source)
+    .replace(/^servicio\s+de\s+/i, '')
+    .replace(/^servicios?\s+de\s+/i, '')
+    .replace(/^zona\s+de\s+/i, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+
+  return cleaned || null;
+}
+
+function collectRelatedCities(candidates: LinkCandidate[], currentNode: SiteNode): string[] {
+  const currentCity = normalize(currentNode.city || '');
+  const seen = new Set<string>();
+  const out: string[] = [];
+
+  for (const candidate of candidates) {
+    const slug = String(candidate.targetSlug || '').replace(/^\/+|\/+$/g, '');
+    if (!slug) continue;
+    const last = slug.split('/').filter(Boolean).slice(-1)[0] || '';
+    const city = last.replace(/-/g, ' ').trim();
+    if (!city) continue;
+    if (normalize(city) === currentCity) continue;
+    if (seen.has(normalize(city))) continue;
+    seen.add(normalize(city));
+    out.push(city);
+    if (out.length >= 6) break;
+  }
+
+  return out;
+}
+
 function findMoneyPage(graph: SiteGraph, currentNode: SiteNode): LinkCandidate | undefined {
   const outgoing = graph.adjacency[currentNode.id] || [];
   const candidate = outgoing
@@ -221,14 +270,20 @@ export function buildArchitectLinkContext(
   }
 
   const plan = resolveInternalLinkPlan(graph, currentNodeId, analystTargets);
-  const availableLinks: ArchitectAvailableLink[] = plan.all.slice(0, 8).map((candidate) => ({
-    slug: candidate.targetSlug,
-    anchor: candidate.anchor,
-    keyword: candidate.targetKeyword,
-    targetType: candidate.targetType,
-    direction: candidate.direction,
-    reason: candidate.reason,
-  }));
+  const availableLinks: ArchitectAvailableLink[] = plan.all.slice(0, 8).map(toArchitectLink);
+  const upwardLinks = plan.upward ? [toArchitectLink(plan.upward)] : [];
+  const lateralLinks = dedupeCandidates(plan.all.filter((candidate) => candidate.direction === 'lateral')).slice(0, 4).map(toArchitectLink);
+  const moneyLinks = dedupeCandidates([
+    ...(plan.bofu ? [plan.bofu] : []),
+    ...plan.grouped.moneyPages,
+  ]).slice(0, 4).map(toArchitectLink);
+  const relatedLinks = dedupeCandidates([
+    ...plan.supporting,
+    ...plan.grouped.relatedServices,
+    ...plan.grouped.relatedAreas,
+    ...plan.grouped.relatedGuides,
+    ...plan.grouped.relatedFaqs,
+  ]).slice(0, 8).map(toArchitectLink);
 
   const mandatoryLinkGoals = [
     'Incluir 2 o 3 enlaces internos útiles y contextuales.',
@@ -244,11 +299,26 @@ export function buildArchitectLinkContext(
     mandatoryLinkGoals.push('Incluir al menos 1 enlace BOFU hacia página transaccional.');
   }
 
+  const localAreas = Array.from(new Set(
+    [
+      currentNode.areaName,
+      ...plan.grouped.relatedAreas.map((candidate) => extractAreaName(candidate)),
+      ...plan.supporting.map((candidate) => extractAreaName(candidate)),
+    ].filter(Boolean) as string[]
+  )).slice(0, 6);
+
   return {
     currentNodeId,
     currentNode,
     availableLinks,
     mandatoryLinkGoals,
     suggestedAnchors: availableLinks.map((link) => link.anchor),
+    upwardLinks,
+    lateralLinks,
+    moneyLinks,
+    relatedLinks,
+    localAreas,
+    relatedCities: collectRelatedCities(plan.all, currentNode),
+    clusterKeywords: Array.from(new Set(plan.all.map((candidate) => candidate.targetKeyword).filter(Boolean))).slice(0, 8),
   };
 }

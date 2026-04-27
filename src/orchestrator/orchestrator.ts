@@ -21,6 +21,7 @@ import { ROIAuditorAgent } from '../agents/roi_auditor.js';
 import { CompetitorAuditAgent } from '../agents/competitor_audit.js';
 import { GeoIntelAgent } from '../agents/geointel.js';
 import { resolvePlaybookForMission } from '../niches/agentAdapters.js';
+import { buildCanonicalBrandName } from '../utils/brandGuard.js';
 
 // V3 Specialized Agents
 import { ContentWriterAgent } from '../agents/contentWriterAgent.js';
@@ -236,7 +237,13 @@ export class TaskOrchestrator {
                 ...options,
                 site_type: interpretation.data.site_type || options.site_type,
                 archetype: interpretation.data.archetype || options.archetype,
-                mode: interpretation.data.mode || options.mode
+                mode: interpretation.data.mode || options.mode,
+                contextual_data: {
+                    ...(options.contextual_data || {}),
+                    command_focus: interpretation.data.command_focus,
+                    strict_input: true,
+                    original_command: command
+                }
             };
 
             const jobId = await this.startMission(niche, finalLocations, interpretation.data.publish_mode as any || publishMode, missionOptions);
@@ -254,6 +261,117 @@ export class TaskOrchestrator {
         new Worker('seo-missions', async (job) => {
             await this.processMissionLogic(job.id!, job.data.niche, job.data.locations, job.data);
         }, { connection: this.connection });
+    }
+
+
+    private uniqueStrings(values: any[], limit = 12): string[] {
+        const seen = new Set<string>();
+        const out: string[] = [];
+        for (const value of Array.isArray(values) ? values : []) {
+            const cleaned = String(value || '').replace(/^[-•*]\s*/, '').replace(/\s+/g, ' ').trim();
+            if (!cleaned) continue;
+            const key = cleaned.toLowerCase();
+            if (seen.has(key)) continue;
+            seen.add(key);
+            out.push(cleaned);
+            if (out.length >= limit) break;
+        }
+        return out;
+    }
+
+    private normalizeAnalysisKeywords(analysisData: any, niche: string, city: string): string[] {
+        const legacy = Array.isArray(analysisData?.keywords_principales)
+            ? analysisData.keywords_principales.map((item: any) => item?.kw || item?.keyword || item).filter(Boolean)
+            : [];
+        const modern = Array.isArray(analysisData?.secondaryKeywords) ? analysisData.secondaryKeywords : [];
+        const primary = analysisData?.primaryKeyword ? [analysisData.primaryKeyword] : [];
+        const localizedPrimary = niche && city ? [`${niche} en ${city}`] : [];
+        return this.uniqueStrings([...modern, ...legacy, ...primary, ...localizedPrimary], 10);
+    }
+
+    private normalizeAnalysisEntities(analysisData: any, city: string): string[] {
+        const legacy = Array.isArray(analysisData?.entidades_seleccionadas)
+            ? analysisData.entidades_seleccionadas.map((item: any) => item?.entity || item?.name || item?.label || item).filter(Boolean)
+            : [];
+        const modern = Array.isArray(analysisData?.entities) ? analysisData.entities : [];
+        const semantic = Array.isArray(analysisData?.semanticEntities) ? analysisData.semanticEntities : [];
+        return this.uniqueStrings([...modern, ...semantic, ...legacy, city], 12);
+    }
+
+    private extractFaqsFromHtml(html: string): Array<{ question: string; answer: string }> {
+        const items: Array<{ question: string; answer: string }> = [];
+        const faqRegex = /<details[^>]*class="[^"]*faq-item[^"]*"[^>]*>[\s\S]*?<summary[^>]*>([\s\S]*?)<\/summary>[\s\S]*?<div[^>]*>([\s\S]*?)<\/div>[\s\S]*?<\/details>/gi;
+        let match: RegExpExecArray | null;
+        while ((match = faqRegex.exec(String(html || '')))) {
+            const question = String(match[1] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+            const answer = String(match[2] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+            if (question && answer) items.push({ question, answer });
+            if (items.length >= 6) break;
+        }
+        return items;
+    }
+
+    private buildTechnicalFallbackPackage(input: {
+        niche: string;
+        city: string;
+        napData: any;
+        analysisData: any;
+        pipelineResult: any;
+        keywords: string[];
+        entities: string[];
+    }): any {
+        const seo = input.pipelineResult?.data?.metadata?.seo || input.pipelineResult?.metadata?.seo || {};
+        const canonical = String(seo.canonical || `https://serviciosprofesionales.pro/${input.niche.toLowerCase().replace(/\s+/g, '-')}/${input.city.toLowerCase().replace(/\s+/g, '-')}/`);
+        const faqs = this.extractFaqsFromHtml(input.pipelineResult?.data?.html || input.pipelineResult?.html || '');
+        const companyName = input.napData?.business_name || buildCanonicalBrandName({ niche: input.niche, city: input.city });
+
+        const graph: any[] = [
+            {
+                '@type': 'Organization',
+                '@id': `${canonical.replace(/\/$/, '')}#organization`,
+                name: companyName,
+                url: canonical
+            },
+            {
+                '@type': 'LocalBusiness',
+                '@id': `${canonical.replace(/\/$/, '')}#local-business`,
+                name: companyName,
+                url: canonical,
+                areaServed: { '@type': 'City', name: input.city }
+            },
+            {
+                '@type': 'Service',
+                '@id': `${canonical.replace(/\/$/, '')}#service`,
+                name: input.niche,
+                serviceType: input.niche,
+                areaServed: { '@type': 'City', name: input.city },
+                provider: { '@id': `${canonical.replace(/\/$/, '')}#local-business` }
+            }
+        ];
+
+        if (faqs.length) {
+            graph.push({
+                '@type': 'FAQPage',
+                '@id': `${canonical.replace(/\/$/, '')}#faq`,
+                mainEntity: faqs.map((item) => ({
+                    '@type': 'Question',
+                    name: item.question,
+                    acceptedAnswer: { '@type': 'Answer', text: item.answer }
+                }))
+            });
+        }
+
+        return {
+            success: true,
+            data: {
+                meta_title: seo.title || `${input.niche} en ${input.city}`,
+                meta_description: seo.metaDescription || `Servicio de ${input.niche} en ${input.city}.`,
+                schema: { '@context': 'https://schema.org', '@graph': graph },
+                authority_links: [],
+                internal_linking: [],
+                fallback: true
+            }
+        };
     }
 
     private async processMissionLogic(jobId: string, niche: string, locations: string[], extraData: any = {}) {
@@ -347,23 +465,35 @@ export class TaskOrchestrator {
 
                     let napData: any = null;
                     let analysisData: any = null;
+                    let marketData: any = null;
+                    let auditResult: any = null;
+                    let localPack: any = [];
 
                     if (extraData.mode === 'sandbox') {
                         await this.analyst.logThought(`[SANDBOX] Saltando fases 1-7 para ${city}. Cargando estado congelado.`);
                         // Base placeholder check
-                        napData = { business_name: `${niche} en ${city}`, address: city, phone: "Consultar" };
+                        napData = { business_name: buildCanonicalBrandName({ niche, city }), address: city, phone: "" };
                     } else {
                         await db.run('UPDATE city_data SET status = ? WHERE mission_id = ? AND city = ?', ['RESEARCHING', jobId, city]);
                         
-                        const marketData = await serpManager.scrapeUnifiedSERP(niche, city);
-                        const localPack = marketData.localPack;
-                        const topLinks = marketData.organic.map(r => r.link);
-                        const auditResult = await this.competitorAudit.execute({ targetLinks: topLinks });
+                        const serpKeyword = extraData.contextual_data?.command_focus ? `${niche} ${String(extraData.contextual_data.command_focus).trim()}`.trim() : niche;
+                        marketData = await serpManager.scrapeUnifiedSERP(serpKeyword, city);
+                        localPack = marketData?.localPack || [];
+                        const organicResults = marketData?.organic || [];
+                        const topLinks = organicResults.map((r: any) => r.link);
+                        await this.analyst.logThought(`[FLOW] SERP listo para ${city}. Resultados orgánicos: ${organicResults.length}. Iniciando auditoría competitiva...`);
+                        auditResult = await this.competitorAudit.execute({ targetLinks: topLinks });
 
+                        const analysisStartedAt = Date.now();
+                        await this.analyst.logThought(`[FLOW] Iniciando síntesis estratégica para ${city} con ${(auditResult.data || []).length} auditorías profundas.`);
+                        const focusKeyword = extraData.contextual_data?.command_focus
+                            ? `${niche} ${String(extraData.contextual_data.command_focus).trim()}`.trim()
+                            : niche;
                         const analysis = await this.analyst.execute({
-                            niche, city,
-                            marketData: { localPack, organicLeaders: marketData.organic, deepAudits: (auditResult.data || []) as any[] }
+                            niche: focusKeyword, city,
+                            marketData: { localPack, organicLeaders: organicResults, deepAudits: (auditResult.data || []) as any[] }
                         });
+                        await this.analyst.logThought(`[FLOW] Síntesis estratégica finalizada para ${city} en ${Date.now() - analysisStartedAt}ms.`);
 
                         if (!analysis.success) {
                              await this.analyst.logThought(`⚠️ Fallo en análisis para ${city}.`);
@@ -371,36 +501,48 @@ export class TaskOrchestrator {
                         analysisData = analysis.data;
 
                         // --- GENERACIÓN DE IDENTIDAD NAP ÚNICA ---
+                        const napStartedAt = Date.now();
+                        await this.analyst.logThought(`[FLOW] Resolviendo identidad NAP para ${city}...`);
                         const napResult = await this.nap.execute({
                             niche, city,
                             business_name: extraData.business_name,
                             address: extraData.address,
                             phone: extraData.phone
                         });
+                        await this.analyst.logThought(`[FLOW] NAP finalizado para ${city} en ${Date.now() - napStartedAt}ms.`);
 
                         napData = napResult.success ? napResult.data : {
-                            business_name: `${niche} en ${city}`,
-                            address: `Centro Ciudad, ${city}`,
-                            phone: "Consultar"
+                            business_name: buildCanonicalBrandName({ niche, city }),
+                            address: city,
+                            phone: ""
                         };
 
                         await db.run('UPDATE city_data SET keywords = ?, entities = ?, content_draft = ?, nap_data = ?, status = ? WHERE mission_id = ? AND city = ?',
-                            [JSON.stringify(analysisData?.keywords_principales || []), JSON.stringify(analysisData?.entidades_seleccionadas || []), "Analizando...", JSON.stringify(napData), 'ANALYZED', jobId, city]);
+                            [JSON.stringify(analysisData?.secondaryKeywords || []), JSON.stringify(analysisData?.entities || []), "Analizando...", JSON.stringify(napData), 'ANALYZED', jobId, city]);
                     }
 
                     const isPrimary = slugify(city) === rootSlug;
                     const generationPipeline = new ContentGenerationPipeline();
+                    const pipelineStartedAt = Date.now();
+                    await this.analyst.logThought(`[FLOW] Lanzando pipeline de contenido para ${city}...`);
                     let pipelineResult = await generationPipeline.run({
                         niche, city,
                         local_nap: napData,
-                        entities: analysisData?.entidades_seleccionadas || [],
+                        entities: analysisData?.entities || [],
+                        contextual_data: {
+                            ...extraData.contextual_data,
+                            strategicAnalysis: analysisData,
+                            marketData: { localPack, organicLeaders: (marketData?.organic || []), deepAudits: (auditResult.data || []) }
+                        },
                         cluster_data: combinedCluster,
                         cluster_folder_name: `${niche.toLowerCase().replace(/\s+/g, '-')}-${rootSlug}`,
                         subPath: isPrimary ? undefined : citySlug,
                         missionId: jobId,
                         mode: extraData.mode,
-                        designOverrides: extraData.designOverrides
+                        designOverrides: extraData.debugOverrides,
+                        debugMode: extraData.debug_mode || extraData.debugMode
                     });
+                    await this.analyst.logThought(`[FLOW] Pipeline de contenido completado para ${city} en ${Date.now() - pipelineStartedAt}ms.`);
 
                         extraData.mode === 'sandbox' ? (
                             await this.analyst.logThought(`[SANDBOX] Skipping duplication gate...`)
@@ -425,26 +567,55 @@ export class TaskOrchestrator {
                         continue; 
                     }
 
-                    const techPackage = await this.technical.execute({
-                        niche, city,
-                        keywords: (analysisData?.keywords_principales || []).map((k: any) => k.kw),
-                        entities: analysisData?.entidades_seleccionadas || [],
-                        business_data: napData 
-                    });
+                    const normalizedKeywords = this.normalizeAnalysisKeywords(analysisData, niche, city);
+                    const normalizedEntities = this.normalizeAnalysisEntities(analysisData, city);
 
-                        if (pipelineResult && techPackage.success) {
-                            let optimizedContent = pipelineResult.html;
+                    if (!pipelineResult || !pipelineResult.success) {
+                        await this.analyst.logThought(`❌ Generación falló para ${city}. ${pipelineResult?.error || 'El pipeline devolvió null.'}`);
+                        await db.run('UPDATE city_data SET status = ? WHERE mission_id = ? AND city = ?', ['FAILED', jobId, city]);
+                        continue;
+                    }
+
+                    let techPackage: any;
+                    try {
+                        techPackage = await this.technical.execute({
+                            niche, city,
+                            keywords: normalizedKeywords,
+                            entities: normalizedEntities,
+                            business_data: napData,
+                            faqs: this.extractFaqsFromHtml(pipelineResult.data?.html || pipelineResult.html || '')
+                        });
+                    } catch (techError: any) {
+                        await this.analyst.logThought(`⚠️ Technical package falló para ${city}: ${techError.message}. Aplicando fallback desde el HTML renderizado.`);
+                    }
+
+                    if (!techPackage?.success) {
+                        techPackage = this.buildTechnicalFallbackPackage({
+                            niche,
+                            city,
+                            napData,
+                            analysisData,
+                            pipelineResult,
+                            keywords: normalizedKeywords,
+                            entities: normalizedEntities
+                        });
+                        await this.analyst.logThought(`[FLOW] Fallback técnico aplicado para ${city}.`);
+                    }
+
+                        if (pipelineResult && pipelineResult.success && techPackage.success) {
+                            let optimizedContent = pipelineResult.data?.html || pipelineResult.html || '';
+                            const metadata = pipelineResult.data?.metadata || (pipelineResult as any).metadata || {};
 
                             // --- BUCLE DE AUDITORÍA EEAT (PASO 1) ---
                             await this.qa.logThought(`[EEAT Audit] Verificando señales negativas para ${city}...`);
 
                             const lingAudit = await this.linguist.auditContent(optimizedContent, city);
-                            const qaAudit: any = { success: true, data: { status: 'passed', score: pipelineResult.metadata.qaScore } };
+                            const qaAudit: any = { success: true, data: { status: 'passed', score: metadata.qaScore || 0 } };
 
                             // Log Quality Score Agent result
-                            await this.qa.logThought(`[QualityScore] Final Score for ${city}: ${pipelineResult.metadata.qaScore}/100`);
-                            if (pipelineResult.metadata.issues.length > 0) {
-                                await this.qa.logThought(`[QualityScore] Issues detected: ${pipelineResult.metadata.issues.join(' | ')}`);
+                            await this.qa.logThought(`[QualityScore] Final Score for ${city}: ${metadata.qaScore || 0}/100`);
+                            if (Array.isArray(metadata.issues) && metadata.issues.length > 0) {
+                                await this.qa.logThought(`[QualityScore] Issues detected: ${metadata.issues.join(' | ')}`);
                             }
 
                             const auditPassed = (lingAudit.success && lingAudit.data?.passed) && (qaAudit.success && qaAudit.data?.status === 'passed');
@@ -473,7 +644,7 @@ export class TaskOrchestrator {
                                     city,
                                     content: optimizedContent,
                                     schema: techPackage.data.schema,
-                                    keywords: analysisData?.keywords_principales || [],
+                                    keywords: normalizedKeywords,
                                     subPath: isPrimary ? undefined : citySlug,
                                     clusterFolderName: `${nicheSlug}-${rootSlug}`
                                 });
@@ -481,10 +652,10 @@ export class TaskOrchestrator {
                             }
                         } else {
                             // --- NEW: HANDLE PIPELINE FAILURE ---
-                            await this.analyst.logThought(`❌ Generación falló para ${city}. Pipeline no produjo HTML válido.`);
+                            await this.analyst.logThought(`❌ Generación falló para ${city}. Pipeline o paquete técnico no produjeron salida publicable.`);
                             await db.run('UPDATE city_data SET status = ? WHERE mission_id = ? AND city = ?', ['FAILED', jobId, city]);
                         }
-                    } catch (cityError: any) {
+                } catch (cityError: any) {
                     console.error(`[Orchestrator] Failed processing ${city}:`, cityError.message);
                     await this.analyst.logThought(`⚠️ Error al procesar ${city}: ${cityError.message}. Continuando con el resto.`);
                     // Intentamos marcar como fallido este destino específico en la BD si es posible

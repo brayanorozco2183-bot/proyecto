@@ -56,6 +56,10 @@ export interface PagePlanLike {
     dna?: {
       family?: string;
       heroTreatment?: string;
+      heroTemplate?: string;
+      pageSkeleton?: string;
+      pageComposition?: string;
+      visualSystem?: string;
       sectionCadence?: string;
       surfaceStyle?: string;
       tensionCurve?: string[];
@@ -140,6 +144,25 @@ export interface SiteStructureMemoryEntry {
   createdAt?: string;
 }
 
+export interface OriginalityReservationEntry {
+  reservationKey: string;
+  clusterScopes: string[];
+  missionId?: string;
+  pageId?: string;
+  city: string;
+  niche: string;
+  pageType: string;
+  serviceKey: string;
+  heroSignature: string;
+  blockSequenceSignature: string;
+  navPatternSignature: string;
+  ctaPatternSignature: string;
+  family?: string;
+  expiresAt?: string;
+  status?: 'pending' | 'consumed' | 'released' | 'expired';
+  createdAt?: string;
+}
+
 export interface OriginalitySnapshot {
   pageId: string;
   scopes: OriginalityScope[];
@@ -171,6 +194,87 @@ export interface OriginalityIssue {
   evidence?: string[];
 }
 
+export interface DesignLearningIssue {
+  code: string;
+  severity: OriginalitySeverity;
+  message: string;
+  penalty: number;
+  evidence?: string[];
+}
+
+export interface DesignLearningRun {
+  pageId: string;
+  clusterScopes: string[];
+  city: string;
+  niche: string;
+  pageType: string;
+  serviceKey: string;
+  family?: string;
+  heroTreatment?: string;
+  pageSkeleton?: string;
+  pageComposition?: string;
+  visualSystem?: string;
+  blockVariants: string[];
+  patterns: string[];
+  designScore: number;
+  issues: DesignLearningIssue[];
+  blurCount: number;
+  denseCardStreak: number;
+  uniqueVariantCount: number;
+  contractLeakCount: number;
+  responsiveHotfixUsed: boolean;
+  heroCtaVisible: boolean;
+  source?: string;
+  createdAt?: string;
+}
+
+export interface DesignExemplarEntry {
+  pageId: string;
+  clusterScopes: string[];
+  city: string;
+  niche: string;
+  pageType: string;
+  serviceKey: string;
+  family?: string;
+  heroTreatment?: string;
+  pageSkeleton?: string;
+  pageComposition?: string;
+  visualSystem?: string;
+  blockSequenceSignature: string;
+  blockVariantsSignature: string;
+  designScore: number;
+  reason: string;
+  excerpt?: string;
+  createdAt?: string;
+}
+
+export interface DesignLessonEntry {
+  clusterScope: string;
+  niche: string;
+  pageType: string;
+  lessonCode: string;
+  lessonText: string;
+  polarity: 'avoid' | 'prefer';
+  targetType: 'family' | 'hero_treatment' | 'visual_variant' | 'pattern' | 'general';
+  targetValue?: string;
+  weight: number;
+  lastSeenAt?: string;
+  createdAt?: string;
+}
+
+export interface DesignLearningGuidance {
+  avoidFamilies: string[];
+  preferFamilies: string[];
+  avoidHeroTreatments: string[];
+  preferHeroTreatments: string[];
+  avoidVisualVariants: string[];
+  preferVisualVariants: string[];
+  avoidPatterns: string[];
+  preferPatterns: string[];
+  designLessons: string[];
+  exemplarPageIds: string[];
+}
+
 export interface OriginalityGuidance {
   avoidHeroSignatures: string[];
   avoidBlockSequenceSignatures: string[];
@@ -181,6 +285,23 @@ export interface OriginalityGuidance {
   avoidCtaPatterns: string[];
   suggestedHeroTreatments: string[];
   suggestedSectionFlips: Array<[string, string]>;
+  avoidFamilies: string[];
+  preferFamilies: string[];
+  avoidHeroTreatments: string[];
+  preferHeroTreatments: string[];
+  avoidVisualVariants: string[];
+  preferVisualVariants: string[];
+  avoidPatterns: string[];
+  preferPatterns: string[];
+  designLessons: string[];
+  exemplarPageIds: string[];
+  reservedCombo?: {
+    reservationKey: string;
+    heroSignature: string;
+    blockSequenceSignature: string;
+    navPatternSignature: string;
+    ctaPatternSignature: string;
+  } | null;
 }
 
 export interface PreRenderOriginalityResult {
@@ -189,6 +310,7 @@ export interface PreRenderOriginalityResult {
   issues: OriginalityIssue[];
   guidance: OriginalityGuidance;
   snapshot: OriginalitySnapshot;
+  reservation?: OriginalityReservationEntry | null;
 }
 
 export interface SiteOriginalityGateResult {
@@ -196,3 +318,4 @@ export interface SiteOriginalityGateResult {
   scoreDelta: number;
   issues: OriginalityIssue[];
 }
+
