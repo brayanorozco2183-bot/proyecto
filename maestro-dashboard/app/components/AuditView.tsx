@@ -54,7 +54,7 @@ export default function AuditView() {
     return (
         <div className="premium-card">
             <h2 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>Vista de Auditoría (Pre-Publicación)</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1rem', height: '400px' }}>
+            <div className="audit-grid">
                 <div style={{ overflowY: 'auto', borderRight: '1px solid var(--border)', paddingRight: '0.5rem' }}>
                     {drafts.map(d => (
                         <div

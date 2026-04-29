@@ -55,6 +55,12 @@ export class ContentArchitectAgent extends BaseAgent {
         super('Content_Architect_01', 'Planning Lead', 'Arquitecto de Contenidos', 'Diseñador de estructuras semánticas y blue-prints de conversión.', vault.OLLAMA_MODEL_RESEARCH);
     }
 
+    private nicheProfile?: any;
+
+    public setNicheProfile(profile: any) {
+        this.nicheProfile = profile;
+    }
+
     private truncate(value: any, max = 400): string {
         const text = String(value || '').replace(/\s+/g, ' ').trim();
         return text.length > max ? `${text.slice(0, max)}…` : text;
@@ -418,12 +424,17 @@ export class ContentArchitectAgent extends BaseAgent {
         };
 
         const selected = variants[pageType] || variants.service;
+        
+        // Inyectar enriquecimiento de vertical si existe
+        const enrichment = this.nicheProfile?.verticalEnrichment;
+        if (enrichment?.authorityH1) selected.h1 = enrichment.authorityH1.replace(/\[CITY\]/g, city);
+        if (enrichment?.authoritySubtitle) selected.subtitle = enrichment.authoritySubtitle.replace(/\[CITY\]/g, city);
 
         return {
             h1: selected.h1,
             subtitle: selected.subtitle,
-            trust_bullets: this.resolveHeroTrustBullets(input),
-            cta_text: selected.cta_text,
+            trust_bullets: enrichment?.trustAssets || this.resolveHeroTrustBullets(input),
+            cta_text: enrichment?.primaryCta || selected.cta_text,
             hero_role: 'conversion',
             visual_intent: 'high_impact'
         };
@@ -650,7 +661,7 @@ export class ContentArchitectAgent extends BaseAgent {
                 return {
                     section_id: 'donde-estamos',
                     h2: `Cobertura y ubicación operativa en ${city}`,
-                    h3s: [],
+                    h3s: this.getGeoAreas(input, 4).length > 0 ? this.getGeoAreas(input, 4) : [`Zonas norte de ${city}`, `Área central y centro histórico`, `Zonas sur y periferia de ${city}`],
                     block_type: 'map',
                     preferred_format: 'prose',
                     content_density: 'compact',
@@ -948,7 +959,7 @@ REGLAS
 - El hero debe evitar clichés como "soluciones personalizadas", "protege tu propiedad", "expertos" o bullets vacíos tipo "confianza" y "seguridad".
 - El hero debe traer 3 trust_bullets concretos y verificables.
 - La FAQ debe priorizar preguntas reales del nicho si están disponibles en los guardrails.
-- No precios exactos.
+- No precios exactos (prohibido mencionar cifras seguidas de €, euros o eur).
 - No tiempos inventados.
 - Devuelve hero separado.
 
@@ -997,7 +1008,7 @@ JSON
 `;
     }
 
-    async execute(input: ArchitectInput): Promise<AgentResponse> {
+    async execute(input: ArchitectInput): Promise<AgentResponse<any>> {
         this.log(`Procesando arquitectura para: ${input.city} (${input.niche})`);
 
         const pageType = String(input.intentModel?.pageType || 'service').toLowerCase();
@@ -1011,7 +1022,7 @@ JSON
         }
 
         try {
-            const knowledge = await this.getRelevantKnowledge(input.niche, input.city, [input.intentModel?.primaryKeyword || input.niche]);
+            const knowledge = await this.getRelevantKnowledge({ niche: input.niche, city: input.city });
             const prompt = this.buildLeanPrompt(input, knowledge, pageType);
 
             const startTime = Date.now();
@@ -1023,7 +1034,7 @@ JSON
             });
 
             const duration = Date.now() - startTime;
-            const parsed = safeJsonParse(response);
+            const parsed = safeJsonParse<any>(response, null);
 
             if (!parsed || !parsed.sections) {
                 throw new Error('Invalid architect response format');

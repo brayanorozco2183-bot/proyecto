@@ -1,5 +1,5 @@
 import { escapeHtml, renderCta, renderParagraphs, renderSectionHeading, wrapSectionBlock } from '../shared.js';
-import type { BlockRendererInput } from '../types.js';
+import type { BlockFaqItem, BlockRendererInput } from '../types.js';
 
 const accordionClean = (input: BlockRendererInput): string => {
   const faqItems = input.content.faqItems || [];
@@ -9,7 +9,7 @@ const accordionClean = (input: BlockRendererInput): string => {
       ${renderSectionHeading(input.content.heading, input.local?.labels?.faqEyebrow || 'Resolvemos dudas')}
       ${renderParagraphs(input.content.subheading, 'faq-block__intro')}
       <div class="faq-block__accordion faq-block__accordion--refined">
-        ${faqItems.map((item: any, index: number) => `
+        ${faqItems.map((item: BlockFaqItem, index: number) => `
           <details class="faq-item faq-item-refined" data-faq-item="true">
             <summary class="faq-summary-refined">
               <span class="faq-summary-refined__count">${String(index + 1).padStart(2, '0')}</span>
@@ -34,7 +34,7 @@ const editorialList = (input: BlockRendererInput): string => {
       ${renderSectionHeading(input.content.heading, input.local?.labels?.faqEyebrow || 'Preguntas frecuentes')}
       ${renderParagraphs(input.content.subheading, 'faq-block__intro')}
       <div class="faq-block__editorial-list">
-        ${faqItems.map((item: any, index: number) => `
+        ${faqItems.map((item: BlockFaqItem, index: number) => `
           <article class="faq-entry" data-faq-item="true">
             <span class="service-card__kicker">Pregunta ${String(index + 1).padStart(2, '0')}</span>
             <h3>${escapeHtml(item.question)}</h3>

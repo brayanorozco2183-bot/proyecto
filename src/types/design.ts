@@ -100,6 +100,14 @@ export interface ResolvedPageRenderPlan {
     navbarTreatment: string;
     footerTreatment: string;
     ornamentPolicy: string;
+    /**
+     * Runtime visual system alias used by the procedural renderer.
+     * Older render-plan builders emitted this as "system"; newer ones use
+     * "visualSystem". Both are accepted so the final renderer remains
+     * backwards-compatible without unsafe casts.
+     */
+    visualSystem?: 'grid' | 'editorial' | 'panelled' | 'minimal' | 'mixed' | string;
+    system?: 'grid' | 'editorial' | 'panelled' | 'minimal' | 'mixed' | string;
   };
   hero: HeroRenderContract;
   sections: SectionRenderContract[];
@@ -107,4 +115,10 @@ export interface ResolvedPageRenderPlan {
   themeId: DesignSystemThemeId;
   responsivePlan: ResponsivePlan;
   outputFingerprintSeed: string[];
+  radicalConfig?: {
+    layoutParadigm?: 'standard' | 'vertical_sidebar' | 'full_screen_scroll' | 'brutalist_split';
+    themeOverrides?: Record<string, string>;
+    customCss?: string;
+    componentOverrides?: Record<string, string>;
+  };
 }

@@ -3,6 +3,7 @@ import path from 'path';
 
 import { ContentGenerationPipeline } from '../pipelines/contentGenerationPipeline.js';
 import { resolvePlaybookForMission } from '../niches/agentAdapters.js';
+import { attachMissionRuntimeContext } from '../runtime/missionContext.js';
 import { buildSiteGraph } from '../internal-linking/index.js';
 import { RenderPlanResolver } from '../renderers/renderPlanResolver.js';
 import { buildSeoForPipeline, attachRenderedSeoToDraft } from '../seo/pipelineIntegration.js';
@@ -217,10 +218,12 @@ export class ContentPipelinePhaseRunner {
   private async runPhase(phase: DebugPhaseId, state: DebugPipelineState, options: DebugRunnerOptions): Promise<void> {
     const startedAt = Date.now();
     const notes: string[] = [];
+    console.log(`[Phase ${phase}] START ${DEBUG_PHASE_LABELS[phase]}`);
 
+    try {
     switch (phase) {
       case '0.1': {
-        state.mission = this.internals.sanitizeMission(cloneMission(state.mission));
+        state.mission = attachMissionRuntimeContext(this.internals.sanitizeMission(cloneMission(state.mission)));
         let playbookContext: any = null;
         try {
           playbookContext = resolvePlaybookForMission(state.mission.niche);
@@ -519,6 +522,26 @@ export class ContentPipelinePhaseRunner {
       }
     }
 
+    } catch (error: any) {
+      const failedAt = Date.now();
+      const durationMs = failedAt - startedAt;
+      const message = error?.message || String(error);
+      notes.push(`FAILED: ${message}`);
+      state.updatedAt = nowIso();
+      state.phaseSummaries.push({
+        phase,
+        label: DEBUG_PHASE_LABELS[phase],
+        startedAt: new Date(startedAt).toISOString(),
+        completedAt: new Date(failedAt).toISOString(),
+        durationMs,
+        notes,
+        metrics: { ...summarizePhaseMetrics(phase, state), failed: true, error: message },
+      });
+      console.error(`[Phase ${phase}] MISSION_FAILED ${DEBUG_PHASE_LABELS[phase]} in ${durationMs}ms: ${message}`);
+      if (error?.stack) console.error(error.stack);
+      throw error;
+    }
+
     const completedAt = Date.now();
     const durationMs = completedAt - startedAt;
     state.lastCompletedPhase = phase;
@@ -532,6 +555,7 @@ export class ContentPipelinePhaseRunner {
       notes,
       metrics: summarizePhaseMetrics(phase, state),
     });
+    console.log(`[Phase ${phase}] END ${DEBUG_PHASE_LABELS[phase]} in ${durationMs}ms`);
   }
 
   async run(options: DebugRunnerOptions): Promise<DebugRunnerResult> {
@@ -540,7 +564,7 @@ export class ContentPipelinePhaseRunner {
     const state = await this.createInitialState(options);
     const artifactsDir = await this.ensureArtifactsDir(state, options);
     state.artifactsDir = artifactsDir;
-    state.mission = this.internals.sanitizeMission(cloneMission(state.mission));
+    state.mission = attachMissionRuntimeContext(this.internals.sanitizeMission(cloneMission(state.mission)));
 
     const fromPhase = options.fromPhase || '0.1';
     const toPhase = options.toPhase || '12';
@@ -550,12 +574,23 @@ export class ContentPipelinePhaseRunner {
     }
 
 
-    for (const phase of phaseRange(fromPhase, toPhase)) {
-      await this.runPhase(phase, state, options);
-      await savePhaseArtifact(artifactsDir, phase, state, {
+    try {
+      for (const phase of phaseRange(fromPhase, toPhase)) {
+        await this.runPhase(phase, state, options);
+        await savePhaseArtifact(artifactsDir, phase, state, {
+          html: state.renderedPage?.html,
+          summary: state.phaseSummaries[state.phaseSummaries.length - 1],
+        });
+      }
+    } catch (error: any) {
+      const failedSummary = state.phaseSummaries[state.phaseSummaries.length - 1];
+      await savePhaseArtifact(artifactsDir, failedSummary?.phase || fromPhase, state, {
         html: state.renderedPage?.html,
-        summary: state.phaseSummaries[state.phaseSummaries.length - 1],
+        summary: failedSummary,
+        notes: [`ERROR: ${error?.message || String(error)}`, error?.stack || ''].filter(Boolean),
       });
+      console.error(`[PhaseRunner] MISSION_FAILED artifactsDir=${artifactsDir} error=${error?.message || error}`);
+      throw error;
     }
     
     console.log(`[PhaseRunner] Consolidated all JSONs into: ${path.join(artifactsDir, 'resultado_json.txt')}`);
@@ -565,6 +600,9 @@ export class ContentPipelinePhaseRunner {
       const finalHtmlPath = path.join(artifactsDir, 'resultado_final.html');
       await fs.writeFile(finalHtmlPath, state.renderedPage.html, 'utf8');
       console.log(`[PhaseRunner] Final HTML saved to: ${finalHtmlPath}`);
+      console.log(`[PhaseRunner] MISSION_SUCCESS html_path=${finalHtmlPath} duration_phases=${state.phaseSummaries.length}`);
+    } else {
+      console.warn(`[PhaseRunner] MISSION_COMPLETED_WITHOUT_HTML artifactsDir=${artifactsDir}`);
     }
 
 

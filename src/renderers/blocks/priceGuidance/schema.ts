@@ -60,13 +60,13 @@ const semanticSchema = z.object({
 });
 
 
-export const PRICEGUIDANCEVARIANTS = ['table_simple', 'cards_price', 'list_transparent'] as const;
+export const PRICEGUIDANCEVARIANTS = ['table_simple', 'cards_price', 'list_transparent', 'insight_panels'] as const;
 export type PriceGuidanceVariant = typeof PRICEGUIDANCEVARIANTS[number];
 
 export const PriceGuidancePayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], bullets: [], items: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

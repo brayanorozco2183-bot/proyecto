@@ -1,5 +1,4 @@
-import type { SectionBlockPayload, BlockRendererInput } from './types.js';
-import type { HeroPayload } from './hero/schema.js';
+import type { BlockRendererInput } from './types.js';
 import { heroBlock } from './hero/index.js';
 import { servicesGridBlock } from './servicesGrid/index.js';
 import { localProofBlock } from './localProof/index.js';
@@ -12,9 +11,11 @@ import { ctaPanelBlock } from './ctaPanel/index.js';
 import { comparisonTableBlock } from './comparisonTable/index.js';
 import { mapBlock } from './map/index.js';
 import { renderInternalLinkingBlock } from './shared/internalLinking.js';
+import { normalizeBlockRendererInput } from './contracts.js';
 
 export * from './types.js';
 export * from './shared.js';
+export * from './contracts.js';
 
 export * from './hero/index.js';
 export * from './servicesGrid/index.js';
@@ -44,16 +45,17 @@ export const blockRegistry = {
   internal_linking: (input: BlockRendererInput) =>
     renderInternalLinkingBlock(
       input,
-      (input.content as any)?.links || input.seo?.metadata?.internalLinks || input.payload?.links || []
+      []
     )
 } as const;
 
 export function renderBlock(input: BlockRendererInput): string {
-  const handler = blockRegistry[input.blockType as keyof typeof blockRegistry];
-  
+  const normalizedInput = normalizeBlockRendererInput(input);
+  const handler = blockRegistry[normalizedInput.blockType as keyof typeof blockRegistry];
+
   if (!handler) {
-    throw new Error(`Renderer not found for block type: ${input.blockType}`);
+    throw new Error(`Renderer not found for block type: ${normalizedInput.blockType}`);
   }
 
-  return (handler as any)(input);
+  return handler(normalizedInput);
 }

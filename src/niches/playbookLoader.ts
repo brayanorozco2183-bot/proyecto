@@ -68,6 +68,8 @@ const strongLongTailMatchers: Array<{ niche: SupportedNicheId; regex: RegExp }> 
 ];
 
 const cache = new Map<SupportedNicheId, NichePlaybook>();
+const resolvedNicheCache = new Map<string, SupportedNicheId | null>();
+const loggedResolutionKeys = new Set<string>();
 
 function normalize(input: string): string {
   return String(input || '')
@@ -193,10 +195,25 @@ export function resolveCanonicalServiceNiche(rawNiche: string): SupportedNicheId
 
 export function resolveNicheId(rawNiche: string): SupportedNicheId | null {
   const norm = normalizeMissionNiche(rawNiche);
+  const cacheKey = `${String(rawNiche || '').trim()}::${norm}`;
+
+  if (resolvedNicheCache.has(cacheKey)) {
+    return resolvedNicheCache.get(cacheKey)!;
+  }
+
   const resolved = resolveCanonicalServiceNiche(norm || rawNiche);
-  console.log(`[PlaybookLoader] Resolving "${rawNiche}" (norm: "${norm}") -> ${resolved}`);
+  resolvedNicheCache.set(cacheKey, resolved);
+
+  const logEveryResolve = process.env.GRAVITY_PLAYBOOK_LOG_EVERY_RESOLVE === 'true';
+  const logKey = `${norm || rawNiche}->${resolved || 'none'}`;
+  if (logEveryResolve || !loggedResolutionKeys.has(logKey)) {
+    console.log(`[PlaybookLoader] Resolving "${rawNiche}" (norm: "${norm}") -> ${resolved}`);
+    loggedResolutionKeys.add(logKey);
+  }
+
   return resolved;
 }
+
 
 export function loadNichePlaybookById(id: SupportedNicheId): NichePlaybook {
   if (cache.has(id)) return cache.get(id)!;

@@ -84,7 +84,7 @@ export default function SiteSettings() {
                 {/* GLOBAL SECTOR: Platform & URL */}
                 <section style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', border: '1px solid var(--border)' }}>
                     <h3 style={{ fontSize: '0.9rem', marginBottom: '1rem', color: 'var(--primary)', fontWeight: 700 }}>1. Plataforma Base</h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="form-grid">
                         <div>
                             <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--muted)', marginBottom: '0.5rem' }}>Tipo de Despliegue</label>
                             <select
@@ -113,7 +113,7 @@ export default function SiteSettings() {
                 {settings.site_type === 'wordpress' && (
                     <section style={{ padding: '1rem', background: 'rgba(56, 189, 248, 0.05)', borderRadius: '12px', border: '1px solid rgba(56, 189, 248, 0.2)' }}>
                         <h3 style={{ fontSize: '0.9rem', marginBottom: '1rem', color: '#38bdf8', fontWeight: 700 }}>2. Credenciales WordPress</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div className="form-grid">
                             <div>
                                 <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--muted)', marginBottom: '0.5rem' }}>Usuario WP</label>
                                 <input
@@ -142,7 +142,7 @@ export default function SiteSettings() {
                 {settings.site_type === 'static' && (
                     <section style={{ padding: '1rem', background: 'rgba(245, 158, 11, 0.05)', borderRadius: '12px', border: '1px solid rgba(245, 158, 11, 0.2)' }}>
                         <h3 style={{ fontSize: '0.9rem', marginBottom: '1rem', color: '#f59e0b', fontWeight: 700 }}>2. Configuración Auto-Despliegue (SFTP/FTP)</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                        <div className="form-grid-uneven" style={{ marginBottom: '1rem' }}>
                             <div>
                                 <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--muted)', marginBottom: '0.5rem' }}>Servidor / Host IP</label>
                                 <input
@@ -163,7 +163,7 @@ export default function SiteSettings() {
                                 />
                             </div>
                         </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                        <div className="form-grid" style={{ marginBottom: '1rem' }}>
                             <div>
                                 <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--muted)', marginBottom: '0.5rem' }}>Usuario FTP</label>
                                 <input

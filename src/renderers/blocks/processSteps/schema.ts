@@ -54,13 +54,13 @@ const semanticSchema = z.object({
 });
 
 
-export const PROCESSSTEPSVARIANTS = ['timeline_vertical', 'grid_steps', 'numbered_list'] as const;
+export const PROCESSSTEPSVARIANTS = ['timeline_vertical', 'grid_steps', 'numbered_list', 'stepped_rail'] as const;
 export type ProcessStepsVariant = typeof PROCESSSTEPSVARIANTS[number];
 
 export const ProcessStepsPayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], items: [], bullets: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

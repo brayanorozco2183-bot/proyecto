@@ -1,0 +1,59 @@
+{
+  "name": "createwebseooptimized",
+  "version": "1.0.0",
+  "description": "Gravity BLE - SEO Semantic Generation Engine",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/orchestrator/orchestrator.ts",
+    "dashboard": "tsx src/dashboard/server.ts",
+    "comfy:check": "tsx src/images/comfy/setupHelper.ts",
+    "comfy:gen": "tsx scripts/generar_imagen.ts",
+    "images:finalize": "tsx src/tools/imageFinisher.ts",
+    "test": "npm run typecheck && npm run audit:security && npm run audit:hardening",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit",
+    "ble:v2": "tsx src/experiments/large_learning_run.ts",
+    "audit:cleanup": "tsx scripts/audit_cleanup_static.ts",
+    "audit:v22": "tsx scripts/audit_ble_v22_integrity.ts",
+    "ble:v22": "tsx src/experiments/large_learning_run.ts",
+    "audit:v23": "tsx scripts/audit_ble_v23_phase_repair.ts output_sites",
+    "start:prod": "NODE_ENV=production tsx src/orchestrator/orchestrator.ts",
+    "dashboard:prod": "NODE_ENV=production tsx src/dashboard/server.ts",
+    "audit:hardening": "tsx scripts/audit_ble_v24_hardening.ts",
+    "audit:security": "node scripts/check_dashboard_security.mjs",
+    "cleanup:duplicates": "node scripts/cleanup_duplicate_js.mjs --dry-run",
+    "cleanup:duplicates:apply": "node scripts/cleanup_duplicate_js.mjs --apply",
+    "prepare:production": "node scripts/prepare_production_tree.mjs --dry-run",
+    "prepare:production:apply": "node scripts/prepare_production_tree.mjs --apply",
+    "test:hardening": "npm run typecheck && npm run audit:security && npm run audit:hardening"
+  },
+  "dependencies": {
+    "axios": "^1.13.5",
+    "cheerio": "^1.2.0",
+    "dotenv": "^17.3.1",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "typescript": "^5.9.3",
+    "zod": "^4.3.6"
+  },
+  "optionalDependencies": {
+    "basic-ftp": "^5.2.0",
+    "bullmq": "^5.70.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "ghost-cursor": "^1.4.2",
+    "ioredis": "^5.9.3",
+    "playwright": "^1.58.2",
+    "playwright-extra": "^4.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "ssh2-sftp-client": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.3.0",
+    "@types/sqlite3": "^3.1.11",
+    "tsx": "^4.19.3"
+  }
+}

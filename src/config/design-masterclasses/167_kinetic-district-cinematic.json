@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_167_KINETIC_DISTRICT_CINEMATIC",
+  "title": "Kinetic District Cinematic",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "conversion_landing",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 16,
+      "gutter": "20px",
+      "container_width": "min(1440px, calc(100% - 64px))"
+    },
+    "navigation": {
+      "style": "floating_cta_bar",
+      "position": "fixed_bottom",
+      "blur": "22px",
+      "contrast_safe": true,
+      "mobile_pattern": "compact_command"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#8A1238",
+      "accent": "#0F766E",
+      "bg": "#FEF8F5",
+      "surface": "#FFFFFF",
+      "surface_alt": "#F1E5E0",
+      "text": "#23161A",
+      "muted": "#574148",
+      "on_primary": "#FFFFFF",
+      "on_accent": "#FFFFFF",
+      "radius_policy": "24px",
+      "shadow_policy": "floating_card",
+      "font_display": "'Libre Baskerville', serif",
+      "font_body": "'Public Sans', sans-serif",
+      "spacing_density": "editorial",
+      "border_policy": "architectural"
+    },
+    "contrast_report": {
+      "bg_text": 16.62,
+      "surface_text": 17.48,
+      "primary_on_primary": 9.44,
+      "accent_on_accent": 5.47,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #FEF8F5; --surface: #FFFFFF; --surface-alt: #F1E5E0; --text: #23161A; --muted: #574148; --primary: #8A1238; --accent: #0F766E; --on-primary: #FFFFFF; --on-accent: #FFFFFF; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 24px; --gap: 20px; --blur: 22px; --nav-position: fixed; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Public Sans', sans-serif; } h1,h2,h3,.display { font-family: 'Libre Baskerville', serif; } .editorial-flow { display: grid; grid-template-columns: minmax(220px, .34fr) 1fr; gap: clamp(32px, 6vw, 96px); } .editorial-flow h2 { font-size: clamp(2rem, 5vw, 5.5rem); line-height: .92; letter-spacing: -.06em; } .article-card { border-top: 1px solid var(--border); padding-block: 28px; }  @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "dashboard_hero",
+      "custom_structure": "<section class='hero hero--dashboard'><div class='metric-strip'>{{METRICS}}</div><h1>{{H1}}</h1><p>{{INTRO}}</p><div class='dashboard-cta'>{{CTA_PRIMARY}}{{PHONE_BADGE}}</div></section>"
+    },
+    "services_grid": {
+      "style": "premium_bento_cards",
+      "columns_override": 3,
+      "interaction": "magnetic_cta",
+      "content_strategy": "cards elevated with proof metric and CTA"
+    },
+    "trust_layer": {
+      "style": "authority_sidebar",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "map_like_area_list",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "technical_table",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "porcelain_burgundy",
+    "motion_level": "cinematic",
+    "noise_overlay": false,
+    "color_glitch": false,
+    "image_treatment": "editorial_crop",
+    "premium_cues": [
+      "editorial typography",
+      "oversized headings",
+      "calm rhythm"
+    ]
+  }
+}

@@ -14,6 +14,7 @@ export default function LiveConsole() {
     const [logs, setLogs] = useState<Log[]>([]);
     const [error, setError] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [autoScroll, setAutoScroll] = useState(true);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -36,21 +37,38 @@ export default function LiveConsole() {
     }, []);
 
     useEffect(() => {
-        if (scrollRef.current) {
+        if (autoScroll && scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
-    }, [logs]);
+    }, [logs, autoScroll]);
+
+    const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+        const target = e.currentTarget;
+        const isAtBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 50;
+        setAutoScroll(isAtBottom);
+    };
 
     return (
-        <div className="premium-card" style={{ height: '500px', display: 'flex', flexDirection: 'column' }}>
+        <div className="premium-card" style={{ height: '500px', display: 'flex', flexDirection: 'column', position: 'relative' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
                 <h2 style={{ fontSize: '1.25rem' }}>Trazabilidad del Enjambre (Logs de Pensamiento)</h2>
-                <span className={`status-badge ${error ? 'status-error' : 'status-active'}`}>
-                    {error ? 'API Offline' : 'Escuchando Agentes'}
-                </span>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    {!autoScroll && (
+                        <button 
+                            onClick={() => setAutoScroll(true)}
+                            style={{ background: 'var(--primary)', color: '#fff', border: 'none', padding: '2px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer' }}
+                        >
+                            ⬇️ Reanudar Scroll
+                        </button>
+                    )}
+                    <span className={`status-badge ${error ? 'status-error' : 'status-active'}`}>
+                        {error ? 'API Offline' : 'Escuchando Agentes'}
+                    </span>
+                </div>
             </div>
             <div
                 ref={scrollRef}
+                onScroll={handleScroll}
                 style={{
                     flex: 1,
                     overflowY: 'auto',

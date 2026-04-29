@@ -31,6 +31,61 @@ export class TechnicalLeadAgent extends BaseAgent {
         return hasPlus ? `+${digits}` : digits;
     }
 
+    private normalizeSlug(value: string): string {
+        return String(value || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/ñ/g, 'n')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .trim();
+    }
+
+    private normalizeText(value: unknown): string {
+        return String(value || '').replace(/\s+/g, ' ').trim();
+    }
+
+    private titleCase(value: string): string {
+        return this.normalizeText(value)
+            .split(' ')
+            .filter(Boolean)
+            .map((token) => {
+                const lower = token.toLowerCase();
+                if (['de', 'del', 'en', 'y', 'la', 'el', 'los', 'las'].includes(lower)) return lower;
+                return lower.charAt(0).toUpperCase() + lower.slice(1);
+            })
+            .join(' ');
+    }
+
+    private buildSafeBusinessName(niche: string, city: string, provided?: string): string {
+        const raw = this.normalizeText(provided || '');
+        if (raw && !/pendiente|fallback|undefined|null|servicio\s+de/i.test(raw)) return this.titleCase(raw);
+        const cleanNiche = this.titleCase(niche.replace(/^de\s+/i, '')) || 'Servicio Local';
+        const cleanCity = this.titleCase(city) || 'España';
+        return `${cleanNiche} ${cleanCity} Pro`;
+    }
+
+    private buildAuthorityCandidates(niche: string, city: string): { label: string; url: string }[] {
+        const slug = this.normalizeSlug(city);
+        const base = [
+            { label: `Ayuntamiento de ${city}`, url: `https://www.${slug}.es/` },
+            { label: 'Administración General del Estado', url: 'https://administracion.gob.es/' },
+            { label: 'Consumo y derechos de usuarios en España', url: 'https://www.consumo.gob.es/' }
+        ];
+        const normalized = this.normalizeSlug(niche);
+        if (/electric|instalacion-electrica|boletin/.test(normalized)) {
+            base.splice(1, 0, { label: 'Ministerio de Industria y Turismo', url: 'https://industria.gob.es/' });
+        } else if (/fontaner|agua|desatasc/.test(normalized)) {
+            base.splice(1, 0, { label: 'Información pública sobre consumo de agua', url: 'https://www.miteco.gob.es/' });
+        } else if (/cerraj|seguridad|cerradur/.test(normalized)) {
+            base.splice(1, 0, { label: 'Policía Nacional - seguridad ciudadana', url: 'https://www.policia.es/' });
+        } else if (/reforma|obra|arquitect|construccion/.test(normalized)) {
+            base.splice(1, 0, { label: 'Código Técnico de la Edificación', url: 'https://www.codigotecnico.org/' });
+        }
+        return base;
+    }
+
     private async verifyUrl(url: string): Promise<boolean> {
         try {
             const res = await axios.get(url, {
@@ -57,8 +112,8 @@ export class TechnicalLeadAgent extends BaseAgent {
         const knowledge = await this.getPersistentKnowledge({ city: input.city, niche: input.niche });
         if (knowledge) this.logThought(`[V7] Aplicando reglas de conocimiento: ${knowledge.substring(0, 50)}...`);
 
-        const slug = input.city.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
-        const nicheSlug = input.niche.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+        const slug = this.normalizeSlug(input.city);
+        const nicheSlug = this.normalizeSlug(input.niche);
 
         // ── 1. Metadatos dinámicos y editoriales ──
         const main_entity = input.entities?.[0] || input.niche;
@@ -77,8 +132,8 @@ export class TechnicalLeadAgent extends BaseAgent {
         // ── 2. JSON-LD LocalBusiness (100% plantilla TypeScript) ──
         const napData = input.business_data || {};
         const phone = this.normalizePhone(napData.phone);
-        const addressName = String(napData.address || input.city || "").trim() || input.city;
-        const companyName = napData.business_name || `${input.niche} en ${input.city}`;
+        const addressName = this.normalizeText(napData.address || '');
+        const companyName = this.buildSafeBusinessName(input.niche, input.city, napData.business_name);
 
         // Price Range enforcement
         let priceRange = "€€";
@@ -93,10 +148,10 @@ export class TechnicalLeadAgent extends BaseAgent {
             "description": meta_description,
             "url": `./`,
             "priceRange": priceRange,
-                        "areaServed": input.city,
+            "areaServed": { "@type": "City", "name": input.city },
             "address": {
                 "@type": "PostalAddress",
-                "streetAddress": addressName,
+                ...(addressName ? { "streetAddress": addressName } : {}),
                 "addressLocality": input.city,
                 "addressCountry": "ES"
             },
@@ -113,19 +168,54 @@ export class TechnicalLeadAgent extends BaseAgent {
         const graph: any[] = [
             organizationNode,
             {
+                "@type": "WebSite",
+                "@id": "#website",
+                "name": companyName,
+                "url": "./",
+                "inLanguage": "es-ES"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "#webpage",
+                "name": meta_title,
+                "description": meta_description,
+                "url": "./",
+                "inLanguage": "es-ES",
+                "isPartOf": { "@id": "#website" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "#breadcrumb",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "/" },
+                    { "@type": "ListItem", "position": 2, "name": `${input.niche} en ${input.city}`, "item": "./" }
+                ]
+            },
+            {
                 "@type": "Service",
+                "@id": "#service",
+                "name": input.niche,
                 "serviceType": `Servicio de ${input.niche} Profesional`,
                 "provider": { "@id": `#organization` },
                 "areaServed": { "@type": "City", "name": input.city }
             }
         ];
 
-        // ── 3. FAQPage condicional (Solo si hay FAQs reales) ──
-        if (input.faqs && input.faqs.length > 0) {
+        // ── 3. FAQPage condicional (Solo si hay FAQs reales y no navegación/CTA) ──
+        const cleanFaqs = (input.faqs || []).filter((f) => {
+            const question = String(f?.question || '').replace(/\s+/g, ' ').trim();
+            const answer = String(f?.answer || '').replace(/\s+/g, ' ').trim();
+            if (!question || question.length < 12 || !/[¿?]/.test(question)) return false;
+            if (/^(menú|menu|inicio|servicios|áreas|areas|dudas|contacto|llamar ahora)$/i.test(question)) return false;
+            if (!answer || answer.length < 20) return false;
+            return true;
+        }).slice(0, 8);
+
+        if (cleanFaqs.length > 0) {
             graph.push({
                 "@id": `#faq`,
                 "@type": "FAQPage",
-                "mainEntity": input.faqs.map(f => ({
+                "mainEntity": cleanFaqs.map(f => ({
                     "@type": "Question",
                     "name": f.question,
                     "acceptedAnswer": {
@@ -142,12 +232,7 @@ export class TechnicalLeadAgent extends BaseAgent {
         };
 
         // ── 4. Verificación real de enlaces (sin inventar) ──
-        const candidateLinks = [
-            { label: `Ayuntamiento de ${input.city}`, url: `https://www.${slug}.es/` },
-            { label: 'Seguridad en el Hogar - OCU', url: 'https://www.ocu.org/' },
-            { label: 'Consejos de Seguridad - Policía Nacional', url: 'https://www.policia.es/' },
-            { label: 'Información de España - Spain.info', url: 'https://www.spain.info/' }
-        ];
+        const candidateLinks = this.buildAuthorityCandidates(input.niche, input.city);
 
         const verifiedLinks: { label: string; url: string }[] = [];
         for (const candidate of candidateLinks) {

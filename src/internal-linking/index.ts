@@ -5,3 +5,4 @@ export * from './linkPlanner.js';
 export * from './autoBlocks.js';
 export * from './pipelineAdapters.js';
 export * from './validator.js';
+export * from './postClusterInterlinking.js';

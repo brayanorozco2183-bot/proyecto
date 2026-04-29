@@ -39,12 +39,38 @@ const PREMIUM_MIN_SCORE = 88;
 
 const BLE_V24_TECHNICAL_BLOCKERS = new Set([
     'FAQ_SCHEMA_CONTENT_MISMATCH',
+    'SCHEMA_JSON_INVALID',
+    'SCHEMA_MISSING',
     'PLACEHOLDER_OR_BROKEN_COPY',
     'PRODUCTION_PLACEHOLDER_VISUAL',
     'MOBILE_VIEWPORT_MISSING',
+    'BROKEN_INTERNAL_INDEX_LINK',
     'BROKEN_INTERNAL_LINK',
     'SYSTEM_LEAK_VISIBLE'
 ]);
+
+function hasBlockingQualityIssue(issues: QualityGateIssue[]): boolean {
+    return issues.some((issue) =>
+        issue.severity === 'critical' ||
+        BLE_V24_TECHNICAL_BLOCKERS.has(issue.code) ||
+        issue.code === 'BLE_V24_BLOCKER_ESCALATION'
+    );
+}
+
+function recomputeQualityGatePass(issues: QualityGateIssue[], score: number, minScore: number): boolean {
+    const forcePass = process.env.QUALITY_GATE_FORCE_PASS === 'true';
+    if (forcePass) return true;
+    const errorCount = issues.filter(i => i.severity === 'error').length;
+    return !hasBlockingQualityIssue(issues) && errorCount === 0 && score >= minScore;
+}
+
+function qualityGateCounts(issues: QualityGateIssue[]): { criticalCount: number; errorCount: number; blockerCount: number } {
+    return {
+        criticalCount: issues.filter(i => i.severity === 'critical').length,
+        errorCount: issues.filter(i => i.severity === 'error').length,
+        blockerCount: issues.filter(i => BLE_V24_TECHNICAL_BLOCKERS.has(i.code)).length,
+    };
+}
 
 const ABSTRACT_LOCAL_HEADINGS = new Set([
     'referencias geográficas locales',
@@ -667,9 +693,11 @@ function analyzeCrossNicheLeakage(input: QualityGateInput, plainText: string, is
 }
 
 function analyzeNicheCompliance(input: QualityGateInput, issues: QualityGateIssue[]): number {
-    const nicheRules = input.pagePlan?.strategicAnalysis?.schemaTypes || input.pagePlan?.schemaTypes || input.pagePlan?.seoBrief?.schemaTypes || [];
-    console.log(`[DEBUG_QUALITY] Provided Schemas: ${JSON.stringify(nicheRules)}`);
-    // console.log(`[DEBUG_QUALITY_FULL_PLAN] ${JSON.stringify(input.pagePlan, null, 2)}`);
+    const pagePlan = (input.pagePlan || {}) as any;
+    const nicheRules = pagePlan?.strategicAnalysis?.schemaTypes || pagePlan?.schemaTypes || pagePlan?.seoBrief?.schemaTypes || [];
+    if (process.env.DEBUG_QUALITY_GATE === 'true') {
+        console.log(`[DEBUG_QUALITY] Provided Schemas: ${JSON.stringify(nicheRules)}`);
+    }
 
     const nicheValidation = validateContentAgainstNichePlaybook({
         niche: input.niche,
@@ -721,12 +749,12 @@ function analyzeGlobalParagraphRepetition($: cheerio.CheerioAPI, issues: Quality
 }
 
 export function runQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_SCORE): QualityGateResult {
+    const $ = cheerio.load(input.html);
+    const plainText = normalizeText(stripHtml(input.html));
+
     const issues: QualityGateIssue[] = [];
     issues.push(...detectSchemaHygieneIssues($));
     let score = 100;
-
-    const $ = cheerio.load(input.html);
-    const plainText = normalizeText(stripHtml(input.html));
 
     score += analyzeTitleAndMeta($, input.city, issues);
     score += analyzePlaceholderHeadings($, input.city, issues);
@@ -751,9 +779,8 @@ export function runQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_S
         score -= penalty;
     }
 
-    const criticalCount = issues.filter(i => i.severity === 'critical').length;
-    const blockerCount = issues.filter(i => BLE_V24_TECHNICAL_BLOCKERS.has(i.code)).length;
-    if (blockerCount > 0 && !issues.some(i => i.code === 'BLE_V24_BLOCKER_ESCALATION')) {
+    let counts = qualityGateCounts(issues);
+    if (counts.blockerCount > 0 && !issues.some(i => i.code === 'BLE_V24_BLOCKER_ESCALATION')) {
         issues.push({
             code: 'BLE_V24_BLOCKER_ESCALATION',
             severity: 'critical',
@@ -761,9 +788,9 @@ export function runQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_S
             penalty: 100
         });
     }
-    const errorCount = issues.filter(i => i.severity === 'error').length;
 
-    if (criticalCount >= 2) {
+    counts = qualityGateCounts(issues);
+    if (counts.criticalCount >= 2 && !issues.some(i => i.code === 'QUALITY_COLLAPSE')) {
         pushIssue(issues, {
             code: 'QUALITY_COLLAPSE',
             severity: 'critical',
@@ -774,15 +801,12 @@ export function runQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_S
     }
 
     score = Math.max(0, Math.min(100, score));
-
-    const forcePass = process.env.QUALITY_GATE_FORCE_PASS === 'true';
-    const hardBlockCodes = new Set(['CROSS_NICHE_LEAKAGE_FATAL','PLACEHOLDER_OR_BROKEN_COPY','SANITIZER_RESIDUAL_FRAGMENTS','SYSTEM_LEAK_VISIBLE']);
-    const hasHardBlock = issues.some(i => hardBlockCodes.has(i.code));
-    const passed = forcePass || (!hasHardBlock && criticalCount === 0 && errorCount === 0 && score >= minScore);
+    counts = qualityGateCounts(issues);
+    const passed = recomputeQualityGatePass(issues, score, minScore);
 
     const summary = passed
         ? `Quality Gate OK (${score}/100).`
-        : `Quality Gate FAILED (${score}/100). Critical=${criticalCount}, Errors=${errorCount}.`;
+        : `Quality Gate FAILED (${score}/100). Critical=${counts.criticalCount}, Errors=${counts.errorCount}. Blockers=${counts.blockerCount}.`;
 
     return {
         passed,
@@ -858,16 +882,11 @@ export async function runAsyncQualityGate(input: QualityGateInput, minScore = DE
             result.score += originalityGate.scoreDelta;
             result.score = Math.max(0, Math.min(100, result.score));
             
-            const criticalCount = result.issues.filter(i => i.severity === 'critical').length;
-            const errorCount = result.issues.filter(i => i.severity === 'error').length;
-            
-            const forcePass = process.env.QUALITY_GATE_FORCE_PASS === 'true';
-            const hardBlockCodes = new Set(['CROSS_NICHE_LEAKAGE_FATAL','PLACEHOLDER_OR_BROKEN_COPY','SANITIZER_RESIDUAL_FRAGMENTS','SYSTEM_LEAK_VISIBLE']);
-            const hasHardBlock = result.issues.some(i => hardBlockCodes.has(i.code));
-            result.passed = forcePass || (!hasHardBlock && criticalCount === 0 && errorCount === 0 && result.score >= minScore);
+            const counts = qualityGateCounts(result.issues);
+            result.passed = recomputeQualityGatePass(result.issues, result.score, minScore);
             result.summary = result.passed
                 ? `Quality Gate OK (${result.score}/100 including Site Originality).`
-                : `Quality Gate FAILED (${result.score}/100) due to Site Originality issues.`;
+                : `Quality Gate FAILED (${result.score}/100) due to Site Originality issues. Critical=${counts.criticalCount}, Errors=${counts.errorCount}, Blockers=${counts.blockerCount}.`;
             
             result.issues.sort((a, b) => b.penalty - a.penalty);
         }

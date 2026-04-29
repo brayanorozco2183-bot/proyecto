@@ -138,7 +138,7 @@ function mutateWorkflow(workflow: ComfyWorkflow, brief: PageImageBrief): { workf
             node.inputs.ckpt_name = vault.COMFY_CHECKPOINT;
         }
 
-        if (classType === 'emptylatentimage') {
+        if (classType === 'emptylatentimage' || classType === 'emptysd3latentimage' || classType === 'emptyflux2latentimage') {
             node.inputs.width = brief.width;
             node.inputs.height = brief.height;
             node.inputs.batch_size = 1;

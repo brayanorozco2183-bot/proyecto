@@ -1,3 +1,4 @@
+import { getFallbackServiceTopics } from '../utils/fallbackQuality.js';
 import { BaseAgent, AgentResponse } from './base.js';
 import axios from 'axios';
 import { AIFacade } from '../tools/aiFacade.js';
@@ -61,6 +62,7 @@ export interface WriterInput {
         factualConstraints?: string[];
         internalLinksToMention?: string[];
         prohibitedClaims?: string[];
+        qualityContract?: any;
     };
     usedAngles?: string[];
     contentOnly?: boolean; // NEW: If true, do NOT output the main H2
@@ -117,6 +119,12 @@ export class ContentWriterAgent extends BaseAgent {
             'Genera contenido largo, detallado y optimizado SEO para una sección HTML específica.',
             vault.OLLAMA_MODEL_COPY // O el modelo configurado para redacción
         );
+    }
+
+    private nicheProfile?: any;
+
+    public setNicheProfile(profile: any) {
+        this.nicheProfile = profile;
     }
 
     private readonly FORBIDDEN_BOILERPLATE = [
@@ -194,8 +202,8 @@ export class ContentWriterAgent extends BaseAgent {
         const missingPlaybook = !writerBrief || !semanticSeed;
 
         if (forceAll) return true;
-        
-        // FORZAR SIEMPRE IA PARA CONTENIDO PREMIUM (ELIMINAR FASTPATH POR DEFECTO)
+        if (disableOnMissingPlaybook && (genericNiche || missingPlaybook)) return true;
+
         return false;
     }
 
@@ -446,16 +454,18 @@ private buildFaqAnswer(question: string, input: WriterInput, variant: number): s
                         `En ${city}, comparar propuestas tiene más sentido cuando separan fabricación, instalación, remates y posibles ajustes en obra.`
                     ]
                 },
-                local_proof: {
+                local_context: {
                     intro: [
-                        `En ${city}, nuestra logística operativa nos permite cubrir con solvencia tanto el centro como los barrios periféricos, asegurando que cada aviso cuente con técnicos que conocen bien la zona.`,
-                        `La asistencia en ${city} se organiza siguiendo protocolos de proximidad; esto nos permite optimizar desplazamientos y ofrecer una respuesta técnica coherente con las necesidades del municipio.`
+                        `En ${city}, la logística operativa debe explicar cobertura, visita previa y coordinación real, no promesas genéricas de proximidad.`,
+                        `La asistencia en ${city} se organiza mejor cuando se concreta cómo se validan medidas, accesos y tiempos de montaje según el tipo de trabajo.`
                     ]
                 },
-                faq: [
-                    `En ${city}, la solución técnica ideal siempre se valida tras una inspección directa, priorizando la durabilidad y el uso de materiales que cumplan con los estándares de calidad del sector.`,
-                    `Resolver cualquier duda en ${city} antes de empezar es parte de nuestro compromiso; entender los factores que influyen en el resultado ayuda a tomar decisiones más inteligentes.`
-                ]
+                faq: {
+                    body: [
+                        `En ${city}, la solución técnica ideal se valida tras una inspección directa, priorizando durabilidad, medidas reales y materiales adecuados al uso.`,
+                        `Resolver dudas en ${city} antes de empezar ayuda a entender medidas, acabados, plazos de fabricación y factores que influyen en el resultado.`
+                    ]
+                }
             },
             home_local: {
                 local_proof: {
@@ -663,6 +673,8 @@ private dedupeLocalLabel(text: string, city: string): string {
             .replace(/\bla seguridad de su hogar o negocio es nuestra prioridad fundamental\b/gi, this.isLocksmithLikeNiche(niche) ? 'protegemos accesos y cerramientos con un enfoque técnico' : 'la fiabilidad de la instalación y la tranquilidad del usuario son una prioridad en cada intervención')
             .replace(/\bdisponemos de la tecnolog[ií]a m[aá]s avanzada del sector actual\b/gi, 'trabajamos con herramienta profesional y procedimientos contrastados')
             .replace(/\bprecios transparentes y presupuestos cerrados\b/gi, 'presupuesto claro antes de intervenir')
+            .replace(/\b\d+(?:[,.]\d+)?\s*(?:€|euros?\b|eur\b)/gi, 'presupuesto ajustado')
+            .replace(/\bdesde\s+\d+(?:[,.]\d+)?\s*(?:€|euros?\b|eur\b)/gi, 'presupuesto personalizado tras valoración')
             .replace(/\bcomo los profesionales? de toda la vida\b/gi, 'con un criterio profesional claro')
             .replace(/\bcomo referentes locales\b/gi, 'con atención local')
             .replace(/\bespecialistas de toda la vida\b/gi, 'profesionales del oficio')
@@ -852,7 +864,7 @@ private dedupeLocalLabel(text: string, city: string): string {
         if (normalized.cta && typeof normalized.cta === 'object') {
             normalized.cta = {
                 text: this.normalizeCtaText(normalized.cta.text, input.local_nap.phone),
-                phone: input.local_nap.phone,
+                phone: input.local_nap?.phone || '',
                 note: typeof normalized.cta.note === 'string' ? normalized.cta.note : ''
             };
         }
@@ -952,16 +964,16 @@ private dedupeLocalLabel(text: string, city: string): string {
         const base: SectionSemanticData = {
             sectionId: input.section_id,
             h2: this.dedupeLocalLabel(input.section_h2, input.city),
-            intro: seed?.intro || [`En ${city}, el servicio de ${niche.toLowerCase()} necesita un enfoque técnico proporcionado al estado real del trabajo, del material y del montaje.`],
+            intro: seed?.intro || [`En ${city}, el servicio de ${niche.toLowerCase()} se plantea a partir de una revisión clara del caso, del estado real del trabajo y de los materiales que pueden hacer falta.`],
             items: seed?.items || h3s.map(h3 => ({
                 title: h3,
                 body: this.buildFallbackBodyFromTitle(h3, input)
             })),
-            bullets: seed?.bullets || [],
+            bullets: seed?.bullets || getFallbackServiceTopics(niche, 4).map((topic) => `${topic}: revisión del alcance, materiales y resultado esperado.`),
             faqItems: seed?.faqItems || [],
             cta: {
                 text: 'Consultar presupuesto sin compromiso',
-                phone: input.local_nap.phone
+                phone: input.local_nap?.phone || ''
             }
         };
 
@@ -984,7 +996,7 @@ private dedupeLocalLabel(text: string, city: string): string {
         return /\[DEBUG\]|\[TRACE\]|\[LOG\]|AI Response:|Writing Phase:|Block Index:/.test(text);
     }
 
-    private stripTraceArtifacts(text: string): string {
+    protected stripTraceArtifacts(text: string): string {
         return text
             .split('\n')
             .filter(line => !this.looksLikeTraceArtifact(line))
@@ -992,7 +1004,7 @@ private dedupeLocalLabel(text: string, city: string): string {
             .trim();
     }
 
-    private sanitizeModelOutput(text: string): string {
+    protected sanitizeModelOutput(text: string): string {
         return text
             .replace(/```json|```/g, '')
             .replace(/(\r\n|\n|\r)/gm, " ")
@@ -1003,57 +1015,65 @@ private dedupeLocalLabel(text: string, city: string): string {
     private buildSystemPrompt(input: WriterInput, knowledgePack: string): string {
         const niche = input.niche;
         const city = this.normalizeCityName(input.city);
-        const cityLower = city.toLowerCase();
-        const nicheLower = niche.toLowerCase();
         const techBrief = this.truncate(this.technicalBrief, 400);
         const nicheBrief = this.truncate(this.nicheBrief, 800);
         const knowledge = this.truncate(knowledgePack, 2000);
         const entities = (input.entities || []).slice(0, 10).join(', ');
         const areas = this.getAllowedLocalAreas(input, 4).join(', ');
         const linkHints = this.getInternalLinkHints(input, 3).join(', ');
-        const governanceRules = getRulesByCategory('Writer').map((r, i) => `${i + 1}. ${r}`).join('\n');
+
+        // HYBRID ENRICHMENT: Get curated technical topics from fallback system
+        const curatedTechnicalTopics = getFallbackServiceTopics(niche, 8);
+        const technicalExpertisePills = curatedTechnicalTopics.map(t => `- ${t}`).join('\n');
 
         return `
-Eres un redactor experto en SEO local para el mercado español. Tu misión es generar el contenido semántico para una sección específica de una página de servicios.
+Eres un redactor experto en SEO local para el mercado español. Tu misión es generar el contenido semántico para una sección específica de una página de servicios premium.
 
 NICHO: ${niche}
 CIUDAD: ${city}
+block_type: ${input.blockType}
 H2 SECCIÓN: ${this.dedupeLocalLabel(input.section_h2, city)}
 H3 SUBSECCIONES: ${input.subsections_h3.join(', ')}
 KEYWORDS/ENTIDADES: ${entities}
 ÁREAS LOCALES: ${areas}
 ENLACES INTERNOS (Anchors sugeridos): ${linkHints}
 
-REGLAS DE ORO (OBLIGATORIAS):
-${governanceRules}
-2. **ESPECIFICIDAD TÉCNICA REAL**: Habla del oficio correcto para el nicho actual. Usa materiales, procesos, piezas y criterios compatibles con ${input.niche}, nunca con otros gremios.
-3. **TONO DE AUTORIDAD**: Escribe como un profesional veterano del nicho actual que explica la realidad técnica del trabajo a un cliente, sin adornos publicitarios.
-4. **LOCALIDAD NATURAL**: Menciona barrios o zonas de ${city} (ej: ${areas}) integrándolos en logística real de visita, medición, desplazamiento y montaje; evita ejemplos fijos de otros oficios.
-5. **SIN PLACEHOLDERS**: No escribas "Factor 1", "Criterio 1", "Placeholder". Genera contenido real y completo.
-6. **PREGUNTAS USUARIO**: ${input.sectionBrief?.userQuestion || '¿Cómo se resuelve mi problema de forma fiable?'}
-7. **REGLA DE PROHIBICIÓN**: ${input.sectionBrief?.prohibitedClaims?.join(', ') || 'Sin tiempos record ni precios cerrados por teléfono.'}
+ESTRATEGIA DE REDACCIÓN (HÍBRIDA):
+1. **DENSIDAD TÉCNICA OBLIGATORIA**: No te limites a la información de la SERP. Debes integrar los siguientes conceptos expertos del nicho para demostrar autoridad real:
+${technicalExpertisePills}
+
+2. **FORMATO JSON ESTRICTO**: No escribas nada fuera del JSON.
+3. **ESPECIFICIDAD TÉCNICA REAL**: Habla del oficio con precisión quirúrgica. Usa materiales, procesos, piezas y criterios específicos de ${niche}.
+4. **TONO DE AUTORIDAD**: Escribe como un profesional veterano (Senior Artisan) que explica la realidad técnica del trabajo, no como un comercial.
+5. **LOCALIDAD NATURAL**: Integra las zonas de ${city} (ej: ${areas}) en la logística del servicio (ej: "nos desplazamos a ${areas[0] || 'la zona'} para mediciones previas").
+6. **SIN PLACEHOLDERS**: No escribas "Factor 1", "Criterio 1". Genera contenido real y completo.
+7. **REGLA DE PROHIBICIÓN (CRÍTICA)**: No uses claims de "tiempo récord", "precios baratos" ni "presupuestos cerrados por teléfono". Sé honesto y técnico.
+
+DATOS TÉCNICOS DE AUTORIDAD (USA ESTA TERMINOLOGÍA):
+${this.nicheProfile?.verticalEnrichment ? JSON.stringify(this.nicheProfile.verticalEnrichment) : 'Usa terminología técnica estándar del sector.'}
 
 PLAYBOOK TÉCNICO:
 ${techBrief}
 
-CONOCIMIENTO NICHO:
-${nicheBrief}
+CONOCIMIENTO NICHO / ESTRATEGIA:
+${this.nicheProfile?.copyBrief || this.truncate(this.nicheBrief, 800) || 'Escribe con autoridad técnica y enfoque local.'}
 
-KNOWLEDGE PACK:
+KNOWLEDGE PACK (EVIDENCIA DE MERCADO):
 ${knowledge}
-
-PACK CERRADO DE NICHO (OBLIGATORIO):
-- Usa solo terminología, piezas, procesos y ejemplos compatibles con ${niche}.
-- Prohibido mezclar oficios, materiales o averías de otros nichos.
-- Si una frase no encaja claramente en el playbook del nicho, no la uses.
-- Ante duda, vuelve a servicios, FAQs, trust signals y criterios de decisión del playbook.
 
 INSTRUCCIONES JSON:
 Devuelve un objeto JSON con esta estructura:
 {
   "intro": ["Párrafo 1 profundo", "Párrafo 2 de contexto"],
-  "items": [{"title": "Subtítulo H3", "body": "Texto detallado (80-120 palabras)", "meta": ["Dato técnico 1", "Dato 2"]}],
-  "bullets": ["Ventaja técnica 1", "Diferenciador 2"],
+  "items": [{"title": "Subtítulo H3", "body": "Texto detallado (80-120 palabras) integrando conceptos técnicos y locales.", "meta": ["Dato técnico 1", "Dato 2"]}],
+  "bullets": ["Ventaja técnica específica", "Diferenciador de autoridad"],
+  "faqItems": [{"question": "¿...?", "answer": "Explicación clara y útil que resuelva la duda con criterio técnico."}],
+  "commonMistakes": ["Error técnico común del cliente", "Mito del sector desmentido"],
+  "decisionFactors": [{"title": "Factor técnico X", "body": "Por qué es crítico para la durabilidad/seguridad"}],
+  "cta": {"text": "Llamativa y natural", "note": "Garantía de profesionalidad"}
+}
+`;
+    }aja técnica 1", "Diferenciador 2"],
   "faqItems": [{"question": "¿...?", "answer": "Explicación clara y útil"}],
   "commonMistakes": ["Error 1", "Error 2"],
   "decisionFactors": [{"title": "Factor 1", "body": "Por qué es importante"}],
@@ -1099,14 +1119,14 @@ Devuelve un objeto JSON con esta estructura:
             this.log(`Warning en pre-hidratación: ${(e as Error).message}`);
         }
 
-        const writerBrief = String(this.nicheBrief || '');
+        const writerBrief = this.nicheProfile?.copyBrief || String(this.nicheBrief || '');
         if (this.shouldBypassLlmForSection(input, writerBrief, semanticSeed)) {
             return this.buildDeterministicSectionResult(input, semanticSeed, 'bypass_llm');
         }
 
         try {
             const { primary: timeoutMs } = this.getWriterTimeouts();
-            const knowledge = await this.getRelevantKnowledge(input.niche, input.city, [input.section_h2, ...input.subsections_h3]);
+            const knowledge = await this.getRelevantKnowledge({ niche: input.niche, city: input.city });
             const systemPrompt = this.buildSystemPrompt(input, knowledge);
 
             const startTime = Date.now();
@@ -1118,7 +1138,7 @@ Devuelve un objeto JSON con esta estructura:
             });
 
             const duration = Date.now() - startTime;
-            let semantic = safeJsonParse(response) as SectionSemanticData;
+            let semantic = safeJsonParse<SectionSemanticData | null>(response, null) as SectionSemanticData;
 
             if (!semantic || (!semantic.intro?.length && !semantic.items?.length)) {
                 throw new Error('Invalid semantic response from LLM');

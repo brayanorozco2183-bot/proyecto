@@ -66,7 +66,7 @@ export type ComparisonTableVariant = typeof COMPARISONTABLEVARIANTS[number];
 export const ComparisonTablePayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], items: [], bullets: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

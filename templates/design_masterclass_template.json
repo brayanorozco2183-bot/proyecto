@@ -1,0 +1,38 @@
+{
+  "comment": "Gravity V7.1 - Plantilla para Design Masterclasses (100/100). Define aquí el ADN visual perfecto.",
+  "masterclass_id": "nombre-unico-estilo (ej: modern-industrial-gold)",
+  "title": "Título descriptivo del estilo",
+  "niche_patterns": ["cerraj", "fontan", "electric"],
+  "dna": {
+    "personality": "luxury | modern_tech | organic | editorial",
+    "family": "editorial | conversion_heavy | local_trust | technical_grid | asymmetric_premium | minimal_authority",
+    "contrastModel": "soft | balanced | dramatic",
+    "surfaceStyle": "flat | tinted | glass | paper",
+    "cardTreatment": "elevated | outlined | flat | editorial",
+    "navbarTreatment": "solid | glass | minimal",
+    "footerTreatment": "directory | minimal | editorial",
+    "ornamentPolicy": "none | subtle | hero_only | hero_and_cta",
+    "spacingScale": "compact | balanced | luxury",
+    "heroTreatment": "split | centered | stacked | proof_first | cta_heavy",
+    "pageSkeleton": "editorial-longform | conversion-funnel | local-directory | premium-showcase | technical-comparison",
+    "cadencePattern": "alternating | stacked | contrast-bursts | cinematic | calm",
+    "pageComposition": "editorial | conversion | local_dense | trust_first",
+    "visualSystem": "grid | editorial | panelled | minimal | mixed",
+    "sectionCadence": "calm | alternating | contrast | cinematic"
+  },
+  "block_variants": {
+    "comment": "Define qué variante visual debe usar cada bloque para este estilo maestro.",
+    "services_grid": "magazine_panels | icon_grid | simple_list",
+    "local_proof": "evidence_cards | story_timeline | map_focused",
+    "trust_band": "minimal_icons | floating_pills | badge_strip",
+    "faq": "accordion_clean | side_by_side | minimal_list",
+    "process_steps": "stepped_rail | numbered_grid | cards_flow",
+    "cta_panel": "consultation_split | minimal_centered | background_glow"
+  },
+  "art_direction_notes": "Instrucciones específicas para el IA: ej. 'Usa mucho aire entre bloques, tipografía display muy grande en los títulos y sombras muy suaves (soft-shadows).'",
+  "tension_curve": ["low", "medium", "high", "medium", "low"],
+  "seed": {
+    "asymmetryLevel": 8,
+    "densityProfile": "rich | standard | compact"
+  }
+}

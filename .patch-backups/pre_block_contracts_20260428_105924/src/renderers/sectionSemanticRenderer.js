@@ -1,0 +1,682 @@
+function escapeHtml(value = '') {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+function stripHtml(value = '') {
+    return value.replace(/<[^>]*>?/gm, '').trim();
+}
+function safeArray(value) {
+    return Array.isArray(value) ? value : [];
+}
+function toTelHref(phone) {
+    if (!phone)
+        return '#contacto';
+    return `tel:${phone.replace(/\s+/g, '')}`;
+}
+function resolveFlow(opts) {
+    return (opts.sectionContract?.flow ||
+        opts.layoutContract?.flow ||
+        opts.flow ||
+        inferFlowFromContext(opts.blockType, opts.pageSkeleton, opts.pageComposition));
+}
+function resolveShell(opts) {
+    return (opts.sectionContract?.shell ||
+        opts.layoutContract?.shell ||
+        opts.sectionShell ||
+        inferShellFromContext(opts.blockType, opts.pageSkeleton, opts.pageComposition));
+}
+function resolveMedia(opts) {
+    return (opts.layoutContract?.media ||
+        opts.mediaPolicy ||
+        inferMediaFromBlockType(opts.blockType));
+}
+function resolveCtaWeight(opts) {
+    return opts.sectionContract?.emphasis === 'cta' ? 'high' : (opts.layoutContract?.cta || opts.ctaWeight || 'medium');
+}
+function resolveTrustDistribution(opts) {
+    return opts.sectionContract?.emphasis === 'trust' ? 'separate' : (opts.layoutContract?.trust || opts.trustDistribution || 'embedded');
+}
+function resolveDensity(opts) {
+    return opts.sectionContract?.density || opts.layoutContract?.density || opts.density || 'standard';
+}
+function inferFlowFromContext(blockType, pageSkeleton, pageComposition) {
+    const bt = (blockType || '').toLowerCase();
+    if (bt === 'map')
+        return pageSkeleton === 'local-directory' ? 'asymmetric' : 'centered';
+    if (bt === 'faq')
+        return pageSkeleton === 'technical-comparison' ? 'centered' : 'stack';
+    if (bt === 'process_steps')
+        return pageSkeleton === 'editorial-longform' ? 'zigzag' : 'stack';
+    if (bt === 'urgency_panel')
+        return pageSkeleton === 'conversion-funnel' ? 'split' : 'centered';
+    if (bt === 'comparison_table')
+        return 'centered';
+    if (bt === 'case_story')
+        return 'split';
+    if (bt === 'before_after')
+        return 'asymmetric';
+    if (bt === 'objections')
+        return 'stack';
+    if (bt === 'micro_cta')
+        return 'centered';
+    if (pageSkeleton === 'local-directory')
+        return bt === 'local_proof' ? 'centered' : 'asymmetric';
+    if (pageSkeleton === 'premium-showcase')
+        return 'zigzag';
+    if (pageSkeleton === 'technical-comparison')
+        return 'centered';
+    if (pageSkeleton === 'conversion-funnel')
+        return bt === 'cta_panel' ? 'centered' : 'stack';
+    if (pageComposition === 'editorial')
+        return 'split';
+    if (pageComposition === 'trust_first')
+        return 'centered';
+    return 'stack';
+}
+function inferShellFromContext(blockType, pageSkeleton, pageComposition) {
+    const bt = (blockType || '').toLowerCase();
+    if (bt === 'cta_panel')
+        return pageSkeleton === 'conversion-funnel' ? 'band' : 'plain';
+    if (bt === 'urgency_panel')
+        return pageSkeleton === 'conversion-funnel' ? 'band' : 'panel';
+    if (bt === 'local_proof')
+        return pageSkeleton === 'local-directory' ? 'panel' : 'plain';
+    if (bt === 'trust_band')
+        return 'band';
+    if (bt === 'comparison_table')
+        return 'panel';
+    if (bt === 'case_story')
+        return 'editorial';
+    if (bt === 'before_after')
+        return 'panel';
+    if (bt === 'objections')
+        return 'plain';
+    if (bt === 'micro_cta')
+        return 'plain';
+    if (pageSkeleton === 'premium-showcase')
+        return bt === 'faq' ? 'plain' : 'editorial';
+    if (pageSkeleton === 'conversion-funnel')
+        return bt === 'services_grid' ? 'panel' : 'plain';
+    if (pageSkeleton === 'technical-comparison')
+        return 'panel';
+    if (pageComposition === 'editorial')
+        return 'editorial';
+    if (pageComposition === 'trust_first')
+        return 'panel';
+    return 'plain';
+}
+function inferMediaFromBlockType(blockType) {
+    const bt = (blockType || '').toLowerCase();
+    if (bt.includes('map'))
+        return 'map';
+    if (bt.includes('trust') || bt.includes('proof') || bt.includes('testimonial'))
+        return 'proof';
+    if (bt.includes('service') || bt.includes('process'))
+        return 'iconic';
+    return 'none';
+}
+function inferSectionPattern(blockType, opts, flow) {
+    if (opts.sectionContract?.sectionPattern && opts.sectionContract.sectionPattern !== 'auto') {
+        return opts.sectionContract.sectionPattern;
+    }
+    if (opts.sectionPattern && opts.sectionPattern !== 'auto')
+        return opts.sectionPattern;
+    const bt = (blockType || '').toLowerCase();
+    const skeleton = opts.pageSkeleton;
+    if (bt === 'faq')
+        return skeleton === 'conversion-funnel' ? 'stacked_cards' : 'minimal';
+    if (bt === 'cta_panel')
+        return opts.ctaStrategy === 'distributed' ? 'cta_inline' : 'editorial';
+    if (bt === 'price_guidance')
+        return 'comparison_table';
+    if (bt === 'local_proof' || bt === 'trust_band') {
+        if (skeleton === 'local-directory')
+            return 'directory';
+        return 'panelled';
+    }
+    if (bt === 'services_grid') {
+        if (skeleton === 'premium-showcase')
+            return 'mosaic';
+        if (skeleton === 'technical-comparison')
+            return 'comparison_table';
+        if (flow === 'stack')
+            return 'stacked_cards';
+        if (flow === 'zigzag')
+            return 'two_column_story';
+        return 'panelled';
+    }
+    if (bt === 'process_steps')
+        return skeleton === 'editorial-longform' ? 'timeline' : 'stacked_cards';
+    if (bt === 'map')
+        return skeleton === 'local-directory' ? 'directory' : 'minimal';
+    if (flow === 'zigzag')
+        return 'two_column_story';
+    if (flow === 'asymmetric')
+        return 'mosaic';
+    return 'minimal';
+}
+function buildSectionClasses(opts, resolved) {
+    const sectionClasses = [
+        'semantic-section',
+        `shell-${resolved.shell}`,
+        `system-${resolved.system}`,
+        `flow-${resolved.flow}`,
+        `media-${resolved.media}`,
+        `density-${resolved.density}`,
+        `cta-weight-${resolved.ctaWeight}`,
+        `trust-${resolved.trustDistribution}`,
+        `pattern-${resolved.pattern}`,
+        `variant-${resolved.variant}`,
+        `weight-${opts.visualWeight || 'medium'}`,
+        `emphasis-${opts.emphasis || 'content'}`,
+        `composition-${opts.pageComposition || 'editorial'}`,
+        `skeleton-${opts.pageSkeleton || 'editorial-longform'}`,
+        `cadence-${opts.cadencePattern || 'alternating'}`
+    ];
+    if (opts.sectionContract) {
+        sectionClasses.push('has-contract');
+        sectionClasses.push(`contract-shell-${opts.sectionContract.shell}`);
+        sectionClasses.push(`contract-flow-${opts.sectionContract.flow}`);
+        sectionClasses.push(`contract-density-${opts.sectionContract.density}`);
+        sectionClasses.push(`contract-emphasis-${opts.sectionContract.emphasis}`);
+        sectionClasses.push(`contract-card-${opts.sectionContract.cardStyle}`);
+        sectionClasses.push(`contract-ornament-${opts.sectionContract.ornamentLevel}`);
+        sectionClasses.push(`mobile-pattern-${opts.sectionContract.mobilePattern}`);
+    }
+    return sectionClasses
+        .filter(Boolean)
+        .join(' ');
+}
+function renderParagraphs(paragraphs) {
+    return paragraphs.map(p => `<p>${p}</p>`).join('\n');
+}
+function renderBullets(bullets, className = '') {
+    if (!bullets.length)
+        return '';
+    return `<ul class="${className || 'semantic-bullets'}">${bullets.map(b => `<li>${b}</li>`).join('')}</ul>`;
+}
+function renderDecisionFactors(decisionFactors) {
+    if (!decisionFactors.length)
+        return '';
+    return `
+    <section class="decision-factors">
+        <h3>Criterios de elección</h3>
+        <dl class="decision-factors__list">
+            ${decisionFactors.map(f => `
+                <div class="decision-factor">
+                    <dt>${escapeHtml(f.title)}</dt>
+                    <dd>${f.body}</dd>
+                </div>
+            `).join('')}
+        </dl>
+    </section>`;
+}
+function renderCommonMistakes(commonMistakes) {
+    if (!commonMistakes.length)
+        return '';
+    return `
+    <section class="common-mistakes">
+        <h3>Errores comunes a evitar</h3>
+        <ul class="common-mistakes__list">
+            ${commonMistakes.map(m => `<li>${m}</li>`).join('')}
+        </ul>
+    </section>`;
+}
+function renderTable(semantic) {
+    const hasColumns = safeArray(semantic.table?.columns).length > 0;
+    const hasRows = safeArray(semantic.table?.rows).length > 0;
+    if (!hasColumns || !hasRows)
+        return '';
+    return `
+    <div class="table-wrap" style="max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+        <table class="semantic-table" style="min-width:640px;width:100%;table-layout:fixed;">
+            <thead>
+                <tr>${semantic.table.columns.map(c => `<th>${c}</th>`).join('')}</tr>
+            </thead>
+            <tbody>
+                ${semantic.table.rows.map(row => `
+                    <tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>
+                `).join('')}
+            </tbody>
+        </table>
+    </div>`;
+}
+function renderCta(semantic, weight, strategy = 'terminal', label) {
+    if (!semantic.cta?.phone && !semantic.cta?.text)
+        return '';
+    const phone = semantic.cta?.phone || '';
+    const href = toTelHref(phone);
+    const text = semantic.cta?.text || label || 'Llamar ahora';
+    return `
+    <div class="section-cta section-cta--${weight} section-cta--${strategy}">
+        <a class="cta-link cta-link--${weight}" href="${href}">
+            ${escapeHtml(text)}
+        </a>
+    </div>`;
+}
+function renderSemanticCards(semantic, variant) {
+    const items = safeArray(semantic.items);
+    if (!items.length)
+        return '';
+    if (variant === 'directory') {
+        return `
+        <div class="semantic-directory">
+            ${items.map((item, index) => `
+                <article class="semantic-directory__item">
+                    <div class="semantic-directory__index">${index + 1}</div>
+                    <div class="semantic-directory__body">
+                        <h3>${escapeHtml(stripHtml(item.title || ''))}</h3>
+                        <p>${item.body}</p>
+                    </div>
+                </article>
+            `).join('')}
+        </div>`;
+    }
+    if (variant === 'mosaic') {
+        return `
+        <div class="semantic-mosaic">
+            ${items.map((item, index) => `
+                <article class="semantic-card semantic-card--mosaic semantic-card--${index % 3 === 0 ? 'large' : 'standard'}">
+                    <h3>${escapeHtml(stripHtml(item.title || ''))}</h3>
+                    <p>${item.body}</p>
+                </article>
+            `).join('')}
+        </div>`;
+    }
+    return `
+    <div class="semantic-items">
+        ${items.map(item => `
+            <article class="semantic-card service-card">
+                <h3>${escapeHtml(stripHtml(item.title || ''))}</h3>
+                <p>${item.body}</p>
+            </article>
+        `).join('')}
+    </div>`;
+}
+function renderProcessTimeline(semantic) {
+    const items = safeArray(semantic.items);
+    if (!items.length)
+        return '';
+    return `
+    <ol class="process-timeline process-steps">
+        ${items.map((item, index) => `
+            <li class="process-timeline__step step-card">
+                <span class="step-card__index">${index + 1}</span>
+                <div class="process-timeline__content">
+                    <h3>${escapeHtml(stripHtml(item.title || ''))}</h3>
+                    <p>${item.body}</p>
+                </div>
+            </li>
+        `).join('')}
+    </ol>`;
+}
+function renderFaqClassic(semantic) {
+    const faqs = safeArray(semantic.faqItems);
+    if (!faqs.length)
+        return '';
+    return `
+    <div class="faq-list">
+        ${faqs.map(f => `
+            <details class="faq-item">
+                <summary>${escapeHtml(f.question)}</summary>
+                <div><p>${f.answer}</p></div>
+            </details>
+        `).join('')}
+    </div>`;
+}
+function renderFaqColumns(semantic) {
+    const faqs = safeArray(semantic.faqItems);
+    if (!faqs.length)
+        return '';
+    return `
+    <div class="faq-columns">
+        ${faqs.map(f => `
+            <article class="faq-card faq-item" data-faq-item>
+                <h3>${escapeHtml(f.question)}</h3>
+                <p>${f.answer}</p>
+            </article>
+        `).join('')}
+    </div>`;
+}
+function renderMapSection(semantic, opts) {
+    const note = semantic.mapNote ? `<p class="map-note">${semantic.mapNote}</p>` : '';
+    const intro = renderParagraphs(safeArray(semantic.intro));
+    if (opts.pageSkeleton === 'local-directory') {
+        return `
+        <div class="map-directory">
+            <div class="map-directory__content">
+                ${intro}
+                ${note}
+            </div>
+            <div class="map-directory__visual">
+                <div class="map-placeholder">
+                    <div class="map-placeholder__inner">Mapa / cobertura local</div>
+                </div>
+            </div>
+        </div>`;
+    }
+    return `
+    <div class="map-block">
+        ${intro}
+        ${note}
+        <div class="map-placeholder">
+            <div class="map-placeholder__inner">Mapa / ubicación</div>
+        </div>
+    </div>`;
+}
+function renderProofAside(semantic, opts) {
+    if (opts.proofStrategy === 'distributed' || opts.trustDistribution === 'separate') {
+        const proofBullets = safeArray(semantic.bullets).slice(0, 3);
+        if (!proofBullets.length)
+            return '';
+        return `
+        <aside class="proof-aside">
+            <span class="proof-aside__eyebrow">Confianza</span>
+            ${renderBullets(proofBullets, 'proof-aside__list')}
+        </aside>`;
+    }
+    return '';
+}
+function wrapSection(inner, sectionId, h2, classes, opts) {
+    const eyebrow = opts.sectionContract?.eyebrow || opts.blockType || '';
+    const eyebrowValue = String(eyebrow || '').trim().toLowerCase();
+    const safeEyebrow = eyebrowValue && !['generic', 'hero', 'undefined', 'null'].includes(eyebrowValue) ? `<span class="block__eyebrow">${escapeHtml(String(eyebrow))}</span>` : '';
+    const shellClass = opts.sectionContract?.shell ? `shell-${opts.sectionContract.shell}` : '';
+    const densityClass = opts.sectionContract?.density ? `density-${opts.sectionContract.density}` : '';
+    return `
+    <section class="${classes}" id="${sectionId}">
+        <div class="el-container">
+            <div class="semantic-section__container section-shell ${shellClass} ${densityClass}">
+                ${h2 || safeEyebrow ? `<header class="block__header">${safeEyebrow}${h2 ? `<h2 class="block__title">${h2}</h2>` : ''}</header>` : ''}
+                <div class="generic-layout generic-layout--${opts.sectionContract?.density || 'standard'}">
+                    ${inner}
+                </div>
+            </div>
+        </div>
+    </section>`;
+}
+function renderGenericByFlow(semantic, opts, pattern, flow) {
+    const intro = renderParagraphs(safeArray(semantic.intro));
+    const bullets = renderBullets(safeArray(semantic.bullets));
+    const table = renderTable(semantic);
+    const cards = renderSemanticCards(semantic, pattern);
+    const decisionFactors = renderDecisionFactors(safeArray(opts.decisionFactors));
+    const commonMistakes = renderCommonMistakes(safeArray(opts.commonMistakes));
+    const proofAside = renderProofAside(semantic, opts);
+    if (pattern === 'comparison_table' && table) {
+        return `
+        <div class="layout-block layout-block--comparison">
+            <div class="layout-main">
+                ${intro}
+                ${table}
+            </div>
+            ${proofAside}
+        </div>
+        ${decisionFactors}
+        ${commonMistakes}`;
+    }
+    if (pattern === 'two_column_story' || flow === 'split' || flow === 'zigzag' || flow === 'asymmetric') {
+        const auxiliary = `${decisionFactors || ''}${proofAside || ''}${commonMistakes || ''}`.trim();
+        return `
+        <div class="layout-block layout-block--split">
+            <div class="layout-main">
+                ${intro}
+                ${cards}
+                ${bullets}
+            </div>
+            ${auxiliary ? `<div class="layout-side">${auxiliary}</div>` : ''}
+        </div>`;
+    }
+    return `
+    <div class="layout-block layout-block--stack">
+        ${intro}
+        ${cards}
+        ${bullets}
+        ${table}
+        ${decisionFactors}
+        ${commonMistakes}
+    </div>`;
+}
+export function renderSemanticSection(semantic, opts) {
+    const sectionId = opts.sectionId || 'section';
+    const h2 = opts.sectionH2 || '';
+    const blockType = opts.blockType || 'generic';
+    const shell = resolveShell(opts);
+    const system = opts.visualSystem || 'minimal';
+    const flow = resolveFlow(opts);
+    const media = resolveMedia(opts);
+    const density = resolveDensity(opts);
+    const ctaWeight = resolveCtaWeight(opts);
+    const trustDistribution = resolveTrustDistribution(opts);
+    const variant = opts.visualVariant || 'default';
+    const pattern = inferSectionPattern(blockType, opts, flow);
+    const classes = buildSectionClasses(opts, {
+        shell,
+        system,
+        flow,
+        media,
+        density,
+        ctaWeight,
+        trustDistribution,
+        pattern,
+        variant
+    });
+    const introHtml = renderParagraphs(safeArray(semantic.intro));
+    const bulletsHtml = renderBullets(safeArray(semantic.bullets));
+    const ctaHtml = renderCta(semantic, ctaWeight, opts.ctaStrategy);
+    const decisionFactorsHtml = renderDecisionFactors(safeArray(opts.decisionFactors));
+    const commonMistakesHtml = renderCommonMistakes(safeArray(opts.commonMistakes));
+    const proofAside = renderProofAside(semantic, opts);
+    switch (blockType) {
+        case 'services_grid': {
+            const cards = renderSemanticCards(semantic, pattern);
+            if (pattern === 'comparison_table' && semantic.table?.columns?.length) {
+                return wrapSection(`
+                    <div class="services-layout services-layout--comparison">
+                        <div class="services-layout__main">
+                            ${introHtml}
+                            ${renderTable(semantic)}
+                        </div>
+                        <div class="services-layout__aside">
+                            ${decisionFactorsHtml}
+                            ${commonMistakesHtml}
+                            ${ctaHtml}
+                        </div>
+                    </div>
+                `, sectionId, h2, classes, opts);
+            }
+            if (pattern === 'mosaic') {
+                return wrapSection(`
+                    <div class="services-layout services-layout--mosaic">
+                        ${introHtml}
+                        ${cards}
+                        ${ctaHtml}
+                    </div>
+                `, sectionId, h2, classes, opts);
+            }
+            if (pattern === 'two_column_story') {
+                return wrapSection(`
+                    <div class="services-layout services-layout--story">
+                        <div class="services-layout__main">
+                            ${introHtml}
+                            ${cards}
+                        </div>
+                        <aside class="services-layout__aside">
+                            ${decisionFactorsHtml}
+                            ${commonMistakesHtml}
+                            ${ctaHtml}
+                        </aside>
+                    </div>
+                `, sectionId, h2, classes, opts);
+            }
+            return wrapSection(`
+                <div class="services-layout services-layout--default">
+                    ${introHtml}
+                    ${cards}
+                    ${decisionFactorsHtml}
+                    ${commonMistakesHtml}
+                    ${ctaHtml}
+                </div>
+            `, sectionId, h2, classes, opts);
+        }
+        case 'urgency_panel': {
+            const splitLayout = flow === 'split' || flow === 'asymmetric';
+            return wrapSection(`
+                <div class="urgency-layout urgency-layout--${splitLayout ? 'split' : 'stack'}">
+                    <div class="urgency-layout__copy">
+                        ${introHtml}
+                        ${bulletsHtml}
+                    </div>
+                    <aside class="urgency-layout__action">
+                        ${proofAside}
+                        ${ctaHtml}
+                    </aside>
+                </div>
+            `, sectionId, h2, classes, opts);
+        }
+        case 'local_proof':
+        case 'trust_band': {
+            const cards = renderSemanticCards(semantic, pattern);
+            if (opts.pageSkeleton === 'local-directory') {
+                return wrapSection(`
+                    <div class="trust-layout trust-layout--directory">
+                        <div class="trust-layout__main">
+                            ${introHtml}
+                            ${cards}
+                        </div>
+                        <aside class="trust-layout__side">
+                            ${bulletsHtml}
+                            ${decisionFactorsHtml}
+                        </aside>
+                    </div>
+                `, sectionId, h2, classes, opts);
+            }
+            if (trustDistribution === 'separate') {
+                return wrapSection(`
+                    <div class="trust-layout trust-layout--separate">
+                        ${introHtml}
+                        <div class="trust-layout__grid">
+                            <div class="trust-layout__cards">${cards}</div>
+                            <aside class="trust-layout__proof">
+                                ${bulletsHtml}
+                                ${decisionFactorsHtml}
+                                ${commonMistakesHtml}
+                            </aside>
+                        </div>
+                    </div>
+                `, sectionId, h2, classes, opts);
+            }
+            return wrapSection(`
+                <div class="trust-layout trust-layout--embedded">
+                    ${introHtml}
+                    ${cards}
+                    ${bulletsHtml}
+                    ${decisionFactorsHtml}
+                    ${commonMistakesHtml}
+                </div>
+            `, sectionId, h2, classes, opts);
+        }
+        case 'process_steps': {
+            const processHtml = pattern === 'timeline'
+                ? renderProcessTimeline(semantic)
+                : `
+                    <ol class="process-steps">
+                        ${safeArray(semantic.items).map((item, index) => `
+                            <li class="process-step">
+                                <div class="process-step__content">
+                                    <div class="process-step__body">
+                                        <h3>${escapeHtml(stripHtml(item.title || ''))}</h3>
+                                        <p>${item.body}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        `).join('')}
+                    </ol>`;
+            return wrapSection(`
+                <div class="process-layout">
+                    ${introHtml}
+                    ${processHtml}
+                    ${decisionFactorsHtml}
+                    ${ctaHtml}
+                </div>
+            `, sectionId, h2, classes, opts);
+        }
+        case 'price_guidance': {
+            const table = renderTable(semantic);
+            if (pattern === 'comparison_table' && table) {
+                return wrapSection(`
+                    <div class="pricing-layout pricing-layout--comparison">
+                        <div class="pricing-layout__main">
+                            ${introHtml}
+                            ${table}
+                        </div>
+                        <aside class="pricing-layout__aside">
+                            ${bulletsHtml}
+                            ${decisionFactorsHtml}
+                            ${ctaHtml}
+                        </aside>
+                    </div>
+                `, sectionId, h2, classes, opts);
+            }
+            return wrapSection(`
+                <div class="pricing-layout pricing-layout--default">
+                    ${introHtml}
+                    ${table || bulletsHtml}
+                    ${ctaHtml}
+                </div>
+            `, sectionId, h2, classes, opts);
+        }
+        case 'faq': {
+            const faqHtml = opts.pageSkeleton === 'conversion-funnel' || pattern === 'stacked_cards'
+                ? renderFaqClassic(semantic)
+                : renderFaqColumns(semantic);
+            return wrapSection(`
+                <div class="faq-layout faq-layout--${opts.pageSkeleton === 'conversion-funnel' ? 'classic' : 'editorial'}">
+                    ${faqHtml}
+                    ${ctaWeight === 'high' ? ctaHtml : ''}
+                </div>
+            `, sectionId, h2, classes, opts);
+        }
+        case 'cta_panel': {
+            if (opts.ctaStrategy === 'distributed' || pattern === 'cta_inline') {
+                return wrapSection(`
+                    <div class="cta-panel cta-panel--inline">
+                        <div class="cta-panel__copy">
+                            ${introHtml}
+                            ${commonMistakesHtml}
+                        </div>
+                        <div class="cta-panel__action">
+                            ${ctaHtml}
+                        </div>
+                    </div>
+                `, sectionId, h2, classes, opts);
+            }
+            return wrapSection(`
+                <div class="cta-panel cta-panel--centered">
+                    ${introHtml}
+                    ${commonMistakesHtml}
+                    ${ctaHtml}
+                </div>
+            `, sectionId, h2, classes, opts);
+        }
+        case 'map': {
+            return wrapSection(renderMapSection(semantic, opts), sectionId, h2, classes, opts);
+        }
+        default: {
+            const generic = renderGenericByFlow(semantic, opts, pattern, flow);
+            const trailingCta = opts.ctaStrategy === 'distributed' || opts.emphasis === 'cta'
+                ? ctaHtml
+                : '';
+            return wrapSection(`
+                <div class="generic-layout">
+                    ${generic}
+                    ${trailingCta}
+                </div>
+            `, sectionId, h2, classes, opts);
+        }
+    }
+}

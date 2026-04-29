@@ -1,0 +1,136 @@
+{
+  "comment": "Reglas estratégicas para Knowledge Hub de Gravity. Enfocadas en generación premium de páginas locales por nicho y ciudad.",
+  "metadata": {
+    "version": "1.1",
+    "target_table": "agent_knowledge",
+    "project": "Gravity - Generador de páginas premium por nicho y ciudad",
+    "quality_target": 100
+  },
+  "rules": [
+    {
+      "agent_id": "global",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "REGLA GLOBAL: Todo contenido debe estar adaptado a un nicho y ciudad concretos. Está prohibido generar textos genéricos que puedan servir igual para cualquier sector o ubicación. Cada bloque debe incluir contexto local, intención SEO clara o una diferenciación técnica real."
+    },
+    {
+      "agent_id": "global",
+      "category": "TERMINOS_PROHIBIDOS",
+      "content": "REGLA GLOBAL: No afirmar certificaciones, homologaciones, premios, años de experiencia, número de clientes, reseñas, garantías legales, disponibilidad 24/7 o tiempos exactos de llegada si esos datos no han sido proporcionados explícitamente por el brief del cliente o la configuración del proyecto."
+    },
+    {
+      "agent_id": "global",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "REGLA GLOBAL: La ciudad debe integrarse de forma natural en títulos, introducciones, zonas de cobertura, CTAs y FAQs. Evitar repetir de forma artificial combinaciones como '[servicio] en [ciudad]'. Usar variaciones semánticas y referencias locales útiles cuando aporten valor."
+    },
+    {
+      "agent_id": "global",
+      "category": "TONO_DE_MARCA",
+      "content": "REGLA GLOBAL: El tono debe ser profesional, claro, técnico y comercial sin exageraciones. Evitar frases vacías como 'somos los mejores', 'máxima calidad', 'empresa líder' o 'servicio inmejorable' salvo que estén respaldadas por una prueba concreta."
+    },
+    {
+      "agent_id": "global",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "REGLA GLOBAL: Cada sección de una página debe responder una intención distinta: servicio principal, urgencia, confianza, proceso, precios, zonas, preguntas frecuentes, garantías, diferenciación o conversión. No repetir la misma idea en varios bloques con palabras diferentes."
+    },
+    {
+      "agent_id": "Estratega de Mercado",
+      "category": "GENERAL",
+      "content": "Antes de generar una página, definir un ángulo comercial dominante según nicho y ciudad: rapidez, diagnóstico técnico, precio claro, cobertura local, urgencias, mantenimiento, materiales premium, confianza documental o especialización. El resto de agentes deben mantener ese enfoque."
+    },
+    {
+      "agent_id": "Estratega de Mercado",
+      "category": "GENERAL",
+      "content": "Cada página debe resolver al menos tres objeciones reales del cliente local: precio, tiempo de respuesta, confianza, limpieza, molestias, desplazamiento, garantía, experiencia, materiales, urgencia o claridad del presupuesto."
+    },
+    {
+      "agent_id": "Arquitecto de Contenidos",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "Toda página premium debe incluir como mínimo: hero local, servicios principales, diferenciadores técnicos, proceso de trabajo, zonas de cobertura, bloque de confianza, preguntas frecuentes, CTA final y un bloque específico del nicho."
+    },
+    {
+      "agent_id": "Arquitecto de Contenidos",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "Cada nicho debe tener al menos un bloque propio que no tendría sentido en otro sector. Ejemplos: averías frecuentes para fontaneros, boletines para electricistas, materiales para reformas, humedad para pintores, carga y embalaje para mudanzas."
+    },
+    {
+      "agent_id": "Arquitecto de Contenidos",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "Mantener una jerarquía SEO limpia: un único H1 por página, H2 para secciones principales y H3 para elementos internos. No usar encabezados decorativos que no aporten significado semántico."
+    },
+    {
+      "agent_id": "Redactor de Sección",
+      "category": "TONO_DE_MARCA",
+      "content": "Cada párrafo debe cumplir una función concreta: explicar, diferenciar, resolver una objeción, aportar contexto local, mostrar proceso o empujar a conversión. Si un párrafo no aporta nada nuevo, debe eliminarse."
+    },
+    {
+      "agent_id": "Redactor de Sección",
+      "category": "TONO_DE_MARCA",
+      "content": "El contenido debe sonar experto pero comprensible para un cliente local. Se pueden usar términos técnicos, pero siempre conectados con el beneficio práctico para el usuario."
+    },
+    {
+      "agent_id": "Redactor de Sección",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "No sobreoptimizar keywords. Evitar repeticiones forzadas como '[nicho] en [ciudad]' en exceso. Usar sinónimos, variaciones naturales, contexto de barrio, intención del servicio y lenguaje comercial fluido."
+    },
+    {
+      "agent_id": "Motor de Variedad",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "Dos páginas del mismo nicho en ciudades distintas no pueden compartir la misma estructura textual exacta. Deben variar ejemplos, orden de argumentos, referencias locales, CTAs, FAQs y enfoque comercial principal."
+    },
+    {
+      "agent_id": "Motor de Variedad",
+      "category": "TONO_DE_MARCA",
+      "content": "Cada página debe tener un ángulo dominante distinto cuando sea posible: rapidez, confianza, diagnóstico técnico, precio transparente, especialización, cobertura local, urgencias, mantenimiento, eficiencia o diseño."
+    },
+    {
+      "agent_id": "Auditor de Calidad",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "Una página solo puede aprobarse si cumple estos criterios: localización natural, diferenciación técnica, ausencia de frases genéricas, CTA coherente, estructura SEO correcta, FAQs útiles, confianza sin claims falsos, variedad respecto a otras páginas y tono profesional."
+    },
+    {
+      "agent_id": "Auditor de Calidad",
+      "category": "TERMINOS_PROHIBIDOS",
+      "content": "Rechazar cualquier bloque que pueda copiarse en otro nicho o ciudad sin apenas cambios. Si un texto sirve igual para cerrajeros en Valencia que para jardineros en Sevilla, no es válido."
+    },
+    {
+      "agent_id": "Auditor de Coherencia",
+      "category": "REGLAS_TECNICAS_SEO",
+      "content": "Comprobar que servicios, ciudad, barrios, teléfono, disponibilidad, garantías, tono, tipo de cliente y promesas comerciales son coherentes en toda la página. No puede haber contradicciones entre bloques."
+    },
+    {
+      "agent_id": "Auditor de Coherencia",
+      "category": "TERMINOS_PROHIBIDOS",
+      "content": "Rechazar cualquier bloque que mezcle términos de otro nicho sin justificación. Ejemplo: hablar de cuadros eléctricos en pintores, poda en reformas, humedad en cerrajeros o embalaje en electricistas salvo que el contexto lo requiera."
+    },
+    {
+      "agent_id": "Corrector de Castellano",
+      "category": "TONO_DE_MARCA",
+      "content": "Corregir ortografía, concordancias y puntuación sin convertir el texto en académico o frío. El resultado debe sonar comercial, claro, natural y profesional en español de España."
+    },
+    {
+      "agent_id": "Corrector de Castellano",
+      "category": "TONO_DE_MARCA",
+      "content": "Sustituir exageraciones como 'los mejores', 'calidad insuperable', 'líderes absolutos' o 'servicio perfecto' por expresiones más creíbles: 'equipo especializado', 'trabajo documentado', 'intervención técnica', 'presupuesto claro' o 'proceso revisado'."
+    },
+    {
+      "agent_id": "Visual Designer",
+      "category": "GENERAL",
+      "content": "El diseño debe responder a la intención del bloque: confianza sobria, urgencia visible, servicios escaneables, FAQs claras y CTAs destacados sin agresividad visual. Evitar que la página parezca una plantilla genérica."
+    },
+    {
+      "agent_id": "Visual Designer",
+      "category": "TONO_DE_MARCA",
+      "content": "Usar iconos solo cuando ayuden a identificar servicios, beneficios, estados o acciones. Evitar iconografía decorativa excesiva que reduzca la percepción premium."
+    },
+    {
+      "agent_id": "Protector de Datos",
+      "category": "GENERAL",
+      "content": "Los formularios deben pedir únicamente los datos necesarios para responder al usuario: nombre, teléfono o email, ciudad o zona y descripción breve del servicio. No solicitar datos sensibles ni información innecesaria."
+    },
+    {
+      "agent_id": "Protector de Datos",
+      "category": "GENERAL",
+      "content": "Toda captación de contacto debe incluir una nota clara indicando que los datos se usarán únicamente para responder a la solicitud, preparar el presupuesto o gestionar la consulta comercial."
+    }
+  ]
+}

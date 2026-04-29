@@ -31,6 +31,12 @@ export class NicheCoherenceAgent extends BaseAgent {
         );
     }
 
+    private nicheProfile?: any;
+
+    public setNicheProfile(profile: any) {
+        this.nicheProfile = profile;
+    }
+
     private normalizeNicheName(niche: string): string {
         return String(niche || '')
             .toLowerCase()
@@ -69,6 +75,8 @@ Tu misión es realizar una "cirugía semántica" sobre el código HTML que recib
 
 [REGLAS TÉCNICAS Y NORMAS DE MARCA (OBLIGATORIO)]:
 ${this.technicalBrief || 'Sin normas técnicas adicionales.'}
+
+${this.nicheProfile?.verticalEnrichment ? `DATOS TÉCNICOS DE AUTORIDAD (USA ESTA TERMINOLOGÍA):\n${JSON.stringify(this.nicheProfile.verticalEnrichment)}` : ''}
 
 [CRÍTICO] PROHIBICIÓN DE ENCABEZADOS:
 - NO agregues ningún tag <h1> ni <h2> al inicio.

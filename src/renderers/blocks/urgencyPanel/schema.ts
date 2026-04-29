@@ -41,7 +41,7 @@ export type UrgencyPanelVariant = typeof URGENCYPANELVARIANTS[number];
 export const UrgencyPanelPayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], bullets: [], trustBullets: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

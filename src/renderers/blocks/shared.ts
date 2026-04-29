@@ -1,6 +1,56 @@
-import type { BlockContext, BlockRendererInput, BlockSectionBase, HeroBlockPayload, SectionBlockPayload } from './types.js';
+import type { BlockContext, BlockRendererInput } from './types.js';
+import { technicalClean } from '../../design-system/themes/technicalClean.js';
+import type { DesignSystemTheme, OfficialShell } from '../../design-system/types.js';
 
-export function escapeHtml(value = ''): string {
+
+function resolveBlockTheme(input?: BlockRendererInput): DesignSystemTheme {
+  return input?.design || technicalClean;
+}
+
+function resolveShellForBlock(theme: DesignSystemTheme, blockType: string): OfficialShell {
+  const normalized = sanitizeToken(blockType);
+  if (normalized === 'hero_trust') return theme.rules.shellUsage.hero;
+  if (normalized === 'trust_band' || normalized === 'local_proof') return theme.rules.shellUsage.trust;
+  if (normalized === 'faq') return theme.rules.shellUsage.faq;
+  if (normalized === 'comparison_table' || normalized === 'price_guidance') return theme.rules.shellUsage.comparison;
+  if (normalized === 'cta_panel' || normalized === 'urgency_panel') {
+    return theme.rules.allowedShells.includes('band') ? 'band' : theme.rules.shellUsage.default;
+  }
+  return theme.rules.shellUsage.default;
+}
+
+function normalizeCtaHref(href?: string, phone?: string): string {
+  const value = String(href || '').trim();
+  if (value) {
+    if (/^tel:/i.test(value)) {
+      return toTelHref(value.replace(/^tel:/i, ''), '#contacto');
+    }
+    return value;
+  }
+  return toTelHref(phone);
+}
+
+function normalizeTable(table: unknown): { columns: string[]; rows: string[][] } {
+  if (!table || typeof table !== 'object' || Array.isArray(table)) {
+    return { columns: [], rows: [] };
+  }
+
+  const raw = table as { columns?: unknown; headers?: unknown; rows?: unknown };
+  const columns = safeArray(raw.columns || raw.headers)
+    .map((column) => String(column || '').trim())
+    .filter(Boolean);
+  const rows = safeArray(raw.rows)
+    .map((row) => safeArray(row).map((cell) => String(cell || '').trim()))
+    .filter((row) => row.some(Boolean));
+
+  return { columns, rows };
+}
+
+export function getTableRows(table: unknown): string[][] {
+  return normalizeTable(table).rows;
+}
+
+export function escapeHtml(value: unknown = ''): string {
   return String(value)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -9,12 +59,12 @@ export function escapeHtml(value = ''): string {
     .replace(/'/g, '&#39;');
 }
 
-export function escapeAttribute(value = ''): string {
+export function escapeAttribute(value: unknown = ''): string {
   return escapeHtml(String(value).replace(/\s+/g, ' ').trim());
 }
 
-export function safeArray<T>(value: T[] | undefined | null): T[] {
-  return Array.isArray(value) ? value : [];
+export function safeArray<T = unknown>(value: unknown): T[] {
+  return Array.isArray(value) ? value as T[] : [];
 }
 
 export function sanitizeToken(value: string | undefined | null, fallback = 'default'): string {
@@ -81,11 +131,11 @@ export function renderCta(
   input?: BlockRendererInput
 ): string {
   const phone = cta?.phone || local?.phone;
-  const href = cta?.href || local?.ctaHref || toTelHref(phone);
+  const href = normalizeCtaHref(cta?.href || local?.ctaHref, phone);
   const text = cta?.text || local?.labels?.primaryCta || 'Contactar ahora';
   
-  const theme = input?.design;
-  const buttonStyle = theme?.rules.buttonSystem;
+  const theme = resolveBlockTheme(input);
+  const buttonStyle = theme.rules.buttonSystem;
   
   const ctaClass = [
     'cta-primary',
@@ -103,7 +153,7 @@ export function renderCta(
 
   return `
     <div class="block__cta-group">
-      <a href="${escapeAttribute(href)}" class="${ctaClass}" aria-label="${escapeAttribute(`${text}${phone ? ` ${phone}` : ''}`)}">
+      <a href="${escapeAttribute(href)}" class="${ctaClass}" data-cta="primary" aria-label="${escapeAttribute(`${text}${phone ? ` ${phone}` : ''}`)}">
         ${escapeHtml(text)}
       </a>
       ${phoneHtml}
@@ -117,11 +167,11 @@ export function wrapSectionBlock(
   innerHtml: string,
   extraClass = ''
 ): string {
-  const { sectionId, blockType, variant, design } = input;
-  const theme = design;
+  const { sectionId, blockType, variant } = input;
+  const theme = resolveBlockTheme(input);
   
   // Resolve strategy weights from theme rules
-  const shell = theme.rules.shellUsage[blockType as keyof typeof theme.rules.shellUsage] || theme.rules.shellUsage.default;
+  const shell = resolveShellForBlock(theme, blockType);
   const rhythm = theme.rules.verticalRhythm;
   const cardStyle = theme.rules.cards.variant;
   const density = input.contract?.density || 'standard';
@@ -158,7 +208,7 @@ export function wrapSectionBlock(
 }
 
 export function wrapHeroBlock(input: BlockRendererInput, innerHtml: string, extraClass = ''): string {
-  const theme = input.design;
+  const theme = resolveBlockTheme(input);
   const variant = sanitizeToken(input.variant || 'default');
   const template = theme.rules.hero.template;
   
@@ -186,22 +236,23 @@ export function deriveFallbackItems(
   titles: string[] | undefined | null,
   body = 'Explicamos el criterio de trabajo, el alcance real y qué conviene revisar antes de tomar una decisión.'
 ): Array<{ title: string; body: string; meta?: string[] }> {
-  return safeArray(titles)
+  return safeArray<string>(titles)
     .filter(Boolean)
     .map((title) => ({ title, body }));
 }
 
 export function renderTable(
-  table: { columns: string[]; rows: string[][] } | undefined,
+  table: unknown,
   className = 'block-table'
 ): string {
-  if (!table || !safeArray(table.columns).length || !safeArray(table.rows).length) return '';
+  const normalized = normalizeTable(table);
+  if (!normalized.columns.length || !normalized.rows.length) return '';
 
-  const header = table.columns.map((column) => `<th scope="col">${escapeHtml(column)}</th>`).join('');
-  const rows = table.rows
+  const header = normalized.columns.map((column) => `<th scope="col">${escapeHtml(column)}</th>`).join('');
+  const rows = normalized.rows
     .map(
       (row) =>
-        `<tr>${safeArray(row).map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`
+        `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`
     )
     .join('');
 

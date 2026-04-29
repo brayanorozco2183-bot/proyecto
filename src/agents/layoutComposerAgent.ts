@@ -118,7 +118,7 @@ const ALLOWED_CTA = ['low', 'medium', 'high'] as const;
 const ALLOWED_TRUST = ['embedded', 'separate', 'mixed'] as const;
 const ALLOWED_DENSITY = ['standard', 'compact', 'rich'] as const;
 const ALLOWED_RHYTHMS = ['dynamic', 'calm', 'cinematic'] as const;
-const ALLOWED_HERO_TEMPLATES = ['split', 'centered', 'proof-first', 'form-first', 'conversion', 'local', 'urgency', 'educational', 'binary_cta'] as const;
+const ALLOWED_HERO_TEMPLATES = ['split', 'centered', 'proof-first', 'form-first', 'conversion', 'local', 'urgency', 'educational', 'binary_cta', 'cta-heavy'] as const;
 const ALLOWED_CADENCE_PATTERNS = ['alternating', 'stacked', 'contrast-bursts', 'cinematic', 'calm'] as const;
 const ALLOWED_PROOF_STRATEGIES = ['early', 'mid', 'distributed', 'none'] as const;
 const ALLOWED_CTA_STRATEGIES = ['terminal', 'distributed', 'hero-heavy', 'minimal'] as const;
@@ -179,7 +179,35 @@ function avoidAdjacentRepetition(contract: LayoutContract, orderedSections: { se
     }
 }
 
+function normalizeBlockType(type: string): string {
+    const value = String(type || '').toLowerCase().trim();
+    const aliases: Record<string, string> = {
+        services_grid: 'services',
+        service_matrix: 'services',
+        feature_spotlight: 'services',
+        process_steps: 'process',
+        urgency_panel: 'urgency',
+        local_proof: 'local_proof',
+        trust_band: 'trust',
+        testimonial_quote: 'trust',
+        authority_note: 'trust',
+        faq: 'faq',
+        cta_panel: 'cta',
+        micro_cta: 'cta',
+        price_guidance: 'price',
+        comparison_table: 'comparison',
+        checklist: 'checklist',
+        case_story: 'case_story',
+        map: 'map',
+        objections: 'objections',
+        before_after: 'before_after',
+        internal_linking: 'internal_linking'
+    };
+    return aliases[value] || value;
+}
+
 function defaultSectionContract(type: string, family: string): SectionLayoutContract {
+    const normalizedType = normalizeBlockType(type);
     const fallbacks: SectionLayoutContract = {
         shell: family === 'editorial' ? 'editorial' : 'plain',
         flow: family === 'asymmetric_premium' ? 'asymmetric' : 'stack',
@@ -191,49 +219,101 @@ function defaultSectionContract(type: string, family: string): SectionLayoutCont
         visualVariant: 'default'
     };
 
-    if (type === 'hero') {
+    if (normalizedType === 'hero') {
         fallbacks.shell = 'hero-bridge';
         fallbacks.flow = 'split';
         fallbacks.media = 'illustrated';
         fallbacks.pattern = 'hero_split_left';
     }
-    if (type === 'services') {
+    if (normalizedType === 'services') {
         fallbacks.shell = 'panel';
         fallbacks.flow = 'zigzag';
         fallbacks.pattern = 'section_zigzag';
     }
-    if (type === 'testimonials') {
+    if (normalizedType === 'testimonials' || normalizedType === 'trust') {
         fallbacks.trust = 'separate';
         fallbacks.pattern = 'section_quote_proof';
     }
-    if (type === 'map') {
+    if (normalizedType === 'map') {
         fallbacks.shell = 'band';
         fallbacks.media = 'map';
         fallbacks.pattern = 'section_minimal';
     }
 
-    if (type === 'comparison_table') {
+    if (normalizedType === 'comparison') {
         fallbacks.shell = 'panel';
         fallbacks.flow = 'centered';
         fallbacks.pattern = 'section_comparison_table';
     }
 
-    if (type === 'case_story') {
+    if (normalizedType === 'case_story') {
         fallbacks.shell = 'editorial';
         fallbacks.flow = 'split';
         fallbacks.pattern = 'section_two_column_story';
     }
 
-    if (type === 'micro_cta') {
+    if (normalizedType === 'cta') {
         fallbacks.shell = 'plain';
         fallbacks.flow = 'centered';
         fallbacks.pattern = 'cta_inline';
     }
 
-    if (type === 'objections') {
+    if (normalizedType === 'objections') {
         fallbacks.shell = 'panel';
         fallbacks.flow = 'stack';
         fallbacks.pattern = 'section_stacked_cards';
+    }
+
+    if (normalizedType === 'process') {
+        fallbacks.flow = 'zigzag';
+        fallbacks.pattern = 'timeline';
+    }
+
+    if (normalizedType === 'urgency') {
+        fallbacks.shell = 'band';
+        fallbacks.flow = 'split';
+        fallbacks.cta = 'high';
+        fallbacks.pattern = 'diagnostic_rows';
+    }
+
+    if (normalizedType === 'local_proof') {
+        fallbacks.shell = 'editorial';
+        fallbacks.flow = 'split';
+        fallbacks.media = 'proof';
+        fallbacks.trust = 'mixed';
+        fallbacks.pattern = 'neighborhood_notes';
+    }
+
+    if (normalizedType === 'faq') {
+        fallbacks.shell = 'plain';
+        fallbacks.flow = 'stack';
+        fallbacks.pattern = 'cards_faq';
+    }
+
+    if (normalizedType === 'price') {
+        fallbacks.shell = 'panel';
+        fallbacks.flow = 'centered';
+        fallbacks.pattern = 'estimate_matrix';
+    }
+
+    if (normalizedType === 'checklist') {
+        fallbacks.shell = 'panel';
+        fallbacks.flow = 'stack';
+        fallbacks.pattern = 'compact_decision_tree';
+    }
+
+    if (normalizedType === 'before_after') {
+        fallbacks.shell = 'editorial';
+        fallbacks.flow = 'split';
+        fallbacks.media = 'illustrated';
+        fallbacks.pattern = 'before_after_tiles';
+    }
+
+    if (normalizedType === 'internal_linking') {
+        fallbacks.shell = 'plain';
+        fallbacks.flow = 'stack';
+        fallbacks.cta = 'low';
+        fallbacks.pattern = 'horizontal_rows';
     }
 
     // Family-based overrides
@@ -253,7 +333,7 @@ function normalizeSectionContract(raw: any, fallback: SectionLayoutContract): Se
         cta: pickAllowed(raw.cta, ALLOWED_CTA, fallback.cta),
         trust: pickAllowed(raw.trust, ALLOWED_TRUST, fallback.trust),
         density: pickAllowed(raw.density, ALLOWED_DENSITY, fallback.density),
-        pattern: raw.pattern || fallback.pattern,
+        pattern: patternForDialect(raw.pattern, fallback.pattern || 'section_minimal'),
         visualVariant: raw.visualVariant || fallback.visualVariant,
         mergedWith: raw.mergedWith || undefined
     };

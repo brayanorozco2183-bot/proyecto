@@ -1,0 +1,440 @@
+{
+  "id": "cerrajeros",
+  "displayName": "Cerrajeros",
+  "aliases": [
+    "cerrajero",
+    "cerrajeros",
+    "cerrajeria",
+    "cerrajería",
+    "apertura de puertas",
+    "cambio de cerraduras"
+  ],
+  "schemaTypes": [
+    "LocalBusiness",
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "WebPage"
+  ],
+  "allowedVocabulary": [
+    "apertura de puertas",
+    "cambio de cerraduras",
+    "bombín",
+    "cilindro",
+    "cerradura antibumping",
+    "escudo protector",
+    "copia de llaves",
+    "puerta acorazada",
+    "puerta blindada",
+    "cerradura multipunto",
+    "amaestramiento de llaves",
+    "urgencia 24 horas",
+    "apertura sin daños",
+    "cierre provisional",
+    "cerradero",
+    "resbalón",
+    "sobreponer",
+    "perfil europeo",
+    "sistema de seguridad",
+    "mantenimiento de cerraduras"
+  ],
+  "forbiddenVocabulary": [
+    "endodoncia",
+    "brackets",
+    "cuadro eléctrico",
+    "diferencial",
+    "fuga de agua",
+    "desatasco",
+    "termo eléctrico",
+    "peritaje laboral",
+    "despido improcedente"
+  ],
+  "prohibitedClaims": [
+    "20 minutos garantizados",
+    "apertura siempre sin daños",
+    "garantía de 10 años",
+    "precio exacto por teléfono",
+    "somos los más baratos",
+    "sin romper nunca",
+    "llegamos en 15 minutos"
+  ],
+  "validTrustSignals": [
+    {
+      "id": "written-guarantee",
+      "label": "Garantía por escrito",
+      "description": "Cobertura clara sobre mano de obra y piezas instaladas."
+    },
+    {
+      "id": "transparent-diagnosis",
+      "label": "Diagnóstico antes de intervenir",
+      "description": "Explicación de la causa y de la solución antes de actuar."
+    },
+    {
+      "id": "non-destructive-priority",
+      "label": "Prioridad a apertura no destructiva",
+      "description": "Se intenta la vía menos invasiva cuando el caso lo permite.",
+      "requiresVerification": false
+    },
+    {
+      "id": "invoice",
+      "label": "Factura o justificante del servicio",
+      "description": "Entrega documental del trabajo realizado."
+    },
+    {
+      "id": "local-coverage",
+      "label": "Cobertura real por zonas",
+      "description": "Capacidad operativa en barrios y municipios cercanos."
+    }
+  ],
+  "coreServices": [
+    "Apertura de puertas en viviendas y negocios",
+    "Cambio e instalación de cerraduras y bombines",
+    "Sustitución de cilindros antibumping y escudos",
+    "Reparación de cerraduras bloqueadas o forzadas",
+    "Apertura y mantenimiento de persianas metálicas y cierres comerciales",
+    "Amaestramiento y unificación de llaves"
+  ],
+  "bofuVariants": [
+    {
+      "slug": "apertura-puertas-urgente",
+      "label": "Apertura urgente de puertas",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "resolver una entrada bloqueada sin agravar el daño"
+    },
+    {
+      "slug": "cambio-cerradura-tras-robo",
+      "label": "Cambio de cerradura tras robo o pérdida de llaves",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "recuperar seguridad inmediata y control de accesos"
+    },
+    {
+      "slug": "cambiar-bombin-seguridad",
+      "label": "Cambio de bombín de seguridad",
+      "intent": "commercial",
+      "funnelStage": "BOFU",
+      "angle": "mejorar protección frente a técnicas de intrusión comunes"
+    },
+    {
+      "slug": "cerrajero-comercio-cierre-metalico",
+      "label": "Cerrajero para cierre metálico de comercio",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "restablecer acceso o cierre de persiana comercial"
+    }
+  ],
+  "commonObjections": [
+    "Me preocupa que rompan la puerta o el marco.",
+    "No quiero aceptar un precio sin saber qué van a hacer.",
+    "Necesito saber si realmente compensa cambiar el bombín o la cerradura completa.",
+    "Me urge, pero no quiero un servicio improvisado.",
+    "Quiero una solución segura, no un apaño temporal."
+  ],
+  "faqBank": [
+    {
+      "question": "¿Se puede abrir una puerta cerrada sin romper la cerradura?",
+      "answerGuidance": "Explica que depende del tipo de cierre, del estado del bombín y de si la llave está echada, pero que la prioridad profesional es usar métodos no destructivos cuando el caso lo permite.",
+      "intent": "BOFU",
+      "blockHint": "faq"
+    },
+    {
+      "question": "¿Cuándo conviene cambiar solo el bombín y cuándo toda la cerradura?",
+      "answerGuidance": "Diferencia desgaste del cilindro, nivel de seguridad, compatibilidad del escudo y estado del mecanismo completo.",
+      "intent": "MOFU",
+      "blockHint": "services_grid"
+    },
+    {
+      "question": "¿Qué debo hacer si he perdido las llaves y no sé quién puede tener copia?",
+      "answerGuidance": "Recomienda cambio de cilindro o reconfiguración de accesos según riesgo, sin prometer una medida universal.",
+      "intent": "BOFU",
+      "blockHint": "faq"
+    },
+    {
+      "question": "¿Qué influye en el presupuesto de un cerrajero?",
+      "answerGuidance": "Habla de tipo de cierre, franja horaria, complejidad, piezas necesarias y si hay daño previo.",
+      "intent": "MOFU",
+      "blockHint": "price_guidance"
+    },
+    {
+      "question": "¿Qué es una cerradura antibumping y cuándo tiene sentido instalarla?",
+      "answerGuidance": "Define el sistema con lenguaje claro y orienta a vivienda habitual, alquiler y comunidades según exposición al riesgo.",
+      "intent": "TOFU",
+      "blockHint": "faq"
+    },
+    {
+      "question": "¿Atendéis cierres metálicos y persianas de local comercial?",
+      "answerGuidance": "Aclara los casos frecuentes: atasco, motor, lama dañada, cierre desalineado, y cuándo hace falta visita técnica.",
+      "intent": "BOFU",
+      "blockHint": "services_grid"
+    }
+  ],
+  "commonMistakes": [
+    "Forzar la llave o seguir girando cuando el bombín ya está agarrotado.",
+    "Instalar un cilindro nuevo sin revisar escudo, cerradero y alineación de la puerta.",
+    "Elegir solo por precio y no por compatibilidad o nivel de seguridad.",
+    "Dejar un cierre provisional demasiado tiempo después de un intento de robo.",
+    "Cambiar piezas sin diagnosticar si el problema viene del marco, el picaporte o la puerta."
+  ],
+  "decisionCriteria": [
+    {
+      "id": "damage-risk",
+      "label": "Riesgo de daño en puerta y marco",
+      "whyItMatters": "Una intervención correcta reduce reparaciones añadidas y evita agravar el cierre.",
+      "proofExpected": [
+        "explicación del método",
+        "diagnóstico previo"
+      ]
+    },
+    {
+      "id": "security-level",
+      "label": "Nivel de seguridad del sistema",
+      "whyItMatters": "No todas las viviendas o negocios necesitan la misma solución de acceso y protección.",
+      "proofExpected": [
+        "tipo de bombín",
+        "compatibilidad con escudo"
+      ]
+    },
+    {
+      "id": "parts-compatibility",
+      "label": "Compatibilidad de piezas",
+      "whyItMatters": "Cambiar una sola pieza sin revisar el conjunto puede dejar holguras o un cierre inestable.",
+      "proofExpected": [
+        "medidas",
+        "referencias del perfil",
+        "estado del mecanismo"
+      ]
+    },
+    {
+      "id": "response-readiness",
+      "label": "Capacidad operativa real",
+      "whyItMatters": "En urgencias importa tanto la logística como el criterio técnico, no solo la rapidez prometida.",
+      "proofExpected": [
+        "cobertura por zonas",
+        "franjas operativas"
+      ]
+    }
+  ],
+  "usefulLocalEntities": [
+    {
+      "type": "district",
+      "label": "barrios y distritos de la ciudad",
+      "usage": "Para cobertura y logística, sin fingir oficinas inexistentes."
+    },
+    {
+      "type": "infrastructure",
+      "label": "comunidades de propietarios",
+      "usage": "Útil en contenidos de accesos comunitarios y puertas de portal."
+    },
+    {
+      "type": "public_body",
+      "label": "Policía Nacional o Guardia Civil",
+      "usage": "Solo para recomendaciones tras robo o pérdida de llaves; no como aval comercial."
+    },
+    {
+      "type": "service_area",
+      "label": "urbanizaciones y municipios cercanos",
+      "usage": "Para zonas de cobertura reales y urgencias."
+    }
+  ],
+  "toneProfile": {
+    "voice": [
+      "serio",
+      "operativo",
+      "tranquilizador",
+      "preciso"
+    ],
+    "forbiddenCliches": [
+      "abrimos todo",
+      "sin romper nunca",
+      "los más baratos",
+      "conocemos cada rincón como nadie"
+    ],
+    "preferredOpenings": [
+      "diagnóstico del problema",
+      "riesgo de seguridad",
+      "caso frecuente de acceso bloqueado",
+      "criterio técnico para decidir pieza o sistema"
+    ],
+    "editorialAngles": [
+      "seguridad real sin alarmismo",
+      "diagnóstico antes de tocar",
+      "decidir entre reparar, sustituir o reforzar",
+      "transparencia operativa en urgencias"
+    ]
+  },
+  "legalRiskPolicy": {
+    "prohibitedClaims": [
+      "apertura siempre sin daños",
+      "20 minutos garantizados",
+      "garantía de 10 años",
+      "cerraduras certificadas sin aportar marca o norma real"
+    ],
+    "allowedSafeClaims": [
+      "prioridad a métodos no destructivos",
+      "garantía por escrito",
+      "presupuesto antes de intervenir",
+      "revisión del sistema completo cuando procede"
+    ],
+    "requiredDisclaimers": [
+      "el método depende del tipo de cierre y del estado de la puerta",
+      "la apertura no destructiva no puede prometerse en todos los casos",
+      "las piezas o niveles de seguridad deben ajustarse a la instalación real"
+    ],
+    "verificationRequiredFor": [
+      "marca o modelo de cerradura",
+      "norma de seguridad específica",
+      "porcentaje de aperturas sin daños",
+      "certificaciones"
+    ],
+    "pricingPolicy": {
+      "allowExactPrices": false,
+      "allowedLanguage": [
+        "presupuesto orientativo",
+        "presupuesto previo",
+        "depende del tipo de cierre y de las piezas"
+      ],
+      "forbiddenLanguage": [
+        "precio fijo universal",
+        "tarifa exacta por teléfono para cualquier caso"
+      ]
+    },
+    "guaranteePolicy": {
+      "allowSpecificYears": false,
+      "allowedLanguage": [
+        "garantía por escrito",
+        "cobertura sobre mano de obra y piezas instaladas si aplica"
+      ],
+      "forbiddenLanguage": [
+        "garantía de 10 años",
+        "garantía total vitalicia"
+      ]
+    }
+  },
+  "blockSemantics": {
+    "servicesGrid": {
+      "categories": [
+        {
+          "label": "Apertura de puerta de vivienda",
+          "summary": "Intervención sobre puertas cerradas, bloqueadas o con llave perdida.",
+          "situations": [
+            "llave partida",
+            "puerta cerrada al salir",
+            "bombín agarrotado"
+          ],
+          "decisionFactor": "Se evalúa daño, tipo de cierre y necesidad de sustitución posterior."
+        },
+        {
+          "label": "Cambio de bombín o cerradura",
+          "summary": "Sustitución parcial o completa según desgaste, seguridad o pérdida de llaves.",
+          "situations": [
+            "mudanza",
+            "llaves extraviadas",
+            "cierre inseguro"
+          ],
+          "decisionFactor": "Importa la compatibilidad del cilindro y del escudo."
+        },
+        {
+          "label": "Refuerzo de seguridad",
+          "summary": "Mejora del sistema frente a técnicas de intrusión comunes.",
+          "situations": [
+            "vivienda habitual",
+            "alquiler",
+            "local a pie de calle"
+          ],
+          "decisionFactor": "Se decide por exposición al riesgo y nivel de protección buscado."
+        },
+        {
+          "label": "Cerrajería comercial",
+          "summary": "Ajuste y reparación de persianas, cierres y accesos de negocio.",
+          "situations": [
+            "persiana atascada",
+            "cierre que no baja",
+            "llave que no acciona"
+          ],
+          "decisionFactor": "Se revisan lamas, eje, guías y sistema de cierre."
+        }
+      ],
+      "trustBullets": [
+        "Diagnóstico antes de intervenir",
+        "Prioridad a apertura no destructiva cuando procede",
+        "Factura y garantía por escrito",
+        "Cobertura real por zonas"
+      ]
+    },
+    "processSteps": {
+      "steps": [
+        {
+          "title": "Diagnóstico del cierre",
+          "detail": "Se identifica si el problema está en llave, bombín, cerradura, puerta o alineación del marco.",
+          "riskControl": "Evita desmontajes innecesarios y daños añadidos."
+        },
+        {
+          "title": "Propuesta técnica clara",
+          "detail": "Se explica si compensa abrir, reparar, sustituir o reforzar el sistema.",
+          "riskControl": "Permite autorizar el trabajo con criterio y sin sorpresas."
+        },
+        {
+          "title": "Intervención y ajuste",
+          "detail": "Se ejecuta la apertura, sustitución o regulación del conjunto con revisión del funcionamiento.",
+          "riskControl": "Se comprueba suavidad de giro, cierre y asentamiento de la puerta."
+        },
+        {
+          "title": "Verificación final",
+          "detail": "Se revisa el resultado y se deja la instalación operativa o asegurada provisionalmente.",
+          "riskControl": "Reduce recaídas por holgura, desalineación o pieza incompatible."
+        }
+      ]
+    },
+    "faq": {
+      "priorityQuestions": [
+        "apertura sin daños",
+        "bombín vs cerradura",
+        "pérdida de llaves",
+        "factores de presupuesto",
+        "seguridad antibumping"
+      ],
+      "answerPatterns": [
+        "respuesta directa + criterio técnico",
+        "caso frecuente + recomendación",
+        "advertencia + decisión profesional"
+      ]
+    },
+    "priceGuidance": {
+      "factors": [
+        {
+          "label": "Tipo de cierre y complejidad",
+          "whyItChanges": "No es igual una puerta de paso que una acorazada o un cierre comercial.",
+          "safeLanguage": "Se explica el alcance antes de intervenir."
+        },
+        {
+          "label": "Estado previo del mecanismo",
+          "whyItChanges": "El desgaste, la manipulación previa o un intento de robo cambian el trabajo necesario.",
+          "safeLanguage": "La revisión in situ evita presupuestos engañosos."
+        },
+        {
+          "label": "Piezas a sustituir",
+          "whyItChanges": "Bombín, escudo, cerradero o cerradura completa implican materiales distintos.",
+          "safeLanguage": "Solo se recomiendan piezas justificadas por el diagnóstico."
+        }
+      ],
+      "comparisonRows": [
+        [
+          "Tipo de cierre",
+          "puede exigir herramientas o piezas distintas",
+          "se explica según vivienda, portal o local"
+        ],
+        [
+          "Estado del mecanismo",
+          "si hay desgaste o rotura cambia la intervención",
+          "se aclara qué parte falla y por qué"
+        ],
+        [
+          "Piezas necesarias",
+          "bombín, cerradura o refuerzo no cuestan lo mismo",
+          "se propone la opción proporcional al caso"
+        ]
+      ]
+    }
+  }
+}

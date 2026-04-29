@@ -88,9 +88,10 @@ export default function PublishedUrls() {
             } else {
                 alert(`Error API: ${result.error}`);
             }
-        } catch (err: any) {
+        } catch (err) {
+            const errorMsg = err instanceof Error ? err.message : String(err);
             console.error('Error in bulk delete:', err);
-            alert(`No se pudo completar el borrado masivo: ${err.message}`);
+            alert(`No se pudo completar el borrado masivo: ${errorMsg}`);
         } finally {
             setBatchActionLoading(false);
         }

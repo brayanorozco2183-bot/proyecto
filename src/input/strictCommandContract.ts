@@ -58,8 +58,9 @@ export function parseStrictServiceCommand(rawCommand: string): StrictCommandPars
   const archetype = command.match(/\b(?:familia|family|arquetipo|archetype)\s+([\w_-]+)\b/i)?.[1];
   const mode = command.match(/\b(?:modo|mode)\s+([\w_-]+)\b/i)?.[1] || (/premium/i.test(command) ? 'premium' : 'standard');
 
-  const coreMatch = command.match(/(?:crea(?:r)?|genera(?:r)?|haz|prepara|monta|produce|redacta)(?:me)?\s+(?:una|un)?\s*(?:p[aá]gina|landing|sitio|web)?\s*de\s+(.+?)\s+en\s+([A-ZÁÉÍÓÚÑ][\p{L}'’\-\s]{1,40}?)(?:\s+sobre\s+(.+?))?(?:\s+\b(?:modo|mode|familia|family|arquetipo|archetype|wordpress|draft|borrador)\b.*|$)/iu)
-    || command.match(/(?:p[aá]gina|landing|sitio|web)\s+de\s+(.+?)\s+en\s+([A-ZÁÉÍÓÚÑ][\p{L}'’\-\s]{1,40}?)(?:\s+sobre\s+(.+?))?(?:\s+\b(?:modo|mode|familia|family|arquetipo|archetype|wordpress|draft|borrador)\b.*|$)/iu);
+  const coreMatch = command.match(/(?:crea(?:r)?|genera(?:r)?|haz|prepara|monta|produce|redacta)(?:me)?\s+(?:una|un)?\s*(?:p[aá]gina|landing|sitio|web|misi[oó]n)?\s*de\s+(.+?)\s+en\s+([A-ZÁÉÍÓÚÑ][\p{L}'’\-\s]{1,40}?)(?:\s+sobre\s+(.+?))?(?:\s+(?:\b(?:modo|mode|familia|family|arquetipo|archetype|wordpress|draft|borrador)\b|\[PUBLISH_NOW\]).*|$)/iu)
+    || command.match(/(?:p[aá]gina|landing|sitio|web|misi[oó]n)\s+de\s+(.+?)\s+en\s+([A-ZÁÉÍÓÚÑ][\p{L}'’\-\s]{1,40}?)(?:\s+sobre\s+(.+?))?(?:\s+(?:\b(?:modo|mode|familia|family|arquetipo|archetype|wordpress|draft|borrador)\b|\[PUBLISH_NOW\]).*|$)/iu)
+    || command.match(/^(.+?)(?:\s+en\s+|\s+)([A-ZÁÉÍÓÚÑ][\p{L}'’\-\s]{1,40}?)(?:\s+(?:\b(?:modo|mode|familia|family|arquetipo|archetype|wordpress|draft|borrador)\b|\[PUBLISH_NOW\]).*|$)/iu);
 
   if (!coreMatch) {
     throw new Error('Formato no válido. Usa el formato exacto: "crea una página de [nicho] en [ciudad]" o "crea una página de [nicho] en [ciudad] sobre [tema]".');

@@ -20,7 +20,6 @@ export default function AgentPlayground() {
     const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
     const [input, setInput] = useState<string>('Haz un análisis de cerrajeros en Valencia y dime qué keywords son las más rentables');
     const [logs, setLogs] = useState<Log[]>([]);
-    const [currentMissionId, setCurrentMissionId] = useState<string | null>(null);
     const [result, setResult] = useState<Record<string, unknown> | string | null>(null);
     const [loading, setLoading] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -49,7 +48,7 @@ export default function AgentPlayground() {
 
         // --- GENERACIÓN DE SESIÓN ÚNICA V2.2 ---
         const sessionId = `pg-v22-${Date.now()}`;
-        setCurrentMissionId(sessionId);
+        // Mission ID tracking removed as it is unused in the UI
 
         setLoading(true);
         setResult(null);
@@ -147,7 +146,7 @@ export default function AgentPlayground() {
                 </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            <div className="playground-grid">
                 <div style={{ position: 'relative' }}>
                     <label style={{ fontSize: '0.75rem', color: 'var(--muted)', marginBottom: '0.5rem', display: 'block' }}>
                         TU ORDEN (LENGUAJE NATURAL O JSON)

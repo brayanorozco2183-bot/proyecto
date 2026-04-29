@@ -1,0 +1,24 @@
+{
+  "comment": "Plantilla para inyectar conocimiento y reglas en el Knowledge Hub de Gravity (tabla agent_knowledge). Puedes añadir tantas reglas como necesites.",
+  "metadata": {
+    "version": "1.0",
+    "target_table": "agent_knowledge"
+  },
+  "rules": [
+    {
+      "agent_id": "global",
+      "category": "DIRECTIVA_EDITORIAL",
+      "content": "REGLA EJEMPLO: Mantener siempre un tono profesional, técnico y autoritario. Evitar lenguaje de venta agresiva."
+    },
+    {
+      "agent_id": "Content_Writer_01",
+      "category": "SEO_LOCAL_RESTRICCION",
+      "content": "REGLA EJEMPLO: Nunca garantizar tiempos de llegada (ej: 'llegamos en 20 minutos') a menos que el brief del nicho lo autorice explícitamente."
+    },
+    {
+      "agent_id": "Content_Architect_01",
+      "category": "ESTRUCTURA",
+      "content": "REGLA EJEMPLO: Asegurar que el bloque 'map' siempre aparezca después de 'local_proof' en páginas de área de servicio."
+    }
+  ]
+}

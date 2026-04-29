@@ -77,3 +77,121 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--muted);
 }
+
+/* Responsive Utilities */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  gap: 1rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .dashboard-header > div:last-child {
+    text-align: left !important;
+  }
+  .form-grid, .form-grid-uneven {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+}
+
+/* ========================================
+   KnowledgeHub
+======================================== */
+.knowledge-hub-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.knowledge-hub-sidebar {
+  padding-right: 0;
+}
+
+@media (min-width: 768px) {
+  .knowledge-hub-grid {
+    grid-template-columns: 1fr 2fr;
+  }
+  .knowledge-hub-sidebar {
+    border-right: 1px solid var(--border);
+    padding-right: 2rem;
+  }
+}
+
+/* ========================================
+   AuditView
+======================================== */
+.audit-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  min-height: 300px;
+}
+
+@media (min-width: 768px) {
+  .audit-grid {
+    grid-template-columns: 1fr 2fr;
+    height: 400px;
+  }
+}
+
+/* ========================================
+   AgentPlayground
+======================================== */
+.playground-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .playground-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ========================================
+   Global mobile padding
+======================================== */
+@media (max-width: 640px) {
+  main {
+    padding: 1rem !important;
+  }
+  .premium-card {
+    padding: 1rem;
+  }
+  h1 {
+    font-size: 1.75rem !important;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-grid-uneven {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}

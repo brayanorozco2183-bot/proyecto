@@ -7,8 +7,9 @@ interface Section {
     title: string;
     content: string;
     type: string;
-    structured?: any;
+    structured?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
+
 
 export default function SeoMasterControl() {
     const [pages, setPages] = useState<string[]>([]);
@@ -49,7 +50,7 @@ export default function SeoMasterControl() {
         }
     };
 
-    const handleStructuredChange = (id: string, field: string, value: any, index?: number) => {
+    const handleStructuredChange = (id: string, field: string, value: unknown, index?: number) => {
         setSections(prev => prev.map(s => {
             if (s.id !== id) return s;
             const newStructured = Array.isArray(s.structured) ? [...s.structured] : { ...s.structured };
@@ -62,26 +63,16 @@ export default function SeoMasterControl() {
         }));
     };
 
-    const handleSubItemChange = (id: string, field: string, index: number, value: any) => {
-        setSections(prev => prev.map(s => {
-            if (s.id !== id) return s;
-            const newStructured = { ...s.structured };
-            if (Array.isArray(newStructured[field])) {
-                newStructured[field] = [...newStructured[field]];
-                newStructured[field][index] = value;
-            }
-            return { ...s, structured: newStructured };
-        }));
-    };
+    // handleSubItemChange removed as it is unused
 
-    const handleAddItem = (id: string, newItem: any) => {
+    const handleAddItem = (id: string, newItem: Record<string, unknown>) => {
         setSections(prev => prev.map(s => {
             if (s.id !== id) return s;
             return { ...s, structured: [...(s.structured || []), newItem] };
         }));
     };
 
-    const handleAddSubItem = (id: string, field: string, defaultValue: any) => {
+    const handleAddSubItem = (id: string, field: string, defaultValue: unknown) => {
         setSections(prev => prev.map(s => {
             if (s.id !== id) return s;
             const newStructured = { ...s.structured };
@@ -115,7 +106,7 @@ export default function SeoMasterControl() {
         setSaving(true);
         setMessage('');
         setErrors([]);
-        const updates: Record<string, any> = {};
+        const updates: Record<string, unknown> = {};
         sections.forEach(s => {
             updates[s.id] = s.structured || s.content;
         });
@@ -136,6 +127,7 @@ export default function SeoMasterControl() {
                 setMessage('❌ Error: ' + (data.error || 'Desconocido'));
             }
         } catch (err) {
+            console.error('Error saving page:', err);
             setMessage('❌ Error de conexión con la API.');
         } finally {
             setSaving(false);
@@ -226,7 +218,7 @@ export default function SeoMasterControl() {
                         {/* SERVICES GRID EDITOR */}
                         {section.id === 'servicios' && section.structured && (
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem' }}>
-                                {section.structured.map((item: any, idx: number) => (
+                                {section.structured.map((item: { icon: string; title: string; desc: string }, idx: number) => (
                                     <div key={idx} style={{ background: '#0f0f12', border: '1px solid #27272a', padding: '1rem', borderRadius: '10px', position: 'relative' }}>
                                         <button
                                             onClick={() => handleRemoveItem(section.id, idx)}
@@ -267,7 +259,7 @@ export default function SeoMasterControl() {
                                     <div style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>Valor</div>
                                     <div></div>
                                 </div>
-                                {section.structured.map((item: any, idx: number) => (
+                                {section.structured.map((item: { label: string; value: string }, idx: number) => (
                                     <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: '0.5rem', alignItems: 'center' }}>
                                         <input
                                             value={item.label}
@@ -296,7 +288,7 @@ export default function SeoMasterControl() {
                         {/* FAQ EDITOR */}
                         {section.id === 'faq' && section.structured && (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                {section.structured.map((item: any, idx: number) => (
+                                {section.structured.map((item: { question: string; answer: string }, idx: number) => (
                                     <div key={idx} style={{ background: '#0f0f12', border: '1px solid #27272a', padding: '1.25rem', borderRadius: '10px' }}>
                                         <div style={{ display: 'flex', gap: '1rem', alignItems: 'start' }}>
                                             <div style={{ flex: 1 }}>
@@ -344,7 +336,7 @@ export default function SeoMasterControl() {
                                     <div>
                                         <label style={{ fontSize: '0.8rem', color: 'var(--muted)', display: 'block', marginBottom: '1rem' }}>Estadísticas de Confianza</label>
                                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                                            {section.structured.stats.map((stat: any, sIdx: number) => (
+                                            {section.structured.stats.map((stat: { value: string; label: string }, sIdx: number) => (
                                                 <div key={sIdx} style={{ background: '#0f0f12', border: '1px solid #27272a', padding: '1rem', borderRadius: '8px' }}>
                                                     <input
                                                         value={stat.value}
@@ -427,7 +419,7 @@ export default function SeoMasterControl() {
                                 </div>
 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                    {section.structured.blocks?.map((block: any, bIdx: number) => (
+                                    {section.structured.blocks?.map((block: { type: string; text?: string; items?: string[]; title?: string; description?: string; meta?: string[] }, bIdx: number) => (
                                         <div key={bIdx} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid #27272a', padding: '1rem', borderRadius: '8px', position: 'relative' }}>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                                                 <span style={{ fontSize: '0.7rem', color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '1px' }}>{block.type}</span>
@@ -453,12 +445,12 @@ export default function SeoMasterControl() {
                                             {/* LIST BLOCK */}
                                             {block.type === 'list' && (
                                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                                    {block.items.map((item: string, iIdx: number) => (
+                                                    {(block.items || []).map((item: string, iIdx: number) => (
                                                         <div key={iIdx} style={{ display: 'flex', gap: '0.5rem' }}>
                                                             <input
                                                                 value={item}
                                                                 onChange={(e) => {
-                                                                    const newItems = [...block.items];
+                                                                    const newItems = [...(block.items || [])];
                                                                     newItems[iIdx] = e.target.value;
                                                                     const newBlocks = [...section.structured.blocks];
                                                                     newBlocks[bIdx] = { ...block, items: newItems };
@@ -468,7 +460,7 @@ export default function SeoMasterControl() {
                                                             />
                                                             <button
                                                                 onClick={() => {
-                                                                    const newItems = [...block.items];
+                                                                    const newItems = [...(block.items || [])];
                                                                     newItems.splice(iIdx, 1);
                                                                     const newBlocks = [...section.structured.blocks];
                                                                     newBlocks[bIdx] = { ...block, items: newItems };
@@ -481,7 +473,7 @@ export default function SeoMasterControl() {
                                                     <button
                                                         onClick={() => {
                                                             const newBlocks = [...section.structured.blocks];
-                                                            newBlocks[bIdx] = { ...block, items: [...block.items, 'Nuevo elemento...'] };
+                                                            newBlocks[bIdx] = { ...block, items: [...(block.items || []), 'Nuevo elemento...'] };
                                                             handleStructuredChange(section.id, 'blocks', newBlocks);
                                                         }}
                                                         style={{ background: 'transparent', color: 'var(--primary)', border: '1px dashed var(--primary)', borderRadius: '4px', padding: '0.25rem', cursor: 'pointer', fontSize: '0.75rem' }}
@@ -513,12 +505,12 @@ export default function SeoMasterControl() {
                                                         style={{ width: '100%', background: '#0a0a0a', border: '1px solid #27272a', padding: '0.5rem', borderRadius: '4px', color: 'var(--muted)', minHeight: '60px' }}
                                                     />
                                                     <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                                        {block.meta.map((m: string, mIdx: number) => (
+                                                        {(block.meta || []).map((m: string, mIdx: number) => (
                                                             <input
                                                                 key={mIdx}
                                                                 value={m}
                                                                 onChange={(e) => {
-                                                                    const newMeta = [...block.meta];
+                                                                    const newMeta = [...(block.meta || [])];
                                                                     newMeta[mIdx] = e.target.value;
                                                                     const newBlocks = [...section.structured.blocks];
                                                                     newBlocks[bIdx] = { ...block, meta: newMeta };

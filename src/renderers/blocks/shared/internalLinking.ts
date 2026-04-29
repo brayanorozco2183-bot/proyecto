@@ -4,10 +4,20 @@ import { escapeHtml, wrapSectionBlock } from '../shared.js';
 type InternalLink = {
   text?: string;
   url?: string;
+  href?: string;
+  label?: string;
   relation?: string;
   description?: string;
   badge?: string;
 };
+
+function asRecord(value: unknown): Record<string, unknown> {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
+function asLinks(value: unknown): InternalLink[] {
+  return Array.isArray(value) ? value.map((entry) => asRecord(entry) as InternalLink) : [];
+}
 
 function sanitizeInternalHref(href: string): string {
   let output = String(href || '').trim();
@@ -58,15 +68,16 @@ function relationCopy(relation: string): string {
 }
 
 function normalizeLinks(input: BlockRendererInput, links: InternalLink[]): InternalLink[] {
-  const fromContent = Array.isArray((input.content as any)?.links) ? (input.content as any).links : [];
-  const fromSeo = Array.isArray((input.seo as any)?.metadata?.internalLinks) ? (input.seo as any).metadata.internalLinks : [];
+  const fromContent = asLinks(input.content.links);
+  const metadata = asRecord(input.seo?.metadata);
+  const fromSeo = asLinks(metadata.internalLinks);
   const merged = [...links, ...fromContent, ...fromSeo]
-    .map((item: any) => ({
-      text: String(item?.text || item?.label || '').trim(),
-      url: String(item?.url || item?.href || '').trim(),
-      relation: String(item?.relation || 'related').trim(),
-      description: String(item?.description || '').trim(),
-      badge: String(item?.badge || '').trim(),
+    .map((item) => ({
+      text: String(item.text || item.label || '').trim(),
+      url: String(item.url || item.href || '').trim(),
+      relation: String(item.relation || 'related').trim(),
+      description: String(item.description || '').trim(),
+      badge: String(item.badge || '').trim(),
     }))
     .filter((item) => item.text && item.url);
 
@@ -100,16 +111,19 @@ export function renderInternalLinkingBlock(input: BlockRendererInput, links: Int
     `;
   }).join('');
 
-  const heading = (input.content as any)?.heading || (input.content as any)?.h2 || 'Páginas recomendadas dentro del proyecto';
-  const eyebrow = (input.content as any)?.eyebrow || 'Navegación interna';
-  const subtitle = (input.content as any)?.subheading || 'Mantén una navegación clara con la página principal del proyecto y, si existen, hasta dos páginas relacionadas ya generadas.';
+  const heading = input.content.heading || input.content.h2 || 'Páginas recomendadas dentro del proyecto';
+  const eyebrow = String(input.content.eyebrow || 'Navegación interna');
+  const rawSubtitle = input.content.subheading;
+  const subtitle = Array.isArray(rawSubtitle)
+    ? rawSubtitle.join(' ')
+    : String(rawSubtitle || 'Mantén una navegación clara con la página principal del proyecto y, si existen, hasta dos páginas relacionadas ya generadas.');
   const gridModifier = normalized.length === 1 ? ' internal-links-grid--single' : '';
 
   const innerHtml = `
     <header class="block__header internal-links-hub__header">
-      <span class="block__eyebrow">${escapeHtml(String(eyebrow))}</span>
+      <span class="block__eyebrow">${escapeHtml(eyebrow)}</span>
       <h2 class="block__title">${escapeHtml(String(heading))}</h2>
-      <p class="block__subtitle">${escapeHtml(String(subtitle))}</p>
+      <p class="block__subtitle">${escapeHtml(subtitle)}</p>
     </header>
     <ul class="internal-links-grid${gridModifier}" role="list">
       ${cards}

@@ -4,7 +4,7 @@ import type { BlockRendererInput } from '../types.js';
 
 export function renderCtaPanel(input: BlockRendererInput): string {
   const variant = resolveCtaPanelVariant(input.variant);
-  const renderer = (renderCtaPanelVariants as any)[variant] || renderCtaPanelVariants.luxury_banner;
+  const renderer = renderCtaPanelVariants[variant] || renderCtaPanelVariants.luxury_banner;
 
   return renderer(input);
 }

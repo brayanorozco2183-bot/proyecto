@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_130_OPAL_COMMAND_NOBLE",
+  "title": "Opal Command Noble",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "local_authority_map",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 8,
+      "gutter": "40px",
+      "container_width": "min(1320px, calc(100% - 48px))"
+    },
+    "navigation": {
+      "style": "local_anchor_nav",
+      "position": "sticky_top",
+      "blur": "16px",
+      "contrast_safe": true,
+      "mobile_pattern": "horizontal_scroll"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#047857",
+      "accent": "#B45309",
+      "bg": "#FAFAF7",
+      "surface": "#FFFFFF",
+      "surface_alt": "#EEF0E9",
+      "text": "#13231D",
+      "muted": "#4B5F56",
+      "on_primary": "#FFFFFF",
+      "on_accent": "#FFFFFF",
+      "radius_policy": "32px",
+      "shadow_policy": "floating_card",
+      "font_display": "'Sora', sans-serif",
+      "font_body": "'Inter', sans-serif",
+      "spacing_density": "generous",
+      "border_policy": "visible"
+    },
+    "contrast_report": {
+      "bg_text": 15.62,
+      "surface_text": 16.33,
+      "primary_on_primary": 5.48,
+      "accent_on_accent": 5.02,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #FAFAF7; --surface: #FFFFFF; --surface-alt: #EEF0E9; --text: #13231D; --muted: #4B5F56; --primary: #047857; --accent: #B45309; --on-primary: #FFFFFF; --on-accent: #FFFFFF; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 32px; --gap: 40px; --blur: 16px; --nav-position: sticky; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; } h1,h2,h3,.display { font-family: 'Sora', sans-serif; } .testimonial-card { padding: 28px; border-radius: var(--radius); background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 92%, var(--primary))); border: 1px solid var(--border); } .testimonial-card__stars { color: var(--accent); letter-spacing: .16em; } .avatar { width: 48px; height: 48px; border-radius: 999px; background: var(--primary); color: var(--on-primary); }  @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "cinematic_split_hero",
+      "custom_structure": "<section class='hero hero--split'><div class='hero__copy'><span class='eyebrow'>{{LOCAL_PROOF}}</span><h1>{{H1}}</h1><p>{{INTRO}}</p><div class='hero__actions'>{{CTA_PRIMARY}}{{CTA_SECONDARY}}</div></div><div class='hero__visual'><div class='premium-frame'>{{IMAGE}}</div><div class='trust-badge'>{{RATING}}</div></div></section>"
+    },
+    "services_grid": {
+      "style": "horizontal_marquee_services",
+      "columns_override": 1,
+      "interaction": "hover_lift",
+      "content_strategy": "wide service track with alternating large cards"
+    },
+    "trust_layer": {
+      "style": "conversion_proof_strip",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "compact_breadcrumb_cluster",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "split_questions",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "paper_emerald",
+    "motion_level": "premium",
+    "noise_overlay": false,
+    "color_glitch": false,
+    "image_treatment": "duotone_safe",
+    "premium_cues": [
+      "large whitespace",
+      "thin borders",
+      "gold accent"
+    ]
+  }
+}

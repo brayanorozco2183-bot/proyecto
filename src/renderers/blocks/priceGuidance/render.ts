@@ -4,7 +4,7 @@ import type { BlockRendererInput } from '../types.js';
 
 export function renderPriceGuidance(input: BlockRendererInput): string {
   const variant = resolvePriceGuidanceVariant(input.variant);
-  const renderer = renderPriceGuidanceVariants[variant as any] || renderPriceGuidanceVariants.table_simple;
+  const renderer = renderPriceGuidanceVariants[variant] || renderPriceGuidanceVariants.table_simple;
 
   return renderer(input);
 }

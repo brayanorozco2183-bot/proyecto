@@ -4,7 +4,7 @@ import type { BlockRendererInput } from '../types.js';
 
 export function renderLocalProof(input: BlockRendererInput): string {
   const variant = resolveLocalProofVariant(input.variant);
-  const renderer = (renderLocalProofVariants as any)[variant] || renderLocalProofVariants.grid_logos;
+  const renderer = renderLocalProofVariants[variant] || renderLocalProofVariants.coverage_split;
 
   return renderer(input);
 }

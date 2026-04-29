@@ -1,9 +1,10 @@
 import { BLOCK_VISUAL_SPECS } from '../../../config/blockVisualSpecs.js';
 import { LOCALPROOFVARIANTS } from './schema.js';
 import type { BlockRendererInput } from '../types.js';
+import { BlockRendererInputSchema } from '../contracts.js';
 
 export function isLocalProofPayload(value: unknown): value is BlockRendererInput {
-  return true;
+  return BlockRendererInputSchema.safeParse(value).success;
 }
 
 export function resolveLocalProofVariant(input?: string): string {
@@ -11,6 +12,6 @@ export function resolveLocalProofVariant(input?: string): string {
   const allowed = (spec.allowedVisualVariants || LOCALPROOFVARIANTS) as string[];
   const resolved = allowed.includes(input || '')
     ? input
-    : (spec.defaultVisualVariant || 'grid_logos');
+    : (spec.defaultVisualVariant || 'coverage_split');
   return resolved as string;
 }

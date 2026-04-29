@@ -44,6 +44,34 @@ export interface ResearchContext {
         neighborhoods: string[];
         sub_locations: { name: string, type: string }[];
     };
+    serp_evidence?: {
+        attempted?: boolean;
+        executed: boolean;
+        status?: string;
+        fallbackUsed?: boolean;
+        fallbackReason?: string;
+        provider?: string;
+        mode?: string;
+        query?: string;
+        organicResults?: any[];
+        competitors?: any[];
+        localPack?: any[];
+        timestamp?: string;
+        evidenceDir?: string;
+        evidenceFiles?: string[];
+        error?: string;
+    };
+    serpInsights?: {
+        topCompetitorTitles?: string[];
+        competitorUrls?: string[];
+        extractedHeadings?: string[];
+        recurringServices?: string[];
+        recurringQuestions?: string[];
+        contentAngles?: string[];
+        city?: string;
+        niche?: string;
+    };
+    researchConfig?: any;
 }
 
 export interface ResearchBundle {
@@ -105,6 +133,13 @@ export interface PageBlueprint {
         layout_hint?: string;
         visual_weight?: 'light' | 'medium' | 'heavy';
         emphasis?: 'content' | 'trust' | 'cta';
+        pattern_hint?: string;
+        depth_mode?: 'compact' | 'standard' | 'deep' | string;
+        blockType?: string;
+        visual_variant?: string;
+        visual_spec?: Record<string, any>;
+        qualityContract?: any;
+        [key: string]: any;
     }[];
     global_tone: string;
     page_skeleton?: PageSkeleton;
@@ -240,6 +275,9 @@ export interface ContentBlock {
     h2: string;
     html: string;
     wordCount: number;
+    /** Backwards-compatible alias still used by several pipeline phases. */
+    type?: string;
+    score?: number;
     metadata: {
         block_type: string;
         sectionIndex: number;
@@ -253,11 +291,19 @@ export interface ContentBlock {
 }
 
 export interface ContentDraft {
+    h1?: string;
+    meta_title?: string;
+    meta_description?: string;
+    pageProfile?: any;
     blocks: ContentBlock[];
     totalWords: number;
     html?: string;
     metadata?: {
         seo?: any; // Will be cast to RenderedSeoContract in the pipeline
+        blocks_generated?: number;
+        plan_sections?: number;
+        enrichment?: any;
+        [key: string]: any;
     };
 }
 
@@ -270,6 +316,16 @@ export interface RenderedPage {
         editorial_passed: boolean;
         blockScores?: BlockScore[];
         seo?: any;
+        semantic_guard?: {
+            passed: boolean;
+            issues: any[];
+        };
+        output_path?: string;
+        internal_linking_reconciliation?: any;
+        image_generation_error?: string;
+        images_phase?: any;
+        phaseRepairImages?: any;
+        [key: string]: any;
     };
 }
 
@@ -286,6 +342,9 @@ export interface ObservabilityMetadata {
 
 export interface PostDeployAuditResult {
     passed: boolean;
+    score?: number;
+    status?: string;
+    reasoning?: string;
     url: string;
     html_path?: string;
     lighthouse?: any;
@@ -308,11 +367,11 @@ export interface PipelineResult {
         h1: string;
         faqs: { question: string; answer: string }[];
         metadata: {
-            h1: string;
-            total_words: number;
+            h1?: string;
+            total_words?: number;
             sectionsCount?: number;
-            qaScore: number;
-            issues: string[];
+            qaScore?: number;
+            issues?: string[];
             observability: ObservabilityMetadata;
             audit?: PostDeployAuditResult;
             [key: string]: any;

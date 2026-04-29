@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_105_CIVIC_HALO_PRESTIGE",
+  "title": "Civic Halo Prestige",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "bento_grid_system",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 10,
+      "gutter": "20px",
+      "container_width": "min(1180px, calc(100% - 32px))"
+    },
+    "navigation": {
+      "style": "bento_tabs",
+      "position": "sticky_top",
+      "blur": "18px",
+      "contrast_safe": true,
+      "mobile_pattern": "full_screen_overlay"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#00A3B5",
+      "accent": "#FBBF24",
+      "bg": "#030711",
+      "surface": "#0D1626",
+      "surface_alt": "#17243A",
+      "text": "#ECFEFF",
+      "muted": "#A8C2CC",
+      "on_primary": "#000000",
+      "on_accent": "#000000",
+      "radius_policy": "14px",
+      "shadow_policy": "deep_editorial",
+      "font_display": "'Playfair Display', serif",
+      "font_body": "'Source Sans 3', sans-serif",
+      "spacing_density": "standard",
+      "border_policy": "soft"
+    },
+    "contrast_report": {
+      "bg_text": 19.37,
+      "surface_text": 17.4,
+      "primary_on_primary": 6.91,
+      "accent_on_accent": 12.58,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #030711; --surface: #0D1626; --surface-alt: #17243A; --text: #ECFEFF; --muted: #A8C2CC; --primary: #00A3B5; --accent: #FBBF24; --on-primary: #000000; --on-accent: #000000; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 14px; --gap: 20px; --blur: 18px; --nav-position: sticky; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Source Sans 3', sans-serif; } h1,h2,h3,.display { font-family: 'Playfair Display', serif; } .local-map-panel { display: grid; grid-template-columns: .9fr 1.1fr; gap: var(--gap); align-items: stretch; } .area-chip { border: 1px solid var(--border); border-radius: 999px; padding: .75rem 1rem; background: color-mix(in srgb, var(--surface) 88%, var(--accent)); } .trust-badge { backdrop-filter: blur(var(--blur)); background: color-mix(in srgb, var(--surface) 88%, transparent); } body::after { content: ''; position: fixed; inset: 0; pointer-events: none; background-image: radial-gradient(color-mix(in srgb, var(--text) 18%, transparent) 1px, transparent 1px); background-size: 4px 4px; opacity: .035; z-index: 80; } @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "editorial_statement_hero",
+      "custom_structure": "<section class='hero hero--editorial'><p class='kicker'>{{LOCATION}} · {{SERVICE}}</p><h1>{{H1}}</h1><div class='lede-grid'><p>{{INTRO}}</p>{{CTA_PRIMARY}}</div></section>"
+    },
+    "services_grid": {
+      "style": "conversion_price_tiles",
+      "columns_override": 3,
+      "interaction": "hover_lift",
+      "content_strategy": "quote-focused tiles with micro proof"
+    },
+    "trust_layer": {
+      "style": "conversion_proof_strip",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "city_hub_cards",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "schema_ready_cards",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "midnight_cyan",
+    "motion_level": "measured",
+    "noise_overlay": true,
+    "color_glitch": false,
+    "image_treatment": "duotone_safe",
+    "premium_cues": [
+      "large whitespace",
+      "thin borders",
+      "gold accent"
+    ]
+  }
+}

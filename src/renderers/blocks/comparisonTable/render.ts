@@ -4,7 +4,7 @@ import type { BlockRendererInput } from '../types.js';
 
 export function renderComparisonTable(input: BlockRendererInput): string {
   const variant = resolveComparisonTableVariant(input.variant);
-  const renderer = (renderComparisonTableVariants as any)[variant] || renderComparisonTableVariants.matrix_clean;
+  const renderer = renderComparisonTableVariants[variant] || renderComparisonTableVariants.matrix_clean;
 
   return renderer(input);
 }

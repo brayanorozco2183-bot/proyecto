@@ -19,7 +19,7 @@ type CommandPayload = {
 const WINDOW_MS = Number(process.env.DASHBOARD_RATE_WINDOW_MS || 60_000);
 const MAX_REQUESTS = Number(process.env.DASHBOARD_RATE_MAX || 120);
 const MAX_COMMAND_LEN = 240;
-const SAFE_COMMAND = /^[\p{L}\p{N}\s,.;:()_+\-\/áéíóúÁÉÍÓÚñÑüÜ]+$/u;
+const SAFE_COMMAND = /^[\p{L}\p{N}\s,.;:()[\]_+\-\/áéíóúÁÉÍÓÚñÑüÜ]+$/u;
 const buckets = new Map<string, { count: number; resetAt: number }>();
 
 function isProd(): boolean {

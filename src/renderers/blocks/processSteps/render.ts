@@ -4,7 +4,7 @@ import type { BlockRendererInput } from '../types.js';
 
 export function renderProcessSteps(input: BlockRendererInput): string {
   const variant = resolveProcessStepsVariant(input.variant);
-  const renderer = renderProcessStepsVariants[variant as any] || renderProcessStepsVariants.timeline_vertical;
+  const renderer = renderProcessStepsVariants[variant] || renderProcessStepsVariants.timeline_vertical;
 
   return renderer(input);
 }

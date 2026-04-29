@@ -1,15 +1,25 @@
 import { requireNichePlaybook, resolveNicheId, resolveCanonicalServiceNiche, normalizeMissionNiche, getCanonicalNicheLabel } from './playbookLoader.js';
 import { buildAgentPlaybookContext, selectFaqEntries } from './playbookSelectors.js';
 
+const missionPlaybookContextCache = new Map<string, ReturnType<typeof buildAgentPlaybookContext>>();
+
 function resolvePlaybookKey(niche: string): string {
   const normalized = normalizeMissionNiche(niche);
   return resolveCanonicalServiceNiche(normalized || niche) || resolveNicheId(normalized || niche) || normalized || niche;
 }
 
 export function resolvePlaybookForMission(niche: string) {
-  const playbook = requireNichePlaybook(resolvePlaybookKey(niche));
-  return buildAgentPlaybookContext(playbook);
+  const key = resolvePlaybookKey(niche);
+  if (missionPlaybookContextCache.has(key)) {
+    return missionPlaybookContextCache.get(key)!;
+  }
+
+  const playbook = requireNichePlaybook(key);
+  const context = buildAgentPlaybookContext(playbook);
+  missionPlaybookContextCache.set(key, context);
+  return context;
 }
+
 
 export function buildAnalystInjection(niche: string): string {
   return resolvePlaybookForMission(niche).analystBrief;

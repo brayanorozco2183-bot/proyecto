@@ -48,13 +48,13 @@ const semanticSchema = z.object({
 });
 
 
-export const CTAPANELVARIANTS = ['minimal_phone_bar', 'luxury_banner'] as const;
+export const CTAPANELVARIANTS = ['minimal_phone_bar', 'luxury_banner', 'consultation_split'] as const;
 export type CtaPanelVariant = typeof CTAPANELVARIANTS[number];
 
 export const CtaPanelPayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], bullets: [], trustBullets: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

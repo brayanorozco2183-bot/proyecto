@@ -9,6 +9,9 @@ import { deriveOriginalityScopes, scoreDesignRepetitionRisk, getRecentSiteStruct
 import { PAGE_ARCHETYPES } from '../config/pageArchetypes.js';
 import { selectVisualIdentityContract, mapVisualContractToLegacyFamily, mapVisualContractToLegacyHero } from '../config/visualIdentityContracts.js';
 import { buildSeed, pickSeeded, uniqueStrings } from '../utils/designSeed.js';
+import { loadMasterclasses, findMasterclassForNiche, buildMasterclassDirective } from '../originality/designMasterclasses.js';
+import { join } from 'node:path';
+
 
 export interface ArtDirectorInput {
     intentModel: any;
@@ -300,6 +303,53 @@ function hardenCommercialDna(input: ArtDirectorInput, dna: PageDesignDNA, seed: 
     return dna;
 }
 
+
+function normalizeArtDirectorInput(input: ArtDirectorInput): ArtDirectorInput {
+    const blueprint = input?.blueprint && typeof input.blueprint === 'object' ? input.blueprint : {};
+    const intentModel = input?.intentModel && typeof input.intentModel === 'object'
+        ? input.intentModel
+        : (blueprint.intentModel && typeof blueprint.intentModel === 'object' ? blueprint.intentModel : {});
+    const city = String(input?.city || blueprint.city || '').trim();
+    const niche = String(input?.niche || blueprint.niche || '').trim();
+    const sections = Array.isArray(blueprint.sections) ? blueprint.sections.filter(Boolean) : [];
+
+    return {
+        ...input,
+        city,
+        niche,
+        intentModel,
+        blueprint: {
+            ...blueprint,
+            city: blueprint.city || city,
+            niche: blueprint.niche || niche,
+            sections,
+            cluster_data: blueprint.cluster_data && typeof blueprint.cluster_data === 'object' ? blueprint.cluster_data : {}
+        },
+        strategicAnalysis: input?.strategicAnalysis && typeof input.strategicAnalysis === 'object' ? input.strategicAnalysis : {}
+    };
+}
+
+function parseJsonArraySafe(value: any): any[] {
+    if (Array.isArray(value)) return value;
+    if (typeof value !== 'string' || !value.trim()) return [];
+    try {
+        const parsed = JSON.parse(value);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+}
+
+function resolveMasterclassSafely(input: ArtDirectorInput): ReturnType<typeof findMasterclassForNiche> {
+    try {
+        const masterclasses = loadMasterclasses(join(process.cwd(), 'src/config/design-masterclasses'));
+        return findMasterclassForNiche(String(input.niche || input.blueprint?.niche || ''), masterclasses, buildSeed(input.niche, input.city));
+    } catch (error: any) {
+        console.warn(`[ArtDirector] Masterclass resolution skipped: ${error?.message || error}`);
+        return null;
+    }
+}
+
 function buildSeededFallbackDna(input: ArtDirectorInput): PageDesignDNA {
     const pageType = input.intentModel?.pageType || 'service';
     const archetypes = PAGE_ARCHETYPES[pageType] || PAGE_ARCHETYPES.service;
@@ -396,16 +446,17 @@ export class ArtDirectorAgent extends BaseAgent {
 
     async execute(input: ArtDirectorInput): Promise<AgentResponse<PageDesignDNA>> {
         this.logThought("Defining visual DNA for the page...");
+        input = normalizeArtDirectorInput(input);
 
         const db = await dbManager.getDB();
-        const mission = { city: input.city, niche: input.niche, cluster_data: input.blueprint.cluster_data };
+        const mission = { city: input.city, niche: input.niche, cluster_data: input.blueprint?.cluster_data || {} };
         const scopes = deriveOriginalityScopes(mission).map(s => s.key);
         
         const recentSignatures = await getRecentSiteStructureMemory(db, scopes, 15);
         const recentFingerprints = recentSignatures.map(r => ({
             pageType: r.page_type,
             heroTreatment: r.hero_signature,
-            blockVariantSequence: JSON.parse(r.block_variants_json || '[]')
+            blockVariantSequence: parseJsonArraySafe(r.block_variants_json)
         }));
 
         const pageType = String(input.intentModel?.pageType || '').toLowerCase();
@@ -430,12 +481,26 @@ export class ArtDirectorAgent extends BaseAgent {
             );
             hardenCommercialDna(input, fallbackDna, seed);
             applyVisualIdentityContract(input, fallbackDna, seed);
-            await this.logThought('[FASTPATH] Visual DNA resolved in deterministic mode.');
+            
+            // Check for Masterclass to override DNA values if available.
+            // This must never fail the mission: masterclass files are optional data, not a hard dependency.
+            const masterclass = resolveMasterclassSafely(input);
+            if (masterclass) {
+                fallbackDna.family = (masterclass.dna.family || fallbackDna.family) as any;
+                fallbackDna.personality = (masterclass.dna.personality || fallbackDna.personality) as any;
+                fallbackDna.visualSystem = (masterclass.dna.visualSystem || fallbackDna.visualSystem) as any;
+                fallbackDna.pageSkeleton = (masterclass.dna.pageSkeleton || fallbackDna.pageSkeleton) as any;
+                fallbackDna.artDirection = `${fallbackDna.artDirection}\nFOLLOW MASTERCLASS: ${masterclass.art_direction_notes}`;
+                fallbackDna.blockDialects = { ...fallbackDna.blockDialects, ...masterclass.block_variants };
+            }
+
+            await this.logThought(`[FASTPATH] Visual DNA resolved in deterministic mode. ${masterclass ? '(Applied Masterclass: ' + masterclass.title + ')' : ''}`);
             return {
                 success: true,
                 data: fallbackDna,
-                thoughts: `DNA Visual definido de forma determinista: ${fallbackDna.personality} con familia ${fallbackDna.family}.`
+                thoughts: `DNA Visual definido de forma determinista: ${fallbackDna.personality} con familia ${fallbackDna.family}.${masterclass ? ' Masterclass activa: ' + masterclass.title : ''}`
             };
+
         }
 
         const prompt = `
@@ -447,10 +512,15 @@ CONTEXTO:
 - Ciudad: ${input.blueprint.city}
 - Tipo de Página: ${input.intentModel.pageType}
 - Intención Primaria: ${input.intentModel.primaryIntent}
-- Secciones Propuestas: ${input.blueprint.sections.map((s: any) => s.block_type).join(', ')}
+- Secciones Propuestas: ${(Array.isArray(input.blueprint?.sections) ? input.blueprint.sections : []).map((s: any) => s?.block_type || 'section').join(', ')}
 
 MEMORIA DE DISEÑO (Fingerprints recientes):
 ${JSON.stringify(recentFingerprints)}
+
+${(() => {
+    const masterclass = resolveMasterclassSafely(input);
+    return masterclass ? buildMasterclassDirective(masterclass) : '';
+})()}
 
 REGLAS DE ORO:
 1. Manten una calidad visual alta y coherente.

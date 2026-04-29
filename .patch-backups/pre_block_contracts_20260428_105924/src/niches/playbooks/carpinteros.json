@@ -1,0 +1,380 @@
+{
+  "id": "carpinteros",
+  "displayName": "Carpinteros",
+  "aliases": [
+    "carpintero",
+    "carpinteros",
+    "carpinteria",
+    "carpintería",
+    "ebanista",
+    "ebanistería",
+    "reparación de muebles",
+    "montaje de cocinas"
+  ],
+  "schemaTypes": [
+    "LocalBusiness",
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "WebPage"
+  ],
+  "allowedVocabulary": [
+    "muebles a medida",
+    "armarios empotrados",
+    "vestidores",
+    "puertas de interior",
+    "tarima flotante",
+    "parqué",
+    "cocinas integrales",
+    "lacado",
+    "barnizado",
+    "ebanistería",
+    "madera maciza",
+    "melamina",
+    "herrajes",
+    "bisagras",
+    "cepillado",
+    "lijado",
+    "corte de madera",
+    "reparación de estructuras",
+    "carpintería de madera",
+    "muebles de baño"
+  ],
+  "forbiddenVocabulary": [
+    "apertura de puertas",
+    "bombín",
+    "cilindro",
+    "cerradura",
+    "fuga de agua",
+    "desatasco",
+    "cuadro eléctrico",
+    "endodoncia",
+    "peritaje laboral"
+  ],
+  "prohibitedClaims": [
+    "garantía de por vida",
+    "muebles irrompibles",
+    "precio exacto sin ver",
+    "somos los más baratos de la ciudad",
+    "instalación en 10 minutos",
+    "madera que nunca se raya"
+  ],
+  "validTrustSignals": [
+    {
+      "id": "written-guarantee",
+      "label": "Garantía por escrito",
+      "description": "Cobertura clara sobre la fabricación e instalación."
+    },
+    {
+      "id": "custom-design",
+      "label": "Diseño personalizado",
+      "description": "Planos y bocetos adaptados al espacio real antes de fabricar."
+    },
+    {
+      "id": "certified-materials",
+      "label": "Materiales certificados",
+      "description": "Uso de maderas y tableros con sellos de calidad y sostenibilidad."
+    },
+    {
+      "id": "invoice",
+      "label": "Factura detallada",
+      "description": "Desglose formal de materiales y mano de obra."
+    },
+    {
+      "id": "local-workshop",
+      "label": "Taller propio",
+      "description": "Fabricación local sin intermediarios."
+    }
+  ],
+  "coreServices": [
+    "Fabricación de muebles a medida",
+    "Diseño e instalación de armarios y vestidores",
+    "Montaje de cocinas y muebles de baño",
+    "Instalación de puertas de paso y de entrada",
+    "Colocación de tarima y suelos de madera",
+    "Restauración y barnizado de mobiliario"
+  ],
+  "bofuVariants": [
+    {
+      "slug": "muebles-a-medida-precio",
+      "label": "Muebles a medida con presupuesto cerrado",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "obtener un mueble exclusivo adaptado al milímetro"
+    },
+    {
+      "slug": "instalacion-puertas-interior",
+      "label": "Instalación de puertas de interior",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "renovar la estética y el aislamiento del hogar"
+    },
+    {
+      "slug": "montaje-cocina-madera",
+      "label": "Montaje de cocina a medida",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "conseguir una cocina funcional y duradera"
+    },
+    {
+      "slug": "reparacion-suelos-madera",
+      "label": "Reparación y acuchillado de suelos",
+      "intent": "commercial",
+      "funnelStage": "BOFU",
+      "angle": "recuperar el brillo y la vida de tu parqué"
+    }
+  ],
+  "commonObjections": [
+    "Me preocupa que el color final no sea el que espero.",
+    "No sé si los materiales aguantarán bien la humedad.",
+    "El presupuesto me parece alto sin ver calidades.",
+    "Tengo miedo de que la instalación se alargue semanas.",
+    "¿Y si el mueble no encaja perfectamente en el hueco?"
+  ],
+  "faqBank": [
+    {
+      "question": "¿Qué madera es mejor para un armario empotrado?",
+      "answerGuidance": "Depende del presupuesto y uso; explica las diferencias entre melamina de alta densidad, DM lacado y madera maciza.",
+      "intent": "MOFU",
+      "blockHint": "services_grid"
+    },
+    {
+      "question": "¿Cuánto tiempo se tarda en fabricar un mueble a medida?",
+      "answerGuidance": "Aclara que los tiempos varían según complejidad y acabados, pero da un rango orientativo razonable.",
+      "intent": "MOFU",
+      "blockHint": "process_steps"
+    },
+    {
+      "question": "¿Se pueden reparar muebles de madera dañados por el sol o humedad?",
+      "answerGuidance": "Explica que en muchos casos el lijado y barnizado recuperan la pieza, pero que el diagnóstico profesional es clave.",
+      "intent": "TOFU",
+      "blockHint": "faq"
+    },
+    {
+      "question": "¿Ofrecéis garantía sobre la instalación de las puertas?",
+      "answerGuidance": "Confirma la garantía por escrito y habla del ajuste y los herrajes.",
+      "intent": "BOFU",
+      "blockHint": "faq"
+    }
+  ],
+  "commonMistakes": [
+    "No medir con precisión los desniveles de paredes y suelos.",
+    "Elegir herrajes baratos que fallan a los pocos meses.",
+    "No prever la ventilación en armarios o muebles de cocina.",
+    "Usar maderas no tratadas en zonas de alta humedad.",
+    "Omitir el tratamiento contra xilófagos en maderas antiguas."
+  ],
+  "decisionCriteria": [
+    {
+      "id": "material-quality",
+      "label": "Calidad y origen de los materiales",
+      "whyItMatters": "La durabilidad del mueble depende directamente de la base y los acabados elegidos.",
+      "proofExpected": [
+        "muestras de materiales",
+        "certificaciones"
+      ]
+    },
+    {
+      "id": "precision",
+      "label": "Precisión en la medición",
+      "whyItMatters": "Un mueble a medida debe integrarse sin huecos ni holguras en el espacio asignado.",
+      "proofExpected": [
+        "visita técnica",
+        "planos de despiece"
+      ]
+    },
+    {
+      "id": "hardware-durability",
+      "label": "Calidad de los herrajes",
+      "whyItMatters": "Las bisagras y guías son las partes que más sufren por el uso diario.",
+      "proofExpected": [
+        "marcas de herrajes",
+        "capacidad de carga"
+      ]
+    }
+  ],
+  "usefulLocalEntities": [
+    {
+      "type": "district",
+      "label": "barrios y áreas de servicio",
+      "usage": "Para indicar zonas donde se realizan montajes y visitas."
+    },
+    {
+      "type": "infrastructure",
+      "label": "tiendas de bricolaje u oficinas",
+      "usage": "Solo como referencia de ubicación o zonas de suministro."
+    }
+  ],
+  "toneProfile": {
+    "voice": [
+      "artesanal",
+      "profesional",
+      "detallista",
+      "honesto"
+    ],
+    "forbiddenCliches": [
+      "el mejor precio",
+      "carpinteros de toda la vida",
+      "muebles irrompibles",
+      "rápido y barato"
+    ],
+    "preferredOpenings": [
+      "diagnóstico de carpintería",
+      "necesidad de espacio a medida",
+      "problemas comunes de herrajes o madera",
+      "criterio técnico para elegir acabado"
+    ],
+    "editorialAngles": [
+      "aprovechamiento inteligente del espacio",
+      "madera real vs imitaciones",
+      "la importancia de una buena instalación",
+      "restaurar o fabricar de nuevo"
+    ]
+  },
+  "legalRiskPolicy": {
+    "prohibitedClaims": [
+      "garantía de 20 años",
+      "maderas indestructibles",
+      "presupuesto final sin ver el trabajo"
+    ],
+    "allowedSafeClaims": [
+      "garantía por escrito",
+      "materiales de primera calidad",
+      "ajuste profesional en obra",
+      "presupuesto detallado tras visita"
+    ],
+    "requiredDisclaimers": [
+      "la madera es un material natural que puede variar",
+      "los tiempos de entrega dependen de los acabados seleccionados",
+      "el presupuesto puede variar según el estado real de la instalación"
+    ],
+    "verificationRequiredFor": [
+      "tipo de madera o material",
+      "certificaciones de sostenibilidad",
+      "medidas definitivas en obra"
+    ],
+    "pricingPolicy": {
+      "allowExactPrices": false,
+      "allowedLanguage": [
+        "desde un precio base orientativo",
+        "presupuesto personalizado",
+        "tarifas competitivas"
+      ],
+      "forbiddenLanguage": [
+        "precio único para todo",
+        "el más barato garantizado"
+      ]
+    },
+    "guaranteePolicy": {
+      "allowSpecificYears": false,
+      "allowedLanguage": [
+        "garantía por escrito",
+        "cobertura sobre fabricación e instalación"
+      ],
+      "forbiddenLanguage": [
+        "garantía de por vida",
+        "maderas indestructibles"
+      ]
+    }
+  },
+  "blockSemantics": {
+    "servicesGrid": {
+      "categories": [
+        {
+          "label": "Armarios y Vestidores",
+          "summary": "Soluciones de almacenamiento a medida maximizando el espacio.",
+          "situations": [
+            "huecos abuhardillados",
+            "falta de espacio",
+            "renovación de vestidor"
+          ],
+          "decisionFactor": "Distribución interior y tipo de puertas."
+        },
+        {
+          "label": "Puertas y Suelos",
+          "summary": "Instalación de carpintería técnica para renovar interiores.",
+          "situations": [
+            "puertas desajustadas",
+            "cambio de tarima",
+            "parqué desgastado"
+          ],
+          "decisionFactor": "Materiales resistentes y nivelación."
+        },
+        {
+          "label": "Cocinas y Baños",
+          "summary": "Mobiliario funcional adaptado a zonas de alta humedad.",
+          "situations": [
+            "reforma de cocina",
+            "mueble de lavabo a medida",
+            "aprovechamiento de esquinas"
+          ],
+          "decisionFactor": "Resistencia de tableros y calidad de herrajes."
+        }
+      ],
+      "trustBullets": [
+        "Taller propio de fabricación",
+        "Diseño previo personalizado",
+        "Materiales certificados",
+        "Garantía por escrito"
+      ]
+    },
+    "processSteps": {
+      "steps": [
+        {
+          "title": "Medición y Diseño",
+          "detail": "Tomamos medidas exactas y planificamos el diseño según tus necesidades.",
+          "riskControl": "Asegura que el mueble encaje sin problemas."
+        },
+        {
+          "title": "Fabricación en Taller",
+          "detail": "Cortamos, ensamblamos y damos acabado a las piezas con precisión artesanal.",
+          "riskControl": "Control de calidad en cada fase de fabricación."
+        },
+        {
+          "title": "Transporte y Montaje",
+          "detail": "Instalamos en tu domicilio ajustando cada detalle in situ.",
+          "riskControl": "Instalación limpia y herrajes bien regulados."
+        }
+      ]
+    },
+    "faq": {
+      "priorityQuestions": [
+        "maderas recomendadas",
+        "tiempo de fabricación",
+        "reparación vs sustitución",
+        "precios orientativos"
+      ],
+      "answerPatterns": [
+        "explicación técnica + opción sugerida",
+        "depende del caso + factor clave",
+        "consejo de experto + seguridad"
+      ]
+    },
+    "priceGuidance": {
+      "factors": [
+        {
+          "label": "Calidad del material",
+          "whyItChanges": "La madera maciza o el lacado son más costosos que la melamina.",
+          "safeLanguage": "Opciones adaptadas a cada presupuesto."
+        },
+        {
+          "label": "Complejidad del diseño",
+          "whyItChanges": "Curvas, herrajes especiales o iluminación integrada influyen.",
+          "safeLanguage": "Estudio técnico previo sin sorpresas."
+        }
+      ],
+      "comparisonRows": [
+        [
+          "Material base",
+          "Determina la estética y resistencia a largo plazo",
+          "Se elige según la zona de la casa"
+        ],
+        [
+          "Acabados",
+          "Barniz, laca o melamina cambian el mantenimiento",
+          "Se define en la fase de diseño"
+        ]
+      ]
+    }
+  }
+}

@@ -108,6 +108,9 @@ export function editorialPostProcessHtml(
                 });
             }
 
+            // 3. Fix "Comunidad de"
+            processedText = processedText.replace(/\bComunidad de\s*(?=[,.;:!?¡¿]|$|<\/li>)/gi, `Comunidad de ${input.city}`);
+
             (node as any).data = processedText.replace(/\s{2,}/g, ' ');
         });
 

@@ -1,0 +1,73 @@
+{
+    "thresholds": {
+        "minScore": 75,
+        "premiumMinScore": 88
+    },
+    "blockers": [
+        "FAQ_SCHEMA_CONTENT_MISMATCH",
+        "PLACEHOLDER_OR_BROKEN_COPY",
+        "PRODUCTION_PLACEHOLDER_VISUAL",
+        "MOBILE_VIEWPORT_MISSING",
+        "BROKEN_INTERNAL_LINK",
+        "SYSTEM_LEAK_VISIBLE"
+    ],
+    "hardBlocks": [
+        "CROSS_NICHE_LEAKAGE_FATAL",
+        "PLACEHOLDER_OR_BROKEN_COPY",
+        "SANITIZER_RESIDUAL_FRAGMENTS",
+        "SYSTEM_LEAK_VISIBLE"
+    ],
+    "boilerplatePatterns": [
+        {
+            "code": "HERO_BUSCAS_FORMULA",
+            "regex": "\\?buscas\\b",
+            "message": "El hero usa la fórmula “¿Buscas...?”, demasiado genérica para una página premium.",
+            "penalty": 8,
+            "severity": "error"
+        },
+        {
+            "code": "GENERIC_SOLUTIONS_FORMULA",
+            "regex": "ofrecemos soluciones profesionales,\\s*rápidas y garantizadas",
+            "message": "Fórmula de subtítulo demasiado genérica (“soluciones profesionales, rápidas y garantizadas”).",
+            "penalty": 10,
+            "severity": "error"
+        },
+        {
+            "code": "LOCAL_PROOF_METHOD_FORMULA",
+            "regex": "nuestra metodología se adapta a las exigencias técnicas de",
+            "message": "La sección local contiene una fórmula repetitiva que suena a plantilla.",
+            "penalty": 14,
+            "severity": "error"
+        },
+        {
+            "code": "TRUST_TOKEN_RESIDUE",
+            "regex": "seguridad certificada|compromiso profesional directo|uso de sistemas avanzados|calidad verificada|con total garantía técnica",
+            "message": "Se detectaron coletillas de confianza residuales repetidas, impropias de una página premium.",
+            "penalty": 16,
+            "severity": "critical"
+        }
+    ],
+    "abstractLocalHeadings": [
+        "referencias geográficas locales",
+        "puntos de servicio técnico",
+        "logística específica del área",
+        "barrios de cobertura",
+        "barrios de servicio",
+        "casos habituales de la zona",
+        "asistencia en todos los barrios",
+        "expertos en seguridad local",
+        "respuesta ante emergencias en la ciudad",
+        "zona de cobertura",
+        "contexto del barrio",
+        "problemas comunes en la ciudad",
+        "atención inmediata en la zona",
+        "necesidad de climatización en la zona"
+    ],
+    "residualFragments": [
+        "\\btipo\\s+de,\\s+el\\s+herraje\\b",
+        "\\bseg[uú]n\\s+el,\\s+el\\s+material\\b",
+        "\\bbrechas\\s+de\\s+por\\s+copias?\\s+no\\s+autorizadas?\\b",
+        "\\brealizamos\\s+y\\s+con\\s+la\\s+m[aá]xima\\s+discreci[oó]n\\b",
+        "\\bauditor[ií]as\\s+de\\s+gratuitas\\b"
+    ]
+}

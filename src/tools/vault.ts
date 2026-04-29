@@ -75,6 +75,9 @@ const configSchema = z.object({
   PIPELINE_FAST_DEBUG: boolish.default(false),
   PIPELINE_SOFT_MODE: boolish.default(false),
   FORCE_DETERMINISTIC_PLANNING: boolish.default(false),
+  WRITER_FORCE_DETERMINISTIC: boolish.default(false),
+  WRITER_DISABLE_LLM_ON_MISSING_PLAYBOOK: boolish.default(true),
+  LAYOUT_COMPOSER_FORCE_DETERMINISTIC: boolish.default(false),
   QUALITY_GATE_FORCE_PASS: boolish.default(false),
 });
 

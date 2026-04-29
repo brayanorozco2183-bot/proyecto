@@ -34,7 +34,7 @@ const heroSchema = z.object({
 
 export const HeroPayloadSchema = z.object({
   hero: heroSchema,
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

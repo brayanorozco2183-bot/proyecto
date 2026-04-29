@@ -225,7 +225,7 @@ function normalizeProductionLinks($: cheerio.CheerioAPI): void {
   $('a[href]').each((_i, el) => {
     const $el = $(el);
     const href = cleanText($el.attr('href') || '');
-    if (href === '/index.html') {
+    if (href === '/index.html' || href === 'index.html') {
       $el.attr('href', './');
       return;
     }
@@ -234,6 +234,7 @@ function normalizeProductionLinks($: cheerio.CheerioAPI): void {
       $el.attr('href', `${absoluteRootIndex[1]}/${absoluteRootIndex[2] || ''}`);
       return;
     }
+    $el.attr('href', href.replace(/\/index\.html(?=\?|#|$)/i, '/'));
   });
 }
 
@@ -249,25 +250,59 @@ function syncFaqSchemaFromVisible($: cheerio.CheerioAPI): void {
     },
   }));
 
-  let touched = false;
-  $('script[type="application/ld+json"]').each((_i, el) => {
+  let jsonScripts = $('script[type="application/ld+json"]');
+  
+  if (jsonScripts.length === 0) {
+    const basicSchema = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'LocalBusiness',
+          '@id': '#localbusiness'
+        }
+      ]
+    };
+    $('head').append(`<script type="application/ld+json">${JSON.stringify(basicSchema)}</script>`);
+    jsonScripts = $('script[type="application/ld+json"]');
+  }
+
+  jsonScripts.each((_i, el) => {
     const raw = $(el).text();
     try {
       const parsed = JSON.parse(raw);
       const graph = schemaGraph(parsed);
+      let touched = false;
+
       for (const node of graph) {
         if (isType(node, 'FAQPage')) {
           node.mainEntity = mainEntity;
           touched = true;
         }
       }
+      
+      if (!touched) {
+        const faqNode = {
+          '@type': 'FAQPage',
+          mainEntity,
+        };
+        if (Array.isArray(parsed?.['@graph'])) {
+          parsed['@graph'].push(faqNode);
+          touched = true;
+        } else if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+          const base = { ...parsed };
+          Object.keys(parsed).forEach((key) => delete parsed[key]);
+          parsed['@context'] = base['@context'] || 'https://schema.org';
+          parsed['@graph'] = [base, faqNode];
+          touched = true;
+        }
+      }
+
       if (touched) $(el).text(JSON.stringify(parsed));
     } catch {
-      // quality gate will report invalid JSON-LD; do not try to rewrite unknown schema.
+      // The repair kit can replace invalid JSON-LD; this generic polish keeps unknown schema untouched.
     }
   });
 }
-
 function sanitizeVisibleFaqText($: cheerio.CheerioAPI): void {
   $('.faq-item, .faq-card, .faq-entry, [data-faq-item], details, .faq-list > li, .faq-grid > article').each((_i, el) => {
     const $el = $(el);

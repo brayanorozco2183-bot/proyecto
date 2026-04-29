@@ -59,7 +59,7 @@ export async function savePhaseArtifact(
     notes?: string[];
   },
 ): Promise<{ statePath: string; htmlPath?: string; summaryPath?: string }> {
-  const label = DEBUG_PHASE_LABELS[phase];
+  const label = DEBUG_PHASE_LABELS[phase as keyof typeof DEBUG_PHASE_LABELS] || `PHASE_${phase}`;
   const phaseDir = path.join(artifactsDir, `phase-${phase}__${label}`);
   await fs.mkdir(phaseDir, { recursive: true });
 

@@ -1,0 +1,432 @@
+{
+  "id": "fontaneros",
+  "displayName": "Fontaneros",
+  "aliases": [
+    "fontanero",
+    "fontaneros",
+    "fontaneria",
+    "fontanería",
+    "plomero",
+    "plomeros",
+    "reparacion de fugas",
+    "desatascos"
+  ],
+  "schemaTypes": [
+    "LocalBusiness",
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "WebPage"
+  ],
+  "allowedVocabulary": [
+    "fuga de agua",
+    "desatasco",
+    "tubería",
+    "llave de paso",
+    "cisterna",
+    "bajante",
+    "sifón",
+    "latiguillo",
+    "termo",
+    "calentador",
+    "grifo",
+    "humedad",
+    "presión de agua",
+    "desagüe",
+    "sellado",
+    "junta",
+    "válvula",
+    "filtración",
+    "reparación de sanitarios",
+    "mantenimiento de fontanería"
+  ],
+  "forbiddenVocabulary": [
+    "bombín",
+    "cerradura",
+    "escudo magnético",
+    "cuadro eléctrico",
+    "magnetotérmico",
+    "brackets",
+    "despido improcedente"
+  ],
+  "prohibitedClaims": [
+    "desatasco en 15 minutos garantizado",
+    "sin obras en cualquier caso",
+    "precio fijo universal",
+    "fuga resuelta siempre en una visita"
+  ],
+  "validTrustSignals": [
+    {
+      "id": "diagnosis-source",
+      "label": "Localización previa del origen",
+      "description": "No se ataca el síntoma sin revisar de dónde viene la fuga o el atasco."
+    },
+    {
+      "id": "clean-work",
+      "label": "Protección y limpieza de la zona",
+      "description": "Intervención ordenada para evitar daños añadidos."
+    },
+    {
+      "id": "parts-justified",
+      "label": "Sustitución de piezas justificada",
+      "description": "Solo se cambian elementos necesarios según desgaste o avería."
+    },
+    {
+      "id": "written-quote",
+      "label": "Presupuesto previo",
+      "description": "Se explica alcance, materiales y mano de obra antes de empezar."
+    },
+    {
+      "id": "post-check",
+      "label": "Comprobación final",
+      "description": "Se verifica estanqueidad, presión y funcionamiento al terminar."
+    }
+  ],
+  "coreServices": [
+    "Reparación de fugas de agua visibles y ocultas",
+    "Desatascos en fregaderos, lavabos, duchas y bajantes",
+    "Sustitución de grifos, cisternas, sifones y llaves de paso",
+    "Reparación e instalación de termos y calentadores",
+    "Mantenimiento de fontanería en vivienda, local y comunidad",
+    "Intervenciones urgentes por inundación, filtración o rotura"
+  ],
+  "bofuVariants": [
+    {
+      "slug": "fontanero-urgente-fuga",
+      "label": "Fontanero urgente por fuga de agua",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "contener daño y reparar el origen de la avería"
+    },
+    {
+      "slug": "desatasco-cocina-bano",
+      "label": "Desatasco de cocina o baño",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "recuperar uso normal sin empeorar la instalación"
+    },
+    {
+      "slug": "cambio-termo-calentador",
+      "label": "Cambio o reparación de termo y calentador",
+      "intent": "commercial",
+      "funnelStage": "BOFU",
+      "angle": "restablecer agua caliente y seguridad de uso"
+    },
+    {
+      "slug": "reparar-cisterna-grifo",
+      "label": "Reparación de cisterna o grifo que pierde",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "evitar consumo extra y goteos persistentes"
+    }
+  ],
+  "commonObjections": [
+    "No sé si la avería está en el grifo o en la tubería.",
+    "Temo que me digan que hay que romper sin haber revisado bien.",
+    "Quiero saber si compensa reparar o cambiar la pieza.",
+    "Me preocupa el agua acumulada y posibles daños en vecinos o paredes.",
+    "Necesito una solución clara, no una chapuza temporal."
+  ],
+  "faqBank": [
+    {
+      "question": "¿Cómo saber si una fuga viene del grifo, del latiguillo o de la tubería?",
+      "answerGuidance": "Explica señales visibles, humedad, presión y por qué conviene localizar el origen antes de desmontar piezas.",
+      "intent": "MOFU",
+      "blockHint": "faq"
+    },
+    {
+      "question": "¿Qué influye en el presupuesto de un fontanero?",
+      "answerGuidance": "Describe acceso a la avería, piezas, tiempo de diagnóstico, complejidad del atasco y necesidad de pruebas.",
+      "intent": "MOFU",
+      "blockHint": "price_guidance"
+    },
+    {
+      "question": "¿Cuándo conviene reparar una cisterna y cuándo cambiarla?",
+      "answerGuidance": "Diferencia desgaste de mecanismos, disponibilidad de repuestos y estado general del conjunto.",
+      "intent": "BOFU",
+      "blockHint": "services_grid"
+    },
+    {
+      "question": "¿Un desatasco puede requerir algo más que limpiar el sifón?",
+      "answerGuidance": "Aclara cuándo el problema está en ramal, arqueta, bajante o uso acumulado de grasa y residuos.",
+      "intent": "TOFU",
+      "blockHint": "faq"
+    },
+    {
+      "question": "¿Qué hago si una fuga afecta a pared, techo o vecino?",
+      "answerGuidance": "Prioriza cortar agua si procede, contener daños y solicitar diagnóstico del punto de fuga antes de reparar acabados.",
+      "intent": "BOFU",
+      "blockHint": "process_steps"
+    }
+  ],
+  "commonMistakes": [
+    "Usar productos agresivos sin saber si dañan juntas o tuberías.",
+    "Cambiar un grifo cuando la pérdida viene del latiguillo o de la llave de escuadra.",
+    "Ignorar humedades pequeñas hasta que afectan a paredes o vecinos.",
+    "Forzar desatascos sin revisar sifón, pendiente y punto real del tapón.",
+    "Tapar síntomas sin revisar presión, sellados o estado de la instalación."
+  ],
+  "decisionCriteria": [
+    {
+      "id": "source-localization",
+      "label": "Localización real de la avería",
+      "whyItMatters": "Sin identificar origen, el problema suele reaparecer aunque desaparezca el síntoma.",
+      "proofExpected": [
+        "prueba de estanqueidad",
+        "revisión visual",
+        "trazado de la instalación"
+      ]
+    },
+    {
+      "id": "repair-vs-replace",
+      "label": "Reparar o sustituir la pieza",
+      "whyItMatters": "Cambiar de más encarece; cambiar de menos deja una solución corta.",
+      "proofExpected": [
+        "estado de roscas",
+        "desgaste del mecanismo",
+        "disponibilidad de repuestos"
+      ]
+    },
+    {
+      "id": "water-damage-risk",
+      "label": "Riesgo de daños por agua",
+      "whyItMatters": "Filtraciones y humedades pueden afectar acabados, vecinos y tiempos de reparación.",
+      "proofExpected": [
+        "humedad visible",
+        "goteo persistente",
+        "presión anómala"
+      ]
+    },
+    {
+      "id": "access-complexity",
+      "label": "Acceso a la instalación",
+      "whyItMatters": "No es igual intervenir en un mueble de cocina que en una bajante o un falso techo.",
+      "proofExpected": [
+        "punto de acceso",
+        "necesidad de desmontaje",
+        "aislamiento del circuito"
+      ]
+    }
+  ],
+  "usefulLocalEntities": [
+    {
+      "type": "service_area",
+      "label": "barrios, urbanizaciones y municipios cercanos",
+      "usage": "Para coberturas y desplazamientos reales."
+    },
+    {
+      "type": "infrastructure",
+      "label": "comunidades y bajantes comunitarias",
+      "usage": "Para averías compartidas, humedades o desagües."
+    },
+    {
+      "type": "public_body",
+      "label": "compañía suministradora o seguro del hogar",
+      "usage": "Solo cuando proceda por corte, fuga o parte, nunca como aval publicitario."
+    },
+    {
+      "type": "regulation",
+      "label": "instalaciones interiores de agua y saneamiento",
+      "usage": "Como marco general, sin citar normativa específica si no está verificada."
+    }
+  ],
+  "toneProfile": {
+    "voice": [
+      "claro",
+      "diagnóstico",
+      "práctico",
+      "tranquilizador"
+    ],
+    "forbiddenCliches": [
+      "reparamos cualquier fuga en minutos",
+      "sin obra nunca",
+      "somos fontaneros de toda la vida en cada barrio"
+    ],
+    "preferredOpenings": [
+      "origen de la avería",
+      "síntoma vs causa",
+      "criterio para reparar o sustituir",
+      "riesgo de humedad o atasco"
+    ],
+    "editorialAngles": [
+      "detener daños y arreglar el origen",
+      "explicar por qué una fuga reaparece",
+      "evitar chapuzas y cambios innecesarios",
+      "diferenciar mantenimiento de urgencia"
+    ]
+  },
+  "legalRiskPolicy": {
+    "prohibitedClaims": [
+      "sin romper nunca",
+      "desatasco garantizado en 15 minutos",
+      "precio fijo para cualquier avería",
+      "ahorro garantizado sin revisar la instalación"
+    ],
+    "allowedSafeClaims": [
+      "diagnóstico previo",
+      "presupuesto antes de actuar",
+      "comprobación final de funcionamiento",
+      "sustitución de piezas justificada"
+    ],
+    "requiredDisclaimers": [
+      "el alcance depende del punto exacto de la avería",
+      "un atasco puede estar en sifón, ramal, bajante o arqueta",
+      "el presupuesto cambia si hacen falta materiales o desmontajes no visibles al inicio"
+    ],
+    "verificationRequiredFor": [
+      "marca de termo o calentador",
+      "certificados de gas",
+      "promesas de ahorro o consumo",
+      "normas concretas"
+    ],
+    "pricingPolicy": {
+      "allowExactPrices": false,
+      "allowedLanguage": [
+        "presupuesto orientativo",
+        "coste según acceso y materiales",
+        "se confirma tras revisar la avería"
+      ],
+      "forbiddenLanguage": [
+        "precio cerrado universal",
+        "tarifa única para cualquier fuga o desatasco"
+      ]
+    },
+    "guaranteePolicy": {
+      "allowSpecificYears": false,
+      "allowedLanguage": [
+        "garantía por escrito",
+        "cobertura según trabajo realizado y piezas instaladas"
+      ],
+      "forbiddenLanguage": [
+        "garantía de 10 años",
+        "garantía ilimitada"
+      ]
+    }
+  },
+  "blockSemantics": {
+    "servicesGrid": {
+      "categories": [
+        {
+          "label": "Fugas y filtraciones",
+          "summary": "Detección y reparación del punto real de pérdida de agua.",
+          "situations": [
+            "goteo constante",
+            "mancha de humedad",
+            "fuga bajo fregadero"
+          ],
+          "decisionFactor": "Primero se identifica origen y alcance antes de desmontar."
+        },
+        {
+          "label": "Desatascos y desagües",
+          "summary": "Recuperación de caudal y evacuación normal en cocina, baño o bajante.",
+          "situations": [
+            "fregadero lento",
+            "ducha que no traga",
+            "olor por sifón"
+          ],
+          "decisionFactor": "Importa saber si el tapón está en el aparato o más adelante en la instalación."
+        },
+        {
+          "label": "Grifos, cisternas y sanitarios",
+          "summary": "Reparación o sustitución de mecanismos con pérdida, holgura o fallo de cierre.",
+          "situations": [
+            "cisterna que no corta",
+            "grifo que gotea",
+            "válvula defectuosa"
+          ],
+          "decisionFactor": "Se valora desgaste, repuesto y estado general del conjunto."
+        },
+        {
+          "label": "Agua caliente y mantenimiento",
+          "summary": "Intervenciones en termo, calentador y elementos de servicio habituales.",
+          "situations": [
+            "sin agua caliente",
+            "pérdida en válvula",
+            "mantenimiento preventivo"
+          ],
+          "decisionFactor": "Se revisa seguridad, estado del equipo y compatibilidad de piezas."
+        }
+      ],
+      "trustBullets": [
+        "Diagnóstico del origen antes de actuar",
+        "Presupuesto previo",
+        "Protección y limpieza de la zona",
+        "Comprobación final de estanqueidad y funcionamiento"
+      ]
+    },
+    "processSteps": {
+      "steps": [
+        {
+          "title": "Localizar el origen",
+          "detail": "Se distingue entre síntoma visible y causa real de la avería o del atasco.",
+          "riskControl": "Evita reparaciones parciales que no resuelven el problema."
+        },
+        {
+          "title": "Aislar y asegurar",
+          "detail": "Se corta agua o se protege la zona si hay riesgo de fuga o desbordamiento.",
+          "riskControl": "Reduce daños en muebles, suelos o vecinos."
+        },
+        {
+          "title": "Reparar o sustituir con criterio",
+          "detail": "Se interviene sobre la pieza o el tramo que realmente genera el fallo.",
+          "riskControl": "Evita cambios innecesarios y minimiza recaídas."
+        },
+        {
+          "title": "Probar y verificar",
+          "detail": "Se comprueba presión, estanqueidad, caudal y evacuación después del trabajo.",
+          "riskControl": "Confirma que la instalación queda funcional y segura."
+        }
+      ]
+    },
+    "faq": {
+      "priorityQuestions": [
+        "origen de fuga",
+        "factores de presupuesto",
+        "cisterna reparar o cambiar",
+        "desatasco simple o profundo",
+        "daños por humedad"
+      ],
+      "answerPatterns": [
+        "síntoma + causa probable",
+        "advertencia + recomendación",
+        "decisión entre reparar y sustituir"
+      ]
+    },
+    "priceGuidance": {
+      "factors": [
+        {
+          "label": "Punto real de la avería",
+          "whyItChanges": "Una fuga en latiguillo no se aborda igual que una en tramo empotrado o bajante.",
+          "safeLanguage": "El presupuesto serio nace del origen, no del síntoma."
+        },
+        {
+          "label": "Acceso y desmontaje",
+          "whyItChanges": "Mueble, alicatado, falso techo o arqueta cambian tiempo y materiales.",
+          "safeLanguage": "Se explica el acceso antes de intervenir."
+        },
+        {
+          "label": "Piezas y materiales",
+          "whyItChanges": "No cuesta igual una junta sencilla que un mecanismo completo o un tramo de instalación.",
+          "safeLanguage": "Solo se presupuestan materiales justificados por la avería."
+        }
+      ],
+      "comparisonRows": [
+        [
+          "Origen del problema",
+          "si está en pieza, ramal o instalación cambia el trabajo",
+          "se aclara tras revisar la zona"
+        ],
+        [
+          "Acceso a la avería",
+          "mueble, pared o bajante modifican el tiempo",
+          "se informa antes de desmontar"
+        ],
+        [
+          "Materiales necesarios",
+          "juntas, válvulas o mecanismos no tienen el mismo coste",
+          "se sustituyen solo si están justificados"
+        ]
+      ]
+    }
+  }
+}

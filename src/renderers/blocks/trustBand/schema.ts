@@ -54,13 +54,13 @@ const semanticSchema = z.object({
 });
 
 
-export const TRUSTBANDVARIANTS = ['scrolling_strip', 'static_pills', 'minimal_icons'] as const;
+export const TRUSTBANDVARIANTS = ['scrolling_strip', 'static_pills', 'minimal_icons', 'signal_grid'] as const;
 export type TrustBandVariant = typeof TRUSTBANDVARIANTS[number];
 
 export const TrustBandPayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], items: [], trustBullets: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

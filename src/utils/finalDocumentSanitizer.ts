@@ -3,7 +3,7 @@ import { resolveBlockPlaybookPayload } from '../niches/blockContent.js';
 import { sanitizeBrandName, buildCanonicalBrandName, repairBrokenLocalFragments as repairBrandLocalFragments } from './brandGuard.js';
 import { getCanonicalNicheLabel } from '../niches/agentAdapters.js';
 import { normalizeFaqQuestionText, normalizeFaqAnswerText } from './faqSanitizer.js';
-import { normalizeFaqQuestionText, normalizeFaqAnswerText } from './faqSanitizer.js';
+import { sanitizeLegalRiskClaims } from './legalClaimSanitizer.js';
 
 function escapeHtml(value = ''): string {
   return String(value)
@@ -21,6 +21,29 @@ export interface FinalDocumentSanitizerContext {
   phone?: string;
 }
 
+type JsonPrimitive = string | number | boolean | null;
+type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue };
+type JsonObject = { [key: string]: JsonValue };
+
+interface PlaybookServiceItem {
+  title?: string;
+  body?: string;
+  meta?: string[];
+}
+
+interface PlaybookBlockPayload {
+  services?: PlaybookServiceItem[];
+  trustBullets?: string[];
+}
+
+function isJsonObject(value: unknown): value is JsonObject {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isPlaybookBlockPayload(value: unknown): value is PlaybookBlockPayload {
+  return typeof value === 'object' && value !== null;
+}
+
 function normalizeText(value: string): string {
   return String(value || '')
     .replace(/[…]+/g, ' ')
@@ -34,6 +57,160 @@ function normalizeComparable(value: string): string {
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
+}
+
+
+function ensureSpanishPunctuation(value: string): string {
+  let out = normalizeText(value);
+  if (!out) return out;
+  const questionStarters = /^(?:que|qué|como|cómo|cuando|cuándo|donde|dónde|cuanto|cuánto|por qué|por que|puedo|conviene|es mejor|hace falta|necesito|cuál|cual)\b/i;
+  if (questionStarters.test(out) && !out.startsWith('¿')) {
+    out = `¿${out.replace(/^[¿?\s]+|[?\s]+$/g, '')}?`;
+  }
+  return normalizeText(out)
+    .replace(/^Que\b/, 'Qué')
+    .replace(/^Como\b/, 'Cómo')
+    .replace(/^Cuando\b/, 'Cuándo')
+    .replace(/^Donde\b/, 'Dónde')
+    .replace(/^Cuanto\b/, 'Cuánto')
+    .replace(/^Por que\b/i, 'Por qué');
+}
+
+function ensureHeadBaseline($: cheerio.CheerioAPI): void {
+  const html = $('html').first();
+  if (html.length) html.attr('lang', 'es-ES');
+  if ($('meta[charset]').length === 0) $('head').prepend('<meta charset="utf-8">');
+  if ($('meta[name="format-detection"]').length === 0) $('head').append('<meta name="format-detection" content="telephone=yes">');
+  if ($('meta[property="og:locale"]').length === 0) $('head').append('<meta property="og:locale" content="es_ES">');
+  else $('meta[property="og:locale"]').attr('content', 'es_ES');
+  if ($('meta[name="robots"]').length === 0) $('head').append('<meta name="robots" content="index,follow,max-image-preview:large">');
+}
+
+function ensureContactAnchor($: cheerio.CheerioAPI): void {
+  if ($('#contacto').length) return;
+  const footer = $('footer').first();
+  if (footer.length) footer.attr('id', 'contacto');
+}
+
+function addExternalLinkSafety($: cheerio.CheerioAPI): void {
+  $('a[href]').each((_i: number, el: any) => {
+    const $el = $(el);
+    const href = String($el.attr('href') || '').trim();
+    if (!/^https?:\/\//i.test(href)) return;
+    const rel = new Set(String($el.attr('rel') || '').split(/\s+/).filter(Boolean));
+    rel.add('noopener');
+    rel.add('noreferrer');
+    $el.attr('rel', Array.from(rel).join(' '));
+  });
+}
+
+function normalizePremiumSpanishHeadings($: cheerio.CheerioAPI, context: FinalDocumentSanitizerContext): void {
+  const city = normalizeText(context.city || 'tu zona');
+  const service = canonicalServiceLabel(context.niche).toLowerCase();
+  const replacements: Array<[RegExp, string]> = [
+    [/^contratar\s+ahora$/i, `Solicita orientación profesional en ${city}`],
+    [/^panel\s+de\s+urgencia$/i, `Respuesta prioritaria con diagnóstico claro en ${city}`],
+    [/^gu[ií]a\s+de\s+precios$/i, `Qué condiciona el presupuesto de ${service} en ${city}`],
+    [/^bandera\s+de\s+confianza$/i, 'Señales reales de un servicio bien planteado'],
+    [/^p[aá]gina\s+principal\s+y\s+navegaci[oó]n\s+relacionada$/i, `Más información sobre ${service} en ${city}`]
+  ];
+  $('h1, h2, h3, summary').each((_i: number, el: any) => {
+    const $el = $(el);
+    const text = normalizeText($el.text());
+    if (!text) return;
+    for (const [pattern, replacement] of replacements) {
+      if (pattern.test(text)) {
+        $el.text(replacement);
+        return;
+      }
+    }
+    if ($el.is('summary') || $el.closest('[data-block-type="faq"], #faq').length) {
+      const punctuated = ensureSpanishPunctuation(text);
+      if (punctuated !== text) $el.text(punctuated);
+    }
+  });
+}
+
+function removeLowValueTemplateResidue($: cheerio.CheerioAPI): void {
+  const residuePatterns = [
+    /fallback\s+can[oó]nico\s+seguro/i,
+    /tel[eé]fono\s+pendiente\s+de\s+validaci[oó]n/i,
+    /no\s+se\s+inventan\s+reseñas/i,
+    /bloque\s+generado/i,
+    /respaldo\s+controlado/i,
+    /versi[oó]n\s+segura/i,
+    /contenido\s+pendiente\s+de\s+completar/i,
+    /fallback\s+determinista/i,
+    /emergency\s+fallback/i
+  ];
+  $('p, li, span, small').each((_i: number, el: any) => {
+    const $el = $(el);
+    const text = normalizeText($el.text());
+    if (text && residuePatterns.some((rx) => rx.test(text))) $el.remove();
+  });
+}
+
+function dedupeRepeatedBlocks($: cheerio.CheerioAPI): void {
+  const seen = new Set<string>();
+  $('section, article').each((_i: number, el: any) => {
+    const $el = $(el);
+    const id = normalizeText($el.attr('id') || '');
+    const heading = normalizeComparable($el.find('h2, h3').first().text());
+    const body = normalizeComparable($el.text()).slice(0, 220);
+    const key = `${id || heading}::${body}`;
+    if (!(id || heading) || body.length < 80) return;
+    if (seen.has(key)) $el.remove();
+    else seen.add(key);
+  });
+}
+
+function ensureInternalLinksBeforeFooter($: cheerio.CheerioAPI): void {
+  const footer = $('footer').first();
+  if (!footer.length) return;
+  $('.internal-links-hub, #internal-links-contextual').each((_i: number, el: any) => {
+    const $el = $(el);
+    if ($el.nextAll('footer').length === 0) $el.insertBefore(footer);
+  });
+}
+
+function ensureCoreStructuredData($: cheerio.CheerioAPI, context: FinalDocumentSanitizerContext): void {
+  const canonical = normalizeText($('link[rel="canonical"]').attr('href') || './');
+  const businessName = buildBusinessName(context);
+  const title = sanitizeTitle($('title').first().text() || $('h1').first().text(), context.city, context.niche);
+  const description = sanitizeDescription($('meta[name="description"]').attr('content') || '', context.niche, context.city);
+  let script = $('script[type="application/ld+json"]').first();
+  let root: JsonObject = { '@context': 'https://schema.org', '@graph': [] as unknown as JsonValue };
+  if (script.length) {
+    try {
+      const parsed = JSON.parse(script.text() || '{}') as JsonValue;
+      if (isJsonObject(parsed)) root = parsed;
+    } catch {
+      script.remove();
+      script = $();
+    }
+  }
+  const graphRaw = Array.isArray(root['@graph']) ? root['@graph'] : [];
+  const graph = graphRaw.filter(isJsonObject);
+  const hasType = (wanted: string): boolean => graph.some((node) => {
+    const rawType = node['@type'];
+    return Array.isArray(rawType) ? rawType.map(String).includes(wanted) : String(rawType || '') === wanted;
+  });
+  if (!hasType('WebSite')) graph.push({ '@type': 'WebSite', '@id': '#website', name: businessName, url: canonical.startsWith('http') ? new URL(canonical).origin : '/', inLanguage: 'es-ES' });
+  if (!hasType('WebPage')) graph.push({ '@type': 'WebPage', '@id': '#webpage', name: title, description, url: canonical, inLanguage: 'es-ES', isPartOf: { '@id': '#website' } as unknown as JsonValue });
+  if (!hasType('BreadcrumbList')) {
+    graph.push({
+      '@type': 'BreadcrumbList',
+      '@id': '#breadcrumb',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Inicio', item: '/' },
+        { '@type': 'ListItem', position: 2, name: title.replace(/\s+\|\s+.+$/, ''), item: canonical }
+      ] as unknown as JsonValue
+    });
+  }
+  root['@context'] = 'https://schema.org';
+  root['@graph'] = graph as unknown as JsonValue;
+  if (!script.length) $('head').append(`<script type="application/ld+json">${JSON.stringify(root)}</script>`);
+  else script.text(JSON.stringify(root));
 }
 
 function titleCase(value: string): string {
@@ -170,13 +347,13 @@ function sanitizeAnswerText(value: string, niche?: string, city?: string): strin
   return truncateSmart(repairBrokenLocalFragments(out, city), 320, 140);
 }
 
-function sanitizeStructuredDataNode(value: any, context: FinalDocumentSanitizerContext): any {
+function sanitizeStructuredDataNode(value: JsonValue, context: FinalDocumentSanitizerContext): JsonValue {
   if (Array.isArray(value)) {
     return value.map((item) => sanitizeStructuredDataNode(item, context));
   }
 
-  if (value && typeof value === 'object') {
-    const output: Record<string, any> = {};
+  if (isJsonObject(value)) {
+    const output: JsonObject = {};
 
     for (const [key, raw] of Object.entries(value)) {
       if (typeof raw === 'string') {
@@ -587,7 +764,7 @@ function rewriteGenericSectionHeadings($: cheerio.CheerioAPI, context: FinalDocu
     ]
   };
 
-  const genericPatterns = [/^por qu[eé]\s+confiar/i, /^preguntas\s+sobre/i, /^cobertura\s+en/i, /^pide\s+tu/i, /^servicio\s+local\s+de/i, /^motivos\s+para\s+contar/i];
+  const genericPatterns = [/^por qu[eé]\s+confiar/i, /^preguntas\s+sobre/i, /^cobertura\s+en/i, /^pide\s+tu/i, /^servicio\s+local\s+de/i, /^motivos\s+para\s+contar/i, /^contratar\s+ahora/i, /^panel\s+de\s+urgencia/i, /^gu[ií]a\s+de\s+precios/i, /^bandera\s+de\s+confianza/i];
 
   $('section[id]').each((_ignored: any, el: any) => {
     const section = $(el);
@@ -616,6 +793,8 @@ function repairBrokenLocalFragments(value: string, context: FinalDocumentSanitiz
     .replace(/\ben\s+compensa\b/gi, `en ${city} compensa`)
     .replace(/\ben\s+conviene\b/gi, `en ${city} conviene`)
     .replace(/\bcobertura\s+en\s*[,.;:!?]?\s*$/gi, `cobertura en ${city}`)
+    .replace(/\bLa presencia se comunica a nivel de\s+sin\s+inventar\b/gi, `La presencia se comunica a nivel de ${city}, sin inventar`)
+    .replace(/\bc[uó]mo puedo asegurarme de que mi cuadro el[eé]ctrico en est[eé] protegido/gi, 'Cómo puedo asegurarme de que mi cuadro eléctrico esté protegido')
     .replace(/\ben\s*$/i, `en ${city}`);
 
   // Dedupe city repetitions in short spans.
@@ -642,6 +821,7 @@ function cleanVisibleText(value: string, context: FinalDocumentSanitizerContext)
     out = out.replace(pattern, replacement);
   }
 
+  out = sanitizeLegalRiskClaims(out, context.niche).html;
   out = removeCrossNicheSentences(out, context.niche);
   out = repairBrokenLocalFragments(out, context);
 
@@ -723,10 +903,11 @@ function buildSectionIntroParagraphs(niche?: string, city?: string): string[] {
   ];
 }
 
-function resolvePayloadSafe(niche: string | undefined, blockType: string, city?: string): any | null {
+function resolvePayloadSafe(niche: string | undefined, blockType: string, city?: string): PlaybookBlockPayload | null {
   if (!niche) return null;
   try {
-    return resolveBlockPlaybookPayload(niche, blockType, city || '');
+    const payload: unknown = resolveBlockPlaybookPayload(niche, blockType, city || '');
+    return isPlaybookBlockPayload(payload) ? payload : null;
   } catch {
     return null;
   }
@@ -764,7 +945,7 @@ function repairServicesGridSection($: cheerio.CheerioAPI, context: FinalDocument
   }
   if (!cardsContainer.length) return;
 
-  const cardsHtml = payload.services.slice(0, 4).map((item: any) => {
+  const cardsHtml = payload.services.slice(0, 4).map((item: PlaybookServiceItem) => {
     const title = normalizeText(item?.title || 'Servicio especializado');
     const body = cleanVisibleText(normalizeText(item?.body || ''), context);
     const metas = Array.isArray(item?.meta) ? item.meta.map((meta: string) => normalizeText(meta)).filter(Boolean) : [];
@@ -802,7 +983,7 @@ function repairProcessStepsSection($: cheerio.CheerioAPI, context: FinalDocument
   const timeline = section.find('.process-steps__timeline').first();
   if (!timeline.length) return;
 
-  const stepsHtml = payload.services.slice(0, 4).map((item: any, index: number) => {
+  const stepsHtml = payload.services.slice(0, 4).map((item: PlaybookServiceItem, index: number) => {
     const title = normalizeText(item?.title || `Paso ${index + 1}`);
     const body = cleanVisibleText(normalizeText(item?.body || ''), context);
     return `<article class="step-card"><span class="step-card__index">${index + 1}</span><div class="step-card__body"><h3>${title}</h3><p>${body}</p></div></article>`;
@@ -1002,12 +1183,17 @@ function syncSeoAndStructuredData($: cheerio.CheerioAPI, context: FinalDocumentS
   $('script[type="application/ld+json"]').each((_i, el) => {
     const raw = $(el).text() || '';
     try {
-      const parsed = JSON.parse(raw);
-      const graph = Array.isArray(parsed?.['@graph']) ? parsed['@graph'] : [parsed];
-      const sanitizedGraph = graph.map((node: any) => sanitizeStructuredDataNode(node, context));
+      const parsed = JSON.parse(raw) as JsonValue;
+      const parsedObject = isJsonObject(parsed) ? parsed : undefined;
+      const graphRaw = Array.isArray(parsedObject?.['@graph']) ? parsedObject['@graph'] : [parsed];
+      const graph = Array.isArray(graphRaw) ? graphRaw : [parsed];
+      const sanitizedGraph = graph
+        .map((node) => sanitizeStructuredDataNode(node, context))
+        .filter(isJsonObject);
 
       for (const node of sanitizedGraph) {
-        const type = Array.isArray(node?.['@type']) ? node['@type'][0] : node?.['@type'];
+        const rawType = node['@type'];
+        const type = Array.isArray(rawType) ? rawType[0] : rawType;
         if (type === 'Organization' || type === 'LocalBusiness') {
           node.name = businessName;
           if (canonical) node.url = canonical;
@@ -1028,7 +1214,7 @@ function syncSeoAndStructuredData($: cheerio.CheerioAPI, context: FinalDocumentS
         }
         if (type === 'BreadcrumbList' && Array.isArray(node.itemListElement) && node.itemListElement.length > 0) {
           const last = node.itemListElement[node.itemListElement.length - 1];
-          if (last) {
+          if (isJsonObject(last)) {
             last.name = canonicalHeading;
             if (canonical) last.item = canonical;
           }
@@ -1045,7 +1231,7 @@ function syncSeoAndStructuredData($: cheerio.CheerioAPI, context: FinalDocumentS
         }
       }
 
-      const output = Array.isArray(parsed?.['@graph']) ? { ...parsed, '@graph': sanitizedGraph } : sanitizedGraph[0];
+      const output = parsedObject && Array.isArray(parsedObject['@graph']) ? { ...parsedObject, '@graph': sanitizedGraph } : sanitizedGraph[0];
       $(el).text(JSON.stringify(output));
     } catch {
       // leave handled by upstream validator; best effort only
@@ -1057,6 +1243,7 @@ export function sanitizeFinalRenderedHtml(html: string, context: FinalDocumentSa
   const source = String(html || '').normalize('NFC');
   const $ = cheerio.load(source, { decodeEntities: false });
 
+  ensureHeadBaseline($);
   ensureResponsiveGuards($);
   ensurePerformanceGuards($);
   ensureFontPreconnects($);
@@ -1066,6 +1253,9 @@ export function sanitizeFinalRenderedHtml(html: string, context: FinalDocumentSa
   }
 
   fixTextNodes($, context);
+  normalizePremiumSpanishHeadings($, context);
+  removeLowValueTemplateResidue($);
+  ensureContactAnchor($);
 
   // SANITIZACIÓN DEL HEAD (Title y Meta Tags)
   const titleTag = $('title');
@@ -1208,8 +1398,12 @@ export function sanitizeFinalRenderedHtml(html: string, context: FinalDocumentSa
     else $el.removeAttr('class');
   });
 
+  dedupeRepeatedBlocks($);
+  ensureInternalLinksBeforeFooter($);
+  addExternalLinkSafety($);
   syncSeoAndStructuredData($, context);
+  ensureCoreStructuredData($, context);
   removeEmptyArtifacts($);
 
-  return $.html().replace(/\s{2,}/g, ' ').replace(/\n{2,}/g, '\n').trim();
+  return sanitizeLegalRiskClaims($.html().replace(/\s{2,}/g, ' ').replace(/\n{2,}/g, '\n').trim(), context.niche).html;
 }

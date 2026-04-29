@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_199_COPPER_AVENUE_MODERN",
+  "title": "Copper Avenue Modern",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "soft_residential",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 16,
+      "gutter": "32px",
+      "container_width": "min(1440px, calc(100% - 64px))"
+    },
+    "navigation": {
+      "style": "calm_header",
+      "position": "sticky_top",
+      "blur": "24px",
+      "contrast_safe": true,
+      "mobile_pattern": "compact_command"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#7C3AED",
+      "accent": "#0F766E",
+      "bg": "#F9F7FF",
+      "surface": "#FFFFFF",
+      "surface_alt": "#EEEAF8",
+      "text": "#211A33",
+      "muted": "#514869",
+      "on_primary": "#FFFFFF",
+      "on_accent": "#FFFFFF",
+      "radius_policy": "24px",
+      "shadow_policy": "ambient_premium",
+      "font_display": "'Montserrat Alternates', sans-serif",
+      "font_body": "'DM Sans', sans-serif",
+      "spacing_density": "editorial",
+      "border_policy": "architectural"
+    },
+    "contrast_report": {
+      "bg_text": 15.69,
+      "surface_text": 16.66,
+      "primary_on_primary": 5.7,
+      "accent_on_accent": 5.47,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #F9F7FF; --surface: #FFFFFF; --surface-alt: #EEEAF8; --text: #211A33; --muted: #514869; --primary: #7C3AED; --accent: #0F766E; --on-primary: #FFFFFF; --on-accent: #FFFFFF; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 24px; --gap: 32px; --blur: 24px; --nav-position: sticky; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; } h1,h2,h3,.display { font-family: 'Montserrat Alternates', sans-serif; } .blueprint { background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px); background-size: 48px 48px; } .spec-table { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; } .spec-row { display: grid; grid-template-columns: 180px 1fr; padding: 16px; border-bottom: 1px solid var(--border); }  @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "bento_authority_hero",
+      "custom_structure": "<section class='hero hero--bento'><div class='hero-card hero-card--main'><span>{{CATEGORY}}</span><h1>{{H1}}</h1>{{CTA_PRIMARY}}</div><div class='hero-card hero-card--proof'>{{PROOF_STACK}}</div><div class='hero-card hero-card--map'>{{LOCAL_MAP}}</div></section>"
+    },
+    "services_grid": {
+      "style": "editorial_service_blocks",
+      "columns_override": 2,
+      "interaction": "no_motion_static",
+      "content_strategy": "large editorial paragraphs and service badges"
+    },
+    "trust_layer": {
+      "style": "certification_ribbon",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "map_like_area_list",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "technical_table",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "quiet_lavender",
+    "motion_level": "assertive",
+    "noise_overlay": false,
+    "color_glitch": false,
+    "image_treatment": "blueprint_overlay",
+    "premium_cues": [
+      "cinematic hero",
+      "sticky CTA",
+      "local proof"
+    ]
+  }
+}

@@ -1,9 +1,10 @@
 import { BLOCK_VISUAL_SPECS } from '../../../config/blockVisualSpecs.js';
 import { TRUSTBANDVARIANTS } from './schema.js';
 import type { BlockRendererInput } from '../types.js';
+import { BlockRendererInputSchema } from '../contracts.js';
 
 export function isTrustBandPayload(value: unknown): value is BlockRendererInput {
-  return true;
+  return BlockRendererInputSchema.safeParse(value).success;
 }
 
 export function resolveTrustBandVariant(input?: string): string {
@@ -11,6 +12,6 @@ export function resolveTrustBandVariant(input?: string): string {
   const allowed = (spec.allowedVisualVariants || TRUSTBANDVARIANTS) as string[];
   const resolved = allowed.includes(input || '')
     ? input
-    : (spec.defaultVisualVariant || 'scrolling_strip');
+    : (spec.defaultVisualVariant || 'signal_grid');
   return resolved as string;
 }

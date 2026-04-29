@@ -45,7 +45,7 @@ export default async function Home() {
 
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+      <header className="dashboard-header">
         <div>
           <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Maestro Command Center</h1>
           <p style={{ color: 'var(--muted)' }}>Monitoreo en tiempo real del enjambre de agentes SEO.</p>
@@ -75,7 +75,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: '1.5rem', alignItems: 'start', marginBottom: '2rem' }}>
+      <section className="dashboard-grid">
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <SiteSettings />
           <MissionControl />

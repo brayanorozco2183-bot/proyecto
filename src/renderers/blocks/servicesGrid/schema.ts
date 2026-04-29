@@ -54,13 +54,13 @@ const semanticSchema = z.object({
 });
 
 
-export const SERVICESGRIDVARIANTS = ['clean_cards', 'icon_tiles', 'editorial_columns'] as const;
+export const SERVICESGRIDVARIANTS = ['clean_cards', 'icon_tiles', 'editorial_columns', 'magazine_panels'] as const;
 export type ServicesGridVariant = typeof SERVICESGRIDVARIANTS[number];
 
 export const ServicesGridPayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], items: [], trustBullets: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

@@ -1,0 +1,151 @@
+{
+  "id": "reformas_integrales",
+  "displayName": "Reformas Integrales",
+  "aliases": [
+    "reformas",
+    "reforma integral",
+    "reformas de viviendas",
+    "reformas de locales",
+    "reformas en general",
+    "empresa de reformas"
+  ],
+  "schemaTypes": [
+    "LocalBusiness",
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "WebPage"
+  ],
+  "allowedVocabulary": [
+    "reforma integral",
+    "albañilería",
+    "fontanería",
+    "electricidad",
+    "pintura",
+    "carpintería",
+    "alicatado",
+    "solado",
+    "pladur",
+    "falso techo",
+    "iluminación led",
+    "climatización",
+    "aislamiento térmico",
+    "aislamiento acústico",
+    "licencia de obras",
+    "proyecto de reforma",
+    "presupuesto cerrado",
+    "plazos garantizados",
+    "materiales de calidad",
+    "acabados premium"
+  ],
+  "forbiddenVocabulary": [
+    "bombín",
+    "cerradura",
+    "fuga de gas",
+    "desatasco urgente",
+    "implante dental",
+    "derecho penal"
+  ],
+  "prohibitedClaims": [
+    "reforma terminada en 3 días",
+    "el precio más bajo del mercado sin excepciones",
+    "hacemos cualquier cosa sin licencia",
+    "garantía de por vida en todo"
+  ],
+  "validTrustSignals": [
+    {
+      "id": "itemized-budget",
+      "label": "Presupuesto detallado por partidas",
+      "description": "Transparencia total en materiales, mano de obra y plazos."
+    },
+    {
+      "id": "certified-teams",
+      "label": "Equipos propios cualificados",
+      "description": "Profesionales especialistas para cada fase de la obra."
+    },
+    {
+      "id": "site-management",
+      "label": "Gestión integral de obra",
+      "description": "Un solo interlocutor para coordinar todos los oficios."
+    },
+    {
+      "id": "legal-support",
+      "label": "Asesoramiento en licencias",
+      "description": "Ayuda con la tramitación de permisos municipales."
+    }
+  ],
+  "coreServices": [
+    "Reformas integrales de viviendas y pisos",
+    "Reformas de locales comerciales y oficinas",
+    "Rehabilitación de edificios y fachadas",
+    "Reformas de cocinas y baños",
+    "Trabajos de albañilería, pladur y pintura",
+    "Instalaciones eléctricas y fontanería en reformas"
+  ],
+  "bofuVariants": [
+    {
+      "slug": "presupuesto-reforma-integral",
+      "label": "Solicitar presupuesto de reforma integral",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "obtener una valoración real y detallada para tu proyecto"
+    },
+    {
+      "slug": "reforma-piso-llaves-mano",
+      "label": "Reforma de piso llaves en mano",
+      "intent": "commercial",
+      "funnelStage": "BOFU",
+      "angle": "confiar la gestión completa desde el diseño hasta la entrega"
+    }
+  ],
+  "commonObjections": [
+    "Me asustan los retrasos en las obras.",
+    "Tengo miedo a los sobrecostes inesperados.",
+    "Es difícil coordinar a tantos albañiles y técnicos.",
+    "No sé si los materiales serán de la calidad prometida."
+  ],
+  "faqBank": [
+    {
+      "question": "¿Cuánto tiempo suele durar una reforma integral?",
+      "answerGuidance": "Explica que depende de los metros y complejidad, pero orienta sobre plazos lógicos (ej: 2 a 4 meses) resaltando la importancia del planning.",
+      "intent": "MOFU",
+      "blockHint": "faq"
+    },
+    {
+      "question": "¿Qué permisos o licencias necesito para mi reforma?",
+      "answerGuidance": "Diferencia entre comunicado, licencia de obra menor y obra mayor según tocamos estructura o elementos comunes.",
+      "intent": "TOFU",
+      "blockHint": "faq"
+    }
+  ],
+  "toneProfile": {
+    "voice": [
+      "profesional",
+      "experto",
+      "orientado a resultados",
+      "transparente"
+    ],
+    "preferredOpenings": [
+      "planificación estratégica",
+      "transformación de espacios",
+      "optimización de presupuesto",
+      "calidad en los acabados"
+    ]
+  },
+  "blockSemantics": {
+    "servicesGrid": {
+      "categories": [
+        {
+          "label": "Viviendas",
+          "summary": "Reformas completas de pisos, unifamiliares y áticos.",
+          "decisionFactor": "Distribución y luz."
+        },
+        {
+          "label": "Locales",
+          "summary": "Adecuación de espacios comerciales a normativas y diseño de marca.",
+          "decisionFactor": "Plazos y licencias."
+        }
+      ]
+    }
+  }
+}

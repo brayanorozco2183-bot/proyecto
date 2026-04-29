@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_161_TOTAL_CONTROL_HERITAGE",
+  "title": "Total Control Heritage",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "vertical_sidebar",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 10,
+      "gutter": "40px",
+      "container_width": "min(1180px, calc(100% - 32px))"
+    },
+    "navigation": {
+      "style": "rail_magnetic",
+      "position": "fixed_left",
+      "blur": "16px",
+      "contrast_safe": true,
+      "mobile_pattern": "full_screen_overlay"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#D6B35A",
+      "accent": "#36D399",
+      "bg": "#070A0F",
+      "surface": "#101722",
+      "surface_alt": "#1D2634",
+      "text": "#EAF0F7",
+      "muted": "#AAB7C8",
+      "on_primary": "#000000",
+      "on_accent": "#000000",
+      "radius_policy": "14px",
+      "shadow_policy": "brutalist_line",
+      "font_display": "'Archivo', sans-serif",
+      "font_body": "'Roboto Flex', sans-serif",
+      "spacing_density": "standard",
+      "border_policy": "soft"
+    },
+    "contrast_report": {
+      "bg_text": 17.28,
+      "surface_text": 15.68,
+      "primary_on_primary": 10.45,
+      "accent_on_accent": 10.93,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #070A0F; --surface: #101722; --surface-alt: #1D2634; --text: #EAF0F7; --muted: #AAB7C8; --primary: #D6B35A; --accent: #36D399; --on-primary: #000000; --on-accent: #000000; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 14px; --gap: 40px; --blur: 16px; --nav-position: fixed; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Roboto Flex', sans-serif; } h1,h2,h3,.display { font-family: 'Archivo', sans-serif; } .hero { min-height: clamp(720px, 92vh, 980px); display: grid; align-items: end; padding: clamp(32px, 6vw, 96px); } .hero__copy { max-width: 760px; } .hero h1 { font-size: clamp(3.4rem, 8vw, 8.5rem); letter-spacing: -0.08em; line-height: .84; } .premium-frame { border: 1px solid var(--border); border-radius: calc(var(--radius) * 1.4); overflow: hidden; box-shadow: var(--shadow); }  @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "editorial_statement_hero",
+      "custom_structure": "<section class='hero hero--editorial'><p class='kicker'>{{LOCATION}} · {{SERVICE}}</p><h1>{{H1}}</h1><div class='lede-grid'><p>{{INTRO}}</p>{{CTA_PRIMARY}}</div></section>"
+    },
+    "services_grid": {
+      "style": "radial_service_orbits",
+      "columns_override": 3,
+      "interaction": "reveal_on_scroll",
+      "content_strategy": "central hub with orbiting service nodes"
+    },
+    "trust_layer": {
+      "style": "local_reviews_wall",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "city_hub_cards",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "schema_ready_cards",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "obsidian_gold",
+    "motion_level": "measured",
+    "noise_overlay": false,
+    "color_glitch": false,
+    "image_treatment": "soft_masked",
+    "premium_cues": [
+      "bento hierarchy",
+      "metric cards",
+      "glass blur"
+    ]
+  }
+}

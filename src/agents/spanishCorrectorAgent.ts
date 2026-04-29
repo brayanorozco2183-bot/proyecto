@@ -55,6 +55,12 @@ export class SpanishCorrectorAgent extends BaseAgent {
         );
     }
 
+    private nicheProfile?: any;
+
+    public setNicheProfile(profile: any) {
+        this.nicheProfile = profile;
+    }
+
     private getSystemPrompt(): string {
         return `
 Actúa como un corrector profesional de estilo, ortografía, gramática y puntuación en ESPAÑOL de España.
@@ -74,6 +80,8 @@ REGLAS OBLIGATORIAS:
 - Devuelve SIEMPRE JSON válido.
 
 ${this.technicalBrief || 'Sin reglas técnicas específicas.'}
+
+${this.nicheProfile?.copyBrief ? `ESTRATEGIA EDITORIAL:\n${this.nicheProfile.copyBrief}` : ''}
 `.trim();
     }
 

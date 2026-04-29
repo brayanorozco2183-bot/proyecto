@@ -156,7 +156,20 @@ export function scanHtmlContent(html: string, context: ValidationContext): Valid
         score -= 50;
     }
 
-    // 8. Sector Incongruencies
+    // 8. Forbidden exact prices
+    const exactPriceRegex = /\b\d+(?:[,.]\d+)?\s*(?:€|euros?\b|eur\b)/gi;
+    const priceMatches = html.match(exactPriceRegex);
+    if (priceMatches) {
+        issues.push({
+            type: 'FORBIDDEN_EXACT_PRICE',
+            severity: 'error',
+            message: `Detected forbidden exact price mentions: ${priceMatches.join(', ')}.`,
+            match: priceMatches[0]
+        });
+        score -= 20;
+    }
+
+    // 9. Sector Incongruencies
     // (Deprecated: hardcoded niche logic removed to support any vertical)
 
 
@@ -303,7 +316,11 @@ export function autoCleanHtml(html: string): string {
     clean = clean.replace(/Este\s+contenido\s+proporciona\s+información\s+valiosa.*?marca[.]?/gi, '');
     clean = clean.replace(/Este\s+código\s+HTML\s+cumple\s+con\s+todas\s+las\s+directivas.*?marca[.]?/gi, '');
 
-    // 12. Surgical removal of empty links or links with only whitespace/non-breaking spaces
+    // 12. Forbidden Price Cleanup
+    clean = clean.replace(/\bdesde\s+\d+(?:[,.]\d+)?\s*(?:€|euros?\b|eur\b)/gi, 'presupuesto personalizado tras valoración');
+    clean = clean.replace(/\b\d+(?:[,.]\d+)?\s*(?:€|euros?\b|eur\b)/gi, 'presupuesto ajustado');
+
+    // 13. Surgical removal of empty links or links with only whitespace/non-breaking spaces
     clean = clean.replace(/<a\b[^>]*>(?:&nbsp;|\s|<br\s*\/?>)*<\/a>/gi, '');
 
     return clean.trim();

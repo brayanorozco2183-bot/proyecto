@@ -16,6 +16,7 @@ import {
     resolveComparisonTableVariant,
     resolveMapVariant
 } from './blocks/index.js';
+import { selectGravityMasterclass, applyMasterclassBlockVariants } from '../design-system/masterclassRegistry.js';
 
 
 /**
@@ -291,6 +292,15 @@ export class RenderPlanResolver {
     ): ResolvedPageRenderPlan {
         const profile = (variety as any)?.profile || (variety as any) || {};
         const dna = profile.designDNA || {} as PageDesignDNA;
+
+        // --- Masterclass Diagnostic Patch Injection ---
+        const selectedMasterclass = selectGravityMasterclass({
+            niche: blueprint?.niche || intentModel.pageType,
+            city: blueprint?.city || 'default',
+            pageId
+        });
+        // ----------------------------------------------
+
         const familyId = dna.family || 'minimal_authority';
         const familyDef = getFamilyDefinition(familyId);
 
@@ -429,6 +439,10 @@ export class RenderPlanResolver {
             });
         });
 
+        // --- Apply Masterclass Block Variants ---
+        const finalSections = applyMasterclassBlockVariants(sections, selectedMasterclass);
+        // ----------------------------------------
+
         // 3. Plan Responsive Base
         const responsivePlan: ResponsivePlan = {
             breakpointDesktop: 1200,
@@ -459,8 +473,9 @@ export class RenderPlanResolver {
                 ornamentPolicy: dna.ornamentPolicy || 'none'
             },
             hero,
-            sections,
+            sections: finalSections,
             theme,
+            masterclass: selectedMasterclass as any, // Inyectar la masterclass para el ProceduralEngine
             themeId: theme.id,
             responsivePlan,
             outputFingerprintSeed: dna.fingerprint || []

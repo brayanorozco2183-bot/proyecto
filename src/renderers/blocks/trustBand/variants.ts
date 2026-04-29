@@ -1,5 +1,5 @@
 import { escapeHtml, renderCta, renderInlinePills, renderParagraphs, renderSectionHeading, safeArray, wrapSectionBlock } from '../shared.js';
-import type { BlockRendererInput } from '../types.js';
+import type { BlockContentItem, BlockRendererInput } from '../types.js';
 
 function resolveTrustLabels(input: BlockRendererInput): string[] {
   const { content, local } = input;
@@ -14,8 +14,8 @@ function resolveTrustLabels(input: BlockRendererInput): string[] {
 
 function resolveTrustEntries(input: BlockRendererInput): Array<{ title: string; body: string }> {
   const items = safeArray(input.content.items)
-    .filter((item: any) => item?.title)
-    .map((item: any) => ({
+    .filter((item): item is BlockContentItem => Boolean(item?.title))
+    .map((item) => ({
       title: String(item.title).trim(),
       body: String(item.body || '').trim()
     }));

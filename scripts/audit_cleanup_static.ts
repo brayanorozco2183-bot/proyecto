@@ -45,7 +45,14 @@ for (const file of files.filter((f) => /\.tsx?$/i.test(f))) {
       if (!existsModule(resolved)) findings.push(`${rel(file)} import roto: ${spec}`);
     }
   }
-  if (/¿\s*\d{1,2}\s*¿/.test(text)) findings.push(`${rel(file)} contiene posible FAQ numbering literal`);
+  const relativeFile = rel(file);
+  const faqArtifactAllowlist = new Set([
+    'src/niches/premiumContracts.ts',
+    'src/utils/faqSanitizer.ts',
+  ]);
+  if (!faqArtifactAllowlist.has(relativeFile) && /¿\s*\d{1,2}\s*¿/.test(text)) {
+    findings.push(`${relativeFile} contiene posible FAQ numbering literal`);
+  }
 }
 
 if (findings.length) {

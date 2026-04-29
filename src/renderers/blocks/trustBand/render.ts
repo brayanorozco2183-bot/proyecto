@@ -4,7 +4,7 @@ import type { BlockRendererInput } from '../types.js';
 
 export function renderTrustBand(input: BlockRendererInput): string {
   const variant = resolveTrustBandVariant(input.variant);
-  const renderer = (renderTrustBandVariants as any)[variant] || renderTrustBandVariants.scrolling_strip;
+  const renderer = renderTrustBandVariants[variant] || renderTrustBandVariants.signal_grid;
 
   return renderer(input);
 }

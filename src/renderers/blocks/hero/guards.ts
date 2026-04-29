@@ -1,9 +1,10 @@
 import { BLOCK_VISUAL_SPECS } from '../../../config/blockVisualSpecs.js';
 import { HEROVARIANTS } from './schema.js';
 import type { BlockRendererInput } from '../types.js';
+import { BlockRendererInputSchema } from '../contracts.js';
 
 export function isHeroPayload(value: unknown): value is BlockRendererInput {
-  return true;
+  return BlockRendererInputSchema.safeParse(value).success;
 }
 
 export function resolveHeroVariant(input?: string): string {

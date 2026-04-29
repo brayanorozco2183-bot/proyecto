@@ -46,6 +46,8 @@ export class TaskOrchestrator {
     private missionQueue?: Queue;
     private generatedH1s: Set<string> = new Set();
     private failsafeMode = false;
+    private readonly sentinelIntervalMs = Number(process.env.SENTINEL_INTERVAL_MS || 60000 * 60);
+    private readonly reaperIntervalMs = Number(process.env.REAPER_INTERVAL_MS || 60000 * 30);
     public globalStop = false;
 
     private analyst = new SEOAnalystAgent();
@@ -162,7 +164,7 @@ export class TaskOrchestrator {
     }
 
     private startReaperBeat() {
-        setInterval(async () => {
+        const timer = setInterval(async () => {
             if (this.failsafeMode) return;
             const db = await dbManager.getDB();
             const damaged = await db.all('SELECT * FROM city_data WHERE status = ? LIMIT 3', ['NEEDS_REOPTIMIZATION']);
@@ -177,13 +179,15 @@ export class TaskOrchestrator {
                     });
                 }
             }
-        }, 60000 * 30);
+        }, this.reaperIntervalMs);
+        timer.unref?.();
     }
 
     private startSentinelBeat() {
-        setInterval(async () => {
+        const timer = setInterval(async () => {
             await this.sentinel.execute({});
-        }, 60000 * 60);
+        }, this.sentinelIntervalMs);
+        timer.unref?.();
     }
 
     async startMission(niche: string, locations: string[], publishMode: 'draft' | 'publish' = 'publish', options: any = {}): Promise<string> {
@@ -418,6 +422,9 @@ export class TaskOrchestrator {
             }
 
             const processingOrder = locations;
+            let processedCities = 0;
+            let failedCities = 0;
+            let stoppedMission = false;
 
             const slugify = (value: string) =>
                 value
@@ -436,6 +443,7 @@ export class TaskOrchestrator {
                     const missionStatus = await db.get('SELECT status FROM missions WHERE id = ?', [jobId]);
                     if (this.globalStop || missionStatus?.status === 'STOPPED') {
                         this.globalStop = true; // Sync local state
+                        stoppedMission = true;
                         await this.analyst.logThought(`🛑 Misión abortada manualmente por el usuario. Deteniendo el procesamiento en ${city}.`);
                         await db.run('UPDATE missions SET status = ? WHERE id = ?', ['STOPPED', jobId]);
                         break;
@@ -541,6 +549,9 @@ export class TaskOrchestrator {
                         mode: extraData.mode,
                         designOverrides: extraData.debugOverrides,
                         debugMode: extraData.debug_mode || extraData.debugMode
+                    }, {
+                        withImages: true,
+                        deliver: extraData.mode !== 'sandbox'
                     });
                     await this.analyst.logThought(`[FLOW] Pipeline de contenido completado para ${city} en ${Date.now() - pipelineStartedAt}ms.`);
 
@@ -556,13 +567,14 @@ export class TaskOrchestrator {
                         await this.staticDeploy.execute({
                             niche,
                             city,
-                            content: pipelineResult!.html,
+                            content: pipelineResult?.data?.html || (pipelineResult as any)?.html || '',
                             schema: {}, // Mock schema for sandbox
                             keywords: [], // No keywords in sandbox mode
                             subPath: isPrimary ? variantSuffix : `${citySlug}${variantSuffix ? '-' + variantSuffix : ''}`,
                             clusterFolderName: `${nicheSlug}-${rootSlug}`
                         });
 
+                                processedCities++;
                         await db.run('UPDATE city_data SET status = ? WHERE mission_id = ? AND city = ?', ['STATIC_READY', jobId, city]);
                         continue; 
                     }
@@ -572,6 +584,7 @@ export class TaskOrchestrator {
 
                     if (!pipelineResult || !pipelineResult.success) {
                         await this.analyst.logThought(`❌ Generación falló para ${city}. ${pipelineResult?.error || 'El pipeline devolvió null.'}`);
+                        failedCities++;
                         await db.run('UPDATE city_data SET status = ? WHERE mission_id = ? AND city = ?', ['FAILED', jobId, city]);
                         continue;
                     }
@@ -610,10 +623,11 @@ export class TaskOrchestrator {
                             await this.qa.logThought(`[EEAT Audit] Verificando señales negativas para ${city}...`);
 
                             const lingAudit = await this.linguist.auditContent(optimizedContent, city);
-                            const qaAudit: any = { success: true, data: { status: 'passed', score: metadata.qaScore || 0 } };
+                            const editorialScore = metadata.editorialAudit?.score ?? metadata.qaScore ?? pipelineResult.data?.score ?? 0;
+                            const qaAudit: any = { success: true, data: { status: 'passed', score: editorialScore } };
 
                             // Log Quality Score Agent result
-                            await this.qa.logThought(`[QualityScore] Final Score for ${city}: ${metadata.qaScore || 0}/100`);
+                            await this.qa.logThought(`[QualityScore] Final Score for ${city}: ${editorialScore}/100`);
                             if (Array.isArray(metadata.issues) && metadata.issues.length > 0) {
                                 await this.qa.logThought(`[QualityScore] Issues detected: ${metadata.issues.join(' | ')}`);
                             }
@@ -637,6 +651,7 @@ export class TaskOrchestrator {
                                     site_url: wp_url, auth_user: wp_user, auth_pass: wp_pass,
                                     post_data: { title: `${niche} en ${city}`, content: optimizedContent, status: extraData.publish_mode || 'publish', type: 'page', meta: { _schema_jsonld: JSON.stringify(techPackage.data.schema) } }
                                 });
+                                processedCities++;
                                 await db.run('UPDATE city_data SET status = ? WHERE mission_id = ? AND city = ?', ['PUBLISHED', jobId, city]);
                             } else {
                                 await this.staticDeploy.execute({
@@ -648,15 +663,18 @@ export class TaskOrchestrator {
                                     subPath: isPrimary ? undefined : citySlug,
                                     clusterFolderName: `${nicheSlug}-${rootSlug}`
                                 });
+                                processedCities++;
                                 await db.run('UPDATE city_data SET status = ? WHERE mission_id = ? AND city = ?', ['STATIC_READY', jobId, city]);
                             }
                         } else {
                             // --- NEW: HANDLE PIPELINE FAILURE ---
+                            failedCities++;
                             await this.analyst.logThought(`❌ Generación falló para ${city}. Pipeline o paquete técnico no produjeron salida publicable.`);
                             await db.run('UPDATE city_data SET status = ? WHERE mission_id = ? AND city = ?', ['FAILED', jobId, city]);
                         }
                 } catch (cityError: any) {
                     console.error(`[Orchestrator] Failed processing ${city}:`, cityError.message);
+                    failedCities++;
                     await this.analyst.logThought(`⚠️ Error al procesar ${city}: ${cityError.message}. Continuando con el resto.`);
                     // Intentamos marcar como fallido este destino específico en la BD si es posible
                     try {
@@ -664,7 +682,8 @@ export class TaskOrchestrator {
                     } catch { /* ignore */ }
                 }
             }
-            await db.run('UPDATE missions SET status = ? WHERE id = ?', ['COMPLETED', jobId]);
+            const finalStatus = stoppedMission ? 'STOPPED' : failedCities > 0 && processedCities > 0 ? 'COMPLETED_WITH_ERRORS' : failedCities > 0 ? 'FAILED' : 'COMPLETED';
+            await db.run('UPDATE missions SET status = ? WHERE id = ?', [finalStatus, jobId]);
         } catch (err: any) {
             const db = await dbManager.getDB();
             await db.run('UPDATE missions SET status = ? WHERE id = ?', ['FAILED', jobId]);
@@ -694,7 +713,7 @@ if (isMain) {
     const command = process.argv.slice(2).join(' ').replace(/^ \/ /, '').trim();
     if (command) {
         console.log(`[CLI] 🚀 Inyectando comando manual: "${command}"`);
-        orchestrator.executeCommand(command)
+        orchestrator.executeCommand(command, 'publish', { debug_mode: true })
             .then(res => {
                 console.log(`[CLI] ✅ Comando completado: ${res.response}`);
                 setTimeout(() => process.exit(0), 1000); // Give some time for logs

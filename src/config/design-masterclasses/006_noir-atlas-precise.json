@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_006_NOIR_ATLAS_PRECISE",
+  "title": "Noir Atlas Precise",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "editorial_stack",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 8,
+      "gutter": "28px",
+      "container_width": "min(1320px, calc(100% - 48px))"
+    },
+    "navigation": {
+      "style": "magazine_index",
+      "position": "sticky_top",
+      "blur": "10px",
+      "contrast_safe": true,
+      "mobile_pattern": "horizontal_scroll"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#78A800",
+      "accent": "#38BDF8",
+      "bg": "#0B0F0A",
+      "surface": "#151B12",
+      "surface_alt": "#25301F",
+      "text": "#F4FFE8",
+      "muted": "#C9D7B9",
+      "on_primary": "#000000",
+      "on_accent": "#000000",
+      "radius_policy": "10px",
+      "shadow_policy": "none_precise",
+      "font_display": "'Cormorant Garamond', serif",
+      "font_body": "'Manrope', sans-serif",
+      "spacing_density": "generous",
+      "border_policy": "visible"
+    },
+    "contrast_report": {
+      "bg_text": 18.69,
+      "surface_text": 16.97,
+      "primary_on_primary": 7.4,
+      "accent_on_accent": 9.8,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #0B0F0A; --surface: #151B12; --surface-alt: #25301F; --text: #F4FFE8; --muted: #C9D7B9; --primary: #78A800; --accent: #38BDF8; --on-primary: #000000; --on-accent: #000000; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 10px; --gap: 28px; --blur: 10px; --nav-position: sticky; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Manrope', sans-serif; } h1,h2,h3,.display { font-family: 'Cormorant Garamond', serif; } .nav { position: var(--nav-position); z-index: 50; backdrop-filter: blur(var(--blur)); border: 1px solid var(--border); } .nav a { color: var(--text); text-decoration: none; } .nav a:hover { color: var(--primary); } .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 34%); pointer-events: none; } body::after { content: ''; position: fixed; inset: 0; pointer-events: none; background-image: radial-gradient(color-mix(in srgb, var(--text) 18%, transparent) 1px, transparent 1px); background-size: 4px 4px; opacity: .035; z-index: 80; } @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "editorial_statement_hero",
+      "custom_structure": "<section class='hero hero--editorial'><p class='kicker'>{{LOCATION}} · {{SERVICE}}</p><h1>{{H1}}</h1><div class='lede-grid'><p>{{INTRO}}</p>{{CTA_PRIMARY}}</div></section>"
+    },
+    "services_grid": {
+      "style": "premium_bento_cards",
+      "columns_override": 3,
+      "interaction": "reveal_on_scroll",
+      "content_strategy": "cards elevated with proof metric and CTA"
+    },
+    "trust_layer": {
+      "style": "local_reviews_wall",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "compact_breadcrumb_cluster",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "split_questions",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "charcoal_lime",
+    "motion_level": "premium",
+    "noise_overlay": true,
+    "color_glitch": false,
+    "image_treatment": "soft_masked",
+    "premium_cues": [
+      "bento hierarchy",
+      "metric cards",
+      "glass blur"
+    ]
+  }
+}

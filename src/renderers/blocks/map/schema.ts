@@ -48,13 +48,13 @@ const semanticSchema = z.object({
 });
 
 
-export const MAPVARIANTS = ['full_width', 'boxed_with_text', 'spotlight_card', 'minimal_embed'] as const;
+export const MAPVARIANTS = ['full_width', 'boxed_with_text', 'spotlight_card', 'minimal_embed', 'context_frame'] as const;
 export type MapVariant = typeof MAPVARIANTS[number];
 
 export const MapPayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], bullets: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

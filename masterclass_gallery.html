@@ -1,0 +1,2330 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravity Masterclass Explorer</title>
+    <style>
+        :root {
+            --bg: #09090b;
+            --card: #18181b;
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
+            --accent: #d4af37;
+            --border: #27272a;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            padding: 2rem;
+        }
+        header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        .benchmarks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .benchmark-card img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        .badge-personality { background: #3b82f6; color: white; }
+        .badge-family { background: #10b981; color: white; }
+        .badge-style { background: #8b5cf6; color: white; }
+        h2 { margin-top: 0; font-size: 1.25rem; }
+        .notes { font-size: 0.875rem; color: var(--muted); line-height: 1.5; margin-bottom: 1rem; }
+        .dna-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            font-size: 0.75rem;
+            gap: 0.5rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+        .dna-item span { color: var(--muted); }
+        .tension {
+            display: flex;
+            gap: 2px;
+            height: 10px;
+            margin-top: 1rem;
+        }
+        .tension-bar {
+            flex: 1;
+            background: var(--border);
+            border-radius: 2px;
+        }
+        .tension-high { background: var(--accent); }
+        .tension-medium { background: #71717a; }
+        .tension-low { background: #3f3f46; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gravity Masterclass Explorer</h1>
+        <p style="color: var(--muted)">Explorando los 100 ejemplares de diseño para misiones SEO.</p>
+    </header>
+
+    <section>
+        <h2>Resultados Reales de Generación (Fidelidad de Producción)</h2>
+        <p style="color: var(--muted); margin-bottom: 1.5rem;">Capturas directas de misiones ejecutadas. Sin retoques, mostrando la composición procedural y el renderizado final de bloques.</p>
+        <div class="benchmarks">
+            <div class="benchmark-card">
+                <img src="file:///C:/Users/Bryan/Desktop/pruebaGravity/output_sites/ux-audit/madrid-full-flow-test/pass-desktop-standard.png" alt="Desktop Production Render">
+                <h3>Render de Escritorio</h3>
+                <p class="notes">Salida real del pipeline V7.1. Se observa el cumplimiento de contratos de bloque y la jerarquía visual de autoridad.</p>
+            </div>
+            <div class="benchmark-card">
+                <img src="file:///C:/Users/Bryan/Desktop/pruebaGravity/output_sites/ux-audit/madrid-full-flow-test/pass-mobile-standard.png" alt="Mobile Production Render">
+                <h3>Render Mobile-First</h3>
+                <p class="notes">Validación de viewport. Los bloques se reordenan para maximizar el CTR en dispositivos móviles sin perder semántica.</p>
+            </div>
+            <div class="benchmark-card">
+                <img src="file:///C:/Users/Bryan/Desktop/pruebaGravity/assets_generated/preview_quality.png" alt="Quality Analysis">
+                <h3>Análisis de Calidad</h3>
+                <p class="notes">Mapa de calor y densidad de entidades. El sistema verifica que no haya "alucinaciones visuales" antes de publicar.</p>
+            </div>
+        </div>
+    </section>
+
+    <h2>Catálogo Completo (100 Masterclasses)</h2>
+    <div class="grid">
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist</h2>
+                <p class="notes">Configuración técnica para nichos de alto ticket. Forzamos el uso de superficies tipo `glass` con contrastes `dramatic`. No es un diseño estático: el motor inyecta variables CSS de oro y azul marino profundo para elevar la percepción de seguridad. Los bloques de confianza se desplazan al tercio superior del documento para reducir el bounce rate en búsquedas de urgencia.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Urban Glass</h2>
+                <p class="notes">Implementación orientada a la autoridad urbana. Utiliza filtros de `backdrop-filter: blur` y sombras de profundidad media. El sistema de 'ritmo' procedural alterna entre bloques densos y espacios abiertos para guiar el ojo hacia el CTA. Ideal para servicios 24h donde la claridad de información sobre la velocidad de respuesta es crítica.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Warm Local</h2>
+                <p class="notes">Enfoque en proximidad y confianza vecinal. El algoritmo de diseño selecciona paletas de colores tierra y tipografía con serifas suaves. Se prioriza la inyección de entidades geográficas hiper-locales (nombres de calles, monumentos cercanos) en los bloques de texto para maximizar la relevancia semántica de cara a Google.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Climatizacion</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de climatizacion por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Reformas</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de reformas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Pintores</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de pintores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Soft Residential para Carpinteros</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de carpinteros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Jardineria</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de jardineria por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Limpieza</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de limpieza por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Clean Directory para Mudanzas</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de mudanzas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist para Persianistas</h2>
+                <p class="notes">Estética limpia, mucho aire y detalles premium discretos. Diseñado para páginas locales de persianistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Urban Glass para Cristaleros</h2>
+                <p class="notes">Paneles translúcidos, sombras suaves y sensación urbana moderna. Diseñado para páginas locales de cristaleros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Warm Local para Tejados</h2>
+                <p class="notes">Cercanía local, fondos cálidos y señales humanas de confianza. Diseñado para páginas locales de tejados por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Plagas</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de plagas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Ceramistas</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de ceramistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Decoradores</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de decoradores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Soft Residential para Domotica</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de domotica por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Albañiles</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de albañiles por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Aislamientos</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de aislamientos por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Clean Directory para Mantenimiento</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de mantenimiento por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Urban Glass para Cerrajeros</h2>
+                <p class="notes">Paneles translúcidos, sombras suaves y sensación urbana moderna. Diseñado para páginas locales de cerrajeros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Warm Local para Fontaneros</h2>
+                <p class="notes">Cercanía local, fondos cálidos y señales humanas de confianza. Diseñado para páginas locales de fontaneros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Electricistas</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de electricistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Climatizacion</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de climatizacion por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Reformas</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de reformas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Soft Residential para Pintores</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de pintores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Carpinteros</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de carpinteros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Jardineria</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de jardineria por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Clean Directory para Limpieza</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de limpieza por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist para Mudanzas</h2>
+                <p class="notes">Estética limpia, mucho aire y detalles premium discretos. Diseñado para páginas locales de mudanzas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Urban Glass para Persianistas</h2>
+                <p class="notes">Paneles translúcidos, sombras suaves y sensación urbana moderna. Diseñado para páginas locales de persianistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Warm Local para Cristaleros</h2>
+                <p class="notes">Cercanía local, fondos cálidos y señales humanas de confianza. Diseñado para páginas locales de cristaleros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Tejados</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de tejados por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Plagas</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de plagas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Ceramistas</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de ceramistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Soft Residential para Decoradores</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de decoradores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Domotica</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de domotica por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Albañiles</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de albañiles por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Clean Directory para Aislamientos</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de aislamientos por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist para Mantenimiento</h2>
+                <p class="notes">Estética limpia, mucho aire y detalles premium discretos. Diseñado para páginas locales de mantenimiento por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Warm Local para Cerrajeros</h2>
+                <p class="notes">Cercanía local, fondos cálidos y señales humanas de confianza. Diseñado para páginas locales de cerrajeros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Fontaneros</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de fontaneros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Electricistas</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de electricistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Climatizacion</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de climatizacion por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Soft Residential para Reformas</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de reformas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Pintores</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de pintores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Carpinteros</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de carpinteros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Clean Directory para Jardineria</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de jardineria por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist para Limpieza</h2>
+                <p class="notes">Estética limpia, mucho aire y detalles premium discretos. Diseñado para páginas locales de limpieza por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Urban Glass para Mudanzas</h2>
+                <p class="notes">Paneles translúcidos, sombras suaves y sensación urbana moderna. Diseñado para páginas locales de mudanzas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Warm Local para Persianistas</h2>
+                <p class="notes">Cercanía local, fondos cálidos y señales humanas de confianza. Diseñado para páginas locales de persianistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Cristaleros</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de cristaleros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Tejados</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de tejados por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Plagas</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de plagas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Soft Residential para Ceramistas</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de ceramistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Decoradores</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de decoradores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Domotica</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de domotica por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Clean Directory para Albañiles</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de albañiles por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist para Aislamientos</h2>
+                <p class="notes">Estética limpia, mucho aire y detalles premium discretos. Diseñado para páginas locales de aislamientos por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Urban Glass para Mantenimiento</h2>
+                <p class="notes">Paneles translúcidos, sombras suaves y sensación urbana moderna. Diseñado para páginas locales de mantenimiento por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Cerrajeros</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de cerrajeros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Fontaneros</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de fontaneros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Electricistas</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de electricistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Soft Residential para Climatizacion</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de climatizacion por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Reformas</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de reformas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Pintores</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de pintores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Clean Directory para Carpinteros</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de carpinteros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist para Jardineria</h2>
+                <p class="notes">Estética limpia, mucho aire y detalles premium discretos. Diseñado para páginas locales de jardineria por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Urban Glass para Limpieza</h2>
+                <p class="notes">Paneles translúcidos, sombras suaves y sensación urbana moderna. Diseñado para páginas locales de limpieza por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Warm Local para Mudanzas</h2>
+                <p class="notes">Cercanía local, fondos cálidos y señales humanas de confianza. Diseñado para páginas locales de mudanzas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Persianistas</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de persianistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Cristaleros</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de cristaleros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Tejados</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de tejados por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Soft Residential para Plagas</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de plagas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Ceramistas</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de ceramistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Decoradores</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de decoradores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Clean Directory para Domotica</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de domotica por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist para Albañiles</h2>
+                <p class="notes">Estética limpia, mucho aire y detalles premium discretos. Diseñado para páginas locales de albañiles por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Urban Glass para Aislamientos</h2>
+                <p class="notes">Paneles translúcidos, sombras suaves y sensación urbana moderna. Diseñado para páginas locales de aislamientos por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Warm Local para Mantenimiento</h2>
+                <p class="notes">Cercanía local, fondos cálidos y señales humanas de confianza. Diseñado para páginas locales de mantenimiento por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Cerrajeros</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de cerrajeros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Fontaneros</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de fontaneros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Soft Residential para Electricistas</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de electricistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Climatizacion</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de climatizacion por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Reformas</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de reformas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Clean Directory para Pintores</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de pintores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist para Carpinteros</h2>
+                <p class="notes">Estética limpia, mucho aire y detalles premium discretos. Diseñado para páginas locales de carpinteros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Urban Glass para Jardineria</h2>
+                <p class="notes">Paneles translúcidos, sombras suaves y sensación urbana moderna. Diseñado para páginas locales de jardineria por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Warm Local para Limpieza</h2>
+                <p class="notes">Cercanía local, fondos cálidos y señales humanas de confianza. Diseñado para páginas locales de limpieza por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Mudanzas</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de mudanzas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Editorial Prestige para Persianistas</h2>
+                <p class="notes">Composición editorial, titulares fuertes y ritmo de revista premium. Diseñado para páginas locales de persianistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Emergency High Trust para Cristaleros</h2>
+                <p class="notes">Conversión rápida, teléfono visible y urgencia controlada. Diseñado para páginas locales de cristaleros por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">editorial</span>
+                    <span class="badge badge-family">technical_grid</span>
+                </div>
+                <h2>Masterclass Soft Residential para Tejados</h2>
+                <p class="notes">Hogar, calma, claridad y tarjetas amables. Diseñado para páginas locales de tejados por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Bold Contrast para Plagas</h2>
+                <p class="notes">Contraste fuerte, CTAs dominantes y titulares con mucha presencia. Diseñado para páginas locales de plagas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Artisan Craft para Ceramistas</h2>
+                <p class="notes">Sensación artesanal, materiales, detalle y trabajo a medida. Diseñado para páginas locales de ceramistas por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> paper</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> editorial</div>
+                    <div class="dna-item"><span>Hero:</span> proof_first</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">organic</span>
+                    <span class="badge badge-family">minimal_authority</span>
+                </div>
+                <h2>Masterclass Clean Directory para Decoradores</h2>
+                <p class="notes">Estructura local clara para páginas de ciudad y barrios. Diseñado para páginas locales de decoradores por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> cta_heavy</div>
+                    <div class="dna-item"><span>Visual:</span> grid</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">conversion_heavy</span>
+                </div>
+                <h2>Masterclass Luxury Minimalist para Domotica</h2>
+                <p class="notes">Estética limpia, mucho aire y detalles premium discretos. Diseñado para páginas locales de domotica por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> soft</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> mixed</div>
+                    <div class="dna-item"><span>Spacing:</span> compact</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">editorial</span>
+                </div>
+                <h2>Masterclass Urban Glass para Albañiles</h2>
+                <p class="notes">Paneles translúcidos, sombras suaves y sensación urbana moderna. Diseñado para páginas locales de albañiles por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> flat</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> editorial</div>
+                    <div class="dna-item"><span>Spacing:</span> balanced</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-medium"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">modern_tech</span>
+                    <span class="badge badge-family">asymmetric_premium</span>
+                </div>
+                <h2>Masterclass Warm Local para Aislamientos</h2>
+                <p class="notes">Cercanía local, fondos cálidos y señales humanas de confianza. Diseñado para páginas locales de aislamientos por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> tinted</div>
+                    <div class="dna-item"><span>Contrast:</span> balanced</div>
+                    <div class="dna-item"><span>Cards:</span> outlined</div>
+                    <div class="dna-item"><span>Hero:</span> split</div>
+                    <div class="dna-item"><span>Visual:</span> panelled</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+            <div class="card">
+                <div>
+                    <span class="badge badge-personality">luxury</span>
+                    <span class="badge badge-family">local_trust</span>
+                </div>
+                <h2>Masterclass Technical Blueprint para Mantenimiento</h2>
+                <p class="notes">Autoridad técnica, orden visual y lectura muy clara. Diseñado para páginas locales de mantenimiento por ciudad, manteniendo el sistema procedural. Prioriza un hero con propuesta clara, CTA telefónico visible, señales de confianza arriba, tarjetas con jerarquía real y bloques de prueba local antes del cierre. Evita la apariencia de plantilla repetida alternando densidad, ritmo, tratamientos de superficie y variantes de bloque.</p>
+                
+                <div class="dna-grid">
+                    <div class="dna-item"><span>Surface:</span> glass</div>
+                    <div class="dna-item"><span>Contrast:</span> dramatic</div>
+                    <div class="dna-item"><span>Cards:</span> elevated</div>
+                    <div class="dna-item"><span>Hero:</span> centered</div>
+                    <div class="dna-item"><span>Visual:</span> minimal</div>
+                    <div class="dna-item"><span>Spacing:</span> luxury</div>
+                </div>
+
+                <div class="tension" title="Curva de Tensión Visual">
+                    <div class="tension-bar tension-medium"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div><div class="tension-bar tension-low"></div><div class="tension-bar tension-medium"></div><div class="tension-bar tension-high"></div>
+                </div>
+            </div>
+        
+    </div>
+</body>
+</html>

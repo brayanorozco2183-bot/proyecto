@@ -2,6 +2,7 @@ import type { ZodTypeAny } from 'zod';
 import type { HeroRenderContract, SectionRenderContract } from '../../types/design.js';
 import type { SectionSemanticData } from '../../agents/contentWriterAgent.js';
 import type { DesignSystemTheme } from '../../design-system/types.js';
+import type { NicheIntelligenceProfile } from '../../niche-intelligence/types.js';
 
 export type BlockType =
   | 'hero_trust'
@@ -90,17 +91,91 @@ export interface HeroBlockPayload {
   context?: BlockContext;
 }
 
+export interface BlockCtaContent {
+  text?: string;
+  href?: string;
+  phone?: string;
+  note?: string;
+}
+
+export interface BlockContentItem {
+  title: string;
+  body: string;
+  meta?: string[];
+  href?: string;
+  label?: string;
+  value?: string;
+}
+
+export interface BlockFaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface BlockReadiness {
+  ready: boolean;
+  score: number;
+  missing: string[];
+  repaired: string[];
+  checkedAt: string;
+}
+
+export interface BlockContent {
+  heading?: string;
+  subheading?: string[];
+  items?: BlockContentItem[];
+  bullets?: string[];
+  trustBullets?: string[];
+  faqItems?: BlockFaqItem[];
+  table?: unknown;
+  cta?: BlockCtaContent;
+  mapNote?: string;
+  decisionFactors?: string[];
+  commonMistakes?: string[];
+  links?: Array<Record<string, unknown>>;
+  h1?: string;
+  h2?: string;
+  h3s?: string[];
+  html?: string;
+  phone?: string;
+  cta_text?: string;
+  secondary_cta_text?: string;
+  eyebrow?: string;
+  subtitle?: string;
+  trust_bullets?: string[];
+  hero_card_eyebrow?: string;
+  hero_card_title?: string;
+  hero_card_text?: string;
+  [key: string]: unknown;
+}
+
+export interface BlockSeoData {
+  city?: string;
+  niche?: string;
+  canonical?: string;
+  metadata?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+export interface BlockLocalData extends BlockContext {
+  address?: string;
+  labels?: Record<string, string>;
+  [key: string]: unknown;
+}
+
 export interface BlockRendererInput {
   sectionId: string;
   blockType: string;
   variant: string;
   layoutHint: string;
-  content: any;
-  seo: any;
-  design: DesignSystemTheme;
-  local: any;
-  payload?: any;
+  content: BlockContent;
+  seo: BlockSeoData;
+  design?: DesignSystemTheme;
+  local: BlockLocalData;
+  payload?: unknown;
   contract?: Partial<SectionRenderContract>;
+  nicheProfile?: NicheIntelligenceProfile;
+  quality?: BlockReadiness;
 }
 
 export type HtmlRenderer<TPayload = BlockRendererInput> = (payload: TPayload) => string;

@@ -1,0 +1,72 @@
+{
+  "comment": "Gravity V7.1 - Plantilla para Exemplars 100/100. Copia este objeto para cada bloque que quieras perfeccionar.",
+  "metadata": {
+    "agent_name": "Content_Writer_01",
+    "score": 100,
+    "polarity": "positive"
+  },
+  "exemplars": [
+    {
+      "block_type": "services_grid",
+      "title": "Ejemplo Perfecto de Parrilla de Servicios",
+      "semantic": {
+        "sectionId": "servicios-principales",
+        "h2": "Especialistas en [Nicho] en [Ciudad]: Diagnóstico y Ejecución Real",
+        "intro": [
+          "En [Ciudad], abordar un trabajo de [Nicho] requiere un conocimiento profundo de las particularidades locales y la normativa vigente (ej: [Normativa específica]).",
+          "Nuestro enfoque se aleja de las soluciones genéricas: cada intervención comienza con una auditoría del estado previo para asegurar que el resultado sea duradero y técnicamente impecable."
+        ],
+        "items": [
+          {
+            "title": "Servicio Técnico Especializado",
+            "body": "No nos limitamos a la instalación básica. Analizamos [Concepto Técnico] y aplicamos [Herramienta/Proceso] para garantizar que el sistema funcione bajo los estándares de seguridad más estrictos de [Ciudad].",
+            "meta": ["Herramienta Pro", "Normativa ISO/UNE"]
+          },
+          {
+            "title": "Mantenimiento y Optimización",
+            "body": "El mantenimiento en [Ciudad] es preventivo. Identificamos fatiga en [Componente] antes de que ocurra una avería mayor, utilizando [Técnica de medición] para validar el rendimiento real.",
+            "meta": ["Visita Técnica", "Informe Detallado"]
+          }
+        ],
+        "trustBullets": [
+          "Cobertura técnica real en zonas como [Barrio 1] y [Barrio 2].",
+          "Uso exclusivo de materiales certificados con trazabilidad clara.",
+          "Proceso documentado con entrega de parte técnico al finalizar."
+        ],
+        "faqItems": [
+          {
+            "question": "¿Cómo se garantiza la durabilidad del trabajo en [Ciudad]?",
+            "answer": "La clave está en no omitir pasos: desde la limpieza del área de trabajo hasta la comprobación final con [Herramienta], aseguramos que cada punto crítico cumpla con el estándar [Nicho] Pro."
+          }
+        ],
+        "cta": {
+          "text": "Solicitar Valoración Técnica",
+          "phone": "915000100",
+          "note": "Atención directa en [Ciudad] y alrededores."
+        }
+      }
+    },
+    {
+      "block_type": "urgency_panel",
+      "title": "Ejemplo Perfecto de Panel de Urgencias",
+      "semantic": {
+        "sectionId": "urgencias-locales",
+        "h2": "Atención Prioritaria en [Ciudad]: Respuesta Técnica en Menos de 30min",
+        "intro": [
+          "Las emergencias de [Nicho] en [Ciudad] no permiten improvisaciones. Contamos con una guardia operativa permanente para resolver incidencias críticas que comprometan la seguridad o habitabilidad.",
+          "Nuestros técnicos se desplazan con taller móvil completo, permitiendo resolver el 90% de los casos en la primera visita sin esperas innecesarias por materiales básicos."
+        ],
+        "urgency_details": {
+          "status": "Guardia Activa",
+          "priority": "Alta",
+          "availability": "24/7 en toda el área metropolitana"
+        },
+        "cta": {
+          "text": "Llamar a Urgencias",
+          "phone": "915000100",
+          "note": "Prioridad máxima para avisos en [Ciudad] centro y periferia."
+        }
+      }
+    }
+  ]
+}

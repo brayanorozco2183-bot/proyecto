@@ -178,8 +178,32 @@ function uniqueBy<T>(items: T[], keyFn: (item: T) => string): T[] {
   return out;
 }
 
+export function normalizeHrefForCompare(value?: string): string {
+  return normalizeText(value || '')
+    .replace(/\\/g, '/')
+    .replace(/^https?:\/\/[^/]+/i, '')
+    .replace(/^\/+|\/+$/g, '')
+    .replace(/\/index\.html$/i, '')
+    .replace(/^index\.html$/i, '')
+    .trim();
+}
+
 function sameHref(a?: string, b?: string): boolean {
-  return normalizeText(a || '').replace(/\/+$/g, '') === normalizeText(b || '').replace(/\/+$/g, '');
+  return normalizeHrefForCompare(a) === normalizeHrefForCompare(b);
+}
+
+function plannedGeoHref(folder: string, geo: { name: string; sub_path?: string }): string {
+  const subPath = normalizeText(geo.sub_path || `${slugify(geo.name)}/index.html`).replace(/^[/\\]+/, '');
+  return `/${folder}/${subPath}`.replace(/\/{2,}/g, '/');
+}
+
+function getConfiguredNumber(mission: MissionLike | undefined, keys: string[], fallback: number): number {
+  for (const key of keys) {
+    const raw = (mission as any)?.[key];
+    const value = Number(raw);
+    if (Number.isFinite(value) && value > 0) return Math.floor(value);
+  }
+  return fallback;
 }
 
 function findCurrentNode(plan: InternalLinkPlan, graph?: SiteGraph): SiteNode | undefined {
@@ -210,30 +234,96 @@ function buildHubLink(text: string, url: string, relation: LinkRelation, descrip
 function buildLinksFromCluster(plan: InternalLinkPlan, graph?: SiteGraph, mission?: MissionLike): HubLink[] {
   const currentNode = findCurrentNode(plan, graph);
   const currentHref = currentPublicHrefFromMission(mission);
-  const routes = filterRoutesForCluster(scanGeneratedRoutes(), mission);
   const nicheLabel = normalizeText(getCanonicalNicheLabel((mission as any)?.niche || currentNode?.keyword || 'servicio'));
   const city = normalizeText((mission as any)?.city || currentNode?.city || 'tu zona');
+  const folder = clusterFolderFromMission(mission);
 
-  const rootMoneyHref = `/${clusterFolderFromMission(mission)}/index.html`;
+  const links: HubLink[] = [];
+
+  // ── PRIORITY: build links directly from cluster_data.geo (sub_paths) ──────
+  const geoItems: Array<{ name: string; sub_path?: string }> =
+    (mission as any)?.cluster_data?.geo || [];
+
+  if (geoItems.length > 0) {
+    // The planned manifest is the source of truth. The root city hub is the item
+    // whose sub_path points to index.html; do not infer it from mission.city,
+    // because on neighbourhood pages mission.city is the neighbourhood name.
+    const cityHub = geoItems.find((g) => normalizeHrefForCompare(g.sub_path || 'index.html') === '') || geoItems[0];
+    const rootCity = normalizeHumanLabel(cityHub?.name || city);
+    const currentHrefNorm = normalizeHrefForCompare(currentHref);
+    const currentIsHub = sameHref(currentHref, plannedGeoHref(folder, cityHub));
+    const maxHubLinks = getConfiguredNumber(mission, ['internalLinkingMaxHubLinks', 'internal_linking_max_hub_links'], 12);
+    const maxAreaLinks = getConfiguredNumber(mission, ['internalLinkingMaxAreaLinks', 'internal_linking_max_area_links'], 5);
+    const maxLinks = currentIsHub ? maxHubLinks : maxAreaLinks;
+
+    // Upward money link → the root city hub. It is skipped on the hub itself to
+    // avoid self-links.
+    if (cityHub) {
+      const hubPath = plannedGeoHref(folder, cityHub);
+      if (!sameHref(currentHref, hubPath)) {
+        links.push(
+          buildHubLink(
+            `Página principal de ${nicheLabel} en ${rootCity}`,
+            hubPath,
+            'money',
+            `Visión general de ${nicheLabel} en ${rootCity}: servicios, cobertura y criterios de decisión.`,
+            'Página principal',
+            currentHref,
+          ),
+        );
+      }
+    }
+
+    // Downward/lateral links. The hub links to all planned areas; each area links
+    // back to the hub and to sibling areas already planned in the same manifest.
+    const neighbours = geoItems
+      .filter((geo) => geo !== cityHub)
+      .map((geo) => ({ geo, href: plannedGeoHref(folder, geo), name: normalizeHumanLabel(geo.name) }))
+      .filter((item) => normalizeHrefForCompare(item.href) !== currentHrefNorm);
+
+    const relations: LinkRelation[] = ['supporting', 'lateral', 'lateral', 'lateral'];
+    neighbours.slice(0, Math.max(0, maxLinks - links.length)).forEach((item, i) => {
+      links.push(
+        buildHubLink(
+          `${nicheLabel} en ${item.name}`,
+          item.href,
+          relations[i] ?? 'lateral',
+          currentIsHub
+            ? `Cobertura específica de ${nicheLabel} en ${item.name}, dentro del cluster local de ${rootCity}.`
+            : `Página relacionada para comparar cobertura de ${nicheLabel} entre ${city} y ${item.name}, dentro del cluster local de ${rootCity}.`,
+          currentIsHub ? 'Zona cubierta' : 'Barrio relacionado',
+          currentHref,
+        ),
+      );
+    });
+
+    if (links.length) {
+      return uniqueBy(links, (link) => `${normalizeHrefForCompare(link.url)}|${link.text.toLowerCase()}`).slice(0, maxLinks);
+    }
+  }
+
+  // ── FALLBACK: scan already generated files on disk ─────────────────────────
+  const routes = filterRoutesForCluster(scanGeneratedRoutes(), mission);
+  const rootMoneyHref = `/${folder}/index.html`;
   const moneyRoute = routes
     .sort((a, b) => a.parts.length - b.parts.length || a.publicHref.localeCompare(b.publicHref))
     .find((route) => sameHref(route.publicHref, rootMoneyHref)) || routes
       .sort((a, b) => a.parts.length - b.parts.length || a.publicHref.localeCompare(b.publicHref))[0];
 
-  const links: HubLink[] = [];
-
   if (moneyRoute || mission) {
     const moneyHref = moneyRoute?.publicHref || rootMoneyHref || currentHref;
-    links.push(
-      buildHubLink(
-        `Página principal de ${nicheLabel} en ${city}`,
-        moneyHref,
-        'money',
-        `Abre la página principal para ver la referencia general del servicio, la cobertura y el contexto base del proyecto en ${city}.`,
-        'Página principal',
-        currentHref,
-      )
-    );
+    if (!sameHref(moneyHref, currentHref)) {
+      links.push(
+        buildHubLink(
+          `Página principal de ${nicheLabel} en ${city}`,
+          moneyHref,
+          'money',
+          `Si necesitas una visión general antes de decidir, esta página principal reúne cobertura, servicios y criterios base de ${nicheLabel} en ${city}.`,
+          'Página principal',
+          currentHref,
+        )
+      );
+    }
   }
 
   const siblingRoutes = routes
@@ -247,8 +337,8 @@ function buildLinksFromCluster(plan: InternalLinkPlan, graph?: SiteGraph, missio
         route.publicHref,
         index === 0 ? 'supporting' : 'lateral',
         index === 0
-          ? `Consulta otra página ya generada del mismo proyecto para ampliar contexto y revisar una variante útil relacionada con este servicio en ${city}.`
-          : `Continúa la navegación con otra página del mismo proyecto para profundizar en un caso complementario o en otra cobertura útil en ${city}.`,
+          ? `Si el caso encaja con una variante relacionada, esta página ayuda a comparar alcance, señales de decisión y cobertura sin repetir la misma información de ${city}.`
+          : `Para un caso complementario, este enlace añade contexto operativo y permite moverse por el proyecto manteniendo la relación con ${city}.`,
         index === 0 ? 'Página relacionada' : 'Navegación adicional',
         currentHref,
       )
@@ -256,21 +346,25 @@ function buildLinksFromCluster(plan: InternalLinkPlan, graph?: SiteGraph, missio
   });
 
   if (!links.length) {
-    const fallbackMoneyHref = `/${clusterFolderFromMission(mission)}/index.html`;
+    const fallbackMoneyHref = `/${folder}/index.html`;
     links.push(
       buildHubLink(
         `Página principal de ${nicheLabel} en ${city}`,
         fallbackMoneyHref,
         'money',
-        `Accede a la página de referencia principal del proyecto para mantener una navegación clara y coherente en ${city}.`,
+        `Si quieres volver al punto de partida, esta referencia principal conecta servicios, cobertura y decisiones útiles dentro del proyecto en ${city}.`,
         'Referencia',
         currentHref,
       )
     );
   }
 
-  return uniqueBy(links, (link) => `${link.url}|${link.text.toLowerCase()}`).slice(0, 3);
+  const maxLinks = getConfiguredNumber(mission, ['internalLinkingMaxFallbackLinks', 'internal_linking_max_fallback_links'], 5);
+  return uniqueBy(links, (link) => `${normalizeHrefForCompare(link.url)}|${link.text.toLowerCase()}`).slice(0, maxLinks);
 }
+
+export const INTERNAL_LINKS_START_MARKER = '<!-- GRAVITY_INTERNAL_LINKS_START -->';
+export const INTERNAL_LINKS_END_MARKER = '<!-- GRAVITY_INTERNAL_LINKS_END -->';
 
 function renderHubHtml(title: string, intro: string, links: HubLink[]): string {
   const isSingle = links.length === 1;
@@ -283,12 +377,13 @@ function renderHubHtml(title: string, intro: string, links: HubLink[]): string {
       <h3 class="internal-links-item__title">${escapeHtml(link.text)}</h3>
       <p class="internal-links-item__description">${escapeHtml(link.description)}</p>
       <a href="${escapeHtml(safeUrl)}" class="internal-links-item__anchor" aria-label="Navegar a ${escapeHtml(link.text)}">
-        <span class="internal-links-item__cta">Abrir página <span aria-hidden="true">→</span></span>
+        <span class="internal-links-item__cta">Ver contexto relacionado <span aria-hidden="true">→</span></span>
       </a>
     </li>`;
   }).join('');
 
   return `
+    ${INTERNAL_LINKS_START_MARKER}
     <section class="internal-links-hub internal-links-hub--premium section-shell" aria-labelledby="internal-links-title">
       <div class="el-container">
         <header class="block__header internal-links-hub__header">
@@ -303,6 +398,7 @@ function renderHubHtml(title: string, intro: string, links: HubLink[]): string {
         </div>
       </div>
     </section>
+    ${INTERNAL_LINKS_END_MARKER}
   `;
 }
 
@@ -345,10 +441,10 @@ export function buildAutomaticInternalLinkBlocks(
   const links = buildLinksFromCluster(plan, graph, mission);
   if (!links.length) return [];
 
-  const title = links.length >= 3 ? 'Páginas recomendadas dentro del proyecto' : 'Página principal y navegación relacionada';
+  const title = links.length >= 3 ? 'Páginas recomendadas dentro del proyecto' : 'Navegación relacionada del proyecto';
   const intro = links.length >= 3
-    ? `Aquí puedes abrir la página principal y otras páginas ya generadas del mismo proyecto para moverte con contexto y sin perder el hilo de navegación en ${city}.`
-    : `Aquí tienes la página principal del proyecto para mantener una navegación clara y siempre disponible en ${city}.`;
+    ? `Estos enlaces conectan páginas del mismo proyecto cuando ayudan a comparar alcance, cobertura o criterios de decisión relacionados con ${niche} en ${city}.`
+    : `Este enlace devuelve a la referencia principal para revisar servicios, cobertura y decisiones base de ${niche} en ${city}.`;
 
   return [buildBlock('internal-links-contextual', title, renderHubHtml(title, intro, links), links)];
 }

@@ -58,7 +58,7 @@ export type FaqVariant = typeof FAQVARIANTS[number];
 export const FaqPayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], faqItems: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

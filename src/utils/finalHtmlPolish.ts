@@ -8,11 +8,11 @@ export interface FinalHtmlPolishOptions {
   niche?: string;
 }
 
-function normalizeText(value: any): string {
+function normalizeText(value: unknown): string {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
-function escapeHtml(value: any): string {
+function escapeHtml(value: unknown): string {
   return String(value ?? '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -497,6 +497,7 @@ function injectPremiumConsistencyCss($: cheerio.CheerioAPI): void {
     @media (max-width:820px){
       .map-block__split,.internal-links-grid,.services-grid__magazine,.process-steps__rail-layout,.local-proof__coverage,.cta-panel__consult,.price-guidance__insight,.map-block__context{grid-template-columns:1fr;gap:1.5rem}
       .internal-links-item{padding:1.75rem}
+    }
   </style>`;
   $('head').append(css);
 }

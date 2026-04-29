@@ -55,13 +55,13 @@ const semanticSchema = z.object({
 });
 
 
-export const LOCALPROOFVARIANTS = ['grid_logos', 'list_detailed', 'cards_minimal'] as const;
+export const LOCALPROOFVARIANTS = ['grid_logos', 'list_detailed', 'cards_minimal', 'evidence_stack', 'coverage_split'] as const;
 export type LocalProofVariant = typeof LOCALPROOFVARIANTS[number];
 
 export const LocalProofPayloadSchema = z.object({
   section: sectionSchema,
   semantic: semanticSchema.default({ intro: [], items: [], bullets: [] }),
-  contract: z.any().optional(),
+  contract: z.unknown().optional(),
   context: contextSchema.optional()
 });
 

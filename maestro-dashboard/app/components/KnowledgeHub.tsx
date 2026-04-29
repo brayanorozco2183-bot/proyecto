@@ -77,9 +77,9 @@ export default function KnowledgeHub() {
                 <span style={{ fontSize: '0.7rem', background: 'var(--accent)', color: 'black', padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold' }}>SISTEMA AUTÓNOMO</span>
             </h2>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '2rem' }}>
+            <div className="knowledge-hub-grid">
                 {/* Panel de Creación */}
-                <div style={{ borderRight: '1px solid var(--border)', paddingRight: '2rem' }}>
+                <div className="knowledge-hub-sidebar">
                     <h3 style={{ fontSize: '1rem', marginBottom: '1rem', color: 'var(--primary)' }}>Nueva Norma / Guarda-rail</h3>
 
                     <div style={{ marginBottom: '1rem' }}>

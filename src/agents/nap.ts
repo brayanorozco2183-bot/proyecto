@@ -95,10 +95,10 @@ export class NAPGuardianAgent extends BaseAgent {
     })();
 
     const trustEvidence = [
-      businessNameProvided ? 'Nombre comercial aportado' : 'Nombre comercial resuelto por fallback canónico seguro',
-      addressGranularity === 'exact' ? 'Dirección exacta aportada' : 'Cobertura mostrada a nivel de ciudad',
-      phoneProvided ? 'Teléfono con formato válido' : 'Teléfono pendiente de validación',
-      'No se inventan reseñas ni valoraciones',
+      businessNameProvided ? 'Nombre comercial revisado' : 'Identidad local coherente para la página',
+      addressGranularity === 'exact' ? 'Dirección exacta aportada' : `Cobertura comunicada a nivel de ${normalizeText(input.city) || 'zona'}`,
+      phoneProvided ? 'Teléfono con formato válido' : 'Canal de contacto no telefónico preparado',
+      'Contenido local prudente y sin promesas no comprobadas',
     ];
 
     const napData = {
@@ -107,7 +107,7 @@ export class NAPGuardianAgent extends BaseAgent {
       phone,
       consistency_score,
       truth_level,
-      business_name_status: businessNameProvided ? 'provided_sanitized' : 'fallback_canonical',
+      business_name_status: businessNameProvided ? 'provided_sanitized' : 'canonical_generated',
       address_status: addressGranularity,
       phone_status: phoneProvided ? 'validated_format' : 'missing',
       render_policy: {
@@ -124,7 +124,7 @@ export class NAPGuardianAgent extends BaseAgent {
         { site: `Directorio local de ${input.city}`, action: 'create', status: business_name ? 'ready_for_creation' : 'needs_real_brand' },
         { site: 'Bing Places', action: 'create', status: phoneProvided ? 'ready_for_creation' : 'needs_real_phone' }
       ],
-      local_blurb: `${business_name} presta servicio de ${getCanonicalNicheLabel(input.niche).toLowerCase()} en ${input.city} con identidad local coherente, datos visibles y cobertura declarada sin inventar información sensible.`
+      local_blurb: `${business_name} presta servicio de ${getCanonicalNicheLabel(input.niche).toLowerCase()} en ${input.city} con información local prudente, cobertura clara y datos públicos alineados con lo aportado.`
     };
 
     return {

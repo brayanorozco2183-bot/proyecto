@@ -4,6 +4,6 @@ import type { BlockRendererInput } from '../types.js';
 
 export function renderUrgencyPanel(input: BlockRendererInput): string {
   const variant = resolveUrgencyPanelVariant(input.variant);
-  const renderer = renderUrgencyPanelVariants[variant as any] || renderUrgencyPanelVariants.sidebar_alert;
+  const renderer = renderUrgencyPanelVariants[variant] || renderUrgencyPanelVariants.sidebar_alert;
   return renderer(input);
 }

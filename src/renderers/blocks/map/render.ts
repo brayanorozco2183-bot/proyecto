@@ -4,7 +4,7 @@ import type { BlockRendererInput } from '../types.js';
 
 export function renderMap(input: BlockRendererInput): string {
   const variant = resolveMapVariant(input.variant);
-  const renderer = (renderMapVariants as any)[variant] || renderMapVariants.full_width;
+  const renderer = renderMapVariants[variant] || renderMapVariants.full_width;
 
   return renderer(input);
 }

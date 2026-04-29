@@ -65,7 +65,10 @@ export default function MissionControl() {
             const payload = command || `Misión de ${niche} en ${locations}`;
             const finalCommand = publishMode === 'publish' ? payload + ' [PUBLISH_NOW]' : payload;
             // Preparar credenciales adicionales si se han rellenado
-            const extraPayload: any = {};
+            const extraPayload: {
+                ftp_creds?: { host: string; user: string; pass: string; port: number; path: string };
+                wp_creds?: { site_url: string; auth_user: string; auth_pass: string };
+            } = {};
             if (siteType === 'static' && ftpHost) {
                 extraPayload.ftp_creds = { host: ftpHost, user: ftpUser, pass: ftpPass, port: 22, path: ftpPath };
             }
@@ -75,7 +78,10 @@ export default function MissionControl() {
 
             const res = await fetch('http://localhost:8081/api/command', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer debug_token_123'
+                },
                 body: JSON.stringify({
                     command: finalCommand,
                     publish_mode: publishMode,
@@ -101,7 +107,7 @@ export default function MissionControl() {
                 setLocations('');
                 setCommand('');
             } else {
-                throw new Error(data.error);
+                throw new Error(data.error || data.response || 'Error devuelto por el servidor sin mensaje específico');
             }
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
@@ -123,8 +129,9 @@ export default function MissionControl() {
             } else {
                 setMessage(`Error al detener: ${data.error}`);
             }
-        } catch (err: any) {
-            setMessage(`Error de conexión al detener: ${err.message}`);
+        } catch (err) {
+            const errorMsg = err instanceof Error ? err.message : String(err);
+            setMessage(`Error de conexión al detener: ${errorMsg}`);
         }
     };
 
@@ -173,7 +180,7 @@ export default function MissionControl() {
 
                 <div style={{ padding: '0.5rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
                     <p style={{ fontSize: '0.7rem', color: 'var(--muted)', marginBottom: '1rem', textAlign: 'center' }}>O usa el formulario estructurado:</p>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1rem' }}>
+                    <div className="form-grid" style={{ gap: '0.5rem', marginBottom: '1rem' }}>
                         <input
                             type="text"
                             value={niche}
@@ -288,7 +295,7 @@ export default function MissionControl() {
                     {siteType === 'static' && (
                         <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(245, 158, 11, 0.05)', borderRadius: '8px', border: '1px solid rgba(245, 158, 11, 0.2)' }}>
                             <h4 style={{ fontSize: '0.75rem', color: '#f59e0b', marginBottom: '0.75rem', fontWeight: 600 }}>Credenciales SFTP/FTP (Opcional - Sobrescribe Globales)</h4>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+                            <div className="form-grid" style={{ gap: '0.5rem' }}>
                                 <input type="text" placeholder="Host (Ej: ftp.server.com)" value={ftpHost} onChange={e => setFtpHost(e.target.value)} style={{ padding: '0.5rem', background: '#050507', border: '1px solid var(--border)', borderRadius: '4px', color: '#fff', fontSize: '0.75rem' }} />
                                 <input type="text" placeholder="Usuario FTP" value={ftpUser} onChange={e => setFtpUser(e.target.value)} style={{ padding: '0.5rem', background: '#050507', border: '1px solid var(--border)', borderRadius: '4px', color: '#fff', fontSize: '0.75rem' }} />
                                 <input type="password" placeholder="Contraseña FTP" value={ftpPass} onChange={e => setFtpPass(e.target.value)} style={{ padding: '0.5rem', background: '#050507', border: '1px solid var(--border)', borderRadius: '4px', color: '#fff', fontSize: '0.75rem' }} />
@@ -302,7 +309,7 @@ export default function MissionControl() {
                             <h4 style={{ fontSize: '0.75rem', color: '#38bdf8', marginBottom: '0.75rem', fontWeight: 600 }}>Credenciales WordPress (Opcional - Sobrescribe Globales)</h4>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem' }}>
                                 <input type="text" placeholder="URL Pública (Ej: https://miweb.com)" value={wpUrl} onChange={e => setWpUrl(e.target.value)} style={{ padding: '0.5rem', background: '#050507', border: '1px solid var(--border)', borderRadius: '4px', color: '#fff', fontSize: '0.75rem' }} />
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+                                <div className="form-grid" style={{ gap: '0.5rem' }}>
                                     <input type="text" placeholder="Usuario WP" value={wpUser} onChange={e => setWpUser(e.target.value)} style={{ padding: '0.5rem', background: '#050507', border: '1px solid var(--border)', borderRadius: '4px', color: '#fff', fontSize: '0.75rem' }} />
                                     <input type="password" placeholder="App Password" value={wpPass} onChange={e => setWpPass(e.target.value)} style={{ padding: '0.5rem', background: '#050507', border: '1px solid var(--border)', borderRadius: '4px', color: '#fff', fontSize: '0.75rem' }} />
                                 </div>

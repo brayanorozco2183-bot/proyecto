@@ -1,6 +1,10 @@
 import type { ObservabilityMetadata, PipelineResult } from '../types/pipeline_v2.js';
+import { assertPipelinePhaseContract } from '../validators/pipelineContractValidator.js';
 import { QualityPolicyEngine } from '../quality/policy/qualityPolicyEngine.js';
 import { createEmptyQualityLedger, type PipelineQualityLedger } from '../types/pipeline/quality.js';
+import { appendMissionEvent, formatHumanEvent, type MissionEvent } from '../observability/missionEvents.js';
+import { classifyPipelineError } from '../observability/errorClassifier.js';
+import { writeMissionSummary } from '../observability/missionSummary.js';
 import {
   CANONICAL_PIPELINE_LABELS,
   CANONICAL_PIPELINE_PHASES,
@@ -141,6 +145,23 @@ export class ContentPipelineStateMachine {
   private readonly qualityPolicy = new QualityPolicyEngine();
 
   constructor(private readonly host: PipelineHostAdapter) {}
+
+  private async emitMissionEvent(state: PipelineState, event: MissionEvent): Promise<void> {
+    const enriched: MissionEvent = {
+      missionId: state.runId,
+      ...event,
+      data: {
+        ...(event.data || {}),
+        niche: state.mission?.niche,
+        city: state.mission?.city,
+      },
+    };
+    const line = formatHumanEvent(enriched);
+    if (event.level === 'error') console.error(line);
+    else if (event.level === 'warn') console.warn(line);
+    else console.log(line);
+    await appendMissionEvent(state.artifactsDir, enriched);
+  }
 
   private resolveQualityLedger(state: PipelineState, options: PipelineRunOptions): PipelineQualityLedger {
     const profile = this.qualityPolicy.resolveProfile({
@@ -322,6 +343,7 @@ export class ContentPipelineStateMachine {
     error?: string;
     html?: string;
     state: PipelineState;
+    metrics?: Record<string, string | number | boolean | null>;
   }> {
     const warnings: string[] = [];
     let nextState: PipelineState = safeClone(state);
@@ -357,6 +379,7 @@ export class ContentPipelineStateMachine {
       }
       case 'render-plan': {
         if (!nextState.data.pagePlan) throw new Error('Falta pagePlan antes de render-plan.');
+        console.log(`[Phase 3.5] Resolving render plan for ${nextState.mission.city}...`);
         nextState.data.resolvedPlan = this.host.resolveRenderPlan(nextState.mission, nextState.data.pagePlan);
         return { status: 'success', warnings, state: nextState };
       }
@@ -384,6 +407,7 @@ export class ContentPipelineStateMachine {
         if (!nextState.data.correctedDraft || !nextState.data.pagePlan || !nextState.data.normalizedContext) {
           throw new Error('Faltan correctedDraft, pagePlan o normalizedContext antes de integrity.');
         }
+        console.log(`[Phase 6] Validating content integrity for ${nextState.mission.city}...`);
         const targetTotal = nextState.mission.contextual_data?.wordCountTarget || nextState.data.pagePlan.intentModel?.wordCountTarget || 2100;
         this.host.validateWordBudget(nextState.data.correctedDraft, targetTotal);
         await this.host.validatePreAssemblyIntegrityGate(nextState.data.correctedDraft, {
@@ -410,6 +434,7 @@ export class ContentPipelineStateMachine {
         if (!nextState.data.enrichedDraft || !nextState.data.pagePlan) {
           throw new Error('Faltan enrichedDraft o pagePlan antes de seo-contract.');
         }
+        console.log(`[Phase 7.5] Building SEO contract and metadata...`);
         const seoPack = await this.host.buildSeoContract(nextState.data.enrichedDraft, nextState.data.pagePlan, nextState.mission);
         nextState.data.enrichedDraft = seoPack.enrichedDraft;
         nextState.data.pagePlan = seoPack.pagePlan;
@@ -428,7 +453,12 @@ export class ContentPipelineStateMachine {
           nextState.mission,
           nextState.data.resolvedPlan,
         );
-        return { status: 'success', warnings, state: nextState, html: nextState.data.renderedPage.html };
+        const assemblyMode = String((nextState.data.renderedPage.metadata as any)?.assembly_mode || 'procedural');
+        if (assemblyMode === 'emergency_fallback') {
+          warnings.push('ASSEMBLY_EMERGENCY_FALLBACK');
+          return { status: 'degraded', warnings, state: nextState, html: nextState.data.renderedPage.html, metrics: { assemblyFallback: true } };
+        }
+        return { status: 'success', warnings, state: nextState, html: nextState.data.renderedPage.html, metrics: { assemblyFallback: false } };
       }
       case 'images': {
         if (!nextState.data.renderedPage || !nextState.data.pagePlan) {
@@ -512,7 +542,9 @@ export class ContentPipelineStateMachine {
           return { status: 'degraded', warnings, state: nextState, html: nextState.data.renderedPage?.html, error: deliveryPolicy.reason };
         }
 
-        const outcome = await this.host.runDeliveryPhase(nextState.data.renderedPage, nextState.mission, options);
+        const pageForDelivery = nextState.data.renderedPage;
+        if (!pageForDelivery) throw new Error('Falta renderedPage antes de delivery.');
+        const outcome = await this.host.runDeliveryPhase(pageForDelivery, nextState.mission, options);
         nextState.data.renderedPage = outcome.output?.renderedPage || nextState.data.renderedPage;
         nextState.data.delivery = outcome.output?.delivery || nextState.data.delivery;
         warnings.push(...(outcome.warnings || []));
@@ -549,6 +581,18 @@ export class ContentPipelineStateMachine {
       state.stateFilePath = await savePipelineState(state);
     }
 
+    await this.emitMissionEvent(state, {
+      level: 'info',
+      event: 'MISSION_START',
+      status: state.lifecycle.status,
+      data: {
+        persistState,
+        resumeFromStatePath: Boolean(options.resumeFromStatePath),
+        startFromPhase: options.startFromPhase || null,
+        stopAfterPhase: options.stopAfterPhase || null,
+      },
+    });
+
     try {
       await this.host.ensureMissionEnrolledDB(state.mission);
       const startPhase = this.resolveStartPhase(state, options);
@@ -563,6 +607,17 @@ export class ContentPipelineStateMachine {
           lifecycle: state.lifecycle,
         });
 
+        await this.emitMissionEvent(state, {
+          level: 'info',
+          phase,
+          event: 'PHASE_START',
+          status: 'running',
+          data: {
+            attempt: attemptForPhase(state, phase),
+            inputMetrics: summarizeMetrics(phase, state),
+          },
+        });
+
         let phaseState = safeClone(state);
         phaseState.lifecycle.status = 'running';
         phaseState.lifecycle.currentPhase = phase;
@@ -575,8 +630,12 @@ export class ContentPipelineStateMachine {
         let executionRecord: PipelinePhaseExecutionRecord | undefined;
         const phaseAttempt = attemptForPhase(state, phase);
         try {
+          assertPipelinePhaseContract(phase, 'input', phaseState);
           const outcome = await this.executePhase(phase, phaseState, options);
           state = safeClone(outcome.state);
+          if (outcome.status !== 'failed') {
+            assertPipelinePhaseContract(phase, 'output', state);
+          }
           state.lifecycle.currentPhase = phase;
           state.lifecycle.lastStablePhase = phase;
           state.lifecycle.status = 'running';
@@ -623,13 +682,37 @@ export class ContentPipelineStateMachine {
 
           state.phases.push(executionRecord);
 
+          await this.emitMissionEvent(state, {
+            level: outcome.status === 'success' ? 'info' : outcome.status === 'degraded' ? 'warn' : 'error',
+            phase,
+            event: outcome.status === 'failed' ? 'PHASE_FAILED' : 'PHASE_END',
+            status: outcome.status,
+            durationMs: executionRecord.durationMs,
+            message: outcome.error,
+            data: {
+              attempt: phaseAttempt,
+              metrics: executionRecord.metrics || {},
+              warningsCount: executionRecord.warnings?.length || 0,
+              errorType: outcome.error ? classifyPipelineError(new Error(outcome.error), { phase }).type : undefined,
+            },
+          });
+
           if (outcome.status === 'failed') {
             state.lifecycle.status = 'failed';
             state.updatedAt = nowIso();
             if (persistState && state.artifactsDir) {
               state.stateFilePath = await savePipelineState(state);
             }
-            return { result: this.toFailureResult(state, new Error(outcome.error || `La fase ${phase} falló.`)), state };
+            const failureResult = this.toFailureResult(state, new Error(outcome.error || `La fase ${phase} falló.`));
+            await writeMissionSummary(state, failureResult, new Error(outcome.error || `La fase ${phase} falló.`));
+            await this.emitMissionEvent(state, {
+              level: 'error',
+              event: 'MISSION_FAILED',
+              status: 'failed',
+              message: failureResult.error,
+              data: { failedPhase: phase, lastStablePhase: state.lifecycle.lastStablePhase || null },
+            });
+            return { result: failureResult, state };
           }
 
           if (this.host.saveLegacyDebugSnapshot) {
@@ -680,18 +763,51 @@ export class ContentPipelineStateMachine {
 
           state.phases.push(executionRecord);
 
+          await this.emitMissionEvent(state, {
+            level: 'error',
+            phase,
+            event: 'PHASE_FAILED',
+            status: 'failed',
+            durationMs: executionRecord.durationMs,
+            message: error.message,
+            data: {
+              attempt: phaseAttempt,
+              errorType: classifyPipelineError(error, { phase }).type,
+              errorHint: classifyPipelineError(error, { phase }).hint,
+              metrics: executionRecord.metrics || {},
+            },
+          });
+
           if (persistState && state.artifactsDir) {
             state.stateFilePath = await savePipelineState(state);
           }
 
           if (state.data.renderedPage && this.host.shouldUseSoftMode(state.mission)) {
+            const softModeResult = this.host.buildSoftModeResult(state.data.renderedPage, state.mission, error, state.observability);
+            await writeMissionSummary(state, softModeResult, error);
+            await this.emitMissionEvent(state, {
+              level: 'error',
+              event: 'MISSION_FAILED',
+              status: 'failed',
+              message: softModeResult.error || error.message,
+              data: { failedPhase: phase, lastStablePhase: state.lifecycle.lastStablePhase || null, softMode: true },
+            });
             return {
-              result: this.host.buildSoftModeResult(state.data.renderedPage, state.mission, error, state.observability),
+              result: softModeResult,
               state,
             };
           }
 
-          return { result: this.toFailureResult(state, error), state };
+          const failureResult = this.toFailureResult(state, error);
+          await writeMissionSummary(state, failureResult, error);
+          await this.emitMissionEvent(state, {
+            level: 'error',
+            event: 'MISSION_FAILED',
+            status: 'failed',
+            message: failureResult.error,
+            data: { failedPhase: phase, lastStablePhase: state.lifecycle.lastStablePhase || null },
+          });
+          return { result: failureResult, state };
         }
       }
 
@@ -701,7 +817,16 @@ export class ContentPipelineStateMachine {
       if (persistState && state.artifactsDir) {
         state.stateFilePath = await savePipelineState(state);
       }
-      return { result: this.buildSuccessResult(state), state };
+      const successResult = this.buildSuccessResult(state);
+      await writeMissionSummary(state, successResult);
+      await this.emitMissionEvent(state, {
+        level: successResult.success ? 'info' : 'error',
+        event: successResult.success ? 'MISSION_SUCCESS' : 'MISSION_FAILED',
+        status: successResult.success ? 'completed' : 'failed',
+        message: successResult.error,
+        data: { htmlPath: successResult.data?.html_path || null, score: successResult.data?.score || null },
+      });
+      return { result: successResult, state };
     } catch (error: any) {
       state.lifecycle.status = 'failed';
       state.updatedAt = nowIso();
@@ -709,13 +834,31 @@ export class ContentPipelineStateMachine {
         state.stateFilePath = await savePipelineState(state);
       }
       if (state.data.renderedPage && this.host.shouldUseSoftMode(state.mission)) {
+        const outerSoftModeResult = this.host.buildSoftModeResult(state.data.renderedPage, state.mission, error, state.observability);
+        await writeMissionSummary(state, outerSoftModeResult, error);
+        await this.emitMissionEvent(state, {
+          level: 'error',
+          event: 'MISSION_FAILED',
+          status: 'failed',
+          message: outerSoftModeResult.error || error.message,
+          data: { failedPhase: state.lifecycle.currentPhase || null, lastStablePhase: state.lifecycle.lastStablePhase || null, softMode: true },
+        });
         return {
-          result: this.host.buildSoftModeResult(state.data.renderedPage, state.mission, error, state.observability),
+          result: outerSoftModeResult,
           state,
         };
       }
+      const outerFailureResult = this.toFailureResult(state, error);
+      await writeMissionSummary(state, outerFailureResult, error);
+      await this.emitMissionEvent(state, {
+        level: 'error',
+        event: 'MISSION_FAILED',
+        status: 'failed',
+        message: outerFailureResult.error,
+        data: { failedPhase: state.lifecycle.currentPhase || null, lastStablePhase: state.lifecycle.lastStablePhase || null },
+      });
       return {
-        result: this.toFailureResult(state, error),
+        result: outerFailureResult,
         state,
       };
     }

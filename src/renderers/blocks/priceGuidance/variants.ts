@@ -1,4 +1,4 @@
-import { deriveFallbackItems, escapeHtml, renderBullets, renderCta, renderParagraphs, renderSectionHeading, renderTable, wrapSectionBlock } from '../shared.js';
+import { deriveFallbackItems, escapeHtml, getTableRows, renderBullets, renderCta, renderParagraphs, renderSectionHeading, renderTable, wrapSectionBlock } from '../shared.js';
 import type { BlockRendererInput } from '../types.js';
 
 function resolveItems(input: BlockRendererInput) {
@@ -24,7 +24,7 @@ const tableSimple = (input: BlockRendererInput): string => {
 
 const cardsPrice = (input: BlockRendererInput): string => {
   const items = resolveItems(input);
-  const rows = input.content.table?.rows || [];
+  const rows = getTableRows(input.content.table);
 
   return wrapSectionBlock(
     input,

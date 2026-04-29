@@ -1,0 +1,11 @@
+{
+  "1": { "inputs": { "clip_name1": "qwen_3_4b.safetensors", "clip_name2": "qwen_3_4b.safetensors", "type": "flux" }, "class_type": "DualCLIPLoaderGGUF", "_meta": { "title": "DualCLIPLoaderGGUF" } },
+  "2": { "inputs": { "unet_name": "flux1-schnell-Q2_K.gguf", "weight_dtype": "default" }, "class_type": "UnetLoaderGGUF", "_meta": { "title": "UnetLoaderGGUF" } },
+  "3": { "inputs": { "vae_name": "flux2-vae.safetensors" }, "class_type": "VAELoader", "_meta": { "title": "VAELoader" } },
+  "4": { "inputs": { "guidance": 3.5, "conditioning": [ "5", 0 ] }, "class_type": "FluxGuidance", "_meta": { "title": "FluxGuidance" } },
+  "5": { "inputs": { "text": "placeholder_prompt", "clip": [ "1", 0 ] }, "class_type": "CLIPTextEncode", "_meta": { "title": "Prompt Editorial" } },
+  "6": { "inputs": { "width": 512, "height": 512, "batch_size": 1 }, "class_type": "EmptyLatentImage", "_meta": { "title": "EmptyLatentImage" } },
+  "7": { "inputs": { "seed": 0, "steps": 4, "cfg": 1, "sampler_name": "euler", "scheduler": "simple", "denoise": 1, "model": [ "2", 0 ], "positive": [ "4", 0 ], "negative": [ "4", 0 ], "latent_image": [ "6", 0 ] }, "class_type": "KSampler", "_meta": { "title": "KSampler" } },
+  "8": { "inputs": { "samples": [ "7", 0 ], "vae": [ "3", 0 ] }, "class_type": "VAEDecode", "_meta": { "title": "VAEDecode" } },
+  "9": { "inputs": { "filename_prefix": "editorial", "images": [ "8", 0 ] }, "class_type": "SaveImage", "_meta": { "title": "SaveImage" } }
+}

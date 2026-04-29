@@ -1,0 +1,185 @@
+{
+  "uploaded_html_files_analyzed": 34,
+  "dominant_html_classes": [
+    [
+      "el-container",
+      310
+    ],
+    [
+      "cta-primary",
+      180
+    ],
+    [
+      "block__pill",
+      166
+    ],
+    [
+      "conversion-proof-item",
+      136
+    ],
+    [
+      "conversion-proof-item__value",
+      136
+    ],
+    [
+      "conversion-proof-item__label",
+      136
+    ],
+    [
+      "conversion-proof-item__text",
+      136
+    ],
+    [
+      "shell-plain",
+      112
+    ],
+    [
+      "bullet-inner",
+      102
+    ],
+    [
+      "el-section",
+      102
+    ],
+    [
+      "testimonial-card",
+      102
+    ],
+    [
+      "testimonial-card__stars",
+      102
+    ],
+    [
+      "testimonial-text",
+      102
+    ],
+    [
+      "testimonial-meta",
+      102
+    ],
+    [
+      "avatar",
+      102
+    ],
+    [
+      "testimonial-name",
+      102
+    ],
+    [
+      "testimonial-date",
+      102
+    ],
+    [
+      "footer__nav-link",
+      102
+    ],
+    [
+      "density--standard",
+      88
+    ],
+    [
+      "section-shell",
+      78
+    ]
+  ],
+  "dominant_colors_found": [
+    [
+      "#FFFFFF",
+      512
+    ],
+    [
+      "#F8FAFC",
+      275
+    ],
+    [
+      "#FFF",
+      205
+    ],
+    [
+      "#10B981",
+      106
+    ],
+    [
+      "#0F172A",
+      104
+    ],
+    [
+      "#0F766E",
+      102
+    ],
+    [
+      "#94A3B8",
+      102
+    ],
+    [
+      "#F59E0B",
+      72
+    ],
+    [
+      "#07111D",
+      68
+    ],
+    [
+      "#C7A54A",
+      68
+    ],
+    [
+      "#22C55E",
+      68
+    ],
+    [
+      "#64748B",
+      68
+    ],
+    [
+      "#000",
+      38
+    ],
+    [
+      "#F1F5F9",
+      34
+    ],
+    [
+      "#334155",
+      34
+    ],
+    [
+      "#475569",
+      34
+    ],
+    [
+      "#0A192F",
+      34
+    ],
+    [
+      "#D4AF37",
+      34
+    ],
+    [
+      "#F9FAFB",
+      34
+    ],
+    [
+      "#F8FBFF",
+      34
+    ]
+  ],
+  "titles_sample": [
+    "Masterclass Technical Blueprint para Mantenimiento | Prueba de Calidad Gravity",
+    "Masterclass Luxury Minimalist para Cerrajeros | Prueba de Calidad Gravity",
+    "Masterclass Urban Glass para Fontaneros | Prueba de Calidad Gravity",
+    "Masterclass Warm Local para Electricistas | Prueba de Calidad Gravity",
+    "Masterclass Technical Blueprint para Climatizacion | Prueba de Calidad Gravity",
+    "Masterclass Editorial Prestige para Reformas | Prueba de Calidad Gravity",
+    "Masterclass Emergency High Trust para Pintores | Prueba de Calidad Gravity",
+    "Masterclass Soft Residential para Carpinteros | Prueba de Calidad Gravity",
+    "Masterclass Bold Contrast para Jardineria | Prueba de Calidad Gravity",
+    "Masterclass Artisan Craft para Limpieza | Prueba de Calidad Gravity"
+  ],
+  "contrast_minimums_in_generated_pack": {
+    "bg_text": 14.77,
+    "surface_text": 15.39,
+    "primary_on_primary": 4.7,
+    "accent_on_accent": 4.69
+  }
+}

@@ -4,7 +4,7 @@ import type { BlockRendererInput } from '../types.js';
 
 export function renderFaq(input: BlockRendererInput): string {
   const variant = resolveFaqVariant(input.variant);
-  const renderer = (renderFaqVariants as any)[variant] || renderFaqVariants.accordion_clean;
+  const renderer = renderFaqVariants[variant] || renderFaqVariants.accordion_clean;
 
   return renderer(input);
 }

@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_031_MONOLITH_FLOW_HERITAGE",
+  "title": "Monolith Flow Heritage",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "service_command_center",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 16,
+      "gutter": "12px",
+      "container_width": "min(1440px, calc(100% - 64px))"
+    },
+    "navigation": {
+      "style": "command_palette",
+      "position": "fixed_right",
+      "blur": "20px",
+      "contrast_safe": true,
+      "mobile_pattern": "compact_command"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#E11D48",
+      "accent": "#2DD4BF",
+      "bg": "#09090B",
+      "surface": "#17171C",
+      "surface_alt": "#25252C",
+      "text": "#FFF1F2",
+      "muted": "#D4BEC3",
+      "on_primary": "#FFFFFF",
+      "on_accent": "#000000",
+      "radius_policy": "24px",
+      "shadow_policy": "deep_editorial",
+      "font_display": "'Archivo', sans-serif",
+      "font_body": "'Roboto Flex', sans-serif",
+      "spacing_density": "editorial",
+      "border_policy": "architectural"
+    },
+    "contrast_report": {
+      "bg_text": 18.11,
+      "surface_text": 16.26,
+      "primary_on_primary": 4.7,
+      "accent_on_accent": 11.28,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #09090B; --surface: #17171C; --surface-alt: #25252C; --text: #FFF1F2; --muted: #D4BEC3; --primary: #E11D48; --accent: #2DD4BF; --on-primary: #FFFFFF; --on-accent: #000000; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 24px; --gap: 12px; --blur: 20px; --nav-position: fixed; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Roboto Flex', sans-serif; } h1,h2,h3,.display { font-family: 'Archivo', sans-serif; } .hero { min-height: clamp(720px, 92vh, 980px); display: grid; align-items: end; padding: clamp(32px, 6vw, 96px); } .hero__copy { max-width: 760px; } .hero h1 { font-size: clamp(3.4rem, 8vw, 8.5rem); letter-spacing: -0.08em; line-height: .84; } .premium-frame { border: 1px solid var(--border); border-radius: calc(var(--radius) * 1.4); overflow: hidden; box-shadow: var(--shadow); }  @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "bento_authority_hero",
+      "custom_structure": "<section class='hero hero--bento'><div class='hero-card hero-card--main'><span>{{CATEGORY}}</span><h1>{{H1}}</h1>{{CTA_PRIMARY}}</div><div class='hero-card hero-card--proof'>{{PROOF_STACK}}</div><div class='hero-card hero-card--map'>{{LOCAL_MAP}}</div></section>"
+    },
+    "services_grid": {
+      "style": "emergency_action_grid",
+      "columns_override": 2,
+      "interaction": "reveal_on_scroll",
+      "content_strategy": "urgent priority cards with phone actions"
+    },
+    "trust_layer": {
+      "style": "local_reviews_wall",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "map_like_area_list",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "technical_table",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "graphite_rose",
+    "motion_level": "cinematic",
+    "noise_overlay": false,
+    "color_glitch": false,
+    "image_treatment": "soft_masked",
+    "premium_cues": [
+      "bento hierarchy",
+      "metric cards",
+      "glass blur"
+    ]
+  }
+}

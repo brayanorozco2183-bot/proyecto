@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_198_LUNAR_WORKSHOP_ARCHITECT",
+  "title": "Lunar Workshop Architect",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "technical_blueprint",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 8,
+      "gutter": "24px",
+      "container_width": "min(1320px, calc(100% - 48px))"
+    },
+    "navigation": {
+      "style": "blueprint_rail",
+      "position": "fixed_left",
+      "blur": "0px",
+      "contrast_safe": true,
+      "mobile_pattern": "horizontal_scroll"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#EA580C",
+      "accent": "#14B8A6",
+      "bg": "#110B08",
+      "surface": "#20130E",
+      "surface_alt": "#301E17",
+      "text": "#FFF4EB",
+      "muted": "#D9C5B8",
+      "on_primary": "#000000",
+      "on_accent": "#000000",
+      "radius_policy": "10px",
+      "shadow_policy": "floating_card",
+      "font_display": "'Outfit', sans-serif",
+      "font_body": "'Inter', sans-serif",
+      "spacing_density": "generous",
+      "border_policy": "visible"
+    },
+    "contrast_report": {
+      "bg_text": 18.04,
+      "surface_text": 16.7,
+      "primary_on_primary": 5.9,
+      "accent_on_accent": 8.44,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #110B08; --surface: #20130E; --surface-alt: #301E17; --text: #FFF4EB; --muted: #D9C5B8; --primary: #EA580C; --accent: #14B8A6; --on-primary: #000000; --on-accent: #000000; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 10px; --gap: 24px; --blur: 0px; --nav-position: fixed; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; } h1,h2,h3,.display { font-family: 'Outfit', sans-serif; } .emergency-dock { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 60; display: flex; gap: 12px; padding: 10px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 90%, transparent); border: 1px solid var(--border); backdrop-filter: blur(var(--blur)); } .emergency-dock .cta-primary { min-height: 48px; } body::after { content: ''; position: fixed; inset: 0; pointer-events: none; background-image: radial-gradient(color-mix(in srgb, var(--text) 18%, transparent) 1px, transparent 1px); background-size: 4px 4px; opacity: .035; z-index: 80; } @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "local_trust_hero",
+      "custom_structure": "<section class='hero hero--local'><div><span class='eyebrow'>{{NEIGHBOURHOOD}}</span><h1>{{H1}}</h1><p>{{INTRO}}</p></div><aside class='hero-proof'>{{RATING}}{{RESPONSE_TIME}}{{CTA_PRIMARY}}</aside></section>"
+    },
+    "services_grid": {
+      "style": "accordion_service_depth",
+      "columns_override": 1,
+      "interaction": "subtle_border_glow",
+      "content_strategy": "accordion blueprint blocks"
+    },
+    "trust_layer": {
+      "style": "metric_bento",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "compact_breadcrumb_cluster",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "split_questions",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "volcanic_orange",
+    "motion_level": "premium",
+    "noise_overlay": true,
+    "color_glitch": false,
+    "image_treatment": "glass_reflection",
+    "premium_cues": [
+      "technical grid",
+      "precise dividers",
+      "SLA emphasis"
+    ]
+  }
+}

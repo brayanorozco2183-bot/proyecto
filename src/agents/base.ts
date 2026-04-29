@@ -5,12 +5,20 @@ import { z } from 'zod';
  * This version keeps backwards compatibility and adds prompt augmentation
  * from curated lessons/exemplars stored in SQLite.
  */
-export interface AgentResponse<T> {
+export interface AgentResponse<T = any> {
   success: boolean;
   data?: T;
   error?: string;
-  thoughts: string;
+  /** Optional because some legacy agents return minimal responses. */
+  thoughts?: string;
   response?: string;
+  /** Optional runtime metadata used by pipeline phases for telemetry. */
+  observability?: {
+    duration?: number;
+    model?: string;
+    tokenUsage?: number;
+    [key: string]: unknown;
+  };
 }
 
 export abstract class BaseAgent {
