@@ -1,4 +1,4 @@
-import { getFallbackServiceTopics } from '../utils/fallbackQuality.js';
+import { getFallbackServiceTopics, buildPublicFallbackParagraphs } from '../utils/fallbackQuality.js';
 import { BaseAgent, AgentResponse } from './base.js';
 import axios from 'axios';
 import { AIFacade } from '../tools/aiFacade.js';
@@ -1026,6 +1026,15 @@ private dedupeLocalLabel(text: string, city: string): string {
         const curatedTechnicalTopics = getFallbackServiceTopics(niche, 8);
         const technicalExpertisePills = curatedTechnicalTopics.map(t => `- ${t}`).join('\n');
 
+        // LEVEL 1: EXPERT REMIX (Technical Seeding)
+        const seedParagraphs = buildPublicFallbackParagraphs({
+            niche,
+            city,
+            blockType: input.blockType,
+            technicalTerms: curatedTechnicalTopics
+        });
+        const technicalSeeds = seedParagraphs.map(p => `> ${p}`).join('\n\n');
+
         return `
 Eres un redactor experto en SEO local para el mercado español. Tu misión es generar el contenido semántico para una sección específica de una página de servicios premium.
 
@@ -1038,16 +1047,21 @@ KEYWORDS/ENTIDADES: ${entities}
 ÁREAS LOCALES: ${areas}
 ENLACES INTERNOS (Anchors sugeridos): ${linkHints}
 
+TECHNICAL SEED MATERIAL (OBLIGATORIO - NIVEL EXPERTO):
+Debes usar estos párrafos como base técnica innegociable. Tu tarea es "remezclarlos", expandirlos y localizarlos para ${city}, pero manteniendo el 100% de la lógica técnica que contienen:
+${technicalSeeds}
+
 ESTRATEGIA DE REDACCIÓN (HÍBRIDA):
-1. **DENSIDAD TÉCNICA OBLIGATORIA**: No te limites a la información de la SERP. Debes integrar los siguientes conceptos expertos del nicho para demostrar autoridad real:
+1. **DENSIDAD TÉCNICA OBLIGATORIA**: Integra los siguientes conceptos expertos del nicho para demostrar autoridad real:
 ${technicalExpertisePills}
 
-2. **FORMATO JSON ESTRICTO**: No escribas nada fuera del JSON.
-3. **ESPECIFICIDAD TÉCNICA REAL**: Habla del oficio con precisión quirúrgica. Usa materiales, procesos, piezas y criterios específicos de ${niche}.
-4. **TONO DE AUTORIDAD**: Escribe como un profesional veterano (Senior Artisan) que explica la realidad técnica del trabajo, no como un comercial.
-5. **LOCALIDAD NATURAL**: Integra las zonas de ${city} (ej: ${areas}) en la logística del servicio (ej: "nos desplazamos a ${areas[0] || 'la zona'} para mediciones previas").
-6. **SIN PLACEHOLDERS**: No escribas "Factor 1", "Criterio 1". Genera contenido real y completo.
-7. **REGLA DE PROHIBICIÓN (CRÍTICA)**: No uses claims de "tiempo récord", "precios baratos" ni "presupuestos cerrados por teléfono". Sé honesto y técnico.
+2. **REGLA DE EXPANSIÓN**: No copies literalmente los "seeds". Úsalos como punto de partida para escribir párrafos de 80-120 palabras que suenen naturales, fluidos y locales.
+3. **FORMATO JSON ESTRICTO**: No escribas nada fuera del JSON.
+4. **ESPECIFICIDAD TÉCNICA REAL**: Habla del oficio con precisión quirúrgica. Usa materiales, procesos, piezas y criterios específicos de ${niche}.
+5. **TONO DE AUTORIDAD**: Escribe como un profesional veterano (Senior Artisan) que explica la realidad técnica del trabajo, no como un comercial.
+6. **LOCALIDAD NATURAL**: Integra las zonas de ${city} (ej: ${areas}) en la logística del servicio (ej: "nos desplazamos a ${areas[0] || 'la zona'} para mediciones previas").
+7. **SIN PLACEHOLDERS**: No escribas "Factor 1", "Criterio 1". Genera contenido real y completo.
+8. **REGLA DE PROHIBICIÓN (CRÍTICA)**: No uses claims de "tiempo récord", "precios baratos" ni "presupuestos cerrados por teléfono". Sé honesto y técnico.
 
 DATOS TÉCNICOS DE AUTORIDAD (USA ESTA TERMINOLOGÍA):
 ${this.nicheProfile?.verticalEnrichment ? JSON.stringify(this.nicheProfile.verticalEnrichment) : 'Usa terminología técnica estándar del sector.'}
@@ -1064,20 +1078,13 @@ ${knowledge}
 INSTRUCCIONES JSON:
 Devuelve un objeto JSON con esta estructura:
 {
-  "intro": ["Párrafo 1 profundo", "Párrafo 2 de contexto"],
-  "items": [{"title": "Subtítulo H3", "body": "Texto detallado (80-120 palabras) integrando conceptos técnicos y locales.", "meta": ["Dato técnico 1", "Dato 2"]}],
+  "intro": ["Párrafo 1 profundo basado en los Seeds", "Párrafo 2 de contexto local"],
+  "items": [{"title": "Subtítulo H3", "body": "Texto detallado (80-120 palabras) integrando conceptos técnicos, semillas y localidad.", "meta": ["Dato técnico 1", "Dato 2"]}],
   "bullets": ["Ventaja técnica específica", "Diferenciador de autoridad"],
   "faqItems": [{"question": "¿...?", "answer": "Explicación clara y útil que resuelva la duda con criterio técnico."}],
   "commonMistakes": ["Error técnico común del cliente", "Mito del sector desmentido"],
   "decisionFactors": [{"title": "Factor técnico X", "body": "Por qué es crítico para la durabilidad/seguridad"}],
   "cta": {"text": "Llamativa y natural", "note": "Garantía de profesionalidad"}
-}
-`;
-    }aja técnica 1", "Diferenciador 2"],
-  "faqItems": [{"question": "¿...?", "answer": "Explicación clara y útil"}],
-  "commonMistakes": ["Error 1", "Error 2"],
-  "decisionFactors": [{"title": "Factor 1", "body": "Por qué es importante"}],
-  "cta": {"text": "Llamativa y natural", "note": "Pequeña aclaración de confianza"}
 }
 `;
     }
