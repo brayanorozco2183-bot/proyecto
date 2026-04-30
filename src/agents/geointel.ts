@@ -35,6 +35,28 @@ const MUNICIPALITY_FALLBACKS: Record<string, string[]> = {
     alicante: ['San Blas', 'Carolinas', 'Babel', 'Benalúa', 'Garbinet', 'Vistahermosa', 'Albufereta'],
 };
 
+const NEIGHBORHOOD_FALLBACKS: Record<string, string[]> = {
+    madrid: [
+        'Centro', 'Arganzuela', 'Retiro', 'Salamanca', 'Chamberí', 'Tetuán', 'Chamartín', 
+        'Fuencarral-El Pardo', 'Moncloa-Aravaca', 'Latina', 'Carabanchel', 'Usera', 
+        'Puente de Vallecas', 'Moratalaz', 'Ciudad Lineal', 'Hortaleza', 'Villaverde', 
+        'Villa de Vallecas', 'Vicálvaro', 'San Blas-Canillejas', 'Barajas', 'Malasaña', 'Chueca', 'Lavapiés'
+    ],
+    barcelona: [
+        'Eixample', 'Gràcia', 'Sants-Montjuïc', 'Les Corts', 'Sarrià-Sant Gervasi', 
+        'Horta-Guinardó', 'Nou Barris', 'Sant Andreu', 'Sant Martí', 'Ciutat Vella', 
+        'Poblenou', 'Barceloneta', 'El Raval'
+    ],
+    valencia: [
+        'Ciutat Vella', 'Eixample', 'Extramurs', 'Campanar', 'La Saïdia', 'El Pla del Real', 
+        'L\'Olivereta', 'Patraix', 'Jesús', 'Quatre Carreres', 'Poblats Marítims', 'Camins al Grau'
+    ],
+    sevilla: [
+        'Casco Antiguo', 'Macarena', 'Nervión', 'Triana', 'Los Remedios', 'Sur', 
+        'Bellavista-La Palmera', 'San Pablo-Santa Justa', 'Este-Alcosa-Torreblanca', 'Cerro-Amate'
+    ]
+};
+
 
 function normalize(value: string): string {
     return String(value || '')
@@ -91,6 +113,14 @@ function pushCandidate(bucket: Array<{ name: string; type: string }>, name: stri
     if (!clean) return;
     const normalized = normalize(clean);
     if (!normalized || normalized === normalize(root)) return;
+
+    // Filter out hierarchy/administrative parents that are NOT neighborhoods
+    if (/espa[ñn]a|comunidad de|provincia de|regi[oó]n de|estado de|reino de/i.test(clean)) return;
+    if (/autonom[ií]a|uni[oó]n europea|continente/i.test(clean)) return;
+    
+    // Explicit exclusions for common false positives in clusters
+    if (normalized.includes('comunidad de') || normalized.includes('provincia de')) return;
+
     if (/^\d{5}$/.test(clean)) return;
     if (/pol[ií]gono industrial|industrial|c[oó]digo postal/i.test(clean)) return;
     bucket.push({ name: clean, type });
@@ -119,6 +149,11 @@ function extractDeterministicGeo(root: string, records: OsmRecord[], scope: GeoS
     const fallbackMunicipalities = MUNICIPALITY_FALLBACKS[normalize(root)] || [];
     for (const municipality of fallbackMunicipalities) {
         pushCandidate(bucket, municipality, 'municipio', root);
+    }
+
+    const fallbackNeighborhoods = NEIGHBORHOOD_FALLBACKS[normalize(root)] || [];
+    for (const neighborhood of fallbackNeighborhoods) {
+        pushCandidate(bucket, neighborhood, 'barrio', root);
     }
 
     const sub_locations = uniqueLocations(
@@ -235,10 +270,11 @@ export class GeoIntelAgent extends BaseAgent {
         REGLAS CRÍTICAS:
         1. Prioriza barrios/distritos reales y municipios cercanos relevantes.
         2. Si no hay suficiente evidencia, conserva la base determinista y no inventes.
-        3. "neighborhoods" debe contener solo strings planos.
+        3. "neighborhoods" debe contener solo strings planos (nombres de barrios).
         4. "sub_locations" debe usar type = barrio, distrito, zona o municipio.
-        5. PROHIBIDO INVENTAR: No generes nombres que suenen geográficamente posibles pero no existan (ej: no inventes nombres vascos si no estás seguro para Bilbao).
-        6. VALIDACIÓN: Cruza tus propuestas con la base DETERMINISTA SEGURA; si algo contradice fuertemente a OSM, descártalo.
+        5. PROHIBIDO INVENTAR: No generes nombres que suenen geográficamente posibles pero no existan.
+        6. VALIDACIÓN JERÁRQUICA: "España", "Comunidad de Madrid" o similares NO son barrios. Deben estar EXCLUIDOS de neighborhoods y sub_locations.
+        7. Si la raíz es una ciudad (ej: Madrid), busca sus DISTRITOS (ej: Retiro, Chamberí).
 
 
         Devuelve ÚNICAMENTE JSON con esta estructura:

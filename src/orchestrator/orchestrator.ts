@@ -36,6 +36,7 @@ import { ContextualVariationAgent } from '../agents/contextualVariationAgent.js'
 import { serpManager } from '../tools/scraper.js';
 import { geoOptimizer } from '../tools/geo_optimizer.js';
 import { dbManager } from '../db/index.js';
+import { RuntimeControl } from '../utils/runtimeControl.js';
 
 /**
  * The TaskOrchestrator is the conductor of the SEO symphony.
@@ -191,6 +192,7 @@ export class TaskOrchestrator {
     }
 
     async startMission(niche: string, locations: string[], publishMode: 'draft' | 'publish' = 'publish', options: any = {}): Promise<string> {
+        RuntimeControl.reset();
         const jobId = `mission-${Date.now()}`;
         const db = await dbManager.getDB();
         await db.run('INSERT INTO missions (id, niche, status) VALUES (?, ?, ?)', [jobId, niche, 'PENDING']);
@@ -439,9 +441,10 @@ export class TaskOrchestrator {
 
             for (const city of processingOrder) {
                 try {
+                    RuntimeControl.check();
                     // --- RECHECK STOP SIGNAL (Multi-process safe) ---
                     const missionStatus = await db.get('SELECT status FROM missions WHERE id = ?', [jobId]);
-                    if (this.globalStop || missionStatus?.status === 'STOPPED') {
+                    if (this.globalStop || missionStatus?.status === 'STOPPED' || RuntimeControl.isStopped()) {
                         this.globalStop = true; // Sync local state
                         stoppedMission = true;
                         await this.analyst.logThought(`🛑 Misión abortada manualmente por el usuario. Deteniendo el procesamiento en ${city}.`);
@@ -548,7 +551,7 @@ export class TaskOrchestrator {
                         missionId: jobId,
                         mode: extraData.mode,
                         designOverrides: extraData.debugOverrides,
-                        debugMode: extraData.debug_mode || extraData.debugMode
+                        debugMode: extraData.debug_mode || extraData.debugMode || extraData.mode === 'debug'
                     }, {
                         withImages: true,
                         deliver: extraData.mode !== 'sandbox'
@@ -699,6 +702,7 @@ export class TaskOrchestrator {
 
     public stopAllMissions() {
         console.warn('🛑 STOP signal received. Aborting all active mission processing.');
+        RuntimeControl.stopAll();
         this.globalStop = true;
     }
 }

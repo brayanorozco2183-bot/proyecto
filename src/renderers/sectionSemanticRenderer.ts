@@ -456,8 +456,8 @@ function renderFaqClassic(semantic: SectionSemanticData): string {
     return `
     <div class="faq-list">
         ${faqs.map(f => `
-            <details class="faq-item">
-                <summary>${escapeHtml(f.question)}</summary>
+            <details class="faq-item" data-faq-item="true">
+                <summary data-faq-question="true">${escapeHtml(f.question)}</summary>
                 <div><p>${f.answer}</p></div>
             </details>
         `).join('')}
@@ -471,8 +471,8 @@ function renderFaqColumns(semantic: SectionSemanticData): string {
     return `
     <div class="faq-columns">
         ${faqs.map(f => `
-            <article class="faq-card faq-item" data-faq-item>
-                <h3>${escapeHtml(f.question)}</h3>
+            <article class="faq-card faq-item" data-faq-item="true">
+                <h3 data-faq-question="true">${escapeHtml(f.question)}</h3>
                 <p>${f.answer}</p>
             </article>
         `).join('')}

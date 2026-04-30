@@ -7,6 +7,7 @@ import { applyFinalHtmlDomainGuards } from '../../guards/index.js';
 import { finalizeRenderedPageSemantics } from '../../utils/semanticContentGuard.js';
 import { applyPageCoherenceCleanup } from '../../utils/pageCoherenceGuard.js';
 import { buildPublicFallbackParagraphs, buildInternalFallbackMeta } from '../../utils/fallbackQuality.js';
+import { renderEmergencyFallbackPage } from '../../fallbacks/emergencyPageRenderer.js';
 import { 
     GenerationMission, 
     NormalizedContext, 
@@ -211,7 +212,7 @@ export class AssemblyPhase {
             console.error(`[Phase 8] ERROR Final procedural composition failed: ${error?.message || error}`);
             if (error?.stack) console.error(error.stack);
 
-            const fallbackHtml = renderEmergencyHtml({ draft, plan, context, mission, error });
+            const fallbackHtml = renderEmergencyFallbackPage({ draft, plan, context, mission, error });
             const fallbackPage = finalizeRenderedPageSemantics({
                 html: fallbackHtml,
                 metadata: {

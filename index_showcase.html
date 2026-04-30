@@ -3,299 +3,386 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gravity 200 PREMIUM Showcase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravity V7.2 | Mission Control Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: #f4f4f5; font-family: 'Inter', system-ui; padding: 4rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        :root {
+            --bg: #030305;
+            --card: rgba(15, 15, 20, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #D4AF37; /* Gold */
+            --accent-rgb: 212, 175, 55;
+            --primary: #3b82f6;
+            --success: #10b981;
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
+            --glass: blur(12px) saturate(180%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif; 
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+        }
+
+        h1, h2, h3, .brand { font-family: 'Outfit', sans-serif; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 4rem 2rem; }
+
+        /* Header Section */
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
+            margin-bottom: 4rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .brand-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .version-badge { 
+            background: rgba(212, 175, 55, 0.1); 
+            color: var(--accent); 
+            padding: 0.2rem 0.6rem; 
+            border-radius: 4px; 
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            letter-spacing: 0.1em;
+        }
+
+        h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -0.03em; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--muted); font-size: 1.1rem; max-width: 600px; }
+
+        /* Stats Grid */
+        .stats-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 1.5rem; 
+            margin-bottom: 4rem; 
+        }
+
+        .stat-card {
+            background: var(--card);
+            backdrop-filter: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: 0.3s ease;
+        }
+        .stat-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-4px); }
+        .stat-label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; display: block; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 0.5rem; }
+        .stat-trend { font-size: 0.7rem; color: var(--success); }
+
+        /* Sections */
+        section { margin-bottom: 5rem; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .section-title { font-size: 1.75rem; font-weight: 700; display: flex; align-items: center; gap: 0.75rem; }
+        .section-title::before { content: ''; width: 4px; height: 24px; background: var(--accent); border-radius: 2px; }
+
+        /* Deployments Grid */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 1.5rem; 
+        }
+
         .card { 
-            background: #0f0f0f; 
-            border: 1px solid #1f1f1f; 
-            border-radius: 16px; 
-            padding: 1.5rem; 
+            background: var(--card); 
+            backdrop-filter: var(--glass);
+            border: 1px solid var(--border); 
+            border-radius: 20px; 
+            padding: 1.75rem; 
             text-decoration: none; 
             color: inherit; 
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-        .card:hover { border-color: var(--p-color); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .badge { font-size: 0.65rem; text-transform: uppercase; padding: 0.3rem 0.6rem; border-radius: 6px; background: #27272a; margin-bottom: 1rem; display: inline-block; font-weight: 700; letter-spacing: 0.05em; }
-        .paradigm-badge { background: #3b82f6; color: white; margin-left: 0.5rem; }
-        h1 { font-size: 3rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.04em; }
-        .subtitle { color: #a1a1aa; margin-bottom: 4rem; font-size: 1.2rem; }
-        .color-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 8px; }
-        .view-link { margin-top: 1.5rem; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+
+        .card:hover { 
+            border-color: var(--p-color, var(--accent)); 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: var(--p-color, var(--accent));
+            opacity: 0.3;
+        }
+
+        .badge-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+        .badge { 
+            font-size: 0.6rem; 
+            text-transform: uppercase; 
+            padding: 0.3rem 0.6rem; 
+            border-radius: 6px; 
+            background: rgba(255,255,255,0.05); 
+            font-weight: 700; 
+            letter-spacing: 0.05em; 
+            color: var(--muted);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .badge-active { color: var(--success); border-color: rgba(16, 185, 129, 0.2); background: rgba(16, 185, 129, 0.05); }
+        .badge-dna { color: var(--primary); border-color: rgba(59, 130, 246, 0.2); background: rgba(59, 130, 246, 0.05); }
+
+        h3 { font-size: 1.25rem; margin-bottom: 0.75rem; color: #fff; }
+        .card-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; flex-grow: 1; }
+
+        .meta-info { 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+            font-size: 0.75rem; 
+            color: var(--muted);
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .color-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+        .view-action { 
+            margin-top: 1.25rem; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            color: var(--p-color, var(--accent)); 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+        }
+
+        /* Tabs/Filters */
+        .filters { display: flex; gap: 1rem; margin-bottom: 2rem; }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card { animation: fadeIn 0.6s ease backwards; }
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.15s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.25s; }
+
+        footer {
+            text-align: center;
+            padding: 4rem 0;
+            color: var(--muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
     </style>
 </head>
 <body>
-    <h1>Premium 200 Pack</h1>
-    <p class="subtitle">Auditoría de los nuevos diseños con inyección de Control Total.</p>
-    <div class="grid">
-        
-            <a href="showcase/premium_001_total-control-heritage.html" class="card" style="--p-color: #D6B35A">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">vertical_sidebar</span>
-                <h3>Total Control Heritage</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #D6B35A"></span>
-                    <span>Primario: #D6B35A</span>
+    <div class="container">
+        <header>
+            <div>
+                <div class="brand-meta">
+                    <span class="version-badge">GRAVITY V7.2 PRODUCTION</span>
+                    <span class="stat-trend">● SYSTEM ONLINE</span>
                 </div>
-                <div class="view-link" style="color: #D6B35A">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_002_obsidian-pulse-pro.html" class="card" style="--p-color: #0A3D62">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">vertical_sidebar</span>
-                <h3>Obsidian Pulse Pro</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #0A3D62"></span>
-                    <span>Primario: #0A3D62</span>
+                <h1>Mission Control</h1>
+                <p class="subtitle">Showcase de alta fidelidad: Auditoría de despliegues SEO, arquitecturas Masterclass e inteligencia de nicho.</p>
+            </div>
+            <div style="text-align: right">
+                <span class="stat-label">Última Misión</span>
+                <span style="font-weight: 600">Electricistas Madrid Unified</span>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Despliegues Activos</span>
+                <span class="stat-value">11 <span class="stat-trend">↑ 14%</span></span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Maestro DB Integrity</span>
+                <span class="stat-value">100% <span class="stat-trend">OPTIMAL</span></span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Quality Score Avg</span>
+                <span class="stat-value">94.2 <span class="stat-trend">EXCELLENT</span></span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Nichelab Ready</span>
+                <span class="stat-value">20+ <span class="stat-trend">VERTICALS</span></span>
+            </div>
+        </div>
+
+        <section id="deployments">
+            <div class="section-header">
+                <h2 class="section-title">Live Deployments (Tier 1)</h2>
+                <div class="filters">
+                    <button class="filter-btn active">Todos</button>
+                    <button class="filter-btn">Madrid</button>
+                    <button class="filter-btn">Barcelona</button>
+                    <button class="filter-btn">Electricistas</button>
                 </div>
-                <div class="view-link" style="color: #0A3D62">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_003_aurora-ledger-prime.html" class="card" style="--p-color: #C77737">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">horizontal_split</span>
-                <h3>Aurora Ledger Prime</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #C77737"></span>
-                    <span>Primario: #C77737</span>
+            </div>
+            <div class="grid">
+                <a href="output_sites/madrid-electricistas-unified-brain/index.html" class="card" style="--p-color: #3b82f6">
+                    <div class="badge-group">
+                        <span class="badge badge-active">Active</span>
+                        <span class="badge badge-dna">Unified Brain V7</span>
+                    </div>
+                    <h3>Madrid Electricistas Unified</h3>
+                    <p class="card-desc">Generación con motor de Exemplars y validación de autoridad local. Fusión de conocimiento determinista.</p>
+                    <div class="meta-info">
+                        <span class="color-dot" style="background: #3b82f6"></span>
+                        <span>Score: 98/100</span>
+                        <span>•</span>
+                        <span>ComfyUI: Generated</span>
+                    </div>
+                    <div class="view-action">Explorar Sitio →</div>
+                </a>
+
+                <a href="output_sites/cerrajeros-madrid-perfect/index.html" class="card" style="--p-color: #D4AF37">
+                    <div class="badge-group">
+                        <span class="badge badge-active">Active</span>
+                        <span class="badge badge-dna">Masterclass Luxury</span>
+                    </div>
+                    <h3>Cerrajeros Madrid Perfect</h3>
+                    <p class="card-desc">Arquitectura de lujo con inyección de NAP sanitizada y hardening DOM-Aware.</p>
+                    <div class="meta-info">
+                        <span class="color-dot" style="background: #D4AF37"></span>
+                        <span>Score: 96/100</span>
+                        <span>•</span>
+                        <span>WP: Ready</span>
+                    </div>
+                    <div class="view-action">Explorar Sitio →</div>
+                </a>
+
+                <a href="output_sites/electricistas-granada/index.html" class="card" style="--p-color: #10b981">
+                    <div class="badge-group">
+                        <span class="badge badge-active">Active</span>
+                        <span class="badge badge-dna">Modern Tech</span>
+                    </div>
+                    <h3>Electricistas Granada</h3>
+                    <p class="card-desc">Despliegue regional optimizado para clusters de barrios periféricos.</p>
+                    <div class="meta-info">
+                        <span class="color-dot" style="background: #10b981"></span>
+                        <span>Score: 92/100</span>
+                        <span>•</span>
+                        <span>GeoIntel: OK</span>
+                    </div>
+                    <div class="view-action">Explorar Sitio →</div>
+                </a>
+
+                <a href="output_sites/fontaneros-barcelona/index.html" class="card" style="--p-color: #8b5cf6">
+                    <div class="badge-group">
+                        <span class="badge badge-active">Active</span>
+                        <span class="badge badge-dna">Conversion Heavy</span>
+                    </div>
+                    <h3>Fontaneros Barcelona</h3>
+                    <p class="card-desc">Motor de urgencia 24h con CTA telefónico dominante y prueba social inyectada.</p>
+                    <div class="meta-info">
+                        <span class="color-dot" style="background: #8b5cf6"></span>
+                        <span>Score: 94/100</span>
+                        <span>•</span>
+                        <span>SEO: Tier 1</span>
+                    </div>
+                    <div class="view-action">Explorar Sitio →</div>
+                </a>
+            </div>
+        </section>
+
+        <section id="masterclass">
+            <div class="section-header">
+                <h2 class="section-title">Masterclass Explorer</h2>
+                <a href="masterclass_gallery.html" style="color: var(--accent); font-size: 0.9rem; text-decoration: none; font-weight: 600">Ver Galería Completa (100) →</a>
+            </div>
+            <div class="grid">
+                <a href="showcase/premium_001_total-control-heritage.html" class="card" style="--p-color: #D6B35A">
+                    <div class="badge">Blueprint</div>
+                    <h3>Total Control Heritage</h3>
+                    <p class="card-desc">Diseño vertical sidebar con enfoque en legibilidad institucional y autoridad de marca.</p>
+                    <div class="view-action">Ver Prototipo →</div>
+                </a>
+                <a href="showcase/premium_002_obsidian-pulse-pro.html" class="card" style="--p-color: #0A3D62">
+                    <div class="badge">Blueprint</div>
+                    <h3>Obsidian Pulse Pro</h3>
+                    <p class="card-desc">Estética dark futurista optimizada para servicios tecnológicos de alto rendimiento.</p>
+                    <div class="view-action">Ver Prototipo →</div>
+                </a>
+                <a href="showcase/premium_005_civic-halo-prestige.html" class="card" style="--p-color: #00A3B5">
+                    <div class="badge">Blueprint</div>
+                    <h3>Civic Halo Prestige</h3>
+                    <p class="card-desc">Sistema Bento Grid para visualización de múltiples servicios en un solo viewport.</p>
+                    <div class="view-action">Ver Prototipo →</div>
+                </a>
+            </div>
+        </section>
+
+        <section id="system">
+            <div class="section-header">
+                <h2 class="section-title">System Integrity & Intelligence</h2>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card" style="grid-column: span 2">
+                    <span class="stat-label">Niche Playbooks (Canónicos)</span>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem;">
+                        <span class="badge">Cerrajeros</span>
+                        <span class="badge">Fontaneros</span>
+                        <span class="badge">Electricistas</span>
+                        <span class="badge">Carpinteros</span>
+                        <span class="badge">Pintores</span>
+                        <span class="badge">Climatización</span>
+                        <span class="badge">Reformas</span>
+                        <span class="badge">Persianistas</span>
+                        <span class="badge">Cristaleros</span>
+                        <span class="badge">Tejados</span>
+                        <span class="badge">...</span>
+                    </div>
                 </div>
-                <div class="view-link" style="color: #C77737">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_004_velvet-grid-executive.html" class="card" style="--p-color: #075E63">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">full_screen_parallax</span>
-                <h3>Velvet Grid Executive</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #075E63"></span>
-                    <span>Primario: #075E63</span>
+                <div class="stat-card">
+                    <span class="stat-label">Exemplars 100/100</span>
+                    <span class="stat-value">542 <span class="stat-trend">CURATED</span></span>
                 </div>
-                <div class="view-link" style="color: #075E63">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_005_civic-halo-prestige.html" class="card" style="--p-color: #00A3B5">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">bento_grid_system</span>
-                <h3>Civic Halo Prestige</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #00A3B5"></span>
-                    <span>Primario: #00A3B5</span>
+                <div class="stat-card">
+                    <span class="stat-label">Polish Engine</span>
+                    <span class="stat-value">DOM-Aware <span class="stat-trend">ACTIVE</span></span>
                 </div>
-                <div class="view-link" style="color: #00A3B5">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_006_noir-atlas-precise.html" class="card" style="--p-color: #78A800">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">editorial_stack</span>
-                <h3>Noir Atlas Precise</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #78A800"></span>
-                    <span>Primario: #78A800</span>
-                </div>
-                <div class="view-link" style="color: #78A800">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_007_kinetic-district-cinematic.html" class="card" style="--p-color: #8A1238">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">conversion_landing</span>
-                <h3>Kinetic District Cinematic</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #8A1238"></span>
-                    <span>Primario: #8A1238</span>
-                </div>
-                <div class="view-link" style="color: #8A1238">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_008_titanium-calm-architect.html" class="card" style="--p-color: #C084FC">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">trust_dashboard</span>
-                <h3>Titanium Calm Architect</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #C084FC"></span>
-                    <span>Primario: #C084FC</span>
-                </div>
-                <div class="view-link" style="color: #C084FC">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_009_granite-signal-modern.html" class="card" style="--p-color: #F59E0B">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">asymmetric_story</span>
-                <h3>Granite Signal Modern</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #F59E0B"></span>
-                    <span>Primario: #F59E0B</span>
-                </div>
-                <div class="view-link" style="color: #F59E0B">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_010_opal-command-noble.html" class="card" style="--p-color: #047857">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">local_authority_map</span>
-                <h3>Opal Command Noble</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #047857"></span>
-                    <span>Primario: #047857</span>
-                </div>
-                <div class="view-link" style="color: #047857">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_011_monolith-flow-heritage.html" class="card" style="--p-color: #E11D48">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">service_command_center</span>
-                <h3>Monolith Flow Heritage</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #E11D48"></span>
-                    <span>Primario: #E11D48</span>
-                </div>
-                <div class="view-link" style="color: #E11D48">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_012_solar-vault-pro.html" class="card" style="--p-color: #6D28D9">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">premium_directory</span>
-                <h3>Solar Vault Pro</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #6D28D9"></span>
-                    <span>Primario: #6D28D9</span>
-                </div>
-                <div class="view-link" style="color: #6D28D9">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_013_neon-province-prime.html" class="card" style="--p-color: #2DD4BF">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">split_hero_cards</span>
-                <h3>Neon Province Prime</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #2DD4BF"></span>
-                    <span>Primario: #2DD4BF</span>
-                </div>
-                <div class="view-link" style="color: #2DD4BF">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_014_editorial-forge-executive.html" class="card" style="--p-color: #60A5FA">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">radial_focus</span>
-                <h3>Editorial Forge Executive</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #60A5FA"></span>
-                    <span>Primario: #60A5FA</span>
-                </div>
-                <div class="view-link" style="color: #60A5FA">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_015_glass-dominion-prestige.html" class="card" style="--p-color: #0F172A">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">cinematic_scroll</span>
-                <h3>Glass Dominion Prestige</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #0F172A"></span>
-                    <span>Primario: #0F172A</span>
-                </div>
-                <div class="view-link" style="color: #0F172A">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_016_bento-crown-precise.html" class="card" style="--p-color: #84CC16">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">modular_grid</span>
-                <h3>Bento Crown Precise</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #84CC16"></span>
-                    <span>Primario: #84CC16</span>
-                </div>
-                <div class="view-link" style="color: #84CC16">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_017_parallax-estate-cinematic.html" class="card" style="--p-color: #1D4ED8">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">luxury_catalog</span>
-                <h3>Parallax Estate Cinematic</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #1D4ED8"></span>
-                    <span>Primario: #1D4ED8</span>
-                </div>
-                <div class="view-link" style="color: #1D4ED8">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_018_lunar-workshop-architect.html" class="card" style="--p-color: #EA580C">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">technical_blueprint</span>
-                <h3>Lunar Workshop Architect</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #EA580C"></span>
-                    <span>Primario: #EA580C</span>
-                </div>
-                <div class="view-link" style="color: #EA580C">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_019_copper-avenue-modern.html" class="card" style="--p-color: #7C3AED">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">soft_residential</span>
-                <h3>Copper Avenue Modern</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #7C3AED"></span>
-                    <span>Primario: #7C3AED</span>
-                </div>
-                <div class="view-link" style="color: #7C3AED">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_020_midnight-index-noble.html" class="card" style="--p-color: #D97706">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">emergency_priority</span>
-                <h3>Midnight Index Noble</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #D97706"></span>
-                    <span>Primario: #D97706</span>
-                </div>
-                <div class="view-link" style="color: #D97706">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_021_total-control-heritage.html" class="card" style="--p-color: #D6B35A">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">vertical_sidebar</span>
-                <h3>Total Control Heritage</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #D6B35A"></span>
-                    <span>Primario: #D6B35A</span>
-                </div>
-                <div class="view-link" style="color: #D6B35A">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_022_obsidian-pulse-pro.html" class="card" style="--p-color: #0A3D62">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">vertical_sidebar</span>
-                <h3>Obsidian Pulse Pro</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #0A3D62"></span>
-                    <span>Primario: #0A3D62</span>
-                </div>
-                <div class="view-link" style="color: #0A3D62">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_023_aurora-ledger-prime.html" class="card" style="--p-color: #C77737">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">horizontal_split</span>
-                <h3>Aurora Ledger Prime</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #C77737"></span>
-                    <span>Primario: #C77737</span>
-                </div>
-                <div class="view-link" style="color: #C77737">Ver Realidad Aumentada →</div>
-            </a>
-        
-            <a href="showcase/premium_024_velvet-grid-executive.html" class="card" style="--p-color: #075E63">
-                <span class="badge">Gravity Premium</span>
-                <span class="badge paradigm-badge">full_screen_parallax</span>
-                <h3>Velvet Grid Executive</h3>
-                <div style="display: flex; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #71717a;">
-                    <span class="color-dot" style="background: #075E63"></span>
-                    <span>Primario: #075E63</span>
-                </div>
-                <div class="view-link" style="color: #075E63">Ver Realidad Aumentada →</div>
-            </a>
-        
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Gravity SEO Engine. Designed for Dominance.</p>
+            <p style="margin-top: 0.5rem; opacity: 0.5">V7.2 "Expert Remix" Edition</p>
+        </footer>
     </div>
 </body>
 </html>
+

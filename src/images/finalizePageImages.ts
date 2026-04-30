@@ -6,6 +6,31 @@ import { comfyClient } from './comfy/client.js';
 import { PageImageContext } from './types.js';
 import { buildBriefForSlot } from './comfy/promptFactory.js';
 
+async function readImageDimensions(filePath: string): Promise<{ width: number; height: number } | null> {
+    try {
+        const buffer = await fs.readFile(filePath);
+        if (buffer.length >= 24 && buffer[0] === 0x89 && buffer.toString('ascii', 1, 4) === 'PNG') {
+            return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+        }
+        if (buffer.length >= 10 && buffer[0] === 0xff && buffer[1] === 0xd8) {
+            let offset = 2;
+            while (offset < buffer.length - 9) {
+                if (buffer[offset] !== 0xff) { offset += 1; continue; }
+                const marker = buffer[offset + 1];
+                const length = buffer.readUInt16BE(offset + 2);
+                if (length < 2) return null;
+                if ((marker >= 0xc0 && marker <= 0xc3) || (marker >= 0xc5 && marker <= 0xc7) || (marker >= 0xc9 && marker <= 0xcb) || (marker >= 0xcd && marker <= 0xcf)) {
+                    return { height: buffer.readUInt16BE(offset + 5), width: buffer.readUInt16BE(offset + 7) };
+                }
+                offset += 2 + length;
+            }
+        }
+    } catch {
+        return null;
+    }
+    return null;
+}
+
 function isProvisionalImage($node: cheerio.Cheerio<any>): boolean {
     const status = String($node.attr('data-image-status') || '').toLowerCase();
     const img = $node.find('img').first();
@@ -153,6 +178,17 @@ export async function finalizePageImages(html: string, context: PageImageContext
                 }
             } else {
                 $img.attr('src', asset.publicUrl);
+            }
+
+            const dimensions = await readImageDimensions(asset.localPath);
+            if (dimensions) {
+                $img.attr('width', String(dimensions.width));
+                $img.attr('height', String(dimensions.height));
+                $img.attr('data-image-width-real', String(dimensions.width));
+                $img.attr('data-image-height-real', String(dimensions.height));
+                if (slot === 'hero-default' && dimensions.width < 900) {
+                    $node.attr('data-image-warning', `hero-resolution-low:${dimensions.width}x${dimensions.height}`);
+                }
             }
 
             $img.attr('alt', asset.alt);

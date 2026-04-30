@@ -1,10 +1,24 @@
 import { DatabaseLike } from '../originality/types.js';
 import { ExemplarRecord, PromptLearningContext, ReviewPersistenceRecord } from './types.js';
 import { excerptText, firstWords, hashString, normalizeKey } from './utils.js';
+import { expandAgentAliases, expandBlockTypeAliases } from './blockTypeAliases.js';
+
+function placeholders(count: number): string {
+  return Array.from({ length: count }, () => '?').join(', ');
+}
 
 function buildWhere(context: PromptLearningContext, polarity?: 'positive' | 'negative') {
-  const clauses: string[] = ['agent_name = ?'];
-  const params: any[] = [context.agentName];
+  const clauses: string[] = [];
+  const params: any[] = [];
+
+  const agentAliases = expandAgentAliases(context.agentName);
+  if (agentAliases.length) {
+    clauses.push(`agent_name IN (${placeholders(agentAliases.length)})`);
+    params.push(...agentAliases);
+  } else {
+    clauses.push('agent_name = ?');
+    params.push(context.agentName);
+  }
 
   if (context.niche) {
     clauses.push('(niche = ? OR niche IS NULL)');
@@ -19,8 +33,14 @@ function buildWhere(context: PromptLearningContext, polarity?: 'positive' | 'neg
     params.push(normalizeKey(context.pageType));
   }
   if (context.blockType) {
-    clauses.push('(block_type = ? OR block_type IS NULL)');
-    params.push(normalizeKey(context.blockType));
+    const aliases = expandBlockTypeAliases(context.blockType);
+    if (aliases.length) {
+      clauses.push(`(block_type IN (${placeholders(aliases.length)}) OR block_type IS NULL)`);
+      params.push(...aliases);
+    } else {
+      clauses.push('(block_type = ? OR block_type IS NULL)');
+      params.push(normalizeKey(context.blockType));
+    }
   }
   if (polarity) {
     clauses.push('polarity = ?');
@@ -30,18 +50,40 @@ function buildWhere(context: PromptLearningContext, polarity?: 'positive' | 'neg
   return { where: clauses.join(' AND '), params };
 }
 
+function specificityOrder(context: PromptLearningContext): string {
+  const city = context.city ? normalizeKey(context.city) : '';
+  const niche = context.niche ? normalizeKey(context.niche) : '';
+  const blockAliases = expandBlockTypeAliases(context.blockType);
+  const blockCase = blockAliases.length
+    ? `CASE WHEN block_type IN (${blockAliases.map((alias) => `'${alias.replace(/'/g, "''")}'`).join(',')}) THEN 8 ELSE 0 END`
+    : '0';
+  return `
+    (CASE WHEN city = '${city.replace(/'/g, "''")}' THEN 40 WHEN city IS NULL THEN 0 ELSE 5 END) +
+    (CASE WHEN niche = '${niche.replace(/'/g, "''")}' THEN 30 WHEN niche IS NULL THEN 0 ELSE 5 END) +
+    (${blockCase}) +
+    (CASE WHEN page_type IS NOT NULL THEN 3 ELSE 0 END)
+  `;
+}
+
 export async function getExemplars(db: DatabaseLike, context: PromptLearningContext, polarity?: 'positive' | 'negative', limit = 3): Promise<ExemplarRecord[]> {
   const { where, params } = buildWhere(context, polarity);
   return db.all<ExemplarRecord[]>(`
     SELECT *
     FROM learning_exemplars
     WHERE ${where}
-    ORDER BY score DESC, created_at DESC
+    ORDER BY (${specificityOrder(context)}) DESC, score DESC, created_at DESC
     LIMIT ?
   `, [...params, limit]);
 }
 
 export async function insertExemplar(db: DatabaseLike, exemplar: ExemplarRecord): Promise<void> {
+  const existing = db.get ? await db.get<any>(`
+    SELECT id FROM learning_exemplars
+    WHERE fingerprint = ? AND agent_name = ? AND polarity = ?
+    LIMIT 1
+  `, [exemplar.fingerprint, exemplar.agent_name, exemplar.polarity]) : null;
+  if (existing) return;
+
   await db.run(`
     INSERT INTO learning_exemplars (
       agent_name, niche, city, page_type, block_type, polarity,
@@ -90,7 +132,7 @@ export async function promoteReviewToExemplars(db: DatabaseLike, context: {
     block_type: context.blockType || null,
     polarity: 'positive',
     title,
-    excerpt: excerptText(context.html, 240),
+    excerpt: excerptText(context.html, 520),
     fingerprint: htmlKey,
     score: context.review.score,
     source_review_id: context.reviewId || null,
@@ -128,7 +170,7 @@ export async function promoteNegativeExemplar(db: DatabaseLike, context: {
     block_type: context.blockType || null,
     polarity: 'negative',
     title: `Evitar: ${context.review.issueCodes.slice(0, 2).join(' + ') || 'output defectuoso'}`,
-    excerpt: excerptText(context.html, 220),
+    excerpt: excerptText(context.html, 360),
     fingerprint,
     score: context.review.score,
     source_review_id: context.reviewId || null,
@@ -140,6 +182,12 @@ export async function promoteNegativeExemplar(db: DatabaseLike, context: {
   });
 }
 
+function compactExcerpt(excerpt: string, max = 700): string {
+  const text = String(excerpt || '').replace(/\s+/g, ' ').trim();
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).trim()}…`;
+}
+
 export function summarizeExemplarForPrompt(exemplar: ExemplarRecord): string {
   let metadata: any = null;
   try {
@@ -149,10 +197,15 @@ export function summarizeExemplarForPrompt(exemplar: ExemplarRecord): string {
   }
 
   if (exemplar.polarity === 'positive') {
-    const strengths = Array.isArray(metadata?.strengths) ? metadata.strengths.slice(0, 2).join('; ') : '';
-    return `BUEN PATRÓN (${exemplar.score}/100): ${exemplar.title}. Señales: ${strengths || exemplar.excerpt}`;
+    const strengths = Array.isArray(metadata?.strengths) ? metadata.strengths.slice(0, 4).join('; ') : '';
+    const pattern = compactExcerpt(exemplar.excerpt, 760);
+    return [
+      `BUEN PATRÓN (${exemplar.score}/100): ${exemplar.title}.`,
+      strengths ? `Señales: ${strengths}.` : '',
+      `Ejemplo a imitar: ${pattern}`
+    ].filter(Boolean).join(' ');
   }
 
   const issues = Array.isArray(metadata?.issueCodes) ? metadata.issueCodes.slice(0, 3).join(', ') : 'errores repetidos';
-  return `EVITAR (${exemplar.score}/100): ${issues}. Ejemplo corto: ${exemplar.excerpt}`;
+  return `EVITAR (${exemplar.score}/100): ${issues}. Ejemplo corto: ${compactExcerpt(exemplar.excerpt, 420)}`;
 }

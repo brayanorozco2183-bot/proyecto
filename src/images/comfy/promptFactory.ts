@@ -125,8 +125,10 @@ function buildEditorialPrompt(niche: string, city: string, section: string): str
 
 export function buildBriefForSlot(slot: string, sectionTitle: string | undefined, context: PageImageContext): PageImageBrief {
     const kind = slot === 'hero-default' ? 'hero' : 'editorial';
-    const width = 512;
-    const height = 384;
+    // Resolución mínima premium: evita heroes pixelados en desktop.
+    // Si el workflow externo fuerza otra resolución, finalizePageImages ajusta width/height al archivo real.
+    const width = kind === 'hero' ? 1280 : 1024;
+    const height = kind === 'hero' ? 896 : 768;
     const seed = buildStableSeed(`${context.pageId}|${slot}|${context.niche}|${context.city}|${sectionTitle || ''}`);
     const niche = normalizeLabel(context.niche, 'servicio local');
     const city = normalizeLabel(context.city, 'tu zona');

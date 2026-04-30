@@ -209,6 +209,36 @@ app.post('/api/agent/teach', async (req: Request, res: Response) => {
     }
 });
 
+app.get('/api/agent/exemplar-stats', async (req: Request, res: Response) => {
+    try {
+        const db = await dbManager.getDB();
+        const stats = await db.all('SELECT agent_name, COUNT(*) as total FROM learning_exemplars GROUP BY agent_name');
+        res.json(stats);
+    } catch (err) {
+        res.status(500).json({ error: String(err) });
+    }
+});
+
+app.get('/api/missions/active', async (req: Request, res: Response) => {
+    try {
+        const db = await dbManager.getDB();
+        const mission = await db.get('SELECT * FROM missions WHERE status IN ("PROCESSING", "PENDING") ORDER BY created_at DESC LIMIT 1');
+        res.json({ mission });
+    } catch (err) {
+        res.status(500).json({ error: String(err) });
+    }
+});
+
+app.get('/api/missions/:id/cities', async (req: Request, res: Response) => {
+    try {
+        const db = await dbManager.getDB();
+        const cities = await db.all('SELECT city, status, quality_score FROM city_data WHERE mission_id = ?', [req.params.id]);
+        res.json(cities);
+    } catch (err) {
+        res.status(500).json({ error: String(err) });
+    }
+});
+
 app.get('/api/agent/knowledge', async (req: Request, res: Response) => {
     const { agent_id } = req.query;
     try {

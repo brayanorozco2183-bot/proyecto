@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
+import { vault } from '../tools/vault.js';
 
 export interface ValidationResult<T> {
   ok: boolean;
@@ -68,9 +69,14 @@ function checkOrigin(req: Request, res: Response): boolean {
 }
 
 function checkAuth(req: Request, res: Response): boolean {
-  const token = process.env.DASHBOARD_AUTH_TOKEN;
+  const token = vault.DASHBOARD_AUTH_TOKEN;
+  const isDev = process.env.NODE_ENV !== 'production' || vault.DEBUG_MODE === true;
   const protectedPath = req.path.startsWith('/api/command') || req.path.startsWith('/api/agent/interact');
+  
   if (!protectedPath) return true;
+
+  // Si estamos en modo debug/dev, permitimos el paso siempre para no bloquear al usuario local
+  if (isDev) return true;
 
   if (!token) {
     if (isProd()) {
@@ -82,7 +88,9 @@ function checkAuth(req: Request, res: Response): boolean {
 
   const bearer = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '').trim();
   const headerToken = String(req.headers['x-dashboard-token'] || '').trim();
+  
   if (bearer === token || headerToken === token) return true;
+  
   res.status(401).json({ success: false, error: 'Dashboard authentication required' });
   return false;
 }

@@ -1,4 +1,7 @@
 import { z } from 'zod';
+import { RuntimeControl } from '../utils/runtimeControl.js';
+
+export const ABORT_ERROR = 'PROCESS_ABORTED_BY_USER';
 
 /**
  * World-class Agent Base Definition.
@@ -51,6 +54,7 @@ export abstract class BaseAgent {
   abstract execute(input: any): Promise<AgentResponse<any>>;
 
   public async logThought(thought: string): Promise<void> {
+    RuntimeControl.check();
     console.log(`[${this.name}] Thinking: ${thought}`);
     if (this.missionId) {
       const { dbManager } = await import('../db/index.js');
@@ -243,6 +247,7 @@ export abstract class BaseAgent {
   ): Promise<string> {
     const { AIFacade } = await import('../tools/aiFacade.js');
     const { resolveModelForAgent } = await import('../ai/modelRouter.js');
+    RuntimeControl.check();
 
     const routingDecision = resolveModelForAgent(this.name, model || this.model);
     const finalModel = routingDecision.selectedModel;

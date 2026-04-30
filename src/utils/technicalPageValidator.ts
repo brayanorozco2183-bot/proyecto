@@ -39,7 +39,8 @@ function normalizeText(value: string): string {
   return normalizeSpace(value)
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[¿?]/g, '');
 }
 
 function normalizePath(value: string): string {
@@ -76,9 +77,9 @@ function extractInternalHrefs($: cheerio.CheerioAPI): Array<{ href: string; text
 function getVisibleFaqQuestions($: cheerio.CheerioAPI): string[] {
   const set = new Set<string>();
 
-  $('.faq-item summary, .faq-summary-refined, .faq-entry h3, .faq-block [data-faq-question]').each((_i, el) => {
+  $('.faq-item summary, .faq-summary-refined, .faq-entry h3, .faq-item h3, .faq-item h4, [data-faq-question], .faq-block details summary').each((_i, el) => {
     const text = normalizeSpace($(el).text());
-    if (text) set.add(text);
+    if (text && text.length > 5) set.add(text);
   });
 
   return Array.from(set);
@@ -387,7 +388,7 @@ export function validateRenderedPageTechnically(renderedPage: { html: string }, 
   }
 
 
-  if (/\bEn\s+,|\ben\s+compensa\b|identidad visible de\s+,/i.test(html)) issues.push('BROKEN_LOCAL_FRAGMENT');
+  if (/\bEn\s+,|\ben\s+compensa\b|identidad visible de\s+,|nivel\s+de\s*,|visible\s+en\s+y\s+evita|se\s+parece\s+a\s*,|Comarca\s+de\s+la\s+Vega\s+de(?:\s+y)?|para\s+garant\s*(?:[<.!,;:]|$)/i.test(html)) issues.push('BROKEN_LOCAL_FRAGMENT');
   if (/class="internal-links-item__anchor"[^>]+href="#top"/i.test(html)) issues.push('INTERNAL_LINKS_TOP_FALLBACK');
   if (/class="internal-links-item__anchor"[^>]+href="(?!https?:|mailto:|tel:|#)(?![^"]*index\.html)[^"]+"/i.test(html)) issues.push('INTERNAL_LINKS_NON_LOCAL_FILE');
   if (/<meta[^>]+property="og:site_name"[^>]+content="(?:Servicio local|Empresa local|Servicio profesional)"/i.test(html)) issues.push('BRAND_GENERIC_SITE_NAME');

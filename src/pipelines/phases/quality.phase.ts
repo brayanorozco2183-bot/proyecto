@@ -28,6 +28,50 @@ import path from 'path';
 import { finalizeRenderedPageSemantics, validateRenderedSemanticQuality } from '../../utils/semanticContentGuard.js';
 import { sanitizeLegalRiskClaims } from '../../utils/legalClaimSanitizer.js';
 
+
+const IMAGE_PHASE_OWNED_CODES = new Set([
+    'PRODUCTION_PLACEHOLDER_VISUAL',
+    'HTML_STRUCTURE_INCOMPLETE',
+    'MOBILE_VIEWPORT_MISSING',
+]);
+
+const IMAGE_PHASE_DEFERRED_GLOBAL_CODES = new Set([
+    'FAQ_SCHEMA_CONTENT_MISMATCH',
+    'FAQ_NUMBERING_ARTIFACT',
+    'PLACEHOLDER_OR_BROKEN_COPY',
+    'SYSTEM_LEAK_VISIBLE',
+    'SCHEMA_JSON_INVALID',
+    'SCHEMA_MISSING',
+    'BROKEN_INTERNAL_INDEX_LINK',
+]);
+
+function uniqueStrings(items: string[]): string[] {
+    return Array.from(new Set(items.filter(Boolean)));
+}
+
+function validateRenderedPageForImagesOnly(page: RenderedPage): ReturnType<typeof validateRenderedPageForPhase> {
+    const full = validateRenderedPageForPhase(page, 'images');
+    const issues = full.issues || [];
+    const imageIssues = issues.filter((issue) => IMAGE_PHASE_OWNED_CODES.has(issue.code));
+    const deferredGlobalIssues = issues.filter((issue) => !IMAGE_PHASE_OWNED_CODES.has(issue.code));
+
+    const hardBlock = imageIssues.some((issue) =>
+        issue.severity === 'critical' || IMAGE_PHASE_OWNED_CODES.has(issue.code)
+    );
+
+    const deferredWarnings = deferredGlobalIssues
+        .filter((issue) => IMAGE_PHASE_DEFERRED_GLOBAL_CODES.has(issue.code) || issue.severity === 'critical')
+        .map((issue) => `DEFERRED_GLOBAL_INTEGRITY_${issue.code}`);
+
+    return {
+        passed: !hardBlock,
+        hardBlock,
+        issues: imageIssues,
+        warnings: uniqueStrings([...(full.warnings || []), ...deferredWarnings]),
+        summary: `phase=images imageScoped=${hardBlock ? 'failed' : 'passed'} deferredGlobal=${uniqueStrings(deferredGlobalIssues.map((issue) => issue.code)).join(',') || 'none'}`,
+    };
+}
+
 export class QualityPhase {
     constructor(private qualityScoreAgent: QualityScoreAgent) {}
 
@@ -66,7 +110,7 @@ export class QualityPhase {
         }
 
         const outcome = await runPhaseWithRepair({
-            phase: 'images', input: safeInitialPage, maxAttempts: 3,
+            phase: 'images', input: safeInitialPage, maxAttempts: 2,
             execute: async (page) => {
                 try {
                     const imageContext: PageImageContext = {
@@ -81,21 +125,28 @@ export class QualityPhase {
                         outputSlug: this.resolveMissionOutputSlug(mission)
                     };
                     page.html = await finalizePageImages(page.html, imageContext);
+                    page.html = finalHtmlPolish(page.html, { city: mission.city, niche: mission.niche });
                 } catch (error: any) {
                     page.metadata = page.metadata || {};
                     page.metadata.image_generation_error = String(error?.message || error);
                 }
                 return repairRenderedPageForPhase(page, 'images', repairOptions);
             },
-            validate: (page) => validateRenderedPageForPhase(page, 'images'),
+            validate: (page) => validateRenderedPageForImagesOnly(page),
             repair: ({ value }) => repairRenderedPageForPhase(value, 'images', repairOptions),
             fallback: ({ value }) => repairRenderedPageForPhase(value, 'images', repairOptions),
             allowFallbackOnHardBlock: true,
         });
 
         const finalPage = repairRenderedPageForPhase(outcome.output || safeInitialPage, 'images', repairOptions);
+        finalPage.html = finalHtmlPolish(finalPage.html, { city: mission.city, niche: mission.niche });
         finalPage.metadata = finalPage.metadata || {};
         (finalPage.metadata as any).phaseRepairImages = outcome.history;
+        (finalPage.metadata as any).images_phase_deferred_global_issues = uniqueStrings(
+            (outcome.warnings || [])
+                .filter((warning) => warning.startsWith('DEFERRED_GLOBAL_INTEGRITY_'))
+                .map((warning) => warning.replace('DEFERRED_GLOBAL_INTEGRITY_', ''))
+        );
         (finalPage.metadata as any).images_phase = {
             schemaVersion: 'images-phase@1',
             status: outcome.status === 'failed' ? 'degraded' : this.toHostStatus(outcome.status),
@@ -120,7 +171,7 @@ export class QualityPhase {
         const repairOptions = { city: mission.city, niche: mission.niche, businessName: mission.local_nap?.business_name, phone: mission.local_nap?.phone };
         const outcome = await runPhaseWithRepair({
             phase: 'completeness', input: renderedPage, maxAttempts: 3,
-            execute: (page) => { const c = validateRenderCompleteness(page.html); if (!c.passed) page.html = finalHtmlPolish(page.html, { city: mission.city, niche: mission.niche }); return page; },
+            execute: (page) => { page.html = finalHtmlPolish(page.html, { city: mission.city, niche: mission.niche }); return page; },
             validate: (page) => { 
                 const c = validateRenderCompleteness(page.html); 
                 const t = validateRenderedPageForPhase(page, 'completeness'); 
@@ -158,6 +209,7 @@ export class QualityPhase {
         // RE-SANITIZAR después de inyección semántica para máxima seguridad
         const profile = (mission as any).nicheProfile;
         semanticPage.html = sanitizeLegalRiskClaims(semanticPage.html, { profile, niche: mission.niche }).html;
+        semanticPage.html = finalHtmlPolish(semanticPage.html, { city: mission.city, niche: mission.niche });
 
         const technicalIssues = validateRenderedPageTechnically(semanticPage, validationInput);
         const semanticIssues = validateRenderedSemanticQuality(semanticPage.html, {
@@ -202,6 +254,7 @@ export class QualityPhase {
         
         // RE-SANITIZAR después de inyección semántica
         semanticPage.html = sanitizeLegalRiskClaims(semanticPage.html, { profile, niche: mission.niche }).html;
+        semanticPage.html = finalHtmlPolish(semanticPage.html, { city: mission.city, niche: mission.niche });
 
         const semanticIssues = validateRenderedSemanticQuality(semanticPage.html, {
             city: mission.city,
@@ -239,7 +292,7 @@ export class QualityPhase {
     async runEditorialValidation(renderedPage: RenderedPage, mission: GenerationMission): Promise<PhaseHostOutcome<{ renderedPage: RenderedPage; editorialAudit: any }>> {
         const profile = (mission as any).nicheProfile;
         const result = await this.qualityScoreAgent.execute({
-            html: renderedPage.html,
+            html: finalHtmlPolish(renderedPage.html, { city: mission.city, niche: mission.niche }),
             niche: mission.niche,
             city: mission.city,
             businessName: mission.local_nap?.business_name,
@@ -248,6 +301,7 @@ export class QualityPhase {
         });
 
         const audit = result.success && result.data ? result.data : { score: 65, status: 'needs_review', reasoning: 'Audit failure' };
+        renderedPage.html = finalHtmlPolish(renderedPage.html, { city: mission.city, niche: mission.niche });
         renderedPage.metadata = renderedPage.metadata || {};
         renderedPage.metadata.editorial_passed = Number(audit.score || 0) >= 80;
 

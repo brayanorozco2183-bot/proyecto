@@ -5,6 +5,7 @@ import { validateContentAgainstNichePlaybook } from '../niches/technicalValidati
 import { detectCrossNicheContamination } from '../niches/crossNicheDetector.js';
 import { scorePremiumOutput } from '../quality/premiumScore.js';
 import { hasFaqNumberingArtifact } from '../utils/faqSanitizer.js';
+import { validateRenderedPageTechnically } from '../utils/technicalPageValidator.js';
 
 export type QualityGateSeverity = 'critical' | 'error' | 'warning';
 
@@ -46,7 +47,12 @@ const BLE_V24_TECHNICAL_BLOCKERS = new Set([
     'MOBILE_VIEWPORT_MISSING',
     'BROKEN_INTERNAL_INDEX_LINK',
     'BROKEN_INTERNAL_LINK',
-    'SYSTEM_LEAK_VISIBLE'
+    'SYSTEM_LEAK_VISIBLE',
+    'TRUNCATED_SEO_COPY',
+    'SCHEMA_STREETADDRESS_IS_CITY',
+    'SCHEMA_WEBPAGE_DESCRIPTION_MISMATCH',
+    'BROKEN_LOCAL_FRAGMENT',
+    'GENERIC_OR_BROKEN_SEO_COPY'
 ]);
 
 function hasBlockingQualityIssue(issues: QualityGateIssue[]): boolean {
@@ -613,7 +619,19 @@ function analyzeSanitizerResidualFragments(plainText: string, issues: QualityGat
         /\bauditor[ií]as?\s+de\s+seguridad\b/gi,
         /\bmecanismos?\s+de\s+seguridad\b/gi,
         /\brepuestos?\s+originales?\b/gi,
-        /\bpuertas?\s+de\s+trastero\b/gi
+        /\bpuertas?\s+de\s+trastero\b/gi,
+        /\bnivel\s+de\s*,/gi,
+        /\bcobertura\s+comunicada\s+a\s+nivel\s+de\s*(?:·|$)/gi,
+        /\ben\s+y\s+evita\b/gi,
+        /\bvisible\s+en\s+y\s+evita\b/gi,
+        /\bse\s+parece\s+a\s*,/gi,
+        /\bComarca\s+de\s+la\s+Vega\s+de\s+y\s+Andaluc[ií]a\b/gi,
+        /\bComarca\s+de\s+la\s+Vega\s+de\b/gi,
+        /\bpara\s+garant\s*$/gi,
+        /\brevisar\s+alta\s+con\s+contexto\b/gi,
+        /\bEscudos\s+Protectors\b/gi,
+        /\bsistemas\s+cerrajeros\b/gi,
+        /\brecuperar\s+el\s+daño\b/gi
     ];
 
     const hits = residualPatterns
@@ -771,6 +789,27 @@ export function runQualityGate(input: QualityGateInput, minScore = DEFAULT_MIN_S
     score += analyzeCrossNicheLeakage(input, plainText, issues);
     score += analyzeSanitizerResidualFragments(plainText, issues);
     score += analyzeNicheCompliance(input, issues);
+
+    const technicalIssues = validateRenderedPageTechnically({ html: input.html }, {
+        expectedPhone: input.phone,
+        expectedBusinessName: input.businessName,
+        mission: { city: input.city, niche: input.niche },
+        pagePlan: input.pagePlan
+    } as any);
+    const technicalPenaltyMap: Record<string, { severity: QualityGateSeverity; penalty: number; message: string }> = {
+        TRUNCATED_SEO_COPY: { severity: 'error', penalty: 14, message: 'La metadescripción, OG o Twitter parece truncada.' },
+        SCHEMA_STREETADDRESS_IS_CITY: { severity: 'error', penalty: 16, message: 'El schema usa la ciudad como streetAddress; no es una dirección verificada.' },
+        SCHEMA_WEBPAGE_DESCRIPTION_MISMATCH: { severity: 'error', penalty: 10, message: 'La descripción de WebPage no está alineada con la meta description final.' },
+        BROKEN_LOCAL_FRAGMENT: { severity: 'critical', penalty: 18, message: 'Hay fragmentos locales rotos visibles.' },
+        GENERIC_OR_BROKEN_SEO_COPY: { severity: 'error', penalty: 10, message: 'El SEO visible contiene copy genérico o roto.' },
+        FAQ_SCHEMA_CONTENT_MISMATCH: { severity: 'critical', penalty: 20, message: 'Las FAQs visibles no coinciden con el schema FAQ.' }
+    };
+    for (const code of technicalIssues) {
+        const policy = technicalPenaltyMap[code];
+        if (!policy || issues.some(issue => issue.code === code)) continue;
+        pushIssue(issues, { code, severity: policy.severity, message: policy.message, penalty: policy.penalty });
+        score -= policy.penalty;
+    }
 
     const premium = scorePremiumOutput({ html: input.html, city: input.city, niche: input.niche, phone: input.phone, businessName: input.businessName, qualityGate: { score } });
     if (premium.score < PREMIUM_MIN_SCORE) {

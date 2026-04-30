@@ -1,4 +1,5 @@
 import { getFallbackServiceTopics, buildPublicFallbackParagraphs } from '../utils/fallbackQuality.js';
+import { buildPremiumFallback } from '../fallbacks/blockFallbackFactory.js';
 import { BaseAgent, AgentResponse } from './base.js';
 import axios from 'axios';
 import { AIFacade } from '../tools/aiFacade.js';
@@ -13,6 +14,7 @@ import { buildWriterInjection } from '../niches/agentAdapters.js';
 import { hydrateSemanticDraftFromPlaybook } from '../niches/blockContent.js';
 import { detectCrossNicheContamination } from '../niches/crossNicheDetector.js';
 import { getRulesByCategory } from '../knowledge-packs/governanceRules.js';
+import { buildNicheGuardPrompt, polishPremiumHtml, polishPremiumText } from '../utils/premiumNicheGuard.js';
 
 export interface WriterInput {
     niche: string;
@@ -142,6 +144,10 @@ export class ContentWriterAgent extends BaseAgent {
         "la transparencia en los costes y la calidad de los materiales son los pilares",
         "¿Buscas",
         "Ofrecemos soluciones profesionales, rápidas y garantizadas",
+        "El Mejor Servicio",
+        "mantenimiento electrónico",
+        "reparación de aparatos eléctricos",
+        "Localización y Reparación de Aparatos Eléctricos",
         "Nuestra metodología se adapta a las exigencias técnicas de",
         "Contamos con la experiencia necesaria",
         "Todas las intervenciones de",
@@ -163,7 +169,9 @@ export class ContentWriterAgent extends BaseAgent {
         "Trabajamos exclusivamente con marcas de prestigio",
         "Nuestros técnicos están en formación continua",
         "la innovación constante nos permite ofrecer",
-        "todo se realiza bajo control"
+        "todo se realiza bajo control",
+        "No se presentan reseñas inventadas",
+        "Cliente satisfecho"
     ];
 
     private truncate(value: any, max = 400): string {
@@ -221,7 +229,7 @@ export class ContentWriterAgent extends BaseAgent {
         const realPhone = input.local_nap.phone;
         const phonePattern = /(?:\+34|0034|34)?[\s.-]?[6789](?:[\s.-]?\d){8}/g;
 
-        const html = renderSemanticSection(semantic, {
+        let html = renderSemanticSection(semantic, {
             blockType: input.blockType,
             sectionId: input.section_id,
             sectionH2: input.contentOnly ? undefined : input.section_h2,
@@ -244,6 +252,7 @@ export class ContentWriterAgent extends BaseAgent {
             sectionContract: input.sectionContract
         });
 
+        html = polishPremiumHtml(html, input);
         const finalHtml = html.replace(phonePattern, (match: string) => {
             const compactMatch = match.replace(/\D/g, '');
             const compactReal = realPhone.replace(/\D/g, '');
@@ -276,15 +285,15 @@ private buildFaqAnswer(question: string, input: WriterInput, variant: number): s
         }
 
         if (/humedad|sol|danad|dañad|reparar|restaurar|sustituir/.test(q)) {
-            return `Muchas piezas se pueden recuperar con lijado, ajuste, refuerzo o barnizado, pero otras conviene sustituirlas si la estructura ya no está estable. En ${city}, la decisión depende del estado real de la madera, de los herrajes y del uso diario del mueble o cerramiento.`;
+            return `Muchas piezas se pueden recuperar con limpieza técnica, ajuste de conexiones, refuerzo o sustitución de componentes, pero otras conviene cambiarlas si la seguridad de la instalación ya no está estable. En ${city}, la decisión depende del estado real de los conductores, de los mecanismos y protecciones y del uso diario del sistema eléctrico.`;
         }
 
         if (/garantia|garantía/.test(q)) {
-            return `Lo importante es que la garantía quede por escrito y que se detalle qué cubre la fabricación, el montaje y los ajustes posteriores. En ${city}, una propuesta seria también deja claro qué depende del material elegido y qué debe verificarse en obra antes de cerrar el presupuesto.`;
+            return `Lo importante es que la garantía quede por escrito y que se detalle qué cubre la instalación, los componentes y los ajustes posteriores. En ${city}, una propuesta seria también deja claro qué depende de la normativa vigente y qué debe verificarse en la instalación antes de cerrar el presupuesto.`;
         }
 
         if (/presupuesto|cuanto|cuánto|precio|coste|tarifa/.test(q)) {
-            return `El presupuesto cambia por medidas reales, material base, complejidad del diseño, acabados y calidad de herrajes. En ${city}, comparar propuestas tiene más sentido cuando te desglosan fabricación, instalación y remates que cuando te dan una cifra universal por teléfono.`;
+            return `El presupuesto cambia por la complejidad del diagnóstico, el material base, la accesibilidad de la instalación y la calidad de los mecanismos. En ${city}, comparar propuestas tiene más sentido cuando te desglosan mano de obra, materiales y certificaciones que cuando te dan una cifra universal por teléfono.`;
         }
 
         if (/cobertura|zona|barrios|tambien atendeis|también atendéis/.test(q)) {
@@ -351,7 +360,7 @@ private buildFaqAnswer(question: string, input: WriterInput, variant: number): s
     private looksLikeSemanticPlaceholder(text: string): boolean {
         const value = String(text || '').replace(/\s+/g, ' ').trim();
         if (!value) return true;
-        return /^(explicaci[oó]n clara del criterio|la respuesta depende del punto exacto|en [a-záéíóúñ\s]+, cuando hablamos de |para abordar |al organizar la intervenci[oó]n|recomienda\b|habla de\b|define\b|aclara\b|la seguridad en tu hogar|nuestro equipo est[aá] preparado|getafe, un pueblo tranquilo|cerrajeros expertos como nosotros|la confianza en los servicios de cerrajer[ií]a)/i.test(value);
+        return /^(explicaci[oó]n clara del criterio|la respuesta depende del punto exacto|en [a-záéíóúñ\s]+, cuando hablamos de |para abordar |al organizar la intervenci[oó]n|recomienda\b|habla de\b|define\b|aclara\b|la seguridad en tu hogar|nuestro equipo est[aá] preparado|getafe, un pueblo tranquilo|cerrajeros expertos como nosotros|la confianza en los servicios de cerrajer[ií]a|no se presentan rese[ñn]as inventadas|cliente satisfecho|este bloque resume casos habituales)/i.test(value);
     }
 
     private hashString(value: string): number {
@@ -610,7 +619,7 @@ private buildFaqAnswer(question: string, input: WriterInput, variant: number): s
     private looksLikeGuidanceInstruction(text: string): boolean {
         const value = String(text || '').trim();
         if (!value) return false;
-        return /^(explica|describe|diferencia|aclara|prioriza|resume|indica|detalla|recomienda|habla|define|orienta)\b/i.test(value);
+        return /^(explica|describe|diferencia|aclara|prioriza|resume|indica|detalla|recomienda|habla|define|orienta|no se presentan rese[ñn]as)\b/i.test(value);
     }
 
 
@@ -720,6 +729,7 @@ private dedupeLocalLabel(text: string, city: string): string {
             // Reparar casos de 'en' al final de fragmentos o listas sin ciudad
             .replace(/\b(en|de|con|para)\s*$/i, (match, prep) => `${prep} ${normalizedCity}`)
             .replace(/\b(en|de|con|para)\s*\.\.\./g, (match, prep) => `${prep} ${normalizedCity}...`)
+            .replace(/\ben el distrito de\s*([,.;:!?¡¿]|$)/gi, `en el distrito de ${normalizedCity}$1`)
             .replace(/\ben\s+es\s+crucial/gi, `en ${normalizedCity} es crucial`)
             .replace(/\ben\s+conviene/gi, `en ${normalizedCity} conviene`)
             .replace(/\bclientes\s+en\s*\./gi, `clientes en ${normalizedCity}.`)
@@ -735,7 +745,7 @@ private dedupeLocalLabel(text: string, city: string): string {
         const value = (title || '').trim().toLowerCase();
         if (!value) return true;
         // Block more generic patterns (User Fix)
-        return /^(intervenci[oó]n t[eé]cnica especializada(?: [a-z0-9]+)?|servicio\s+\d+|servicio\s+[abc]|bloque\s+\d+|elemento\s+\d+|punto\s+\d+|soluci[oó]n\s+\d+|servicio de [a-záéíóúñ]+ en [a-záéíóúñ\s]+|intervenci[oó]n profesional en [a-záéíóúñ\s]+|calidad t[eé]cnica en [a-záéíóúñ\s]+|procesos? de [a-záéíóúñ\s]+|metodolog[ií]a aplicada|explicaci[oó]n t[eé]cnica|compromiso local|profesionales cualificados|soluciones de calidad|nuestros servicios)$/i.test(value);
+        return /^(cliente satisfecho|intervenci[oó]n t[eé]cnica especializada(?: [a-z0-9]+)?|servicio\s+\d+|servicio\s+[abc]|bloque\s+\d+|elemento\s+\d+|punto\s+\d+|soluci[oó]n\s+\d+|servicio de [a-záéíóúñ]+ en [a-záéíóúñ\s]+|intervenci[oó]n profesional en [a-záéíóúñ\s]+|calidad t[eé]cnica en [a-záéíóúñ\s]+|procesos? de [a-záéíóúñ\s]+|metodolog[ií]a aplicada|explicaci[oó]n t[eé]cnica|compromiso local|profesionales cualificados|soluciones de calidad|nuestros servicios)$/i.test(value);
     }
 
     private buildFallbackBodyFromTitle(title: string, input: WriterInput): string {
@@ -756,7 +766,7 @@ private dedupeLocalLabel(text: string, city: string): string {
                 : `La clave está en dejar claro qué se hará, qué se valida al terminar y qué seguimiento conviene si el estado previo del punto tratado pide una segunda revisión.`
         ];
 
-        return this.pickDeterministicVariant(templates, `${normalizedTitle}|${areaA}|${areaB}|${linkHint || ''}|${city}`);
+        return polishPremiumText(this.pickDeterministicVariant(templates, `${normalizedTitle}|${areaA}|${areaB}|${linkHint || ''}|${city}`), input);
     }
 
     private getRandomNicheTitle(niche: string, city: string): string {
@@ -764,8 +774,8 @@ private dedupeLocalLabel(text: string, city: string): string {
             `Especialistas en ${niche}`,
             `Servicio técnico de ${niche}`,
             `Intervención de ${niche} profesional`,
-            `Expertos en ${niche} en ${city}`,
-            `Maestría técnica en ${niche}`,
+            `Criterio técnico de ${niche} en ${city}`, 
+            `Trabajo técnico de ${niche}`, 
             `Resolución de problemas de ${niche}`,
             `Compromiso de calidad en ${niche}`
         ];
@@ -880,9 +890,9 @@ private dedupeLocalLabel(text: string, city: string): string {
         if (normalized.intro) {
             normalized.intro = normalized.intro
                 .map((text, i) => {
-                    const cleaned = this.ensureLocalSeoContext(this.sanitizeSentence(text, city, niche), input, 'intro', `intro_${i}`);
+                    const cleaned = polishPremiumText(this.ensureLocalSeoContext(this.sanitizeSentence(text, city, niche), input, 'intro', `intro_${i}`), input);
                     return (this.looksLikeSemanticPlaceholder(cleaned) || this.looksLikeGuidanceInstruction(cleaned))
-                        ? this.buildLocalSeoAddition(input, 'intro', `intro_${i}`)
+                        ? polishPremiumText(this.buildLocalSeoAddition(input, 'intro', `intro_${i}`), input)
                         : cleaned;
                 })
                 .filter(text => text && !this.looksLikeGuidanceInstruction(text));
@@ -892,15 +902,15 @@ private dedupeLocalLabel(text: string, city: string): string {
             normalized.items = normalized.items.map((item, i) => {
                 const title = this.isGenericItemTitle(item.title)
                     ? this.getRandomNicheTitle(niche, city)
-                    : this.sanitizeSentence(item.title, city, niche);
+                    : polishPremiumText(this.sanitizeSentence(item.title, city, niche), input);
 
-                const candidateBody = this.ensureLocalSeoContext(this.sanitizeSentence(item.body, city, niche), input, 'body', `item_${i}`);
+                const candidateBody = polishPremiumText(this.ensureLocalSeoContext(this.sanitizeSentence(item.body, city, niche), input, 'body', `item_${i}`), input);
                 const body = (this.looksLikeSemanticPlaceholder(item.body) || this.looksLikeGuidanceInstruction(item.body) || this.looksLikeSemanticPlaceholder(candidateBody))
-                    ? this.buildFallbackBodyFromTitle(title, input)
+                    ? polishPremiumText(this.buildFallbackBodyFromTitle(title, input), input)
                     : candidateBody;
 
                 return {
-                    title,
+                    title: this.stripLeadingNumber(title),
                     body,
                     meta: (item.meta || []).map((m: string) => this.sanitizeSentence(m, city, niche)).slice(0, 3)
                 };
@@ -909,11 +919,11 @@ private dedupeLocalLabel(text: string, city: string): string {
 
         if (normalized.faqItems) {
             normalized.faqItems = normalized.faqItems.map((item, i) => ({
-                question: this.sanitizeSentence(item.question, city, niche),
+                question: polishPremiumText(this.sanitizeSentence(item.question, city, niche), input),
                 answer: (() => {
-                    const candidateAnswer = this.ensureLocalSeoContext(this.sanitizeSentence(item.answer, city, niche), input, 'faq', `faq_${i}`);
+                    const candidateAnswer = polishPremiumText(this.ensureLocalSeoContext(this.sanitizeSentence(item.answer, city, niche), input, 'faq', `faq_${i}`), input);
                     return (this.looksLikeSemanticPlaceholder(item.answer) || this.looksLikeGuidanceInstruction(item.answer) || this.looksLikeSemanticPlaceholder(candidateAnswer))
-                        ? this.buildFaqAnswer(item.question, input, i)
+                        ? polishPremiumText(this.buildFaqAnswer(item.question, input, i), input)
                         : candidateAnswer;
                 })()
             })).filter(item => item.question && item.answer);
@@ -921,31 +931,31 @@ private dedupeLocalLabel(text: string, city: string): string {
 
         if (normalized.bullets) {
             normalized.bullets = normalized.bullets
-                .map((b) => this.sanitizeBulletLabel(b, input))
+                .map((b) => polishPremiumText(this.sanitizeBulletLabel(b, input), input))
                 .filter(b => b.length > 3 && !this.looksLikeGuidanceInstruction(b));
         }
 
         if (normalized.trustBullets) {
             normalized.trustBullets = normalized.trustBullets
-                .map((b) => this.sanitizeBulletLabel(b, input, true))
+                .map((b) => polishPremiumText(this.sanitizeBulletLabel(b, input, true), input))
                 .filter(b => b.length > 3 && !this.looksLikeGuidanceInstruction(b));
         }
 
         if (normalized.commonMistakes) {
             normalized.commonMistakes = normalized.commonMistakes
-                .map((m) => this.sanitizeSentence(m, city, niche))
+                .map((m) => polishPremiumText(this.sanitizeSentence(m, city, niche), input))
                 .filter(m => m.length > 3 && !this.looksLikeGuidanceInstruction(m));
         }
 
         const safeDecisionFactors = this.toDecisionFactorArray(normalized.decisionFactors);
         if (safeDecisionFactors.length) {
             normalized.decisionFactors = safeDecisionFactors.map((df, i) => {
-                const safeTitle = this.sanitizeSentence(df.title, city, niche);
-                const candidateBody = this.ensureLocalSeoContext(this.sanitizeSentence(df.body, city, niche), input, 'body', `df_${i}`);
+                const safeTitle = this.stripLeadingNumber(polishPremiumText(this.sanitizeSentence(df.title, city, niche), input));
+                const candidateBody = polishPremiumText(this.ensureLocalSeoContext(this.sanitizeSentence(df.body, city, niche), input, 'body', `df_${i}`), input);
                 return {
                     title: safeTitle,
                     body: (!candidateBody || this.looksLikeSemanticPlaceholder(candidateBody) || this.looksLikeGuidanceInstruction(candidateBody))
-                        ? this.buildFallbackBodyFromTitle(safeTitle || 'Criterio técnico', input)
+                        ? polishPremiumText(this.buildFallbackBodyFromTitle(safeTitle || 'Criterio técnico', input), input)
                         : candidateBody
                 };
             }).filter(df => df.title && df.body);
@@ -992,6 +1002,10 @@ private dedupeLocalLabel(text: string, city: string): string {
         return /cerraj|caja fuerte|bombin|cerradur|persiana|puerta|blindad|cerrojo|ganzu|antibumping/i.test(term);
     }
 
+    private stripLeadingNumber(text: string): string {
+        return text.replace(/^\d+[\s.)-]+\s*/, '').trim();
+    }
+
     private looksLikeTraceArtifact(text: string): boolean {
         return /\[DEBUG\]|\[TRACE\]|\[LOG\]|AI Response:|Writing Phase:|Block Index:/.test(text);
     }
@@ -1026,51 +1040,53 @@ private dedupeLocalLabel(text: string, city: string): string {
         const curatedTechnicalTopics = getFallbackServiceTopics(niche, 8);
         const technicalExpertisePills = curatedTechnicalTopics.map(t => `- ${t}`).join('\n');
 
-        // LEVEL 1: EXPERT REMIX (Technical Seeding)
-        const seedParagraphs = buildPublicFallbackParagraphs({
+        // LEVEL 1: EXPERT REMIX (Technical Seeding V2 - 200+ Templates)
+        const premiumSeed = buildPremiumFallback({
             niche,
             city,
             blockType: input.blockType,
-            technicalTerms: curatedTechnicalTopics
+            sectionId: input.section_id,
+            sectionTitle: input.section_h2,
+            phone: input.local_nap?.phone,
+            businessName: input.local_nap?.business_name,
+            contextualData: input.contextual_data
         });
-        const technicalSeeds = seedParagraphs.map(p => `> ${p}`).join('\n\n');
 
         return `
 Eres un redactor experto en SEO local para el mercado español. Tu misión es generar el contenido semántico para una sección específica de una página de servicios premium.
 
+CONTEXTO DE DISEÑO (OBLIGATORIO):
+- Plantilla Seleccionada: ${premiumSeed.variantId}
+- Estrategia de Contenido: ${input.expansion_mode || 'balanced'}
+- Tono Objetivo: ${input.intentModel?.primaryIntent || 'transaccional'}
+
 NICHO: ${niche}
 CIUDAD: ${city}
-block_type: ${input.blockType}
 H2 SECCIÓN: ${this.dedupeLocalLabel(input.section_h2, city)}
 H3 SUBSECCIONES: ${input.subsections_h3.join(', ')}
-KEYWORDS/ENTIDADES: ${entities}
-ÁREAS LOCALES: ${areas}
-ENLACES INTERNOS (Anchors sugeridos): ${linkHints}
 
-TECHNICAL SEED MATERIAL (OBLIGATORIO - NIVEL EXPERTO):
-Debes usar estos párrafos como base técnica innegociable. Tu tarea es "remezclarlos", expandirlos y localizarlos para ${city}, pero manteniendo el 100% de la lógica técnica que contienen:
-${technicalSeeds}
+TECHNICAL TRUTH MATERIAL (BASE INNEGOCIABLE):
+Debes usar este material como tu "Fuente de Verdad Técnica". Tu tarea es REMEZCLARLO y EXPANDIRLO para ${city}, pero manteniendo la precisión de los conceptos:
+${premiumSeed.html}
 
-ESTRATEGIA DE REDACCIÓN (HÍBRIDA):
-1. **DENSIDAD TÉCNICA OBLIGATORIA**: Integra los siguientes conceptos expertos del nicho para demostrar autoridad real:
-${technicalExpertisePills}
-
-2. **REGLA DE EXPANSIÓN**: No copies literalmente los "seeds". Úsalos como punto de partida para escribir párrafos de 80-120 palabras que suenen naturales, fluidos y locales.
-3. **FORMATO JSON ESTRICTO**: No escribas nada fuera del JSON.
-4. **ESPECIFICIDAD TÉCNICA REAL**: Habla del oficio con precisión quirúrgica. Usa materiales, procesos, piezas y criterios específicos de ${niche}.
-5. **TONO DE AUTORIDAD**: Escribe como un profesional veterano (Senior Artisan) que explica la realidad técnica del trabajo, no como un comercial.
-6. **LOCALIDAD NATURAL**: Integra las zonas de ${city} (ej: ${areas}) en la logística del servicio (ej: "nos desplazamos a ${areas[0] || 'la zona'} para mediciones previas").
-7. **SIN PLACEHOLDERS**: No escribas "Factor 1", "Criterio 1". Genera contenido real y completo.
-8. **REGLA DE PROHIBICIÓN (CRÍTICA)**: No uses claims de "tiempo récord", "precios baratos" ni "presupuestos cerrados por teléfono". Sé honesto y técnico.
+ESTRATEGIA DE REMEZCLA DE ALTA AUTORIDAD (EXPERT REMIX V2):
+1. **DIRECTIVA DE DENSIDAD**: Prohibido el relleno. Entra directamente en materia técnica. Elimina introducciones tipo "En [Ciudad] somos expertos...".
+2. **EVIDENCIA TÉCNICA OBLIGATORIA**: Cada párrafo debe explicar un "cómo" o un "por qué" técnico (ej: tipos de aleaciones, mecanismos de seguridad, normativas, errores de montaje comunes).
+3. **PRECISIÓN SEMÁNTICA**: Integra los términos técnicos detectados (${premiumSeed.topics.join(', ')}) de forma natural pero frecuente.
+4. **EXPANSIÓN DE VALOR**: Genera bloques densos (80-150 palabras por item). Si el plan pide profundidad, aporta detalles sobre materiales, herramientas y durabilidad.
+5. **LOCALIDAD OPERATIVA**: No menciones la ciudad solo por SEO. Menciónala para explicar logística, tipos de viviendas comunes en la zona o normativa local.
+6. **SIN PLACEHOLDERS**: Genera contenido 100% listo para producción.
+7. **FORMATO JSON ESTRICTO**: Solo devuelve el objeto JSON solicitado.
 
 DATOS TÉCNICOS DE AUTORIDAD (USA ESTA TERMINOLOGÍA):
-${this.nicheProfile?.verticalEnrichment ? JSON.stringify(this.nicheProfile.verticalEnrichment) : 'Usa terminología técnica estándar del sector.'}
+${this.nicheProfile?.verticalEnrichment ? JSON.stringify(this.nicheProfile.verticalEnrichment) : 'Usa terminología técnica profesional del sector.'}
 
 PLAYBOOK TÉCNICO:
 ${techBrief}
 
 CONOCIMIENTO NICHO / ESTRATEGIA:
 ${this.nicheProfile?.copyBrief || this.truncate(this.nicheBrief, 800) || 'Escribe con autoridad técnica y enfoque local.'}
+${buildNicheGuardPrompt(input)}
 
 KNOWLEDGE PACK (EVIDENCIA DE MERCADO):
 ${knowledge}
@@ -1084,7 +1100,7 @@ Devuelve un objeto JSON con esta estructura:
   "faqItems": [{"question": "¿...?", "answer": "Explicación clara y útil que resuelva la duda con criterio técnico."}],
   "commonMistakes": ["Error técnico común del cliente", "Mito del sector desmentido"],
   "decisionFactors": [{"title": "Factor técnico X", "body": "Por qué es crítico para la durabilidad/seguridad"}],
-  "cta": {"text": "Llamativa y natural", "note": "Garantía de profesionalidad"}
+  "cta": {"text": "CTA natural y prudente", "note": "Claridad antes de intervenir"}
 }
 `;
     }
@@ -1179,6 +1195,7 @@ Devuelve un objeto JSON con esta estructura:
             };
 
         } catch (error: any) {
+            if (error.message === 'PROCESS_ABORTED_BY_USER') throw error;
             this.log(`Fallo en redacción LLM (${input.section_h2}): ${error.message}. Activando fallback.`);
             await this.rememberFailure({
                 errorMessage: error.message,

@@ -240,20 +240,6 @@ body { padding-bottom: 0; }
   padding: clamp(1.1rem, 2vw, 1.45rem);
   border-radius: 1rem;
 }
-.price-card::before {
-  content: "Transparente";
-  display: inline-flex;
-  width: fit-content;
-  margin-bottom: .8rem;
-  padding: .32rem .62rem;
-  border-radius: 999px;
-  background: rgba(var(--primary-rgb), .08);
-  color: var(--primary);
-  font-size: .72rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-}
 .price-card__facts {
   margin-top: .85rem !important;
   display: grid;

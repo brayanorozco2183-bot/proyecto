@@ -7,9 +7,13 @@ import { detectCrossNicheContamination } from '../../niches/crossNicheDetector.j
 import { validateContentAgainstNichePlaybook } from '../../niches/technicalValidation.js';
 import { refinePremiumBlockCopy } from '../../utils/premiumCopyGuard.js';
 import { buildSectionQualityContract, guardContentBlock, createSemanticFallbackBlock, enforceDraftSemanticCoherence } from '../../utils/semanticContentGuard.js';
+import { buildPremiumFallbackContentBlock } from '../../utils/fallbackQuality.js';
 import { injectAutomaticLinkBlocks } from '../../internal-linking/index.js';
 import { requireNichePlaybook } from '../../niches/playbookLoader.js';
 import { sanitizeLegalRiskClaims } from '../../utils/legalClaimSanitizer.js';
+import { SeoPremiumGuard } from '../../utils/seoPremiumGuard.js';
+import { GeoLinkFallbackFactory } from '../../fallbacks/geo/geoLinkFallbackFactory.js';
+import { polishPlanningLabel, polishPremiumHtml, polishPremiumText } from '../../utils/premiumNicheGuard.js';
 import { 
     GenerationMission, 
     NormalizedContext, 
@@ -28,6 +32,18 @@ export class WritingPhase {
     ) {}
 
     async run(research: NormalizedContext, plan: PagePlan, mission: GenerationMission, obs: ObservabilityMetadata, resolvedPlan: ResolvedPageRenderPlan): Promise<ContentDraft> {
+        plan.h1 = polishPlanningLabel(plan.h1 || '', { niche: research.niche, city: research.city });
+        plan.meta_title = polishPremiumText(plan.meta_title || plan.h1 || '', { niche: research.niche, city: research.city });
+        plan.meta_description = polishPremiumText(plan.meta_description || '', { niche: research.niche, city: research.city });
+        if (Array.isArray(plan.sections)) {
+            plan.sections = plan.sections.map((section: any) => ({
+                ...section,
+                h2: polishPlanningLabel(section.h2 || '', { niche: research.niche, city: research.city }),
+                h3s: Array.isArray(section.h3s) ? section.h3s.map((h: any) => polishPlanningLabel(String(h || ''), { niche: research.niche, city: research.city })) : [],
+                objective: polishPremiumText(section.objective || '', { niche: research.niche, city: research.city }),
+            }));
+        }
+
         console.log(`[Phase 4] Multi-Agent semantic writing for H1: ${plan.h1}`);
 
         const blocks: ContentBlock[] = [];
@@ -110,7 +126,7 @@ export class WritingPhase {
                     id: sectionId,
                     type: section.block_type || 'unspecified',
                     h2: section.h2,
-                    html: sanitizeLegalRiskClaims(writerResponse.data.html || '', (mission as any).nicheProfile || research.niche).html,
+                    html: polishPremiumHtml(sanitizeLegalRiskClaims(writerResponse.data.html || '', (mission as any).nicheProfile || research.niche).html, { niche: research.niche, city: research.city }),
                     wordCount: writerResponse.data.wordCount || 0,
                     score: 0,
                     metadata: {
@@ -131,13 +147,38 @@ export class WritingPhase {
                 obs.tokenUsage += (block.metadata.tokens || 0);
             } else {
                 console.warn(`[Phase 4] Writer failure in block ${i}. Usando fallback semántico controlado.`);
-                const fallbackBlock = createSemanticFallbackBlock({ section, contract: qualityContract, reason: writerResponse.error || 'writer_response_failed' });
-                blocks.push({ ...fallbackBlock, metadata: { ...fallbackBlock.metadata, sectionIndex: i } });
+                const semanticFallbackBlock = createSemanticFallbackBlock({ section, contract: qualityContract, reason: writerResponse.error || 'writer_response_failed' });
+                const fallbackBlock = buildPremiumFallbackContentBlock({
+                    niche: research.niche,
+                    city: research.city,
+                    sectionTitle: section.h2,
+                    blockType: section.block_type || section.blockType,
+                    technicalTerms: qualityContract.requiredTerms,
+                    phone: research.clean_nap?.phone,
+                    businessName: research.clean_nap?.business_name,
+                    pageType: plan.intentModel?.pageType,
+                    primaryIntent: plan.intentModel?.primaryIntent,
+                    contextualData: mission.contextual_data || {},
+                    sectionId,
+                    reason: writerResponse.error || 'writer_response_failed',
+                    seedHint: `writer:${sectionId}:${i}:${plan.variant || ''}`,
+                });
+                blocks.push({
+                    ...fallbackBlock,
+                    id: sectionId,
+                    h2: section.h2 || semanticFallbackBlock.h2,
+                    metadata: {
+                        ...fallbackBlock.metadata,
+                        block_type: section.block_type || section.blockType || fallbackBlock.metadata.block_type,
+                        sectionIndex: i,
+                        semantic_fallback_html_available: Boolean(semanticFallbackBlock.html),
+                    }
+                });
                 obs.agent_logs.push(`[writer-fallback:${sectionId}] ${writerResponse.error || 'writer_response_failed'}`);
             }
         }
 
-        return {
+        const draft: ContentDraft = {
             h1: plan.h1,
             meta_title: plan.meta_title,
             meta_description: plan.meta_description,
@@ -147,6 +188,23 @@ export class WritingPhase {
             metadata: {
                 blocks_generated: blocks.length,
                 plan_sections: plan.sections.length
+            }
+        };
+
+        const seoRefined = SeoPremiumGuard.refine(draft, research, plan, mission);
+        
+        return {
+            ...draft,
+            h1: seoRefined.h1,
+            meta_title: seoRefined.meta_title,
+            meta_description: seoRefined.meta_description,
+            metadata: {
+                ...draft.metadata,
+                seo: {
+                    jsonLd: seoRefined.jsonLd,
+                    fallbackUsed: seoRefined.fallbackUsed,
+                    seoGroupId: seoRefined.groupId
+                }
             }
         };
     }
@@ -178,7 +236,7 @@ export class WritingPhase {
             });
 
             let correctedHtml = correccionesResponse.success && correccionesResponse.data ? correccionesResponse.data.html : refinedHtml;
-            correctedHtml = sanitizeLegalRiskClaims(correctedHtml, (draft as any).nicheProfile || (context as any).nicheProfile || context.niche).html;
+            correctedHtml = polishPremiumHtml(sanitizeLegalRiskClaims(correctedHtml, (draft as any).nicheProfile || (context as any).nicheProfile || context.niche).html, { niche: context.niche, city: context.city });
 
             // NICHE ISOLATION GATE
             const crossNicheReport = detectCrossNicheContamination({
@@ -253,6 +311,7 @@ export class WritingPhase {
                             niche: context.niche || safeMission.niche,
                             city: context.city || safeMission.city,
                         });
+                        enrichedHtml = polishPremiumHtml(enrichedHtml, { niche: context.niche || safeMission.niche, city: context.city || safeMission.city });
                         return { ...block, html: enrichedHtml };
                     } catch (error) {
                         console.warn(`[Phase 7] Block enrichment degraded for ${block.id || block.metadata?.block_type || 'unknown'}: ${this.errorMessage(error)}`);
@@ -269,6 +328,27 @@ export class WritingPhase {
             };
 
             const withLinks = this.safeInjectAutomaticLinks(enrichedDraft, plan);
+            
+            // Garantía de Enlazado Geográfico (Nivel 3)
+            if (!this.hasEnoughInternalLinks(withLinks)) {
+                console.log(`[Phase 7] Low link density detected. Injecting Surgical Geo Cluster Fallback.`);
+                const geoData = GeoLinkFallbackFactory.build(context, safeMission, plan);
+                if (geoData.links.length > 0) {
+                    const geoBlock: ContentBlock = {
+                        id: 'geo-fallback-links',
+                        h2: geoData.h2,
+                        html: this.renderGeoLinkBlock(geoData.intro, geoData.links),
+                        wordCount: 60,
+                        metadata: {
+                            block_type: 'internal_links',
+                            sectionIndex: 99,
+                            is_geo_fallback: true
+                        }
+                    };
+                    withLinks.blocks.push(geoBlock);
+                }
+            }
+
             const coherent = enforceDraftSemanticCoherence(withLinks as any, context, plan, nicheProfile) as ContentDraft;
             const finalDraft: ContentDraft = {
                 ...coherent,
@@ -372,6 +452,32 @@ export class WritingPhase {
             if (out.length >= 8) break;
         }
         return out;
+    }
+
+    private hasEnoughInternalLinks(draft: ContentDraft): boolean {
+        const html = draft.blocks.map(b => b.html).join(' ');
+        // BLE V2.3: Catch relative links (./, ../) and standard root links (/)
+        const linkCount = (html.match(/<a\s+href=["'](?:\/|\.\/|\.\.\/)/gi) || []).length;
+        return linkCount >= 2;
+    }
+
+    private renderGeoLinkBlock(intro: string, links: any[]): string {
+        const listItems = links.map(l => `
+            <li class="internal-links-item internal-links-item--geo">
+                <strong class="internal-links-item__title">${l.anchor}</strong>
+                <a href="${l.url}" class="internal-links-item__anchor">Abrir página</a>
+            </li>
+        `).join('');
+        
+        return `
+        <div class="internal-links-hub">
+            <div class="internal-links-hub__header">
+                <p class="block__description">${intro}</p>
+            </div>
+            <ul class="internal-links-grid">
+                ${listItems}
+            </ul>
+        </div>`;
     }
 
     private getResolvedSectionContract(resolvedPlan: ResolvedPageRenderPlan | undefined, sectionId: string, section: any, index: number) {

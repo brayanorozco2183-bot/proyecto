@@ -45,10 +45,11 @@ function buildLocalReference(context: PremiumCopyGuardContext, salt = ''): strin
     return pickVariant(entities, `${city}|${salt}|local`, city) || city;
 }
 
-function detectPremiumCopyFamily(niche: string): 'locksmith' | 'carpentry' | 'generic' {
+function detectPremiumCopyFamily(niche: string): 'locksmith' | 'carpentry' | 'electrician' | 'generic' {
     const value = String(niche || '');
     if (/(cerraj|cerradur|bombin|bombín|cilindro|llave|persiana|cierre)/i.test(value)) return 'locksmith';
     if (/(carpint|ebanist|madera|armario|vestidor|parqu|tarima|puerta|lacad|barniz)/i.test(value)) return 'carpentry';
+    if (/(electric|cableado|enchufe|diferencial|cuadro|magneto)/i.test(value)) return 'electrician';
     return 'generic';
 }
 
@@ -197,6 +198,42 @@ function buildGenericAnswer(title: string, context: PremiumCopyGuardContext, ind
             `Cuando el servicio se organiza con referencia en ${local}, ${String(title || '').toLowerCase()} se entiende mejor desde medidas, materiales y remates reales, no desde promesas genéricas.`,
             `En ${city}, este servicio funciona mejor cuando se aclara qué se fabrica, qué se ajusta en obra y qué comprobaciones conviene hacer al terminar.`
         ], `${title}|${city}|genericcarpentry|${index}`);
+    }
+
+    if (family === 'electrician') {
+        if (context.blockType === 'process_steps') {
+            return pickVariant([
+                `En ${city}, este paso sirve para diagnosticar el estado real de la instalación, comprobar derivaciones y asegurar que el cuadro eléctrico cumple la normativa antes de intervenir.`,
+                `Cuando la reparación se organiza con referencia en ${local}, conviene separar diagnóstico, propuesta de materiales, ejecución y verificación final de seguridad.`,
+                `En ${city}, cerrar este punto con una comprobación de aislamiento y disparo del diferencial evita averías recurrentes y asegura la instalación.`
+            ], `${title}|${city}|process-electrician|${index}`);
+        }
+
+        if (context.blockType === 'faq') {
+            if (/averia|falla|salta|diferencial|luz/.test(normalizedTitle)) {
+                return `Un diferencial que salta en ${city} suele deberse a una derivación a tierra o a un exceso de consumo. Lo razonable es desconectar circuitos para aislar el fallo y revisar si hay humedad o algún componente dañado antes de volver a armar.`;
+            }
+            if (/cuadro|magneto|proteccion|normativa/.test(normalizedTitle)) {
+                return `El cuadro eléctrico es el corazón de su seguridad. En ${city}, conviene revisar que los puentes sean del calibre adecuado y que las protecciones respondan según la normativa de baja tensión (REBT).`;
+            }
+            if (/presupuesto|precio|coste|cuanto/.test(normalizedTitle)) {
+                return `El presupuesto cambia según la complejidad del diagnóstico, el tipo de componentes (marcas certificadas) y el estado previo del cableado. En ${city}, comparar bien significa pedir desglose de materiales y mano de obra técnica.`;
+            }
+        }
+
+        if (context.blockType === 'local_proof') {
+            return pickVariant([
+                `En ${city}, la cobertura técnica se valida mediante visitas de diagnóstico real, cumplimiento de normativas locales y capacidad de respuesta ante averías urgentes en ${local}.`,
+                `Contar con referencia en ${local} permite coordinar mejor la agenda de revisiones y asegurar que el técnico llega con el equipo necesario para el tipo de vivienda de la zona.`,
+                `En ${city}, hablar de servicio local implica conocer la red de baja tensión de la zona y poder emitir boletines o informes técnicos si el caso lo requiere.`
+            ], `${title}|${city}|localproof-electrician|${index}`);
+        }
+
+        return pickVariant([
+            `En ${city}, ${String(title || '').toLowerCase()} conviene resolverlo con un diagnóstico técnico previo, explicación de la solución y verificación de seguridad al terminar.`,
+            `Cuando el trabajo eléctrico se organiza con referencia en ${local}, ${String(title || '').toLowerCase()} se explica mejor desde la seguridad y el cumplimiento normativo.`,
+            `En ${city}, este servicio eléctrico funciona mejor cuando se aclara el alcance de la intervención y se garantiza el uso de componentes certificados.`
+        ], `${title}|${city}|genericelectrician|${index}`);
     }
 
     return pickVariant([

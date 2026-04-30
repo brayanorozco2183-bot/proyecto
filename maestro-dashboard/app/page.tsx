@@ -1,13 +1,14 @@
 import LiveConsole from './components/LiveConsole';
 import MissionControl from './components/MissionControl';
+import MissionPhaseMonitor from './components/MissionPhaseMonitor';
 import SiteSettings from './components/SiteSettings';
 import AuditView from './components/AuditView';
 import KeywordExplorer from './components/KeywordExplorer';
 import AssetsGallery from './components/AssetsGallery';
 import AgentPlayground from './components/AgentPlayground';
 import KnowledgeHub from './components/KnowledgeHub';
-import SeoMasterControl from './components/SeoMasterControl';
 import PublishedUrls from './components/PublishedUrls';
+import CollapsibleSection from './components/CollapsibleSection';
 
 interface Agent {
   id: string;
@@ -44,86 +45,85 @@ export default async function Home() {
   const agents = await getAgents();
 
   return (
-    <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem' }}>
-      <header className="dashboard-header">
+    <main style={{ maxWidth: '1600px', margin: '0 auto', padding: '2rem' }}>
+      <header className="dashboard-header" style={{ marginBottom: '2rem' }}>
         <div>
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Maestro Command Center</h1>
-          <p style={{ color: 'var(--muted)' }}>Monitoreo en tiempo real del enjambre de agentes SEO.</p>
+          <h1 style={{ fontSize: '2.5rem', marginBottom: '0.25rem', background: 'linear-gradient(to right, #6366f1, #10b981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: 900 }}>
+            Gravity V7.2 Orchestrator
+          </h1>
+          <p style={{ color: 'var(--muted)', fontSize: '1rem' }}>Sincronización Total: Enjambre de Agentes Autónomos con Aprendizaje V8.0</p>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <div className={`status-badge ${agents.length > 0 ? 'status-active' : 'status-error'}`}>
-            {agents.length > 0 ? 'Sistema Online' : 'Esperando API'}
+          <div className={`status-badge ${agents.length > 0 ? 'status-active' : 'status-error'}`} style={{ padding: '0.5rem 1.5rem', fontSize: '0.85rem' }}>
+            {agents.length > 0 ? 'SISTEMA OPERATIVO' : 'ESPERANDO NÚCLEO'}
           </div>
-          <p style={{ fontSize: '0.75rem', marginTop: '0.5rem', opacity: 0.5 }}>v1.0.0-PRO</p>
+          <p style={{ fontSize: '0.75rem', marginTop: '0.5rem', opacity: 0.5 }}>KERNEL: 7.2.4-GOLD-V80</p>
         </div>
       </header>
 
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
-        <div className="premium-card">
-          <h3 style={{ color: 'var(--muted)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>Total Agentes Activos</h3>
-          <p style={{ fontSize: '2rem', fontWeight: 700 }}>{agents.length}</p>
+      {/* Quick Intelligence Bar */}
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '2rem' }}>
+        <div className="premium-card" style={{ background: 'rgba(99, 102, 241, 0.05)' }}>
+          <h3 style={{ color: 'var(--muted)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Agentes en Red</h3>
+          <p style={{ fontSize: '2rem', fontWeight: 800 }}>{agents.length}</p>
         </div>
-        <div className="premium-card">
-          <h3 style={{ color: 'var(--muted)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>Misiones Publicadas</h3>
-          <p style={{ fontSize: '2rem', fontWeight: 700 }}>
-            {stats.find((s: Stat) => s.status === 'PUBLISHED')?.count || 0}
+        <div className="premium-card" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <h3 style={{ color: 'var(--muted)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Páginas Generadas</h3>
+          <p style={{ fontSize: '2rem', fontWeight: 800 }}>
+            {stats.find((s: Stat) => s.status === 'PUBLISHED' || s.status === 'READY' || s.status === 'DRAFT')?.count || 0}
           </p>
         </div>
-        <div className="premium-card">
-          <h3 style={{ color: 'var(--muted)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>Tasa de Éxito QA</h3>
-          <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--accent)' }}>98.4%</p>
+        <div className="premium-card" style={{ background: 'rgba(234, 179, 8, 0.05)' }}>
+          <h3 style={{ color: 'var(--muted)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Puntos de Aprendizaje</h3>
+          <p style={{ fontSize: '2rem', fontWeight: 800 }}>600+</p>
+        </div>
+        <div className="premium-card" style={{ background: 'rgba(239, 68, 68, 0.05)' }}>
+          <h3 style={{ color: 'var(--muted)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Consumo de Tokens (Est.)</h3>
+          <p style={{ fontSize: '2rem', fontWeight: 800 }}>Mínimo</p>
         </div>
       </section>
 
-      <section className="dashboard-grid">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <SiteSettings />
+      {/* Main Orchestration Layer */}
+      <CollapsibleSection title="Orquestación de Misiones" badge="LIVE CONTROL">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
           <MissionControl />
+          <LiveConsole />
         </div>
+        <MissionPhaseMonitor />
+      </CollapsibleSection>
 
-        <LiveConsole />
-
-        <div className="premium-card" style={{ height: 'fit-content' }}>
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>Estado del Enjambre</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {agents.map((agent: Agent) => (
-              <div key={agent.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', background: '#18181b', borderRadius: '8px' }}>
-                <div>
-                  <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{agent.id}</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>Especialidad: {agent.role}</div>
-                </div>
-                <div className="status-badge status-active" style={{ fontSize: '0.625rem' }}>Active</div>
-              </div>
-            ))}
-            {agents.length === 0 && <p style={{ fontSize: '0.875rem', color: 'var(--muted)' }}>No hay agentes registrados.</p>}
-          </div>
-        </div>
-      </section>
-
-      <div style={{ marginBottom: '3rem' }}>
-        <SeoMasterControl />
-      </div>
-
-      <div style={{ marginBottom: '3rem' }}>
-        <PublishedUrls />
-      </div>
-
-      <div style={{ marginBottom: '3rem' }}>
-        <AgentPlayground />
-      </div>
-
-      <div style={{ marginBottom: '3rem' }}>
-        <KnowledgeHub />
-      </div>
-
-      <section style={{ marginTop: '2rem' }}>
+      {/* High Fidelity Audit View */}
+      <CollapsibleSection title="Auditoría Pre-Publicación" badge="V7.2 LIVE DETECTION">
         <AuditView />
-        <KeywordExplorer />
-        <AssetsGallery />
-      </section>
+      </CollapsibleSection>
 
-      <footer style={{ marginTop: '4rem', padding: '2rem 0', borderTop: '1px solid var(--border)', textAlign: 'center', color: 'var(--muted)', fontSize: '0.875rem' }}>
-        &copy; 2026 SEO Maestro AI. Creado para la dominación total de las SERP locales.
+      {/* Knowledge Hub & Secondary Tools */}
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+        <CollapsibleSection title="Nucleus Knowledge Hub" badge="LEARNING V8.0">
+          <KnowledgeHub />
+        </CollapsibleSection>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <CollapsibleSection title="URLs Publicadas" badge="DEPLOY" defaultOpen={false}>
+                <PublishedUrls />
+            </CollapsibleSection>
+            <CollapsibleSection title="Configuración de Sitio" badge="SITE DNA" defaultOpen={false}>
+                <SiteSettings />
+            </CollapsibleSection>
+        </div>
+      </div>
+
+      <CollapsibleSection title="Herramientas Avanzadas de Agentes" badge="LAB" defaultOpen={false}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2rem' }}>
+            <AgentPlayground />
+            <KeywordExplorer />
+            <AssetsGallery />
+          </div>
+      </CollapsibleSection>
+
+      <footer style={{ marginTop: '4rem', padding: '3rem 0', borderTop: '1px solid rgba(255,255,255,0.05)', textAlign: 'center', color: 'var(--muted)', fontSize: '0.875rem' }}>
+        <p style={{ marginBottom: '0.5rem' }}>&copy; 2026 Gravity V7.2 SEO Orchestrator. Dominación Autónoma de las SERP.</p>
+        <p style={{ opacity: 0.3, fontSize: '0.7rem' }}>Protegido por Semantic Guard V8.0 & Autonomous Learning Pack</p>
       </footer>
     </main>
   );

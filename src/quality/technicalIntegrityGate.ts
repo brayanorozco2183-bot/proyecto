@@ -40,6 +40,7 @@ function normalizeQuestion(value: any): string {
     .replace(/^\s*\d+[\).\-\s]+(?=¿)/g, '')
     .replace(/^¿\s*\d+[\).\-\s]+/g, '¿')
     .replace(/^\s*\d+[\).\-\s]+/g, '')
+    .replace(/[¿?]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -65,8 +66,18 @@ function uniqueFaqPairs(items: FaqPair[]): FaqPair[] {
 
 export function extractVisibleFaqPairs($: cheerio.CheerioAPI): FaqPair[] {
   const candidates: FaqPair[] = [];
-  $('.faq-item, .faq-card, .faq-entry, [data-faq-item], details, .faq-list > li, .faq-grid > article').each((_i, el) => {
+  // Excluir explícitamente contenedores de navegación para evitar "Menú" contaminado
+  const faqSelectors = [
+    '.faq-item', '.faq-card', '.faq-entry', '[data-faq-item]',
+    '.faq-section details', '.faq-list > li', '.faq-grid > article',
+    '#faq details', '.semantic-section--faq details', '.faq-item summary', '.faq-summary-refined'
+  ].join(', ');
+
+  $(faqSelectors).each((_i, el) => {
     const $el = $(el);
+    // Ignorar elementos dentro de navegación
+    if ($el.closest('nav, header, .nav-mobile, .site-header, .site-navigation').length > 0) return;
+
     const q = cleanText($el.find('summary, .faq-question, .faq-card__question, .faq-summary-refined, h3, h4, strong').first().text());
     let a = cleanText($el.find('.faq-answer, .faq-card__answer, .faq-content, p').first().text());
     if (!a) {
@@ -74,7 +85,7 @@ export function extractVisibleFaqPairs($: cheerio.CheerioAPI): FaqPair[] {
       clone.find('summary, .faq-question, .faq-card__question, .faq-summary-refined, h3, h4, strong').first().remove();
       a = cleanText(clone.text());
     }
-    if (q && a) candidates.push({ question: q, answer: a });
+    if (q && a && q.length > 5 && a.length > 10) candidates.push({ question: q, answer: a });
   });
   return uniqueFaqPairs(candidates);
 }
@@ -303,8 +314,37 @@ function syncFaqSchemaFromVisible($: cheerio.CheerioAPI): void {
     }
   });
 }
+function isInsideNonContentChrome($: cheerio.CheerioAPI, el: any): boolean {
+  return $(el).closest('nav, header, footer, .nav-mobile, .site-header, .site-footer, .site-navigation, .mobile-menu, [role="navigation"]').length > 0;
+}
+
+function isLikelyFaqContainer($: cheerio.CheerioAPI, el: any): boolean {
+  const $el = $(el);
+  if (isInsideNonContentChrome($, el)) return false;
+  if ($el.closest('#faq, [data-block="faq"], .semantic-section--faq, .faq-section, .faq, .faq-list, .faq-grid').length > 0) return true;
+  const className = String($el.attr('class') || '');
+  if (/\bfaq(?:[-_\s]|$)/i.test(className)) return true;
+  if ($el.attr('data-faq-item') !== undefined) return true;
+  return false;
+}
+
 function sanitizeVisibleFaqText($: cheerio.CheerioAPI): void {
-  $('.faq-item, .faq-card, .faq-entry, [data-faq-item], details, .faq-list > li, .faq-grid > article').each((_i, el) => {
+  const selector = [
+    '#faq details',
+    '[data-block="faq"] details',
+    '.semantic-section--faq details',
+    '.faq-section details',
+    '.faq details',
+    '.faq-item',
+    '.faq-card',
+    '.faq-entry',
+    '[data-faq-item]',
+    '.faq-list > li',
+    '.faq-grid > article'
+  ].join(', ');
+
+  $(selector).each((_i, el) => {
+    if (!isLikelyFaqContainer($, el)) return;
     const $el = $(el);
     const q = $el.find('summary, .faq-question, .faq-card__question, .faq-summary-refined, h3, h4, strong').first();
     if (q.length) q.text(normalizeQuestion(q.text()));

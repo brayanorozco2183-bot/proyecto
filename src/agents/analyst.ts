@@ -691,6 +691,7 @@ REGLAS ESTRATÉGICAS:
             };
 
         } catch (error: any) {
+            if (error.message === 'PROCESS_ABORTED_BY_USER') throw error;
             console.error(`[CRITICAL FAILURE] Pipeline V3 aborted: ${error.message}`);
             await this.rememberFailure({
                 errorMessage: error.message,

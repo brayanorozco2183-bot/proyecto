@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SEO Maestro - Control Center",
+  title: "SEO Maestro",
   description: "Dominación total de las SERPs mediante agentes autónomos.",
 };
 

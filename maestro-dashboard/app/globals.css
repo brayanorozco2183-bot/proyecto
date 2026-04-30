@@ -2,6 +2,7 @@
   --background: #0a0a0c;
   --foreground: #f0f0f2;
   --primary: #6366f1;
+  --primary-rgb: 99, 102, 241;
   --primary-hover: #4f46e5;
   --secondary: #1e1e24;
   --accent: #10b981;
@@ -194,4 +195,15 @@ a {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
 }

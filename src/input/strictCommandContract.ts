@@ -22,7 +22,15 @@ function normalizeText(value: any): string {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
-function unique<T>(values: T[]): T[] { return [...new Set(values)]; }
+function unique(values: string[]): string[] {
+  const seen = new Set<string>();
+  return values.filter(v => {
+    const k = String(v || '').toLowerCase().trim();
+    if (!k || seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+}
 
 function detectScope(command: string): StrictCommandParseResult['scope'] {
   const c = command.toLowerCase();
@@ -79,7 +87,7 @@ export function parseStrictServiceCommand(rawCommand: string): StrictCommandPars
 
   return {
     niche: getCanonicalNicheLabel(canonicalId).toLowerCase(),
-    locations: unique([city, ...locations]).filter(Boolean),
+    locations: unique([...locations, city]).filter(Boolean),
     topic: topic || undefined,
     publish_mode,
     site_type,

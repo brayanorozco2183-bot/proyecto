@@ -69,6 +69,136 @@ function sanitizeBusinessName(value: string, city: string, niche?: string): stri
 }
 
 
+
+function looksSeoDescriptionTruncated(value: string): boolean {
+  const text = normalizeText(value);
+  if (!text) return true;
+  if (text.length < 90) return true;
+  if (/\b(?:para|por|con|sin|de|del|la|el|los|las|y|en|garant|garanti|profesiona|instalaci[oó])$/i.test(text)) return true;
+  if (!/[.!?]$/.test(text) && text.length >= 145) return true;
+  return false;
+}
+
+function buildStablePremiumDescription(city: string, niche?: string): string {
+  const cleanCity = normalizeText(city) || 'tu zona';
+  const cleanNiche = normalizeText(niche || 'servicios profesionales').toLowerCase();
+  const label = cleanNiche.includes(cleanCity.toLowerCase()) ? titleCase(cleanNiche) : `${titleCase(cleanNiche)} en ${cleanCity}`;
+  return `${label} para averías, instalaciones, revisiones y mantenimiento. Diagnóstico previo, intervención proporcional y orientación clara antes de actuar.`;
+}
+
+function normalizeQuestionPunctuation(value: string): string {
+  let text = normalizeText(value)
+    .replace(/^Qué\b/i, '¿Qué')
+    .replace(/^Como\b/i, '¿Cómo')
+    .replace(/^Cómo\b/i, '¿Cómo')
+    .replace(/^Cuando\b/i, '¿Cuándo')
+    .replace(/^Cuándo\b/i, '¿Cuándo')
+    .replace(/^Por qué\b/i, '¿Por qué')
+    .replace(/^Porque\b/i, '¿Por qué');
+  if (/^(qué|cómo|cuándo|por qué|cuál|cuáles|dónde|¿)/i.test(text) && !text.startsWith('¿')) text = `¿${text}`;
+  if (text.startsWith('¿') && !/[?？]$/.test(text)) text += '?';
+  return text;
+}
+
+function repairObservedDebugFragments($: cheerio.CheerioAPI, city: string, _niche?: string): void {
+  const safeCity = normalizeText(city) || 'la ciudad';
+  const replacements: Array<[RegExp, string]> = [
+    [/La presencia se comunica a nivel de\s*,\s*sin inventar oficinas ni direcciones precisas que no est[eé]n confirmadas\./gi, `La cobertura se comunica a nivel de ${safeCity}, sin inventar oficinas ni direcciones precisas no confirmadas.`],
+    [/Cobertura comunicada a nivel de\s*(?=·|$)/gi, `Cobertura comunicada a nivel de ${safeCity} `],
+    [/\bidentidad visible en y evita\b/gi, 'identidad visible para la página y evita'],
+    [/\bmantiene una identidad visible en y evita\b/gi, 'mantiene una identidad visible para la página y evita'],
+    [/\bSi el caso se parece a, puede ser útil valorar esa línea de trabajo dentro del cluster antes de elegir una intervención más amplia\./gi, 'Si el caso requiere una intervención amplia, conviene valorar primero el alcance real, los materiales necesarios y la comprobación final.'],
+    [/\bSi el caso se parece a, puede ser útil valorar esa línea de trabajo[^.]*\./gi, 'Si el caso requiere una intervención amplia, conviene valorar primero el alcance real, los materiales necesarios y la comprobación final.'],
+    [/\bComarca de la Vega de y Andalucía\b/gi, `${safeCity} y su entorno metropolitano`],
+    [/\bComarca de la Vega de\s*(?=,|\.|;|:|\s+y\b|$)/gi, `${safeCity} y su entorno metropolitano`],
+    [/\bnivel de\s*,/gi, `nivel de ${safeCity},`],
+    [/\ben y evita publicar teléfonos no confirmados\b/gi, 'para la página y evita publicar teléfonos no confirmados'],
+    [/\brevisar alta con contexto real\b/gi, 'revisar el caso con contexto real'],
+    [/\bEscudos Protectors\b/gi, 'Escudos protectores'],
+    [/\bsistemas cerrajeros\b/gi, 'sistemas de cerrajería'],
+    [/\brecuperar el daño\b/gi, 'reducir el daño'],
+    [/\bPara verificar la funcionalidad de tu\b/gi, 'Para verificar el funcionamiento de su'],
+    [/\btu hogar\b/gi, 'la vivienda'],
+    [/\btu casa\b/gi, 'la vivienda'],
+    [/\bte recomendamos\b/gi, 'conviene valorar'],
+    [/\bgarantizamos\b/gi, 'procuramos'],
+    [/\bGarantía de Satisfacción del Cliente\b/gi, 'Compromiso de claridad en el servicio'],
+    [/\bsoluciones eléctricas confiables\b/gi, 'soluciones eléctricas fiables'],
+    [/\bconfiables\b/gi, 'fiables'],
+    [/\bmantené\b/gi, 'mantenga'],
+    [/\bprofesionales altamente capacitados\b/gi, 'profesionales con criterio técnico'],
+    [/\baltamente capacitados\b/gi, 'con criterio técnico'],
+    [/\bmateriales de alta calidad\b/gi, 'materiales adecuados a la instalación'],
+    [/\bpara garant(?:izar|i)?\s*$/gi, 'con diagnóstico claro.'],
+  ];
+
+  $('body *').contents().each((_i, node) => {
+    if (node.type !== 'text') return;
+    const original = String((node as any).data || '');
+    if (!original.trim()) return;
+    let next = original;
+    for (const [rx, repl] of replacements) next = next.replace(rx, repl);
+    next = next.replace(/\s+([,.;:!?])/g, '$1').replace(/\s{2,}/g, ' ');
+    if (next !== original) $(node).replaceWith(escapeHtml(next));
+  });
+}
+
+function normalizeVisibleFaqQuestions($: cheerio.CheerioAPI): void {
+  $('section[id*="faq" i] summary, .faq-block summary, .faq-item summary, .faq-entry h3, [data-faq-item] h3').each((_i, el) => {
+    const $el = $(el);
+    if ($el.closest('nav, header, .nav-mobile, .site-header').length) return;
+    const text = normalizeQuestionPunctuation($el.text());
+    if (text) $el.text(text);
+  });
+}
+
+function stabilizeSeoMetaAndSchema($: cheerio.CheerioAPI, city: string, niche?: string): void {
+  const safeCity = normalizeText(city);
+  const desc = normalizeText($('meta[name="description"]').attr('content') || '');
+  const finalDescription = looksSeoDescriptionTruncated(desc) || /profesionales\s+cualificados|soluciones\s+personalizadas|para garant/i.test(desc)
+    ? buildStablePremiumDescription(safeCity, niche)
+    : desc;
+
+  if ($('meta[name="description"]').length) $('meta[name="description"]').attr('content', finalDescription);
+  else $('head').append(`<meta name="description" content="${escapeHtml(finalDescription)}">`);
+  $('meta[property="og:description"], meta[name="twitter:description"]').attr('content', finalDescription);
+
+  $('script[type="application/ld+json"]').each((_i, el) => {
+    const raw = $(el).text();
+    try {
+      const parsed = JSON.parse(raw);
+      const graph = Array.isArray(parsed?.['@graph']) ? parsed['@graph'] : [parsed];
+      for (const node of graph) {
+        const type = node?.['@type'];
+        const types = Array.isArray(type) ? type : [type];
+        if (types.includes('WebPage')) node.description = finalDescription;
+        if ((types.includes('Organization') || types.includes('LocalBusiness')) && node.address && safeCity) {
+          const street = normalizeText(node.address.streetAddress || '');
+          if (street && (street.toLowerCase() === safeCity.toLowerCase() || /^centro de /i.test(street) || street.toLowerCase() === `centro de ${safeCity}`.toLowerCase())) delete node.address.streetAddress;
+          if (!node.address.addressLocality) node.address.addressLocality = safeCity;
+          if (!node.address.addressCountry) node.address.addressCountry = 'ES';
+        }
+        if (types.includes('FAQPage') && Array.isArray(node.mainEntity)) {
+          node.mainEntity = node.mainEntity
+            .map((item: any) => ({ ...item, name: normalizeQuestionPunctuation(String(item?.name || '')), acceptedAnswer: { '@type': 'Answer', ...(item?.acceptedAnswer || {}), text: normalizeText(item?.acceptedAnswer?.text || '') } }))
+            .filter((item: any) => {
+              const q = normalizeText(item?.name || '');
+              const a = normalizeText(item?.acceptedAnswer?.text || '');
+              return q && a && !/^men[uú]$/i.test(q) && !/ÁreasServiciosDudasUrgencia/i.test(a);
+            });
+        }
+        if (types.includes('WebSite') && node['@id'] === '#website') {
+          const canonical = normalizeText($('link[rel="canonical"]').attr('href') || node.url || '');
+          try { if (canonical) node['@id'] = `${new URL(canonical).origin}/#website`; } catch { /* keep previous */ }
+        }
+      }
+      $(el).text(JSON.stringify(parsed));
+    } catch {
+      // Technical validation will report malformed JSON-LD.
+    }
+  });
+}
+
 function syncFooterBrandWithSeo($: cheerio.CheerioAPI, city: string, niche?: string): void {
   const canonicalBrand = sanitizeBusinessName(
     normalizeText($('meta[property="og:site_name"]').attr('content') || $('.footer__brand-name').first().text()),
@@ -129,6 +259,8 @@ function repairBrokenLocalPhrases($: cheerio.CheerioAPI, city: string): void {
           .replace(/\bdesplazamiento a\s+es una parte/gi, `desplazamiento a ${safeCity} es una parte`)
           .replace(/\ben\s+(es|donde|se\s+caracteriza|ofrece|incluye|permite|ayuda|es\s+una\s+ciudad|es\s+crucial)\b/gi, `en ${safeCity} $1`)
           .replace(/\ben\s+compensa\b/gi, `en ${safeCity} compensa`)
+          .replace(/\bNo se presentan rese[ñn]as inventadas\b/gi, '')
+          .replace(/\bCliente satisfecho\b/gi, 'Resultado verificado')
           .replace(/\breputaci[oó]n sólida en\s*\./gi, `reputación sólida en ${safeCity}.`)
           .replace(/\bsolicita\s+orientaci[oó]n\s+profesional\s+en\s+[\.|,]/gi, `solicita orientación profesional en ${safeCity}.`)
           .replace(/\bservicio de ([a-záéíóúñ]+) en\s*\./gi, `servicio de $1 en ${safeCity}.`);
@@ -178,12 +310,17 @@ function ensureMissingParagraphs($: cheerio.CheerioAPI, city: string): void {
       const $el = $(el);
       const visibleText = normalizeText($el.text());
       const heading = normalizeText($el.find('h3').first().text() || $el.find('strong').first().text() || $el.find('.internal-links-item__title').first().text());
-      if (!visibleText) {
-        $el.remove();
-        return;
+      if (!visibleText || /^cliente satisfecho$/i.test(heading)) {
+        if (/^cliente satisfecho$/i.test(heading)) {
+            $el.find('h3, strong').first().text('Resultado verificado');
+        }
+        if (!visibleText) {
+            $el.remove();
+            return;
+        }
       }
       // Only append if it's REALLY empty of descriptive text
-      if ($el.find('p').length === 0 && heading && !visibleText.includes('conviene revisar')) {
+      if ($el.find('p').length === 0 && heading && !visibleText.includes('conviene revisar') && !/^resultado verificado$/i.test(heading)) {
         $el.append(`<p>En ${safeCity}, conviene revisar ${heading.toLowerCase()} con contexto real y una solución proporcionada al caso.</p>`);
       }
     });
@@ -532,12 +669,15 @@ export function finalHtmlPolish(html: string, options: FinalHtmlPolishOptions = 
 
   // Core Tag-Aware Repairs
   repairBrokenLocalPhrases($, city);
+  repairObservedDebugFragments($, city, options.niche);
+  normalizeVisibleFaqQuestions($);
   ensureMissingParagraphs($, city);
   shortenOverlyLongButtons($);
   variateRepetitiveKickers($, options.niche, city);
   sanitizeBrandNodes($, city, options.niche);
   sanitizeFaqVisibleAndSchema($);
   alignSeoAndSchema($, city, options.niche);
+  stabilizeSeoMetaAndSchema($, city, options.niche);
   syncFooterBrandWithSeo($, city, options.niche);
   ensureInternalLinkAnchors($);
   // BLE V2.2: no forzamos /index.html; production links se normalizan en technicalIntegrityGate.

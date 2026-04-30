@@ -1,4 +1,5 @@
 import { BaseAgent, AgentResponse } from './base.js';
+import { buildNicheGuardPrompt, polishPremiumText } from '../utils/premiumNicheGuard.js';
 import axios from 'axios';
 import { vault } from '../tools/vault.js';
 import { AIFacade } from '../tools/aiFacade.js';
@@ -91,6 +92,7 @@ ${this.nicheProfile?.copyBrief ? `ESTRATEGIA EDITORIAL:\n${this.nicheProfile.cop
 CIUDAD: ${input.city}
 NICHO: ${input.niche}
 EMPRESA: ${input.businessName || 'N/D'}
+${buildNicheGuardPrompt(input)}
 
 Debes corregir estos fragmentos de texto visible. Respeta el orden exacto.
 
@@ -146,7 +148,7 @@ La longitud del array debe coincidir exactamente con ${segments.length}.`;
 
             if (this.shouldBypassLlm(input)) {
                 await this.logThought(`[FASTPATH] Corrector determinista activo para HTML muy grande o nicho genérico: ${input.niche}`);
-                const finalHtml = this.applyFinalSafeNormalizations(preCleanHtml);
+                const finalHtml = this.applyFinalSafeNormalizations(preCleanHtml, input);
                 return {
                     success: true,
                     data: {
@@ -191,6 +193,7 @@ La longitud del array debe coincidir exactamente con ${segments.length}.`;
                 thoughts: `Corrección lingüística completada. Cambios realizados: ${changesMade}. Validación estructural: ${validation.passed}`
             };
         } catch (error: any) {
+            if (error.message === 'PROCESS_ABORTED_BY_USER') throw error;
             await this.logThought(`[RESCATE] SpanishCorrector falló: ${error.message}. Devolviendo original.`);
             await this.rememberFailure({
                 errorMessage: error.message,
@@ -522,7 +525,7 @@ La longitud del array debe coincidir exactamente con ${segments.length}.`;
             out = out.replace(new RegExp(this.escapeRegExp(input.businessName), 'g'), input.businessName);
         }
 
-        return out.trim();
+        return polishPremiumText(out, input).trim();
     }
 
     private stripPhaseBoilerplate(text: string, input: CorrectorInput): string {
@@ -568,6 +571,7 @@ La longitud del array debe coincidir exactamente con ${segments.length}.`;
         out = out.replace(/\bpresupuestos son cerrados antes de empezar\b/gi, 'presupuestos se explican antes de empezar');
         out = out.replace(/\bno recibir[aá]s ninguna sorpresa en tu factura\b/gi, 'no haya sorpresas en el alcance del trabajo');
         out = out.replace(/\bConf[ií]a en nosotros para mantener tu vecindario seguro y protegido\b/gi, 'La prioridad es dejar el acceso operativo y la seguridad bien resuelta');
+        out = polishPremiumText(out, input);
         out = out.replace(/\s{2,}/g, ' ');
         out = out.replace(/\s+([,.;:!?])/g, '$1');
         return out.trim();

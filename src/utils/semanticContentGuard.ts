@@ -1,8 +1,10 @@
 import * as cheerio from 'cheerio';
 import { sanitizeLegalRiskClaims } from './legalClaimSanitizer.js';
-import { buildPublicFallbackParagraphs, buildInternalFallbackMeta } from './fallbackQuality.js';
+import { buildPublicFallbackParagraphs, buildInternalFallbackMeta, buildPremiumFallbackContentBlock } from './fallbackQuality.js';
 import type { ContentBlock, ContentDraft, GenerationMission, NormalizedContext, PagePlan, RenderedPage } from '../types/pipeline_v2.js';
 import type { NicheIntelligenceProfile } from '../niche-intelligence/index.js';
+import { dbManager } from '../db/index.js';
+import { autonomousBlockLearning } from '../learning/autonomousLearner.js';
 
 export type SemanticSeverity = 'warning' | 'error' | 'critical';
 
@@ -216,34 +218,28 @@ export function createSemanticFallbackBlock(args: {
   reason: string;
 }): ContentBlock {
   const h2 = String(args.section?.h2 || args.contract.h2 || `Servicio de ${args.contract.niche} en ${args.contract.city}`);
-  const paragraphs = buildPublicFallbackParagraphs({
+  const premium = buildPremiumFallbackContentBlock({
     niche: args.contract.niche,
     city: args.contract.city,
     sectionTitle: h2,
     blockType: args.contract.blockType,
     technicalTerms: args.contract.requiredTerms,
-    reason: args.reason
+    reason: args.reason,
+    sectionId: args.contract.sectionId,
+    seedHint: `semantic:${args.contract.sectionId}:${args.contract.blockType}`,
   });
-  const cta = args.contract.ctaAllowed
-    ? `<p><strong>¿Necesitas una valoración?</strong> Prepara una breve descripción del caso para recibir una orientación concreta y evitar presupuestos genéricos.</p>`
-    : '';
-  const html = [
-    `<section data-fallback="semantic" data-block="${escapeHtml(args.contract.blockType)}">`,
-    `<h2>${escapeHtml(h2)}</h2>`,
-    ...paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`),
-    cta,
-    `</section>`,
-  ].join('');
 
   return {
+    ...premium,
     id: args.contract.sectionId,
     h2,
-    html,
-    wordCount: wordCount(html),
+    wordCount: wordCount(premium.html),
     metadata: {
+      ...premium.metadata,
       block_type: args.contract.blockType,
       sectionIndex: 0,
       semantic_fallback: true,
+      premium_fallback: true,
       ...buildInternalFallbackMeta(args.reason, 'semantic_content_guard')
     },
   };
@@ -279,7 +275,19 @@ export function guardContentBlock(args: {
     },
   };
 
-  return { block, issues: initialIssues.concat(repairedIssues), repaired: repairedHtml !== args.block.html, fallback: false };
+  const result = { block, issues: initialIssues.concat(repairedIssues), repaired: repairedHtml !== args.block.html, fallback: false };
+
+  // BLE V2.5: ACTIVE TOTAL LEARNING
+  // We trigger autonomous learning in the background if the block is high quality
+  if (!result.fallback) {
+      dbManager.getDB().then(db => {
+          autonomousBlockLearning(db as any, result.block, args.contract).catch(e => {
+              console.error('[LEARNING] Autonomous learning failed:', e);
+          });
+      });
+  }
+
+  return result;
 }
 
 export function enforceDraftSemanticCoherence(draft: ContentDraft, context: NormalizedContext, plan?: PagePlan, profile?: NicheIntelligenceProfile): ContentDraft {

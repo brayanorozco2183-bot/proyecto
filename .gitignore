@@ -53,6 +53,8 @@ output_sites/
 scripts/output_sites/
 scripts/public_static/
 public_static/
+public-static/
+site_output/
 test_results/
 debug_runs/
 assets_generated/

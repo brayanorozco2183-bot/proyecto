@@ -367,11 +367,11 @@ function sanitizeStructuredDataNode(value: JsonValue, context: FinalDocumentSani
           output[key] = cleanVisibleText(raw, context);
         } else if (key === 'name' && value['@type'] === 'WebPage') {
           output[key] = sanitizeTitle(raw, context.city, context.niche);
-        } else if (key === 'streetAddress') {
           const val = cleanVisibleText(raw, context);
           const cityNormalized = (context.city || '').trim().toLowerCase();
-          if (val.trim().toLowerCase() === cityNormalized) {
-            output[key] = `Centro de ${context.city}`; // Fix "Getafe" as streetAddress
+          // Si el valor es igual a la ciudad o es muy genérico, NO inventar calle
+          if (val.trim().toLowerCase() === cityNormalized || /centro de/i.test(val)) {
+            delete output[key]; // El informe pide QUITAR streetAddress si no es verificado
           } else {
             output[key] = val;
           }
@@ -561,6 +561,7 @@ function ensurePerformanceGuards($: cheerio.CheerioAPI): void {
         --shadow-soft: 0 4px 16px rgba(15,23,42,0.05);
         --shadow-lift: 0 10px 26px rgba(15,23,42,0.08);
         --shadow-dramatic: 0 16px 38px rgba(15,23,42,0.12);
+        --hero-text: var(--text-on-bg, #ffffff);
       }
       .site-header,
       .site-header__inner,
@@ -794,6 +795,10 @@ function repairBrokenLocalFragments(value: string, context: FinalDocumentSanitiz
     .replace(/\ben\s+conviene\b/gi, `en ${city} conviene`)
     .replace(/\bcobertura\s+en\s*[,.;:!?]?\s*$/gi, `cobertura en ${city}`)
     .replace(/\bLa presencia se comunica a nivel de\s+sin\s+inventar\b/gi, `La presencia se comunica a nivel de ${city}, sin inventar`)
+    .replace(/\ba nivel de\s*[,.;:!?]?\s*$/gi, `en ${city}`)
+    .replace(/\bcomunica a nivel de\s*[,.;:!?]?\s*$/gi, `ofrece en ${city}`)
+    .replace(/\brevisar alta con contexto real\b/gi, `valorar el caso de forma directa`)
+    .replace(/\bEscudos Protectors\b/gi, 'Escudos protectores')
     .replace(/\bc[uó]mo puedo asegurarme de que mi cuadro el[eé]ctrico en est[eé] protegido/gi, 'Cómo puedo asegurarme de que mi cuadro eléctrico esté protegido')
     .replace(/\ben\s*$/i, `en ${city}`);
 

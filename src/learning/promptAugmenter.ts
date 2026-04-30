@@ -4,19 +4,23 @@ import { getCuratedLessons, summarizeLessonForPrompt, dedupeLessonTexts } from '
 import { inferPromptLearningContext } from './promptContext.js';
 import { PromptAugmentationResult } from './types.js';
 
+const POSITIVE_EXEMPLAR_LIMIT = Number(process.env.LEARNING_POSITIVE_EXEMPLARS || 4);
+const NEGATIVE_EXEMPLAR_LIMIT = Number(process.env.LEARNING_NEGATIVE_EXEMPLARS || 2);
+const LESSON_LIMIT = Number(process.env.LEARNING_LESSON_LIMIT || 7);
+
 export async function augmentPromptWithLearnedContext(db: DatabaseLike, agentName: string, prompt: string): Promise<PromptAugmentationResult> {
   const context = inferPromptLearningContext(agentName, prompt);
   console.log(`[LEARNING] Inferred Context for ${agentName}: niche=${context.niche}, city=${context.city}, blockType=${context.blockType}`);
 
   const [lessonsRaw, positiveExemplars, negativeExemplars] = await Promise.all([
-    getCuratedLessons(db, context, 5),
-    getExemplars(db, context, 'positive', 2),
-    getExemplars(db, context, 'negative', 2)
+    getCuratedLessons(db, context, LESSON_LIMIT),
+    getExemplars(db, context, 'positive', POSITIVE_EXEMPLAR_LIMIT),
+    getExemplars(db, context, 'negative', NEGATIVE_EXEMPLAR_LIMIT)
   ]);
 
   const lessons = dedupeLessonTexts(lessonsRaw);
   if (lessons.length || positiveExemplars.length || negativeExemplars.length) {
-    console.log(`[LEARNING] SUCCESS! Augmenting prompt for ${agentName} with ${lessons.length} lessons.`);
+    console.log(`[LEARNING] SUCCESS! Augmenting prompt for ${agentName} with ${lessons.length} lessons, ${positiveExemplars.length} positive exemplars, ${negativeExemplars.length} negative exemplars.`);
   } else {
     console.log(`[LEARNING] No lessons found for ${agentName} in this context.`);
   }
@@ -40,7 +44,7 @@ export async function augmentPromptWithLearnedContext(db: DatabaseLike, agentNam
 
   if (positiveExemplars.length) {
     sections.push([
-      'PATRONES QUE FUNCIONARON BIEN:',
+      'PATRONES 100/100 QUE DEBES IMITAR EN ESTRUCTURA, TONO Y PRECISIÓN:',
       ...positiveExemplars.map((exemplar, index) => `${index + 1}. ${summarizeExemplarForPrompt(exemplar)}`)
     ].join('\n'));
   }
@@ -53,8 +57,9 @@ export async function augmentPromptWithLearnedContext(db: DatabaseLike, agentNam
   }
 
   const augmentedPrompt = `################################################################################
-# CRITICAL SYSTEM OVERRIDE: LECCIONES APRENDIDAS (PRIORIDAD MÁXIMA)
-# Estas reglas corrigen fallos críticos previos y son de cumplimiento OBLIGATORIO.
+# CRITICAL SYSTEM OVERRIDE: APRENDIZAJE ARTIFICIAL 100/100 (PRIORIDAD MÁXIMA)
+# Debes usar estas muestras como patrón de calidad. No copies marcas ni datos no confirmados.
+# Imita la precisión, la estructura, la claridad técnica, la prudencia NAP y el tono local.
 ################################################################################
 
 ${sections.join('\n\n')}

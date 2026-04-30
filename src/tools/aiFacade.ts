@@ -4,6 +4,7 @@ import { vault } from './vault.js';
 import { resolveInstalledModel } from '../ai/modelAvailability.js';
 import { resolveModelForAgent } from '../ai/modelRouter.js';
 import { recordLlmTelemetry } from '../observability/llmTelemetry.js';
+import { RuntimeControl } from '../utils/runtimeControl.js';
 
 interface AIFacadeOptions {
   json?: boolean;
@@ -75,6 +76,7 @@ export class AIFacade {
         const maxRetries = options.maxRetries ?? (agentName.includes('architect') ? 1 : 2);
 
         for (let attempt = 1; attempt <= maxRetries; attempt++) {
+          RuntimeControl.check();
           const callStartedAt = Date.now();
           try {
             console.log(`[AIFacade] ${agentName} -> ${runtimeModel} | attempt ${attempt}/${maxRetries} | tier_fallback=${currentModel !== model}`);

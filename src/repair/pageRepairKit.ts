@@ -117,11 +117,42 @@ function sanitizeVisibleText($: cheerio.CheerioAPI, options: PageRepairOptions):
   });
 }
 
+function isInsideNonContentChrome($: cheerio.CheerioAPI, el: any): boolean {
+  return $(el).closest('nav, header, footer, .nav-mobile, .site-header, .site-footer, .site-navigation, .mobile-menu, [role="navigation"]').length > 0;
+}
+
+function isLikelyFaqContainer($: cheerio.CheerioAPI, el: any): boolean {
+  const $el = $(el);
+  if (isInsideNonContentChrome($, el)) return false;
+  if ($el.closest('#faq, [data-block="faq"], .semantic-section--faq, .faq-section, .faq, .faq-list, .faq-grid').length > 0) return true;
+  const className = String($el.attr('class') || '');
+  if (/\bfaq(?:[-_\s]|$)/i.test(className)) return true;
+  if ($el.attr('data-faq-item') !== undefined) return true;
+  return false;
+}
+
 function extractVisibleFaqPairs($: cheerio.CheerioAPI): Array<{ question: string; answer: string }> {
   const out: Array<{ question: string; answer: string }> = [];
-  $('.faq-item, .faq-card, .faq-entry, [data-faq-item], details, .faq-list > li, .faq-grid > article').each((_i, el) => {
+  const selector = [
+    '#faq details',
+    '[data-block="faq"] details',
+    '.semantic-section--faq details',
+    '.faq-section details',
+    '.faq details',
+    '.faq-item',
+    '.faq-card',
+    '.faq-entry',
+    '[data-faq-item]',
+    '.faq-list > li',
+    '.faq-grid > article'
+  ].join(', ');
+
+  $(selector).each((_i, el) => {
+    if (!isLikelyFaqContainer($, el)) return;
     const $el = $(el);
     const qNode = $el.find('summary, .faq-question, .faq-card__question, .faq-summary-refined, h3, h4, strong').first();
+    if (!qNode.length) return;
+
     const question = normalizeFaqQuestionText(qNode.text());
     let answer = normalizeFaqAnswerText($el.find('.faq-answer, .faq-card__answer, .faq-content, p').first().text());
     if (!answer) {
@@ -129,9 +160,13 @@ function extractVisibleFaqPairs($: cheerio.CheerioAPI): Array<{ question: string
       clone.find('summary, .faq-question, .faq-card__question, .faq-summary-refined, h3, h4, strong').first().remove();
       answer = normalizeFaqAnswerText(clone.text());
     }
-    if (question && answer) out.push({ question, answer });
-    if (qNode.length) qNode.text(question);
+
+    const questionKey = question.toLowerCase().replace(/[¿?]/g, '').trim();
+    const looksLikeNavigation = /^(men[uú]|servicios|[aá]reas|dudas|urgencia|contactar|inicio)$/i.test(questionKey);
+    if (question && answer && !looksLikeNavigation) out.push({ question, answer });
+    if (question && !looksLikeNavigation) qNode.text(question);
   });
+
   const seen = new Set<string>();
   return out.filter((item) => {
     const key = item.question.toLowerCase().replace(/[¿?]/g, '').trim();

@@ -1,4 +1,8 @@
 import { getCanonicalNicheLabel } from '../niches/agentAdapters.js';
+import { resolveNicheBank } from '../fallbacks/contentBanks.js';
+import { createPremiumFallbackBlock, createPremiumFallbackHtml } from '../fallbacks/fallbackRegistry.js';
+import type { ContentBlock } from '../types/pipeline_v2.js';
+import type { PremiumFallbackInput, PremiumFallbackResult } from '../fallbacks/types.js';
 
 export type FallbackReason =
   | 'serp_unavailable'
@@ -15,21 +19,14 @@ export interface PublicFallbackContext {
   blockType?: string;
   technicalTerms?: string[];
   phone?: string;
+  businessName?: string;
   reason?: FallbackReason | string;
+  pageType?: string;
+  primaryIntent?: string;
+  contextualData?: Record<string, any>;
+  sectionId?: string;
+  seedHint?: string;
 }
-
-const NICHE_SERVICE_FALLBACKS: Record<string, string[]> = {
-  electricistas: ['cuadro eléctrico', 'averías eléctricas', 'enchufes e iluminación', 'boletín eléctrico', 'sobrecargas', 'mantenimiento eléctrico'],
-  cerrajeros: ['apertura de puertas', 'cambio de cerraduras', 'bombines de seguridad', 'escudos protectores', 'amaestramiento de llaves', 'cierres metálicos'],
-  fontaneros: ['fugas de agua', 'atascos', 'grifería', 'llaves de paso', 'desagües', 'termos y calderas'],
-  carpinteros: ['puertas de madera', 'armarios a medida', 'muebles a medida', 'ajustes de herrajes', 'tarima y parquet', 'reparaciones de madera'],
-  reformas: ['medición previa', 'alicatados y solados', 'pladur', 'acabados', 'licencias', 'coordinación de gremios'],
-  pintores: ['pintura interior', 'alisado de paredes', 'humedades', 'esmaltado', 'papel pintado', 'acabados decorativos'],
-  climatizacion: ['instalación de split', 'mantenimiento de aire acondicionado', 'conductos', 'bomba de calor', 'filtros', 'carga de gas'],
-  limpieza: ['limpieza de comunidades', 'oficinas', 'cristales', 'abrillantado', 'limpieza final de obra', 'mantenimiento periódico'],
-  jardineria: ['poda', 'riego', 'mantenimiento de jardines', 'césped', 'control de plagas vegetales', 'diseño de zonas verdes'],
-  mudanzas: ['embalaje', 'desmontaje de muebles', 'traslado local', 'protección de enseres', 'montaje final', 'planificación de acceso']
-};
 
 function normalizeKey(value: unknown): string {
   return String(value || '')
@@ -54,9 +51,8 @@ export function getPublicServiceLabel(niche?: string): string {
 }
 
 export function getFallbackServiceTopics(niche?: string, limit = 6): string[] {
-  const key = normalizeKey(getPublicServiceLabel(niche));
-  const match = Object.entries(NICHE_SERVICE_FALLBACKS).find(([candidate]) => key.includes(candidate) || candidate.includes(key));
-  return (match?.[1] || ['diagnóstico inicial', 'presupuesto claro', 'materiales adecuados', 'planificación del trabajo', 'revisión final', 'seguimiento']).slice(0, limit);
+  const bank = resolveNicheBank(getPublicServiceLabel(niche));
+  return Array.from(new Set([...bank.services, ...bank.technicalTerms])).slice(0, limit);
 }
 
 export function sanitizeFallbackReason(value?: string): string {
@@ -69,45 +65,84 @@ export function sanitizeFallbackReason(value?: string): string {
     .trim() || 'criterio de calidad interno';
 }
 
+/**
+ * Paragraph-level compatibility API used by old guards and emergency renderers.
+ * It now reads from the same premium fallback banks, so even legacy fallbacks vary by niche/block.
+ */
 export function buildPublicFallbackParagraphs(context: PublicFallbackContext): string[] {
   const city = normalizePublicText(context.city || 'tu zona');
   const niche = getPublicServiceLabel(context.niche).toLowerCase();
-  const topics = (context.technicalTerms && context.technicalTerms.length ? context.technicalTerms : getFallbackServiceTopics(context.niche, 4)).slice(0, 4);
+  const bank = resolveNicheBank(niche);
+  const topics = (context.technicalTerms && context.technicalTerms.length ? context.technicalTerms : getFallbackServiceTopics(context.niche, 5)).slice(0, 5);
   const topicText = topics.length ? topics.join(', ') : 'diagnóstico, materiales, tiempos y revisión final';
   const blockType = normalizeKey(context.blockType || 'content');
+  const primaryService = bank.services[0] || 'diagnóstico inicial';
+  const trustSignal = bank.trustSignals[0] || 'presupuesto entendible';
+  const objection = bank.objections[0] || 'evitar presupuestos genéricos';
 
   if (/faq/.test(blockType)) {
     return [
       `En ${city}, conviene valorar cada trabajo de ${niche} según el alcance real, el estado previo y la urgencia del caso.`,
-      `Antes de aceptar una intervención, es recomendable confirmar qué se revisará, qué materiales pueden hacer falta y cómo se comprobará el resultado.`
+      `Antes de aceptar una intervención, confirma qué se revisará, qué materiales pueden hacer falta y cómo se comprobará el resultado.`,
+      `Una buena pregunta inicial es si el caso encaja mejor con ${primaryService} o requiere una revisión más amplia.`
     ];
   }
 
   if (/price|precio|pricing|budget|presupuesto/.test(blockType)) {
     return [
-      `El presupuesto de ${niche} en ${city} depende del alcance del trabajo, el acceso, los materiales y el tiempo necesario para dejar la intervención bien terminada.`,
-      `Una valoración seria debe separar mano de obra, piezas o materiales, desplazamiento si aplica y cualquier remate necesario antes de empezar.`
+      `El presupuesto de ${niche} en ${city} depende de factores como ${topicText}, además del acceso y el nivel de urgencia.`,
+      `Una valoración seria debe separar mano de obra, piezas o materiales, desplazamiento si aplica y cualquier remate necesario antes de empezar.`,
+      `Pide que el alcance quede claro para ${objection}.`
     ];
   }
 
   if (/trust|proof|confianza|local/.test(blockType)) {
     return [
       `Para contratar ${niche} en ${city}, ayuda trabajar con un proceso claro: revisión previa, explicación del alcance, presupuesto entendible y comprobación final.`,
-      `Las señales útiles son concretas: comunicación directa, materiales definidos, tiempos razonables y ausencia de promesas que no se puedan verificar.`
+      `Las señales útiles son concretas: ${trustSignal}, materiales definidos, tiempos razonables y ausencia de promesas que no se puedan verificar.`,
+      `El contexto local importa porque cada zona puede cambiar accesos, horarios, materiales o prioridad de la intervención.`
     ];
   }
 
   if (/cta|contact|conversion|hero/.test(blockType)) {
     return [
       `Si necesitas ${niche} en ${city}, prepara una descripción breve del problema, fotos si las tienes y el horario en el que se puede revisar el trabajo.`,
-      `Con esa información es más fácil orientar el alcance, priorizar la urgencia y evitar presupuestos genéricos.`
+      `Con esa información es más fácil orientar el alcance, priorizar la urgencia y evitar presupuestos genéricos.`,
+      `Indica si el caso afecta a ${primaryService}, a otro servicio relacionado o a una duda todavía sin diagnosticar.`
     ];
   }
 
   return [
     `En ${city}, un servicio de ${niche} debe empezar con una revisión clara del caso y una explicación sencilla de las opciones disponibles.`,
-    `Para evitar soluciones genéricas, se tienen en cuenta aspectos como ${topicText}, además del estado real del trabajo y el nivel de acabado esperado.`
+    `Para evitar soluciones genéricas, se tienen en cuenta aspectos como ${topicText}, además del estado real del trabajo y el nivel de acabado esperado.`,
+    `El objetivo es que cada decisión tenga sentido técnico y no dependa solo de una plantilla de contenido.`
   ];
+}
+
+export function buildPremiumFallbackContentBlock(context: PublicFallbackContext): ContentBlock {
+  return createPremiumFallbackBlock(toPremiumInput(context));
+}
+
+export function buildPremiumFallbackHtml(context: PublicFallbackContext): PremiumFallbackResult {
+  return createPremiumFallbackHtml(toPremiumInput(context));
+}
+
+function toPremiumInput(context: PublicFallbackContext): PremiumFallbackInput {
+  return {
+    niche: context.niche,
+    city: context.city,
+    sectionId: context.sectionId,
+    sectionTitle: context.sectionTitle,
+    blockType: context.blockType,
+    technicalTerms: context.technicalTerms,
+    phone: context.phone,
+    businessName: context.businessName,
+    pageType: context.pageType,
+    primaryIntent: context.primaryIntent,
+    reason: sanitizeFallbackReason(String(context.reason || 'quality_control')),
+    contextualData: context.contextualData,
+    seedHint: context.seedHint,
+  };
 }
 
 export function buildInternalFallbackMeta(reason: unknown, source: string): Record<string, unknown> {

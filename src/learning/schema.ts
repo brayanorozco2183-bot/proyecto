@@ -77,4 +77,21 @@ export async function installLearningSchema(db: DatabaseLike): Promise<void> {
     );
   `);
   await db.run(`CREATE INDEX IF NOT EXISTS idx_learning_feedback_events_created ON learning_feedback_events(created_at DESC);`);
+
+  await db.run(`
+    CREATE TABLE IF NOT EXISTS learning_sentences (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      agent_name TEXT NOT NULL,
+      niche TEXT,
+      city TEXT,
+      block_type TEXT,
+      sentence_text TEXT NOT NULL,
+      technical_score INTEGER DEFAULT 0,
+      local_score INTEGER DEFAULT 0,
+      fingerprint TEXT UNIQUE NOT NULL,
+      usage_count INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+  await db.run(`CREATE INDEX IF NOT EXISTS idx_learning_sentences_lookup ON learning_sentences(agent_name, niche, city, block_type, technical_score DESC, local_score DESC);`);
 }

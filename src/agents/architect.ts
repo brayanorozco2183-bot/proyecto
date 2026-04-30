@@ -7,6 +7,7 @@ import { ArchitectLinkContext } from '../internal-linking/types.js';
 import { BLOCK_VISUAL_SPECS } from '../config/blockVisualSpecs.js';
 import { PAGE_ARCHETYPES } from '../config/pageArchetypes.js';
 import { buildSeed, pickSeeded, rotateSeeded, uniqueStrings } from '../utils/designSeed.js';
+import { buildNicheGuardPrompt, polishPlanningLabel, polishPremiumText } from '../utils/premiumNicheGuard.js';
 
 const ALLOWED_BLOCK_TYPES = new Set([
     'hero_trust',
@@ -230,8 +231,17 @@ export class ContentArchitectAgent extends BaseAgent {
     private resolveHeroTrustBullets(input: ArchitectInput): string[] {
         const strategyTrust = this.uniqueNormalizedStrings(input.strategicAnalysis?.trustAssets || [], 4);
         const briefTrust = this.extractBriefItems('SEÑALES DE CONFIANZA REALES', 4);
-        const fallback = ['Medición previa en obra', 'Materiales y herrajes definidos', 'Garantía por escrito'];
-        return this.uniqueNormalizedStrings([...strategyTrust, ...briefTrust, ...fallback], 3).slice(0, 3);
+        
+        const isCarpentry = /carpint|ebanist|madera|mueble|puerta/i.test(input.niche);
+        const isElectrician = /electric/i.test(input.niche);
+        
+        const genericFallback = isCarpentry 
+            ? ['Medición previa en obra', 'Materiales y herrajes definidos', 'Garantía por escrito']
+            : isElectrician
+                ? ['Diagnóstico técnico previo', 'Materiales y componentes certificados', 'Garantía por escrito']
+                : ['Valoración previa sin compromiso', 'Materiales adecuados al uso', 'Garantía por escrito'];
+
+        return this.uniqueNormalizedStrings([...strategyTrust, ...briefTrust, ...genericFallback], 3).slice(0, 3);
     }
 
     private buildDefaultSchemaTypes(input: ArchitectInput, sections: any[] = []): string[] {
@@ -479,12 +489,12 @@ export class ContentArchitectAgent extends BaseAgent {
                     ],
                     block_type: 'services_grid',
                     preferred_format: 'cards',
-                    content_density: 'standard',
+                    content_density: 'rich',
                     factuality_level: 'editorial',
                     mobile_priority: 'high',
                     layout_hint: 'boxed_content',
-                    objective: 'Explicar la oferta principal con claridad comercial.',
-                    target_words: 420,
+                    objective: 'Explicar la oferta principal con claridad comercial y profundidad técnica.',
+                    target_words: 450,
                     expansion_slots: 5,
                     evidence_requirements: ['criterio_tecnico', 'caso_tipico', 'microprueba'],
                     depth_mode: 'deep',
@@ -504,15 +514,15 @@ export class ContentArchitectAgent extends BaseAgent {
                     ],
                     block_type: 'process_steps',
                     preferred_format: 'bullets',
-                    content_density: 'standard',
+                    content_density: 'rich',
                     factuality_level: 'strict',
                     mobile_priority: 'high',
                     layout_hint: 'split_feature',
-                    objective: 'Reducir incertidumbre explicando el proceso.',
-                    target_words: 280,
-                    expansion_slots: 4,
+                    objective: 'Reducir incertidumbre explicando el proceso con detalle de experto.',
+                    target_words: 450,
+                    expansion_slots: 5,
                     evidence_requirements: ['criterio_tecnico', 'error_comun', 'microprueba'],
-                    depth_mode: 'standard',
+                    depth_mode: 'deep',
                     visual_intent: 'editorial',
                     silence_priority: 'low',
                     candidate_visual_variants: ['steps_split', 'timeline_compact']
@@ -529,7 +539,7 @@ export class ContentArchitectAgent extends BaseAgent {
                     mobile_priority: 'high',
                     layout_hint: 'split_feature',
                     objective: 'Captar intención urgente sin prometer tiempos falsos.',
-                    target_words: 150,
+                    target_words: 200,
                     expansion_slots: 3,
                     evidence_requirements: ['objecion', 'decision_factor', 'microprueba'],
                     depth_mode: 'compact',
@@ -549,7 +559,7 @@ export class ContentArchitectAgent extends BaseAgent {
                     mobile_priority: 'normal',
                     layout_hint: 'two_column_trust',
                     objective: 'Demostrar presencia local sin inventar datos.',
-                    target_words: 220,
+                    target_words: 300,
                     expansion_slots: 3,
                     evidence_requirements: ['microprueba', 'caso_tipico', 'decision_factor'],
                     depth_mode: 'standard',
@@ -564,15 +574,15 @@ export class ContentArchitectAgent extends BaseAgent {
                     h3s: ['Qué cambia según materiales y medidas', 'Cómo comparar propuestas sin fijarte solo en el precio', 'Qué errores encarecen un proyecto'],
                     block_type: 'price_guidance',
                     preferred_format: 'prose',
-                    content_density: 'standard',
+                    content_density: 'rich',
                     factuality_level: 'editorial',
                     mobile_priority: 'normal',
                     layout_hint: 'full_width_text',
-                    objective: 'Resolver objeciones sobre presupuesto sin dar precios exactos.',
-                    target_words: 240,
+                    objective: 'Resolver objeciones sobre presupuesto con criterios de valor técnico.',
+                    target_words: 400,
                     expansion_slots: 4,
                     evidence_requirements: ['decision_factor', 'objecion', 'microprueba'],
-                    depth_mode: 'standard',
+                    depth_mode: 'deep',
                     visual_intent: 'supporting',
                     silence_priority: 'medium',
                     candidate_visual_variants: ['editorial_text', 'highlight_panel']
@@ -584,15 +594,15 @@ export class ContentArchitectAgent extends BaseAgent {
                     h3s: this.buildFaqQuestions(n, city, input),
                     block_type: 'faq',
                     preferred_format: 'faq',
-                    content_density: 'standard',
+                    content_density: 'rich',
                     factuality_level: 'editorial',
                     mobile_priority: 'normal',
                     layout_hint: 'boxed_content',
-                    objective: 'Resolver dudas y frenos de compra.',
-                    target_words: 320,
+                    objective: 'Resolver dudas y frenos de compra con respuestas exhaustivas.',
+                    target_words: 400,
                     expansion_slots: 5,
                     evidence_requirements: ['objecion', 'caso_tipico', 'error_comun'],
-                    depth_mode: 'standard',
+                    depth_mode: 'deep',
                     visual_intent: 'editorial',
                     silence_priority: 'medium',
                     candidate_visual_variants: ['accordion_clean', 'faq_cards']
@@ -601,7 +611,9 @@ export class ContentArchitectAgent extends BaseAgent {
                 return {
                     section_id: 'senales-confianza',
                     h2: `Señales de confianza que conviene exigir antes de contratar`,
-                    h3s: ['Garantía por escrito', 'Materiales y herrajes verificables', 'Presupuesto detallado tras visita'],
+                    h3s: isCarpentry 
+                        ? ['Garantía por escrito', 'Materiales y herrajes verificables', 'Presupuesto detallado tras visita']
+                        : ['Garantía por escrito', 'Materiales y componentes verificables', 'Presupuesto detallado tras visita'],
                     block_type: 'trust_band',
                     preferred_format: 'trust_cards',
                     content_density: 'compact',
@@ -609,7 +621,7 @@ export class ContentArchitectAgent extends BaseAgent {
                     mobile_priority: 'high',
                     layout_hint: 'two_column_trust',
                     objective: 'Repartir pruebas de confianza fuera del CTA final.',
-                    target_words: 130,
+                    target_words: 180,
                     expansion_slots: 3,
                     evidence_requirements: ['microprueba', 'decision_factor'],
                     depth_mode: 'compact',
@@ -757,15 +769,15 @@ export class ContentArchitectAgent extends BaseAgent {
         };
 
         const hardCaps: Record<string, number> = {
-            services_grid: 700,
-            process_steps: 520,
-            price_guidance: 420,
-            faq: 560,
-            local_proof: 320,
-            urgency_panel: 180,
-            cta_panel: 120,
-            trust_band: 180,
-            map: 40
+            services_grid: 550,
+            process_steps: 420,
+            price_guidance: 350,
+            faq: 450,
+            local_proof: 250,
+            urgency_panel: 150,
+            cta_panel: 100,
+            trust_band: 150,
+            map: 30
         };
 
         const currentTotal = sections.reduce((sum, section) => sum + Number(section?.target_words || 0), 0);
@@ -843,28 +855,28 @@ export class ContentArchitectAgent extends BaseAgent {
         const current = this.cleanBlueprintText(headline);
         if (!current) return true;
         if (!this.cityRegex(city).test(current)) return true;
-        return /(protege tu propiedad|soluciones personalizadas|expertos?\b|compromiso total|calidad garantizada)/i.test(current);
+        return /(protege tu propiedad|soluciones personalizadas|expertos?\b|compromiso total|calidad garantizada|el mejor servicio|mantenimiento electr[oó]nico|aparatos el[eé]ctricos)/i.test(current);
     }
 
     private harmonizeBlueprint(input: ArchitectInput, pageType: string, raw: any): any {
         const base = this.buildDeterministicBlueprint(input, pageType);
         const rawHero = typeof raw?.hero === 'object' && raw?.hero ? raw.hero : {};
 
-        let h1 = this.cleanBlueprintText(rawHero.h1 || raw?.h1, base.h1);
+        let h1 = polishPlanningLabel(this.cleanBlueprintText(rawHero.h1 || raw?.h1, base.h1), input);
         if (this.shouldFallbackHeadline(h1, input.city)) {
-            h1 = base.h1;
+            h1 = polishPlanningLabel(base.h1, input);
         }
 
         const hero = {
             ...base.hero,
             ...rawHero,
             h1,
-            subtitle: this.sanitizePlanningCopy(this.cleanBlueprintText(rawHero.subtitle, base.hero.subtitle), input) || base.hero.subtitle,
+            subtitle: polishPremiumText(this.sanitizePlanningCopy(this.cleanBlueprintText(rawHero.subtitle, base.hero.subtitle), input) || base.hero.subtitle, input),
             trust_bullets: this.uniqueNormalizedStrings([
                 ...(Array.isArray(rawHero.trust_bullets) ? rawHero.trust_bullets : []),
                 ...base.hero.trust_bullets
             ], 3),
-            cta_text: this.cleanBlueprintText(rawHero.cta_text, base.hero.cta_text),
+            cta_text: polishPremiumText(this.cleanBlueprintText(rawHero.cta_text, base.hero.cta_text), input),
             hero_role: 'conversion',
             visual_intent: this.cleanBlueprintText(rawHero.visual_intent, base.hero.visual_intent)
         };
@@ -884,9 +896,24 @@ export class ContentArchitectAgent extends BaseAgent {
             }
             sections = this.reorderSectionsByArchetype(pageType, sections, input);
             sections = this.ensureMapAfterLocalProof(sections, input);
-            sections = this.sanitizeBlueprintSections(sections.map((section) => this.normalizeSectionVisualContract(section, input)));
+            sections = this.sanitizeBlueprintSections(sections.map((section) => {
+                const normalized = this.normalizeSectionVisualContract(section, input);
+                return {
+                    ...normalized,
+                    h2: polishPlanningLabel(normalized.h2 || '', input),
+                    h3s: Array.isArray(normalized.h3s) ? normalized.h3s.map((h: any) => polishPlanningLabel(String(h || ''), input)) : [],
+                    objective: polishPremiumText(normalized.objective || '', input),
+                };
+            }));
             sections = this.distributeExtraWordsByQuality(sections, Math.max(1200, Number(input.word_count_target || 1800) - 180));
         }
+
+        sections = sections.map((section: any) => ({
+            ...section,
+            h2: polishPlanningLabel(section.h2 || '', input),
+            h3s: Array.isArray(section.h3s) ? section.h3s.map((h: any) => polishPlanningLabel(String(h || ''), input)) : [],
+            objective: polishPremiumText(section.objective || '', input),
+        }));
 
         const schemaTypes = this.uniqueNormalizedStrings([
             ...(Array.isArray(raw?.seoBrief?.schemaTypes) ? raw.seoBrief.schemaTypes : []),
@@ -907,7 +934,7 @@ export class ContentArchitectAgent extends BaseAgent {
                     : h1,
                 60
             ),
-            meta_description: this.sanitizePlanningCopy(this.cleanBlueprintText(raw?.meta_description, base.meta_description), input) || base.meta_description,
+            meta_description: polishPremiumText(this.sanitizePlanningCopy(this.cleanBlueprintText(raw?.meta_description, base.meta_description), input) || base.meta_description, input),
             hero,
             sections,
             page_skeleton: this.cleanBlueprintText(raw?.page_skeleton, base.page_skeleton),
@@ -949,6 +976,7 @@ CONTEXTO
 GUARDRAILS
 ${knowledgeBrief}
 ${nicheBrief}
+${buildNicheGuardPrompt(input)}
 
 REGLAS
 - Usa SOLO block_type permitidos: services_grid, process_steps, urgency_panel, local_proof, faq, cta_panel, price_guidance, trust_band, map, comparison_table, checklist.
@@ -956,7 +984,7 @@ REGLAS
 - Para service prioriza una arquitectura rica de 7 a 9 secciones útiles, no una versión mínima.
 - No repitas block_type.
 - target_words realistas y repartidos con intención editorial.
-- El hero debe evitar clichés como "soluciones personalizadas", "protege tu propiedad", "expertos" o bullets vacíos tipo "confianza" y "seguridad".
+- El hero debe evitar clichés como "soluciones personalizadas", "protege tu propiedad", "expertos", "el mejor servicio" o bullets vacíos tipo "confianza" y "seguridad".
 - El hero debe traer 3 trust_bullets concretos y verificables.
 - La FAQ debe priorizar preguntas reales del nicho si están disponibles en los guardrails.
 - No precios exactos (prohibido mencionar cifras seguidas de €, euros o eur).
@@ -1053,6 +1081,7 @@ JSON
             };
 
         } catch (error: any) {
+            if (error.message === 'PROCESS_ABORTED_BY_USER') throw error;
             this.log(`Error en Architect (LLM): ${error.message}. Activando fallback determinista.`);
             await this.rememberFailure({
                 errorMessage: error.message,
