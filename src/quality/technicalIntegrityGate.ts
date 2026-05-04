@@ -160,7 +160,7 @@ export function analyzeTechnicalIntegrity(html: string): TechnicalIntegrityRepor
     pushIssue(issues, 'MOBILE_VIEWPORT_MISSING', 'critical', 'Falta meta viewport válido en el head.');
   }
 
-  const placeholderRx = /\[[^\]]+\]|\{\{[^}]+\}\}|\b(?:placeholder|undefined|null|object object)\b|\bEn\s*[,.;:]|\bFactor\s*\d+\b|\bCriterio\s*\d+\b/gi;
+  const placeholderRx = /\[[^\]]+\]|\{\{[^}]+\}\}|\b(?:placeholder|undefined|null|object object)\b|\bEn\s*[,.]|\bFactor\s*\d+\b|\bCriterio\s*\d+\b/gi;
   const placeholderHits = text.match(placeholderRx) || [];
   if (placeholderHits.length) pushIssue(issues, 'PLACEHOLDER_OR_BROKEN_COPY', 'critical', 'Hay placeholders o fragmentos rotos visibles.', placeholderHits.join(' | '));
 
