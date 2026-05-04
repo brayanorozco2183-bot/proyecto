@@ -3,9 +3,8 @@ import { resolveBlockPlaybookPayload } from '../niches/blockContent.js';
 import { sanitizeBrandName, buildCanonicalBrandName, repairBrokenLocalFragments as repairBrandLocalFragments } from './brandGuard.js';
 import { getCanonicalNicheLabel } from '../niches/agentAdapters.js';
 import { normalizeFaqQuestionText, normalizeFaqAnswerText } from './faqSanitizer.js';
-import { BLOCK_VISUAL_RECOVERY_CSS } from '../design-system/blockVisualRecoveryCss.js';
 import { sanitizeLegalRiskClaims } from './legalClaimSanitizer.js';
-import { applyFinalDeliveryDomFixes } from './finalDeliveryDomFixes.js';
+import { normalizeCleanDeliveryHtml } from './cleanDeliveryHtmlNormalizer.js';
 
 function escapeHtml(value = ''): string {
   return String(value)
@@ -552,70 +551,6 @@ function ensureFontPreconnects($: cheerio.CheerioAPI): void {
   if ($('link[rel="preconnect"][href="https://fonts.gstatic.com"]').length === 0) {
     $('head').prepend('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>');
   }
-}
-
-
-function ensureBlockVisualRecoveryCss($: cheerio.CheerioAPI): void {
-  const existing = $('#gravity-block-visual-recovery');
-  if (existing.length) {
-    existing.text(BLOCK_VISUAL_RECOVERY_CSS);
-    return;
-  }
-  $('head').append(`<style id="gravity-block-visual-recovery">${BLOCK_VISUAL_RECOVERY_CSS}</style>`);
-}
-
-function repairVisualCopyResidue($: cheerio.CheerioAPI, context: FinalDocumentSanitizerContext): void {
-  const city = normalizeText(context.city || 'tu zona');
-  const niche = canonicalServiceLabel(context.niche).toLowerCase();
-
-  $('p, li, span, strong, h1, h2, h3, summary, a').each((_i: number, el: any) => {
-    const node = $(el);
-    const original = normalizeText(node.text());
-    if (!original) return;
-
-    let text = original
-      .replace(/^[:;,.\s]+este\s+bloque\s+resume/i, 'Este bloque resume')
-      .replace(/no\s+se\s+presentan\s+reseñas\s+inventadas\s*[:;,-]?\s*/gi, '')
-      .replace(/\bantes\s+de\s+sustituir\s+piezas\s+antes\s+de\s+intervenir\s+en\s+[^.?!]+/gi, 'antes de intervenir')
-      .replace(/\bNuestros\s+servicios\s+son\s+gratuitos\s+y\s+sin\s+compromiso\.?/gi, 'La orientación inicial se plantea sin compromiso antes de decidir la intervención.')
-      .replace(/\bservicios\s+son\s+gratuitos\s+y\s+sin\s+compromiso\b/gi, 'orientación inicial sin compromiso')
-      .replace(/\bCont[aá]ctaranos\b/gi, 'Contáctanos')
-      .replace(/\bContactar\s+ahoranos\b/gi, 'contactarnos')
-      .replace(/\bel\s+cerrajer[ií]a\b/gi, 'la cerrajería')
-      .replace(/\bel\s+fontaner[ií]a\b/gi, 'la fontanería')
-      .replace(/\bel\s+electricidad\b/gi, 'la electricidad')
-      .replace(/\bprofesionales\s+cerrajeros\b/gi, 'cerrajeros profesionales')
-      .replace(/\bservicio\s+de\s+cerrajeros\s+se\s+plantea/gi, 'servicio de cerrajería se plantea')
-      .replace(/\bservicio\s+de\s+fontaneros\s+se\s+plantea/gi, 'servicio de fontanería se plantea')
-      .replace(/\bservicio\s+de\s+electricistas\s+se\s+plantea/gi, 'servicio eléctrico se plantea')
-      .replace(/\bEn\s+([A-ZÁÉÍÓÚÑ][\wáéíóúñ-]+),\s+el\s+cerrajer[ií]a\b/gi, 'En $1, la cerrajería')
-      .replace(/\bcon\s+cobertura\s+operativa\s+en\s+y\s+desplazamientos\b/gi, `con cobertura operativa en ${city} y desplazamientos`)
-      .replace(/\bmantener\s+tu\s+propiedad\s+a\s+salvo\s+y\s+funcional\b/gi, 'mantener el acceso y la seguridad funcional del inmueble')
-      .replace(/\best[áa]\s+diseñada\s+para\s+resistir\s+el\s+tiempo\b/gi, 'se revisa para un uso seguro y proporcionado')
-      .replace(/\bgarantizan\s+la\s+seguridad\s+y\s+el\s+confort\s+de\s+tus\s+viviendas\b/gi, 'ayudan a mejorar la seguridad y el uso diario de la vivienda')
-      .replace(/\bAquí\s+te\s+presentamos\s+algunas\s+de\s+las\s+preguntas\s+más\s+frecuentes\s+sobre\s+los\s+servicios\s+ofrecidos\s+por\s+nuestros\s+profesionales\s+[^.]+\./gi, `Estas dudas ayudan a explicar cómo se valora un trabajo de ${niche} en ${city} antes de decidir la actuación.`)
-      .replace(/\s+([,.;:!?])/g, '$1')
-      .replace(/\s{2,}/g, ' ')
-      .trim();
-
-    if (text !== original) node.text(text);
-  });
-}
-
-function normalizeVisualBlockAliases($: cheerio.CheerioAPI): void {
-  $('.process-step-rail__body').addClass('step-card');
-  $('.proof-row').addClass('proof-card');
-  $('.local-proof__signal').addClass('proof-card');
-  $('.trust-band__signal-card').addClass('semantic-card');
-  $('.map-block__support').addClass('semantic-card');
-  $('.services-grid__magazine-feature').addClass('service-card');
-  $('.faq-summary-refined').each((_i: number, el: any) => {
-    const summary = $(el);
-    if (!summary.find('.faq-summary-refined__text').length) {
-      const text = normalizeText(summary.text());
-      summary.empty().append(`<span class="faq-summary-refined__count">?</span><span class="faq-summary-refined__text">${escapeHtml(text)}</span>`);
-    }
-  });
 }
 
 function ensurePerformanceGuards($: cheerio.CheerioAPI): void {
@@ -1317,7 +1252,6 @@ export function sanitizeFinalRenderedHtml(html: string, context: FinalDocumentSa
   ensureHeadBaseline($);
   ensureResponsiveGuards($);
   ensurePerformanceGuards($);
-  ensureBlockVisualRecoveryCss($);
   ensureFontPreconnects($);
 
   if ($('meta[name="viewport"]').length === 0) {
@@ -1325,7 +1259,6 @@ export function sanitizeFinalRenderedHtml(html: string, context: FinalDocumentSa
   }
 
   fixTextNodes($, context);
-  repairVisualCopyResidue($, context);
   normalizePremiumSpanishHeadings($, context);
   removeLowValueTemplateResidue($);
   ensureContactAnchor($);
@@ -1354,7 +1287,6 @@ export function sanitizeFinalRenderedHtml(html: string, context: FinalDocumentSa
   ensureFaqFloor($, context);
   syncPrimaryHeadingWithSeo($, context);
   removeSystemEyebrows($);
-  normalizeVisualBlockAliases($);
   removeEmptyArtifacts($);
 
   $('img').each((_ignored: any, el: any) => {
@@ -1475,12 +1407,10 @@ export function sanitizeFinalRenderedHtml(html: string, context: FinalDocumentSa
   dedupeRepeatedBlocks($);
   ensureInternalLinksBeforeFooter($);
   addExternalLinkSafety($);
-  repairVisualCopyResidue($, context);
-  normalizeVisualBlockAliases($);
   syncSeoAndStructuredData($, context);
   ensureCoreStructuredData($, context);
   removeEmptyArtifacts($);
-  applyFinalDeliveryDomFixes($, context);
 
-  return sanitizeLegalRiskClaims($.html().replace(/\s{2,}/g, ' ').replace(/\n{2,}/g, '\n').trim(), context.niche).html;
+  const legallySanitized = sanitizeLegalRiskClaims($.html().replace(/\s{2,}/g, ' ').replace(/\n{2,}/g, '\n').trim(), context.niche).html;
+  return normalizeCleanDeliveryHtml(legallySanitized, context);
 }

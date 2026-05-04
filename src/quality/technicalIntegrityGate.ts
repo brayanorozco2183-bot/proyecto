@@ -363,6 +363,7 @@ function removeVisiblePlaceholders($: cheerio.CheerioAPI, city?: string): void {
       .replace(/\{\{[^}]+\}\}/g, '')
       .replace(/\bEn\s*([,.;:])/g, `En ${safeCity}$1`)
       .replace(/\b(undefined|null|object object)\b/gi, '')
+      .replace(/\b(?:Factor|Criterio)\s*\d+\b/gi, '')
       .replace(/\s{2,}/g, ' ');
     if (next !== original) $(node).replaceWith(next);
   });

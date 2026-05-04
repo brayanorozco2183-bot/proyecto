@@ -5,14 +5,14 @@
   "status": "production_ready",
   "metrics": {
     "titleLength": 61,
-    "metaDescriptionLength": 162,
+    "metaDescriptionLength": 129,
     "h1Count": 1,
     "h2Count": 11,
     "sectionCount": 13,
     "ctaCount": 13,
     "contactAnchors": 1,
-    "contactLinks": 13,
-    "internalHashLinks": 21,
+    "contactLinks": 0,
+    "internalHashLinks": 8,
     "deadHashLinks": [],
     "blockTypes": [
       {
@@ -40,7 +40,7 @@
         "blockType": "local_proof",
         "count": 1,
         "headings": [
-          "Criterios de confianza antes de decidir"
+          "Prueba Local"
         ]
       },
       {
@@ -68,7 +68,7 @@
         "blockType": "cta_panel",
         "count": 1,
         "headings": [
-          "Contrata Ahora mismo"
+          "Solicita orientación profesional en Valencia"
         ]
       },
       {
@@ -82,17 +82,17 @@
         "blockType": "internal_linking",
         "count": 1,
         "headings": [
-          "Navegación relacionada del proyecto"
+          "Páginas recomendadas dentro del proyecto"
         ]
       }
     ],
-    "styleLayerCount": 11
+    "styleLayerCount": 10
   },
   "issues": [
     {
       "code": "TOO_MANY_STYLE_LAYERS",
       "severity": "warning",
-      "message": "Hay muchas capas <style> en el HTML final (11); conviene consolidar para evitar conflictos visuales."
+      "message": "Hay muchas capas <style> en el HTML final (10); conviene consolidar para evitar conflictos visuales."
     }
   ],
   "summary": "Listo para producción con score 93."

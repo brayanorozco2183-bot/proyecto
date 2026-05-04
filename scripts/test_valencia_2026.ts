@@ -60,16 +60,16 @@ async function generateValencia() {
     const result = await pipeline.run(mission);
     const duration = (Date.now() - startTime) / 1000;
 
-    if (result) {
+    if (result && result.success && result.data) {
         const outputPath = path.join('public_static', 'valencia-test-2026.html');
         await fs.mkdir('public_static', { recursive: true });
-        await fs.writeFile(outputPath, result.html);
+        await fs.writeFile(outputPath, result.data.html || '');
         
         console.log(`\n✅ Generation Successful!`);
         console.log(`   - Output: ${outputPath}`);
-        console.log(`   - Words: ${result.metadata.totalWords}`);
+        console.log(`   - Words: ${result.data.word_count}`);
         console.log(`   - Time: ${duration}s`);
-        console.log(`   - QA Score: ${result.metadata.qaScore}`);
+        console.log(`   - QA Score: ${result.data.score}`);
         
         await db.run('UPDATE missions SET status = ? WHERE id = ?', ['COMPLETED', missionId]);
         await db.run('UPDATE city_data SET status = ? WHERE mission_id = ? AND city = ?', ['COMPLETED', missionId, "Valencia"]);
