@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_073_NEON_PROVINCE_PRIME",
+  "title": "Neon Province Prime",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "split_hero_cards",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 10,
+      "gutter": "48px",
+      "container_width": "min(1180px, calc(100% - 32px))"
+    },
+    "navigation": {
+      "style": "pill_tabs",
+      "position": "sticky_top",
+      "blur": "18px",
+      "contrast_safe": true,
+      "mobile_pattern": "full_screen_overlay"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#2DD4BF",
+      "accent": "#F59E0B",
+      "bg": "#06151A",
+      "surface": "#0D242B",
+      "surface_alt": "#18353D",
+      "text": "#EFFFFB",
+      "muted": "#B8D5D2",
+      "on_primary": "#000000",
+      "on_accent": "#000000",
+      "radius_policy": "14px",
+      "shadow_policy": "glass_depth",
+      "font_display": "'Space Grotesk', sans-serif",
+      "font_body": "'IBM Plex Sans', sans-serif",
+      "spacing_density": "standard",
+      "border_policy": "soft"
+    },
+    "contrast_report": {
+      "bg_text": 18.03,
+      "surface_text": 15.61,
+      "primary_on_primary": 11.28,
+      "accent_on_accent": 9.78,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #06151A; --surface: #0D242B; --surface-alt: #18353D; --text: #EFFFFB; --muted: #B8D5D2; --primary: #2DD4BF; --accent: #F59E0B; --on-primary: #000000; --on-accent: #000000; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 14px; --gap: 48px; --blur: 18px; --nav-position: sticky; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; } h1,h2,h3,.display { font-family: 'Space Grotesk', sans-serif; } .section-shell { width: min(1180px, calc(100% - 32px)); margin-inline: auto; } .cta-primary { display: inline-flex; align-items: center; gap: .75rem; min-height: 56px; padding: 0 24px; border-radius: 999px; background: var(--primary); color: var(--on-primary); font-weight: 800; box-shadow: var(--shadow); } .proof-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }  @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "minimal_luxury_hero",
+      "custom_structure": "<section class='hero hero--minimal'><span class='micro'>{{BRAND_PROMISE}}</span><h1>{{H1}}</h1><p>{{INTRO}}</p>{{CTA_PRIMARY}}</section>"
+    },
+    "services_grid": {
+      "style": "horizontal_marquee_services",
+      "columns_override": 1,
+      "interaction": "subtle_border_glow",
+      "content_strategy": "wide service track with alternating large cards"
+    },
+    "trust_layer": {
+      "style": "metric_bento",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "city_hub_cards",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "schema_ready_cards",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "petrol_mint",
+    "motion_level": "calm",
+    "noise_overlay": false,
+    "color_glitch": false,
+    "image_treatment": "glass_reflection",
+    "premium_cues": [
+      "technical grid",
+      "precise dividers",
+      "SLA emphasis"
+    ]
+  }
+}

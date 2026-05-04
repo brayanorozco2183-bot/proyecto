@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño variante9 | Cerrajeros Madrid</title>
+    <meta name="description" content="Vista previa del diseño para variante9">
+    <link rel="canonical" href="https://serviciosprofesionales.pro/variante9/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Bebas+Neue&family=Poppins:wght@400;700;900&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        
+        :root {
+            --primary: #fbbf24;
+            --secondary: #000000;
+            --accent: #f59e0b;
+            --bg: #0a0a0a;
+            --surface: #171717;
+            --surface-alt: #262626;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: #262626;
+            --heading: #ffffff;
+            
+            --font-display: "Cormorant Garamond", serif;
+            --font-body: "Plus Jakarta Sans", sans-serif;
+            --h1-size: clamp(2.75rem, 2.05rem + 2.8vw, 4.85rem);
+            --h2-size: clamp(1.85rem, 1.45rem + 1.4vw, 2.9rem);
+            --h3-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.55rem);
+            --body-size: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+            
+            --radius: 24px;
+            --radius-btn: 999px;
+            --shadow-soft: 0 4px 12px rgba(0,0,0,0.05);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.1);
+            --gap: 2.5rem;
+            --section-y: clamp(5rem, 10vw, 9rem);
+            
+            /* Responsive Plan */
+            --breakpoint-desktop: 1280px;
+            --breakpoint-tablet: 768px;
+            --breakpoint-mobile: 480px;
+            --base-font-size: 16px;
+            --scaling-factor: 1.2;
+        }
+    
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: var(--font-body); 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6; 
+            font-size: var(--body-size);
+            overflow-x: hidden;
+        }
+        h1, h2, h3 { font-family: var(--font-display); color: var(--heading); line-height: 1.1; margin-bottom: 1.5rem; }
+        h1 { font-size: var(--h1-size); font-weight: 900; }
+        h2 { font-size: var(--h2-size); font-weight: 800; }
+        h3 { font-size: var(--h3-size); font-weight: 700; }
+        p { margin-bottom: 1.25rem; }
+        /* Dynamic Layout & Components */
+        .el-container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; width: 100%; }
+        .el-section { padding: var(--section-y) 0; width: 100%; }
+
+        /* Skeleton Overrides */
+        .skeleton-conversion-funnel { --section-y: 6rem; }
+        .skeleton-editorial-longform { --section-y: 10rem; }
+        .skeleton-premium-showcase { --section-y: 12rem; }
+        .skeleton-local-directory { --section-y: 8rem; }
+
+        /* Section Shells & Layout Systems */
+        .section-shell { width: 100%; transition: all 0.4s ease; position: relative; }
+        .shell-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 4rem; margin: 2rem 0; box-shadow: var(--shadow-lg); }
+        .shell-band { background: var(--surface-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 5rem 0; }
+        .shell-editorial { padding: 8rem 0; border-left: 8px solid var(--primary); background: linear-gradient(to right, var(--surface-alt), transparent); }
+        .shell-plain { padding: var(--section-y) 0; }
+
+        .system-grid .services-grid, .system-grid .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .system-panelled .semantic-card { background: var(--bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border); transition: transform 0.2s; }
+        .system-panelled .semantic-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .system-minimal .semantic-card { border: none; padding: 1rem 0; border-bottom: 1px solid var(--border); border-radius: 0; }
+        .system-editorial .semantic-card { border-left: 4px solid var(--primary); padding-left: 2rem; margin-bottom: 3rem; }
+
+        .emphasis-trust { --primary: #10b981; border-color: #10b981; }
+        .emphasis-cta { --primary: #f59e0b; background: rgba(245, 158, 11, 0.05); }
+
+        .semantic-items, .services-grid, .trust-grid { margin-top: 3rem; }
+        .semantic-card h3 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--primary); }
+        .semantic-card p { font-size: 1rem; color: var(--text); opacity: 0.9; }
+
+        .table-wrap { overflow-x: auto; margin: 3rem 0; border-radius: 12px; border: 1px solid var(--border); }
+        .section-cta { margin-top: 3rem; text-align: center; }
+
+        .faq-item { background: var(--surface); margin-bottom: 1rem; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
+        .faq-item summary { padding: 1.5rem; font-weight: 800; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after { content: "+"; font-size: 1.5rem; color: var(--primary); }
+        .faq-item[open] summary::after { content: "−"; }
+        .faq-item div { padding: 0 1.5rem 1.5rem 1.5rem; border-top: 1px solid var(--border); }
+        
+        /* Layout Flow Systems */
+        .flow-stack { display: flex; flex-direction: column; gap: 2rem; }
+        .flow-centered { max-width: 800px; margin-left: auto; margin-right: auto; text-align: center; }
+        .flow-split { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .flow-asymmetric { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 4rem; align-items: center; }
+        .flow-zigzag:nth-child(even) { direction: rtl; }
+        .flow-zigzag:nth-child(even) > * { direction: ltr; }
+        .flow-zigzag { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+
+        /* Media Policy Styles */
+        .media-iconic i { font-size: 3rem; color: var(--primary); margin-bottom: 1.5rem; display: block; }
+        .media-proof { border: 2px dashed var(--primary); padding: 2rem; border-radius: 12px; background: rgba(var(--primary-rgb), 0.05); }
+
+        /* Header & Navigation */
+        .site-header { 
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(12px); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            border-bottom: 1px solid var(--border); 
+            padding: 1rem 0;
+        }
+        .site-header__inner { display: flex; justify-content: space-between; align-items: center; }
+        .brand { text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .brand__name { font-family: var(--font-display); font-weight: 900; color: var(--primary); font-size: 1.25rem; }
+        .nav { display: flex; align-items: center; gap: 2rem; }
+        .nav__link { text-decoration: none; color: var(--text); font-weight: 700; transition: color 0.2s; font-size: 0.95rem; }
+        .nav__link:hover { color: var(--primary); }
+        .nav__cta { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+
+        /* Hero Split */
+        .hero { position: relative; padding: 6rem 0; overflow: hidden; background: var(--surface); }
+        .hero--split .hero__shell { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center; }
+        .hero__copy { z-index: 2; }
+        .hero__eyebrow { 
+            display: inline-block; 
+            background: rgba(16, 185, 129, 0.1); 
+            color: var(--primary); 
+            padding: 0.5rem 1rem; 
+            border-radius: 99px; 
+            font-weight: 800; 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            margin-bottom: 1.5rem; 
+        }
+        .hero__subtitle { font-size: 1.25rem; color: var(--muted); margin-bottom: 2.5rem; max-width: 600px; }
+        .hero__bullets { list-style: none ; }
+        .hero__bullets li::before { content: "✔" ; color: var(--primary); margin-right: 0.5rem; font-weight: 900; }
+        .hero__aside { position: relative; }
+        .hero-card { 
+            background: var(--surface); 
+            padding: 2.5rem; 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow-lg); 
+            border: 1px solid var(--border);
+            transform: rotate(2deg);
+        }
+        .card__eyebrow { color: var(--primary); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+        .card__title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .cta-row { display: flex; gap: 1.5rem; align-items: center; }
+        .cta-secondary { font-weight: 700; color: var(--text); text-decoration: none; border-bottom: 2px solid var(--primary); padding-bottom: 2px; }
+
+        /* Typography & Content Body */
+        .rich-content ul { list-style: none; margin-bottom: 2rem; }
+        .rich-content li { position: relative; padding-left: 2rem; margin-bottom: 1rem; font-weight: 500; }
+        .rich-content li::before { content: "✓"; position: absolute; left: 0; color: var(--primary); font-weight: 900; font-size: 1.2rem; top: -2px; }
+        
+        /* Tables & Lists */
+        table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin: 2rem 0; box-shadow: var(--shadow-soft); }
+        th, td { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); text-align: left; }
+        th { background: var(--surface-alt); font-weight: 800; color: var(--heading); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
+        tr:last-child td { border-bottom: none; }
+
+        /* Section Tones */
+        .section-tone-base { background-color: var(--bg); color: var(--text); }
+        .section-tone-alt { background-color: var(--surface); color: var(--text); }
+        .section-tone-soft { background-color: var(--surface-alt); color: var(--text); }
+        .section-tone-contrast { background-color: var(--text); color: var(--bg); }
+        .section-tone-contrast h1, .section-tone-contrast h2, .section-tone-contrast h3 { color: var(--bg) !important; }
+        .section-tone-contrast .cta-secondary { border-color: var(--bg); color: var(--bg); }
+
+        /* Surface Styles */
+        .page-surface-glass section { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.7); }
+        .page-surface-tinted section { background: color-mix(in srgb, var(--primary) 5%, var(--bg)); }
+        .page-surface-paper { background-color: #fdfaf6; background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px); background-size: 20px 20px; }
+
+        /* Hero Dispositions */
+        .hero-disposition-center { text-align: center; }
+        .hero-disposition-center .hero__shell { display: flex; flex-direction: column; align-items: center; }
+        .hero-disposition-right .hero__shell { display: grid; grid-template-columns: 0.8fr 1.2fr; direction: rtl; text-align: left; }
+        .hero-disposition-right .hero__copy { direction: ltr; }
+
+        /* Modern Vibe & Systemic Fixes */
+        .site-header[data-nav-style="glass"] { background: rgba(255,255,255,0.7) !important; backdrop-filter: blur(20px); border: none; }
+        .footer[data-style="minimal"] { background: var(--bg); color: var(--text); border-top: 1px solid var(--border); padding: 4rem 0; }
+        .footer[data-style="minimal"] .footer__title, .footer[data-style="minimal"] .footer__phone { color: var(--primary); }
+
+        /* Buttons & Signals */
+        .cta-primary { 
+            display: inline-block; 
+            background: var(--primary); 
+            color: white; 
+            padding: 1rem 2.5rem; 
+            border-radius: var(--radius); 
+            text-decoration: none; 
+            font-weight: 800; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px 0 rgba(var(--primary-rgb), 0.39);
+        }
+        .cta-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.23); }
+
+        /* --- DYNAMIC HERO FOCUSES --- */
+        .pattern-hero_conversion { --hero-bg: var(--bg); }
+        .pattern-hero_proof { background: var(--surface-alt); border-bottom: 5px solid var(--primary); }
+        .pattern-hero_local { background: linear-gradient(to bottom, var(--surface), var(--bg)); }
+        .pattern-hero_urgency { --primary: #dc2626; background: #fee2e2; }
+        .pattern-hero_educational { background: #f8fafc; border-left: 10px solid var(--primary); }
+        .pattern-hero_binary_cta { display: grid; place-items: center; min-height: 80vh; }
+
+        /* --- MERGED CONTENT INTEGRATION --- */
+        .merged-content { 
+            margin-top: 2rem; 
+            padding: 2rem; 
+            background: var(--surface-alt); 
+            border-radius: var(--radius); 
+            border: 1px dashed var(--border); 
+        }
+        .merged-from-map { height: 400px; padding: 0; overflow: hidden; border: none; }
+        .merged-from-map .map-placeholder { height: 100%; border-radius: 0; }
+        .merged-from-urgency_panel { border: 2px solid var(--primary); background: #fff1f2; }
+        
+        /* Footer Original Styles */
+        .footer { background: var(--secondary); color: #fff; padding: 6rem 0 3rem 0; border-top: 1px solid rgba(255,255,255,0.1); }
+        .footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; }
+        .footer__title { color: #fff; margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .footer__subtitle { color: var(--primary); font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; }
+        .footer__text { color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-bottom: 1rem; }
+        .footer__phone { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 0.5rem; display: block; text-decoration: none; }
+        .footer__nav { display: flex; flex-direction: column; gap: 0.75rem; }
+        .footer__link { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; font-size: 0.9rem; }
+        .footer__link:hover { color: var(--primary); }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            :root { --h1-size: 3.5rem; --h2-size: 2.25rem; --section-y: 6rem; }
+            .el-container { padding: 0 4rem; }
+        }
+        @media (max-width: 768px) {
+            :root { --h1-size: 2.75rem; --h2-size: 1.85rem; --section-y: 5rem; }
+            .el-container { padding: 0 2rem; }
+            .hero--split .hero__shell { grid-template-columns: 1fr !important; gap: 3rem; text-align: center; direction: ltr !important; }
+            .hero__subtitle { margin-left: auto; margin-right: auto; }
+            .cta-row { justify-content: center; flex-direction: column; width: 100%; }
+            .cta-primary { width: 100%; text-align: center; }
+            .footer__grid { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+            .hero-card { transform: none; }
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 0.85rem; }
+            th, td { padding: 0.75rem; min-width: 140px; }
+        }
+    
+        
+        /* --- ADDITIONAL SECTION PATTERNS --- */
+        .pattern-section_two_column_story { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        .pattern-section_stacked_cards .layout-flow { display: flex; flex-direction: column; gap: 3rem; }
+        .pattern-section_stacked_cards .layout-flow > * { background: var(--surface); padding: 3rem; border-radius: 1.5rem; border: 1px solid var(--border); box-shadow: var(--shadow-soft); }
+        .pattern-section_comparison_table { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 1rem; overflow: hidden; }
+        .pattern-section_comparison_table > * { padding: 2rem; border: 1px solid var(--border); }
+        .pattern-section_quote_proof blockquote { font-size: 2rem; font-style: italic; position: relative; padding: 4rem 0; border-top: 4px solid var(--primary); }
+        .pattern-section_quote_proof blockquote::after { content: "CERTIFICADO"; position: absolute; top: -1rem; right: 0; background: var(--primary); color: white; padding: 0.5rem 1rem; font-size: 0.7rem; font-style: normal; font-weight: 800; }
+        .pattern-cta_inline { display: flex; align-items: center; justify-content: space-between; background: var(--surface-alt); padding: 2rem 4rem; border-radius: 1rem; }
+
+        /* --- MODULAR FAMILY CSS --- */
+        
+    </style>
+    
+</head>
+<body class="page-visual-mode--premium   skeleton-editorial strategy-proof-early strategy-cta-hero-heavy cadence-contrast-bursts family-general">
+    
+    <header class="site-header" id="top" data-nav-style="solid">
+        <div class="el-container site-header__inner">
+            <a href="#top" class="brand">
+                <span class="brand__name">Madrid Cerrajeros 24h</span>
+            </a>
+            <nav class="nav">
+                <a href="#urgency" class="nav__link">Cerramiento en tiempo real</a><a href="#price" class="nav__link">Prueba local en Madrid</a><a href="#services" class="nav__link">¿Cómo funciona nuestro servicio?</a><a href="#objections" class="nav__link">Haz tu llamada a la acción ahora</a>
+                <a href="tel:912345678" class="cta-primary nav__cta">912 345 678</a>
+            </nav>
+        </div>
+    </header>
+<div class=" pattern-hero_urgency">
+
+    <section class="hero hero--urgency">
+        <div class="el-container">
+            
+        <div class="hero__minimal">
+            <span class="hero__eyebrow">en Madrid</span>
+            <h1>Auditoría de Diseño: variante9</h1>
+            <p class="hero__subtitle">Prueba visual del sistema de diseño contract-based.</p>
+            <a href="tel:912345678" class="cta-primary large">912 345 678</a>
+        </div>
+        </div>
+    </section>
+</div>
+
+    <section class="section--compact">
+        <div class="el-container">
+            <div class="trust-strip">
+                <span class="trust-strip__label">Garantía y Confianza</span>
+                <div class="trust-strip__links">
+                    <span class="trust-pill">✓ Respuesta Inmediata</span>
+                    <span class="trust-pill">✓ Precios Cerrados</span>
+                    <span class="trust-pill">✓ Materiales Certificados</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+                    <section class="el-section section-tone-contrast shell-band pattern-section_banded" id="urgency">
+                        <div class="el-container section-shell shell-band">
+                            <div class="layout-flow flow-centered media-none cta-weight-medium density-standard variant-default rich-content">
+                                <div class="generic-layout"> <div class="layout-block layout-block--stack"> <p>Cerrajeros en Madrid están a salvo en todo momento, sin necesidad de contactar con nosotros. Tu casa está protegida por las cerraduras de alta seguridad y garantías por escrito.</p>
+<p>No te preocupes por el horario, solo necesitas asegurarte de que tu propiedad esté segura antes de hacerlo. Con nuestro servicio, puedes estar tranquilo.</p> <div class="semantic-items"> <article class="semantic-card"> <h3>Claro asesoramiento</h3> <p>Nuestras cerraduras cuentan con garantías por años y se certifican por diversas organizaciones. Encontra la solución más segura a tu casa.</p> </article> <article class="semantic-card"> <h3>Específicos datos</h3> <p>Todas nuestras cajas están equipadas con tecnología de última generación que garantiza un desempeño duradero sin problemas.</p> </article> </div> </div> </div>
+                            </div>
+                        </div>
+                    </section>
+                
+
+                    <section class="el-section section-tone-base shell-panel pattern-section_panelled" id="price">
+                        <div class="el-container section-shell shell-panel">
+                            <div class="layout-flow flow-centered media-none cta-weight-medium density-standard variant-default rich-content">
+                                <div class="generic-layout"> <div class="layout-block layout-block--stack"> <p>En Madrid, es fácil mantener tu propiedad segura y cómoda con nuestras cerraduras de alta seguridad. Aquí tienes nuestros servicios en detalle para asegurarte que tus casas y comercios se mantengan protegidos.</p>
+<p>También podrás encontrar la mejor opción a través de nuestro servicio de mantenimiento en casa, donde nuestros especialistas ayudarán a mantener tu propiedad al día de hoy.</p> <div class="semantic-items"> <article class="semantic-card"> <h3>Servicio de mantenimiento</h3> <p>Nuestros expertos en mantenimiento pueden asistirte a mantener tu propiedad segura y cómoda. Aquí tienes los beneficios:,1. Mantenimiento preventivo: Nuestra empresa se compromete a detectar problemas antes que puedan ser menores.,2. Seguridad de los hogares: No olvides mantener tus propiedades siempre protegidas con nuestras cerraduras.</p> </article> <article class="semantic-card"> <h3>Cerraduras de alta seguridad</h3> <p>Es importante mantener tu propiedad segura y cómoda, por lo que elegimos las mejores cerraduras de alta seguridad para Madrid. Aquí tienes los beneficios:,1. Seguridad personal: Tenemos cerraduras diseñadas específicamente para garantizar la seguridad en tus hogares.,2. Seguridad comercial: Nuestros equipos de profesionales son capaces de ayudarte a mantener tu comercio seguro.</p> </article> </div> </div> </div>
+                            </div>
+                        </div>
+                    </section>
+                
+
+                    <section class="el-section section-tone-soft shell-panel pattern-section_dense_grid" id="services">
+                        <div class="el-container section-shell shell-panel">
+                            <div class="layout-flow flow-stack media-none cta-weight-medium density-standard variant-default rich-content">
+                                <div class="faq-layout faq-layout--editorial"> <div class="faq-columns"> <article class="faq-card"> <h3>¿Cuál es la duración del servicio?</h3> <p>El cierre de las casas y establecimientos Madrid Cerrajeros 24h se realiza en tan solo 15 minutos.</p> </article> <article class="faq-card"> <h3>¿Qué marcas utilizamos para cerrar las puertas?</h3> <p>Utilizamos marcas líderes de cerraduras de alta seguridad certificadas que garantizan la durabilidad y la protección contra amenazas.</p> </article> <article class="faq-card"> <h3>¿Cómo evitamos los malintencionados?</h3> <p>Nuestros trabajadores se entrenan a nivel profesional para identificar y prevenir cualquier amenaza o viojo en las puertas de tu casa o establecimiento.</p> </article> <article class="faq-card"> <h3>¿Es posible cerrar una puerta sin necesitar un turno?</h3> <p>Sí, nuestro servicio está disponible 24/7. No necesitas un turno para que nuestras profesionales te asisten a tiempo récord.</p> </article> </div> </div>
+                            </div>
+                        </div>
+                    </section>
+                
+
+                    <section class="el-section section-tone-base shell-plain pattern-section_two_column_story" id="objections">
+                        <div class="el-container section-shell shell-plain">
+                            <div class="layout-flow flow-split media-none cta-weight-medium density-standard variant-default rich-content">
+                                <div class="generic-layout"> <div class="layout-block layout-block--stack"> <p>¡Haz tu llamada a la acción ahora! Nuestros profesionales están listos para ayudarte en cualquier tarea urgente y confiable. Llama al número del servicio más cercano para obtener una solución inmediata. Don't wait until the last minute; let's take action now.</p>
+<p>¿Eres un cerrajero en Madrid buscando la mejor solución? ¡Haz tu llamada a la acción ahora! Llámanos para comenzar y disfruta de la mejor experiencia en nuestro servicio.</p>
+<p>¿Necesitas ayuda urgente con tu cierre? ¿Estás buscando soluciones rápidas y eficientes? Haz tu llamada a la acción ahora!</p>
+<p>¡Hay algo más que puedes hacer hoy? ¡Haz tu llamada a la acción ahora! Nuestros cerrajeros en Madrid están listos para ayudarte.</p>
+<p>¿Necesitas un servicio de cierre confiable y rápido? Haz tu llamada a la acción ahora! Llámanos para obtener una solución inmediata.</p> <div class="semantic-items"> <article class="semantic-card"> <h3>¿Qué servicios ofrecemos?</h3> <p>¡Nuestros profesionales están listos para ayudarte en cualquier tarea urgente y confiable. Llama al número del servicio más cercano para obtener una solución inmediata.</p> </article> <article class="semantic-card"> <h3>¿Cómo funciona tu servicio?</h3> <p>¡Tenemos la experiencia necesaria para asegurarnos de que tu cierre sea efectivo. Llámanos ahora para comenzar y disfruta de la mejor experiencia en nuestro servicio.</p> </article> <article class="semantic-card"> <h3>¿Qué tipos de servicios ofrecemos?</h3> <p>¡Nuestros profesionales están listos para ayudarte en cualquier tarea urgente y confiable. Llama al número del servicio más cercano para obtener una solución inmediata.</p> </article> </div> </div> </div>
+                            </div>
+                        </div>
+                    </section>
+                
+
+                    <section class="el-section section-tone-contrast shell-plain pattern-section_quote_proof" id="local_proof">
+                        <div class="el-container section-shell shell-plain">
+                            <div class="layout-flow flow-centered media-none cta-weight-medium density-standard variant-default rich-content">
+                                <div class="generic-layout"> <div class="layout-block layout-block--stack"> <p>¿En qué está situado Madrid Cerrajeros 24h? ¿Cómo podemos ayudarte hoy?</p>
+<p>¿Es fácil cerrar las puertas o cisternas en Madrid, sin necesidad de asistencia especializada?</p> <div class="semantic-items"> <article class="semantic-card"> <h3>Localización Central</h3> <p> se encuentra al centro del municipio, a menos de un kilómetro de la capital. Aquí puedes encontrar a nuestros técnicos con experiencia en cerrar puertas y cisternas.</p> </article> <article class="semantic-card"> <h3>Conexión Profunda</h3> <p>Estamos conectados con más de 200 profesionales para ofrecerte un servicio seguro, eficiente y profesional. ¡Conozcemos al mejor cerrajero en Madrid!</p> </article> </div> </div> </div>
+                            </div>
+                        </div>
+                    </section>
+                
+
+                    <section class="el-section section-tone-base shell-band pattern-cta_terminal" id="cta_final">
+                        <div class="el-container section-shell shell-band">
+                            <div class="layout-flow flow-centered media-none cta-weight-medium density-standard variant-default rich-content">
+                                <div class="trust-layout trust-layout--embedded"> <p>El cobertura integral en Madrid ofrece un servicio de cerraduras de alta seguridad para todas las áreas del país, garantizando la protección a través de nuestros productos certificados y técnicos de proximidad.</p>
+<p>Si estás buscando una solución completa para tu instalación, no dudes en contactar a Madrid Cerrajeros 24h para obtener una consulta personalizada.</p> <div class="semantic-items"> <article class="semantic-card"> <h3>Servicio en toda la zona</h3> <p>No hay limitaciones de espacio ni tiempo. Nuestros cierres se mantienen en óptimo estado, permitiéndote asegurar tu propiedad con seguridad y confianza.</p> </article> <article class="semantic-card"> <h3>Técnicos de Proximidad</h3> <p>Nuestros técnicos están dispuestos a asistirte en cualquier lugar del país, desde la casa hasta el trabajo. No dudes en hacer llamadas directamente para un servicio inmediato.</p> </article> <article class="semantic-card"> <h3>Asistencia Local</h3> <p>Si necesitas más ayuda o servicios adicionales, no dudes en contactar a . Nuestros expertos están aquí para ayudarte con cualquier pregunta.</p> </article> </div> </div>
+                            </div>
+                        </div>
+                    </section>
+                
+
+    <section class="el-section vibe-premium">
+        <div class="el-container">
+            <div class="urgency-banner card--strong-border">
+                <div class="urgency-banner__sidebar"></div>
+                <div class="urgency-banner__content">
+                    <div class="status-badge">
+                        <span class="status-badge__dot"></span>
+                        Técnicos de Guardia: Activos
+                    </div>
+                    <h2 class="urgency-banner__title">¿Necesitas un especialista ahora?</h2>
+                    <p class="urgency-banner__subtitle">Equipos móviles estratégicamente ubicados para una respuesta inmediata y materiales de alta seguridad.</p>
+                </div>
+                <div class="counter-box">
+                    <div class="counter-box__label">Estado del Servicio</div>
+                    <div class="counter-box__value">Alta<span class="counter-box__unit">Disponibilidad</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" data-style="directory">
+        <div class="el-container footer__grid">
+            <div class="footer__block">
+                <h3 class="footer__title">Madrid Cerrajeros 24h</h3>
+                <p class="footer__text">Madrid · Servicio profesional</p>
+            </div>
+            <div class="footer__block">
+                <h4 class="footer__subtitle">Contacto</h4>
+                <p class="footer__phone">912 345 678</p>
+                <p class="footer__text">Disponibles 24 horas todos los días.</p>
+            </div>
+            <div class="footer__block">
+                <h4 class="footer__subtitle">Legal</h4>
+                <nav class="footer__nav">
+                    <a href="#" class="footer__link">Aviso Legal</a>
+                    <a href="#" class="footer__link">Política de Privacidad</a>
+                    <a href="#" class="footer__link">Cookies</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

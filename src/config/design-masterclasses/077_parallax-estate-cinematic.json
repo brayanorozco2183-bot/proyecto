@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_077_PARALLAX_ESTATE_CINEMATIC",
+  "title": "Parallax Estate Cinematic",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "luxury_catalog",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 10,
+      "gutter": "48px",
+      "container_width": "min(1180px, calc(100% - 32px))"
+    },
+    "navigation": {
+      "style": "catalog_nav",
+      "position": "sticky_top",
+      "blur": "8px",
+      "contrast_safe": true,
+      "mobile_pattern": "full_screen_overlay"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#1D4ED8",
+      "accent": "#9A3412",
+      "bg": "#FBFDFF",
+      "surface": "#FFFFFF",
+      "surface_alt": "#EAF1F8",
+      "text": "#0B1F33",
+      "muted": "#41566C",
+      "on_primary": "#FFFFFF",
+      "on_accent": "#FFFFFF",
+      "radius_policy": "40px",
+      "shadow_policy": "glass_depth",
+      "font_display": "'Libre Baskerville', serif",
+      "font_body": "'Public Sans', sans-serif",
+      "spacing_density": "standard",
+      "border_policy": "soft"
+    },
+    "contrast_report": {
+      "bg_text": 16.37,
+      "surface_text": 16.69,
+      "primary_on_primary": 6.7,
+      "accent_on_accent": 7.31,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #FBFDFF; --surface: #FFFFFF; --surface-alt: #EAF1F8; --text: #0B1F33; --muted: #41566C; --primary: #1D4ED8; --accent: #9A3412; --on-primary: #FFFFFF; --on-accent: #FFFFFF; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 40px; --gap: 48px; --blur: 8px; --nav-position: sticky; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Public Sans', sans-serif; } h1,h2,h3,.display { font-family: 'Libre Baskerville', serif; } .editorial-flow { display: grid; grid-template-columns: minmax(220px, .34fr) 1fr; gap: clamp(32px, 6vw, 96px); } .editorial-flow h2 { font-size: clamp(2rem, 5vw, 5.5rem); line-height: .92; letter-spacing: -.06em; } .article-card { border-top: 1px solid var(--border); padding-block: 28px; }  @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "editorial_statement_hero",
+      "custom_structure": "<section class='hero hero--editorial'><p class='kicker'>{{LOCATION}} · {{SERVICE}}</p><h1>{{H1}}</h1><div class='lede-grid'><p>{{INTRO}}</p>{{CTA_PRIMARY}}</div></section>"
+    },
+    "services_grid": {
+      "style": "technical_spec_grid",
+      "columns_override": 4,
+      "interaction": "magnetic_cta",
+      "content_strategy": "compact spec cards with icons and SLA rows"
+    },
+    "trust_layer": {
+      "style": "authority_sidebar",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "city_hub_cards",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "schema_ready_cards",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "white_sapphire",
+    "motion_level": "cinematic",
+    "noise_overlay": false,
+    "color_glitch": false,
+    "image_treatment": "editorial_crop",
+    "premium_cues": [
+      "editorial typography",
+      "oversized headings",
+      "calm rhythm"
+    ]
+  }
+}

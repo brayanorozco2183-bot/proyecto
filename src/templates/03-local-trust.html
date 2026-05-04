@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{NICHE}} en Valencia | Familia Local Trust</title>
+  <meta name="description" content="Plantilla maestra local trust para {{NICHE}} en Valencia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  
+:root{--bg:#f7f4ef;--surface:#fffdf9;--surface2:#efe6da;--text:#1f2228;--muted:#6b6f79;--heading:#17181a;--primary:#7c4d2b;--accent:#2f7d62;--border:#ded5c8;--container:1180px}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#fbf7f1,#f7f4ef);color:var(--text);font:400 17px/1.72 "Manrope",sans-serif}
+.container{width:min(calc(100% - 2rem),var(--container));margin:auto}
+h1,h2,h3{font-family:"Fraunces",serif;color:var(--heading);line-height:1.08;letter-spacing:-.02em;margin:0 0 1rem} h1{font-size:clamp(2.8rem,4vw,4.8rem)} h2{font-size:clamp(2rem,2.3vw,3rem)} h3{font-size:1.25rem}
+.site-header{position:sticky;top:0;background:rgba(251,247,241,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)} .header-inner{display:flex;justify-content:space-between;align-items:center;min-height:76px;gap:1rem}
+.header-inner a{text-decoration:none;color:var(--text)} .hero{padding:4.8rem 0 2.5rem}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+.badge{display:inline-flex;padding:.4rem .8rem;border-radius:999px;background:#f0e3d1;color:#684126;font-weight:800;text-transform:uppercase;font-size:.8rem;letter-spacing:.08em}
+.hero-card,.trust-panel,.local-card,.faq-card{background:var(--surface);border:1px solid var(--border);border-radius:22px;box-shadow:0 12px 28px rgba(70,45,20,.06)}
+.hero-card{padding:1.6rem}.section{padding:4rem 0}.section.alt{background:rgba(255,255,255,.52);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.local-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:2rem} .services{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.service-card,.faq-card,.local-card{padding:1.25rem}
+.area-pills{display:flex;flex-wrap:wrap;gap:.65rem}.area-pills span{background:#f1ede6;border:1px solid var(--border);padding:.55rem .85rem;border-radius:999px}
+.cta-row{display:flex;gap:1rem;flex-wrap:wrap}.cta{display:inline-flex;text-decoration:none;min-height:48px;padding:.95rem 1.35rem;border-radius:999px;font-weight:800;align-items:center}.cta-primary{background:var(--accent);color:#fff}.cta-secondary{border:1px solid var(--border);color:var(--text)}
+.site-footer{padding:3.5rem 0;background:#efe6da;border-top:1px solid var(--border)} .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem}.area-links{display:flex;flex-wrap:wrap;gap:.75rem}.area-links a{text-decoration:none;color:var(--muted)}
+@media (max-width:900px){.hero-grid,.local-grid,.services,.footer-grid{grid-template-columns:1fr}}
+
+  </style>
+</head>
+<body>
+
+<header class="site-header"><div class="container header-inner"><a href="#"><strong>{{NICHE}} Elite Valencia</strong><br><small style="color:var(--muted)">Familia local_trust</small></a><nav><a href="#servicios">Servicios</a> · <a href="#zonas">Zonas</a> · <a href="tel:+34961234567">Llamar</a></nav></div></header>
+<main>
+<section class="hero"><div class="container hero-grid"><div><span class="badge">Local trust</span><h1>Una familia que se apoya en cercanía, claridad y prueba local</h1><p>Este patrón funciona muy bien cuando quieres que la página transmita confianza, barrio, cobertura real y un tono menos agresivo que una landing puramente de conversión.</p><div class="cta-row"><a class="cta cta-primary" href="tel:+34961234567">Llamar ahora</a><a class="cta cta-secondary" href="#zonas">Ver zonas</a></div></div><aside class="hero-card"><h3>Bloque local</h3><p>Las zonas y la red local aparecen pronto para reforzar sensación de proximidad.</p><div class="area-pills"><span>Ruzafa</span><span>El Carmen</span><span>Benimaclet</span><span>Cabanyal</span></div></aside></div></section>
+<section class="section alt" id="zonas"><div class="container local-grid"><div class="local-card"><h2>Cobertura visible dentro del main</h2><p>En esta familia la red de barrios no se esconde al final: se integra dentro de la estructura principal.</p><div class="area-pills"><span>Ruzafa</span><span>El Carmen</span><span>Benimaclet</span><span>Cabanyal</span><span>Patraix</span><span>Campanar</span></div></div><div class="trust-panel hero-card"><h3>Por qué encaja</h3><p>Tono cercano, superficies cálidas, ritmo calmado y CTA con más confianza que urgencia.</p></div></div></section>
+<section class="section" id="servicios"><div class="container"><h2>Servicios técnicos de {{NICHE}} avanzada</h2><p>Intervenciones orientadas a aperturas, cambios de cerradura, sustitución de bombines y refuerzo de seguridad con enfoque claro y profesional.</p><div class="services"><article class="service-card hero-card"><h3>Apertura de puertas y accesos con técnicas adaptadas al tipo de cerradura</h3><p>Apertura de puertas y accesos con técnicas adaptadas al tipo de cerradura.</p></article><article class="service-card hero-card"><h3>Sustitución de bombines, cerraduras multipunto y escudos de seguridad</h3><p>Sustitución de bombines, cerraduras multipunto y escudos de seguridad.</p></article><article class="service-card hero-card"><h3>Revisión de cerraduras antiguas y recomendación de mejora según uso y estado</h3><p>Revisión de cerraduras antiguas y recomendación de mejora según uso y estado.</p></article></div></div></section>
+<section class="section alt"><div class="container local-grid"><div class="local-card"><h2>Problemas de seguridad detectados en la zona</h2><p>En viviendas y negocios de Valencia suele ser clave revisar cerraduras desgastadas, bombines básicos y accesos poco reforzados.</p><ul><li>Puertas con herrajes antiguos o bombines poco resistentes.</li><li>Cierres comerciales y accesos de comunidad con mantenimiento irregular.</li><li>Necesidad de actualizar sistemas de cierre tras pérdida de llaves o cambio de inquilinos.</li></ul></div><div class="local-card"><h2>Experiencia local y atención cercana</h2><p>Trabajamos con incidencias habituales de viviendas, portales, locales y puertas de paso, adaptando la solución a cada contexto.</p><ul><li>Conocimiento del entorno urbano y de tipologías de puerta comunes en la ciudad.</li><li>Atención tanto a urgencias como a trabajos planificados.</li><li>Comunicación directa desde el primer contacto hasta el cierre del servicio.</li></ul></div></div></section>
+<section class="section"><div class="container"><div class="faq-card"><h2>Preguntas frecuentes</h2>
+        <details class="faq-item">
+          <summary>¿Atendéis aperturas sin dañar la puerta?</summary>
+          <p>Siempre que el tipo de cerradura lo permita, priorizamos técnicas de apertura no destructiva y explicamos la opción más adecuada antes de intervenir.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Podéis cambiar bombines y reforzar la seguridad?</summary>
+          <p>Sí. Realizamos sustitución de bombines, escudos, cerraduras de seguridad y mejoras orientadas a viviendas, locales y comunidades.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Trabajáis en barrios y zonas cercanas?</summary>
+          <p>Sí, prestamos servicio en Valencia capital y en distintas zonas próximas según disponibilidad operativa.</p>
+        </details></div></div></section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>{{NICHE}} Elite Valencia</h3>
+      <p>Calle San Vicente, 34 · Valencia</p>
+      <p><a href="tel:+34961234567">+34 96 123 45 67</a></p>
+    </div>
+    <div>
+      <h4>Zonas cercanas</h4>
+      <div class="area-links"><a href="#">Ruzafa</a><a href="#">El Carmen</a><a href="#">Benimaclet</a><a href="#">Cabanyal</a><a href="#">Patraix</a><a href="#">Campanar</a></div>
+    </div>
+    <div>
+      <h4>Servicio</h4>
+      <p>Aperturas, cambios de cerradura, bombines y refuerzo de seguridad.</p>
+    </div>
+  </div>
+  <div class="container" style="margin-top:1.5rem;color:var(--muted)">Familia maestra: local_trust</div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "{{NICHE}} Elite Valencia",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle San Vicente, 34 · Valencia",
+    "addressLocality": "Valencia",
+    "addressRegion": "Valencia",
+    "addressCountry": "ES"
+  },
+  "telephone": "+34 96 123 45 67",
+  "areaServed": "Valencia",
+  "openingHours": "Mo-Su 00:00-23:59"
+}
+</script>
+
+</body>
+</html>

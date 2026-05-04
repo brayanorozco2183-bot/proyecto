@@ -1,0 +1,738 @@
+{
+  "context": {
+    "niche": "Fontaneros",
+    "city": "Barcelona",
+    "local_nap": {
+      "business_name": "Barcelona Fontanería Pro",
+      "address": "Gran Via 123, Barcelona",
+      "phone": "934567890"
+    },
+    "keywords": [
+      "servicio local",
+      "establecimiento de fontanería",
+      "maquinaria para pintura",
+      "repair"
+    ],
+    "entities": [
+      "Barcelona",
+      "Fontanero",
+      "Empresa",
+      "Fontanero-electricista reparaciones",
+      "FAC",
+      "TESA",
+      "MUL-T-LOCK",
+      "MOTTURA",
+      "LINCE",
+      "DIERRE"
+    ],
+    "competitors": [
+      {
+        "title": "Resultado SDI 1",
+        "link": "https://www.google.es/intl/es/about/products?tab=wh",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 1
+      },
+      {
+        "title": "Resultado SDI 2",
+        "link": "https://www.milanuncios.com/fontaneros-en-barcelona/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 2
+      },
+      {
+        "title": "Resultado SDI 3",
+        "link": "https://www.cronoshare.com/servicios/fontaneros/barcelona/barcelona",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 3
+      },
+      {
+        "title": "Resultado SDI 4",
+        "link": "https://www.habitissimo.es/empresas/fontaneros/barcelona",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 4
+      },
+      {
+        "title": "Resultado SDI 5",
+        "link": "https://es.wallapop.com/servicios/fontaneros/barcelona",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 5
+      },
+      {
+        "title": "Resultado SDI 6",
+        "link": "https://fontelectrourgente.com/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 6
+      },
+      {
+        "title": "Resultado SDI 7",
+        "link": "https://fontanerobarcelona.pro/?utm_source=google",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 7
+      },
+      {
+        "title": "Resultado SDI 8",
+        "link": "https://fontanerobarcelona.pro/%3Futm_source%3Dgoogle%26utm_medium%3Dperfil%2Bde%2Bempresa%26utm_campaign%3Dboton%2Bsitio%2Bweb",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 8
+      },
+      {
+        "title": "Resultado SDI 9",
+        "link": "https://www.fontanerourgenciasroberto.es/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 9
+      },
+      {
+        "title": "Resultado SDI 10",
+        "link": "https://hogami.leroymerlin.es/servicio/barcelona/fontaneros",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 10
+      }
+    ],
+    "serp_gaps": [
+      "Comparativa de precios detallada",
+      "Garantías específicas del servicio",
+      "Preguntas sobre normativas locales vigentes"
+    ],
+    "market_data": {
+      "primaryKeyword": "Fontaneros en Barcelona",
+      "secondaryKeywords": [
+        "servicio local",
+        "establecimiento de fontanería",
+        "maquinaria para pintura",
+        "repair"
+      ],
+      "entities": [
+        "Barcelona",
+        "Fontanero",
+        "Empresa"
+      ],
+      "pageTypeRecommendation": "home_local",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "wordCountTarget": 2130,
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "contentAngles": [
+        "servicio",
+        "más informativo",
+        "preparación para la venta"
+      ],
+      "trustAssets": [
+        "telefono visible",
+        "faq",
+        "prueba local"
+      ],
+      "internalLinkTargets": [
+        "https://www.google.es/intl/es/about/products?tab=wh",
+        "https://www.milanuncios.com/fontaneros-en-barcelona/",
+        "https://www.cronoshare.com/servicios/fontaneros/barcelona/barcelona"
+      ],
+      "titleStrategy": "string",
+      "metaDescriptionStrategy": "string",
+      "schemaTypes": [
+        "LocalBusiness",
+        "FAQPage"
+      ],
+      "keywordReport": "String",
+      "strategyConfidence": "high",
+      "classificationReasons": [
+        "Detected a service local keyword, which aligns with the primary intent of transactional for Fontaneros in Barcelona. The page focuses on service offerings and repair services within the city."
+      ]
+    },
+    "intentModel": {
+      "pageType": "home_local",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "primaryKeyword": "Fontaneros en Barcelona",
+      "secondaryKeywords": [
+        "servicio local",
+        "establecimiento de fontanería",
+        "maquinaria para pintura",
+        "repair"
+      ],
+      "semanticEntities": [
+        "Barcelona",
+        "Fontanero",
+        "Empresa",
+        "Fontanero-electricista reparaciones",
+        "FAC",
+        "TESA",
+        "MUL-T-LOCK",
+        "MOTTURA",
+        "LINCE",
+        "DIERRE"
+      ],
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "mandatoryTrustElements": [
+        "telefono visible",
+        "faq",
+        "prueba local"
+      ],
+      "mandatorySections": [
+        "servicio",
+        "más informativo",
+        "preparación para la venta"
+      ],
+      "internalLinkTargets": [
+        "https://www.google.es/intl/es/about/products?tab=wh",
+        "https://www.milanuncios.com/fontaneros-en-barcelona/",
+        "https://www.cronoshare.com/servicios/fontaneros/barcelona/barcelona"
+      ],
+      "conversionGoal": "call"
+    },
+    "strategicAnalysis": {
+      "primaryKeyword": "Fontaneros en Barcelona",
+      "secondaryKeywords": [
+        "servicio local",
+        "establecimiento de fontanería",
+        "maquinaria para pintura",
+        "repair"
+      ],
+      "entities": [
+        "Barcelona",
+        "Fontanero",
+        "Empresa"
+      ],
+      "pageTypeRecommendation": "home_local",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "wordCountTarget": 2130,
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "contentAngles": [
+        "servicio",
+        "más informativo",
+        "preparación para la venta"
+      ],
+      "trustAssets": [
+        "telefono visible",
+        "faq",
+        "prueba local"
+      ],
+      "internalLinkTargets": [
+        "https://www.google.es/intl/es/about/products?tab=wh",
+        "https://www.milanuncios.com/fontaneros-en-barcelona/",
+        "https://www.cronoshare.com/servicios/fontaneros/barcelona/barcelona"
+      ],
+      "titleStrategy": "string",
+      "metaDescriptionStrategy": "string",
+      "schemaTypes": [
+        "LocalBusiness",
+        "FAQPage"
+      ],
+      "keywordReport": "String",
+      "strategyConfidence": "high",
+      "classificationReasons": [
+        "Detected a service local keyword, which aligns with the primary intent of transactional for Fontaneros in Barcelona. The page focuses on service offerings and repair services within the city."
+      ]
+    },
+    "geoData": {
+      "neighborhoods": [
+        "Eixample",
+        "Sant Martí",
+        "Gràcia"
+      ],
+      "sub_locations": [
+        {
+          "name": "Eixample",
+          "type": "barrio"
+        },
+        {
+          "name": "Sant Martí",
+          "type": "barrio"
+        },
+        {
+          "name": "Gràcia",
+          "type": "barrio"
+        }
+      ]
+    },
+    "deduplicated_entities": [
+      "Barcelona",
+      "Fontanero",
+      "Empresa",
+      "Fontanero-electricista reparaciones",
+      "FAC",
+      "TESA",
+      "MUL-T-LOCK",
+      "MOTTURA",
+      "LINCE",
+      "DIERRE"
+    ],
+    "clustered_keywords": [
+      {
+        "cluster": "primary_intent",
+        "kws": [
+          "servicio local",
+          "establecimiento de fontanería",
+          "maquinaria para pintura",
+          "repair"
+        ]
+      },
+      {
+        "cluster": "semantic_latents",
+        "kws": []
+      }
+    ],
+    "clean_nap": {
+      "business_name": "Barcelona Fontanería Pro",
+      "address": "Gran Via 123, Barcelona",
+      "phone": "934567890",
+      "phone_normalized": "+34934567890"
+    }
+  },
+  "plan": {
+    "h1": "Explora los Óptimos Servicios de Barcelona Fontanería Pro",
+    "sections": [
+      {
+        "section_id": "servicios",
+        "h2": "¿Qué Estamos Disponibles?",
+        "h3s": [
+          "Cocina de Acero",
+          "Laminación de Madera",
+          "Incorporación de Material Externo",
+          "Embrascamiento de Colores",
+          "Diseño para Eventos"
+        ],
+        "block_type": "service_matrix",
+        "target_words": 450,
+        "visual_intent": "editorial",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "minimal_centered",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "urgencia",
+        "h2": "¡Disponibilidad en Inmediato!",
+        "h3s": [
+          "Servicio Urgente",
+          "Garantía Duradera"
+        ],
+        "block_type": "cta_panel",
+        "target_words": 400,
+        "visual_intent": "high_tension",
+        "preferred_format": "prose",
+        "layout_hint": "minimal_centered",
+        "content_density": "compact",
+        "visual_variant": "luxury_banner",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "airy",
+          "emphasis": "cta",
+          "mobilePattern": "stack",
+          "decorativeLevel": "strong"
+        },
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "form_focus",
+        "visual_weight": "medium",
+        "emphasis": "cta"
+      },
+      {
+        "section_id": "local_proof",
+        "h2": "Certificado en Proyecto de Barcelona Fontanería Pro",
+        "h3s": [
+          "Garantía por Escrito",
+          "Seguridad Financiera"
+        ],
+        "block_type": "trust_band",
+        "target_words": 500,
+        "visual_intent": "high_impact",
+        "preferred_format": "trust_cards",
+        "layout_hint": "two_column_trust",
+        "content_density": "compact",
+        "visual_variant": "scrolling_strip",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "tight",
+          "emphasis": "trust",
+          "mobilePattern": "cards",
+          "decorativeLevel": "soft"
+        },
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "split_feature",
+        "visual_weight": "heavy",
+        "emphasis": "trust"
+      },
+      {
+        "section_id": "faq",
+        "h2": "¿Cómo Funciona el Proceso?",
+        "h3s": [
+          "Preparación de Proyecto",
+          "Evaluación del Requerimiento",
+          "Desarrollo Diseño"
+        ],
+        "block_type": "faq",
+        "target_words": 600,
+        "visual_intent": "editorial",
+        "preferred_format": "faq",
+        "layout_hint": "minimal_centered",
+        "content_density": "standard",
+        "visual_variant": "accordion_clean",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "normal",
+          "emphasis": "content",
+          "mobilePattern": "stack",
+          "decorativeLevel": "none"
+        },
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "text_left_image_right",
+        "visual_weight": "medium",
+        "emphasis": "content"
+      },
+      {
+        "section_id": "cobertura-local",
+        "h2": "Cobertura Integral en Barcelona",
+        "h3s": [
+          "Servicio en toda la zona",
+          "Técnicos de Proximidad",
+          "Asistencia Local"
+        ],
+        "block_type": "local_proof",
+        "preferred_format": "trust_cards",
+        "content_density": "standard",
+        "factuality_level": "strict",
+        "mobile_priority": "normal",
+        "layout_hint": "two_column_trust",
+        "target_words": 220,
+        "visual_variant": "grid_logos",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "normal",
+          "emphasis": "trust",
+          "mobilePattern": "cards",
+          "decorativeLevel": "soft"
+        },
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "cta_banner",
+        "visual_weight": "medium",
+        "emphasis": "trust"
+      }
+    ],
+    "global_tone": "trust",
+    "meta_title": "Fontaneros en Barcelona: Los Mejores Servicios y Garantías",
+    "meta_description": "Descubre las mejores ofertas técnicas y garantías de servicio para tu proyecto de Barcelona Fontanería Pro. Con certeza, te ayudará a crear un diseño imprescindible para tu negocio.",
+    "page_skeleton": "technical-comparison | conversion-funnel | local-directory | premium-showcase",
+    "hero": {
+      "h1": "Nuestros Servicios: Desarrollados por Profesionales con experiencia en la ciudad de Barcelona",
+      "subtitle": "Trabajamos para crear diseños imprescindibles que garantizan una entrega confiable y satisfactoria.",
+      "trust_bullets": [
+        "Ofertas técnicas únicas",
+        "Garantías de servicio garantizadas"
+      ],
+      "cta_text": "Contrata ahora y obtén el mejor servicio de Barcelona Fontanería Pro",
+      "hero_role": "conversion",
+      "visual_intent": "high_impact"
+    },
+    "intentModel": {
+      "pageType": "home_local",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "primaryKeyword": "Fontaneros en Barcelona",
+      "secondaryKeywords": [
+        "servicio local",
+        "establecimiento de fontanería",
+        "maquinaria para pintura",
+        "repair"
+      ],
+      "semanticEntities": [
+        "Barcelona",
+        "Fontanero",
+        "Empresa",
+        "Fontanero-electricista reparaciones",
+        "FAC",
+        "TESA",
+        "MUL-T-LOCK",
+        "MOTTURA",
+        "LINCE",
+        "DIERRE"
+      ],
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "mandatoryTrustElements": [
+        "telefono visible",
+        "faq",
+        "prueba local"
+      ],
+      "mandatorySections": [
+        "servicio",
+        "más informativo",
+        "preparación para la venta"
+      ],
+      "internalLinkTargets": [
+        "https://www.google.es/intl/es/about/products?tab=wh",
+        "https://www.milanuncios.com/fontaneros-en-barcelona/",
+        "https://www.cronoshare.com/servicios/fontaneros/barcelona/barcelona"
+      ],
+      "conversionGoal": "call"
+    },
+    "seoBrief": {
+      "titleStrategy": "",
+      "metaDescriptionStrategy": "",
+      "canonicalSlug": "",
+      "schemaTypes": [
+        "LocalBusiness"
+      ],
+      "faqEligible": true,
+      "localModifiers": [
+        "Barcelona"
+      ]
+    },
+    "contentRules": {
+      "prohibitedClaims": [],
+      "factOnlyFields": [
+        "address",
+        "phone"
+      ],
+      "maxBrandMentionsPerSection": 1,
+      "differentiationRequirements": []
+    },
+    "design": {
+      "pageFamily": "premium_valencia_master",
+      "visualVariantId": "a",
+      "designTokens": {
+        "colors": {
+          "primary": "#ef4444",
+          "secondary": "#000000",
+          "accent": "#dc2626",
+          "background": "#ffffff",
+          "surface": "#ffffff",
+          "surfaceAlt": "#fafafa",
+          "text": "#000000",
+          "muted": "#737373",
+          "border": "#e5e5e5",
+          "heading": "#000000"
+        },
+        "typography": {
+          "fontDisplay": "\"Bebas Neue\", sans-serif",
+          "fontBody": "\"Plus Jakarta Sans\", sans-serif",
+          "h1": "clamp(3.5rem, 8vw, 6rem)",
+          "h2": "clamp(2.2rem, 4vw, 3.2rem)",
+          "h3": "clamp(1.4rem, 2vw, 1.8rem)",
+          "body": "1.08rem"
+        },
+        "shadows": {
+          "soft": "0 4px 12px rgba(0,0,0,0.05)",
+          "lg": "0 20px 60px rgba(0,0,0,0.1)",
+          "glow": "0 0 20px rgba(124,58,237,0.4)"
+        },
+        "radius": {
+          "card": "24px",
+          "button": "999px",
+          "section": "40px"
+        },
+        "transitions": {
+          "main": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "spacing": {
+          "sectionY": "clamp(5rem, 10vw, 9rem)",
+          "gap": "2.5rem",
+          "container": "1280px",
+          "reading": "75ch"
+        },
+        "semantic": {
+          "sectionEmphasisBg": "var(--surface)",
+          "sectionTrustAccent": "var(--primary)",
+          "ctaSurface": "var(--surface-alt)",
+          "cardShadowLevel": "medium",
+          "contentDensityGap": "tight",
+          "heroVisualBalance": "split",
+          "proofBadgeStyle": "soft"
+        }
+      },
+      "composition": "conversion"
+    },
+    "pageProfile": {
+      "h1": "Explora los Óptimos Servicios de Barcelona Fontanería Pro",
+      "profile": {
+        "tone": "consultivo",
+        "narrative_model": "problema-solucion",
+        "editorial_angle": "elite-tecnica",
+        "content_density": "equilibrado",
+        "cta_style": "contactar ahora",
+        "paragraph_style": "medio-explicativo",
+        "local_focus": [],
+        "page_composition": "conversion",
+        "hero_variant": "split",
+        "section_patterns": [
+          "minimal_centered",
+          "form_focus",
+          "split_feature",
+          "text_left_image_right",
+          "cta_banner"
+        ],
+        "section_count_mode": "normal",
+        "art_direction": "local_trust",
+        "section_cadence": "contrast"
+      },
+      "sections": [
+        {
+          "h2": "¿Qué Estamos Disponibles?",
+          "h3s": [
+            "Cocina de Acero",
+            "Laminación de Madera",
+            "Incorporación de Material Externo",
+            "Embrascamiento de Colores",
+            "Diseño para Eventos"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "service_matrix",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "minimal_centered",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 450,
+          "visual_variant": "default",
+          "visual_intent": "editorial",
+          "visual_spec": {}
+        },
+        {
+          "h2": "¡Disponibilidad en Inmediato!",
+          "h3s": [
+            "Servicio Urgente",
+            "Garantía Duradera"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "cta_panel",
+          "layout_hint": "minimal_centered",
+          "pattern_hint": "form_focus",
+          "preferred_format": "prose",
+          "content_density": "compact",
+          "visual_weight": "medium",
+          "emphasis": "cta",
+          "target_words": 400,
+          "visual_variant": "luxury_banner",
+          "visual_intent": "high_tension",
+          "visual_spec": {
+            "spacingProfile": "airy",
+            "emphasis": "cta",
+            "mobilePattern": "stack",
+            "decorativeLevel": "strong"
+          }
+        },
+        {
+          "h2": "Certificado en Proyecto de Barcelona Fontanería Pro",
+          "h3s": [
+            "Garantía por Escrito",
+            "Seguridad Financiera"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "trust_band",
+          "layout_hint": "two_column_trust",
+          "pattern_hint": "split_feature",
+          "preferred_format": "trust_cards",
+          "content_density": "compact",
+          "visual_weight": "heavy",
+          "emphasis": "trust",
+          "target_words": 500,
+          "visual_variant": "scrolling_strip",
+          "visual_intent": "high_impact",
+          "visual_spec": {
+            "spacingProfile": "tight",
+            "emphasis": "trust",
+            "mobilePattern": "cards",
+            "decorativeLevel": "soft"
+          }
+        },
+        {
+          "h2": "¿Cómo Funciona el Proceso?",
+          "h3s": [
+            "Preparación de Proyecto",
+            "Evaluación del Requerimiento",
+            "Desarrollo Diseño"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "faq",
+          "layout_hint": "minimal_centered",
+          "pattern_hint": "text_left_image_right",
+          "preferred_format": "faq",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 600,
+          "visual_variant": "accordion_clean",
+          "visual_intent": "editorial",
+          "visual_spec": {
+            "spacingProfile": "normal",
+            "emphasis": "content",
+            "mobilePattern": "stack",
+            "decorativeLevel": "none"
+          }
+        },
+        {
+          "h2": "Cobertura Integral en Barcelona",
+          "h3s": [
+            "Servicio en toda la zona",
+            "Técnicos de Proximidad",
+            "Asistencia Local"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "local_proof",
+          "layout_hint": "two_column_trust",
+          "pattern_hint": "cta_banner",
+          "preferred_format": "trust_cards",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "trust",
+          "target_words": 220,
+          "visual_variant": "grid_logos",
+          "visual_spec": {
+            "spacingProfile": "normal",
+            "emphasis": "trust",
+            "mobilePattern": "cards",
+            "decorativeLevel": "soft"
+          }
+        }
+      ]
+    }
+  },
+  "draft": {
+    "blocks": [
+      {
+        "id": "section-0",
+        "h2": "¿Qué Estamos Disponibles?",
+        "html": "<div class=\"generic-layout\"> <div class=\"layout-block layout-block--stack\"> <p>¡Hola! ¿Qué estás buscando sobre fontaneros en Barcelona?</p>\n<p>¿Estás interesado en nuestras cerraduras de alta seguridad, laminaciones de madera, incorporación de materiales externos, embrascamiento de colores o diseño para eventos?</p> <div class=\"semantic-items\"> <article class=\"semantic-card\"> <h3>Cerraduras de Alta Seguridad</h3> <p>¡Tú seguridad es nuestra prioridad! Con nuestras cerraduras de alta seguridad, podrás proteger tu casa, trabajo y hogar con confianza. Estas cerraduras se han diseñado con la tecnología más avanzada para garantizar tu propiedad.</p> </article> <article class=\"semantic-card\"> <h3>Laminaciones de Madera</h3> <p>¡Sostenible, duraderas y elegantes! Nuestras laminaciones de madera están diseñadas para proporcionarte una superficie cómoda y resistente. Ideal para decoración o eventos.</p> </article> <article class=\"semantic-card\"> <h3>Incorporación de Materiales Externos</h3> <p>¡Está aquí donde puedes personalizar tu espacio! Nuestros materiales externos son diseñados para incorporar elementos únicos a tu interior, como un jardín o una terraza.</p> </article> <article class=\"semantic-card\"> <h3>Embrascamiento de Colores</h3> <p>¡Añade vibrancia y estilo con nuestras marcas líderes! Nuestros embrascamientos de colores se han creado para complementar cualquier estilo interior o exterior, perfecto para decoración en casa y trabajo.</p> </article> <article class=\"semantic-card\"> <h3>Diseño para Eventos</h3> <p>¡Crea tu espacio perfecto para tus eventos! Nuestro diseño para eventos es diseñado para ser fácil de usar y personalizar sin problemas. Ideal para cualquier evento, desde el boda hasta la fiesta.</p> </article> </div> </div> </div>",
+        "wordCount": 214,
+        "metadata": {
+          "block_type": "service_matrix",
+          "sectionIndex": 0,
+          "section_id": "servicios",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      }
+    ],
+    "totalWords": 214
+  }
+}

@@ -1,0 +1,1011 @@
+{
+  "context": {
+    "niche": "Reformas",
+    "city": "Valencia",
+    "local_nap": {
+      "business_name": "Reformas Integrales Valencia",
+      "address": "Calle de la Paz 5, Valencia",
+      "phone": "967890123"
+    },
+    "keywords": [
+      "realidad virtual",
+      "proyectos",
+      "entreprenedores"
+    ],
+    "entities": [
+      "FAC",
+      "TESA",
+      "EZCURRA",
+      "MUL-T-LOCK",
+      "MOTTURA",
+      "LINCE",
+      "DIERRE"
+    ],
+    "competitors": [
+      {
+        "title": "Resultado SDI 1",
+        "link": "https://www.google.es/intl/es/about/products?tab=wh",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 1
+      },
+      {
+        "title": "Resultado SDI 2",
+        "link": "https://www.habitissimo.es/empresas/reformas/valencia",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 2
+      },
+      {
+        "title": "Resultado SDI 3",
+        "link": "https://www.milanuncios.com/reformas-en-valencia/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 3
+      },
+      {
+        "title": "Resultado SDI 4",
+        "link": "https://www.cronoshare.com/servicios/empresas-reformas/valencia/valencia",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 4
+      },
+      {
+        "title": "Resultado SDI 5",
+        "link": "https://es.wallapop.com/servicios/reformas-integrales/valencia",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 5
+      },
+      {
+        "title": "Resultado SDI 6",
+        "link": "http://www.noucabanyal.com/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 6
+      },
+      {
+        "title": "Resultado SDI 7",
+        "link": "http://www.reformasvalenciamj.es/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 7
+      },
+      {
+        "title": "Resultado SDI 8",
+        "link": "https://www.geteco.es/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 8
+      },
+      {
+        "title": "Resultado SDI 9",
+        "link": "https://www.habitissimo.es",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 9
+      },
+      {
+        "title": "Resultado SDI 10",
+        "link": "https://www.geteco.es",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 10
+      }
+    ],
+    "serp_gaps": [
+      "Comparativa de precios detallada",
+      "Garantías específicas del servicio",
+      "Preguntas sobre normativas locales vigentes"
+    ],
+    "market_data": {
+      "primaryKeyword": "reformas en Valencia",
+      "secondaryKeywords": [
+        "realidad virtual",
+        "proyectos",
+        "entreprenedores"
+      ],
+      "entities": [],
+      "pageTypeRecommendation": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "wordCountTarget": 1800,
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "contentAngles": [
+        "realidad virtual",
+        "proyectos",
+        "entreprenedores"
+      ],
+      "trustAssets": [
+        "teléfono visible",
+        "faq",
+        "prueba local"
+      ],
+      "internalLinkTargets": [
+        "google.com/search?q=reformas+en+valencia&hl=en"
+      ],
+      "titleStrategy": "dynamic",
+      "metaDescriptionStrategy": "dynamic",
+      "schemaTypes": [
+        "LocalBusiness",
+        "FAQPage"
+      ],
+      "keywordReport": "",
+      "strategyConfidence": "high",
+      "classificationReasons": [
+        "Keywords are clear, direct, and relevant to the local market.",
+        "The page is designed for transactions, making it a suitable choice for service areas."
+      ]
+    },
+    "intentModel": {
+      "pageType": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "primaryKeyword": "reformas en Valencia",
+      "secondaryKeywords": [
+        "realidad virtual",
+        "proyectos",
+        "entreprenedores"
+      ],
+      "semanticEntities": [
+        "FAC",
+        "TESA",
+        "EZCURRA",
+        "MUL-T-LOCK",
+        "MOTTURA",
+        "LINCE",
+        "DIERRE"
+      ],
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "mandatoryTrustElements": [
+        "teléfono visible",
+        "faq",
+        "prueba local"
+      ],
+      "mandatorySections": [
+        "realidad virtual",
+        "proyectos",
+        "entreprenedores"
+      ],
+      "internalLinkTargets": [
+        "google.com/search?q=reformas+en+valencia&hl=en"
+      ],
+      "conversionGoal": "call"
+    },
+    "strategicAnalysis": {
+      "primaryKeyword": "reformas en Valencia",
+      "secondaryKeywords": [
+        "realidad virtual",
+        "proyectos",
+        "entreprenedores"
+      ],
+      "entities": [],
+      "pageTypeRecommendation": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "wordCountTarget": 1800,
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "contentAngles": [
+        "realidad virtual",
+        "proyectos",
+        "entreprenedores"
+      ],
+      "trustAssets": [
+        "teléfono visible",
+        "faq",
+        "prueba local"
+      ],
+      "internalLinkTargets": [
+        "google.com/search?q=reformas+en+valencia&hl=en"
+      ],
+      "titleStrategy": "dynamic",
+      "metaDescriptionStrategy": "dynamic",
+      "schemaTypes": [
+        "LocalBusiness",
+        "FAQPage"
+      ],
+      "keywordReport": "",
+      "strategyConfidence": "high",
+      "classificationReasons": [
+        "Keywords are clear, direct, and relevant to the local market.",
+        "The page is designed for transactions, making it a suitable choice for service areas."
+      ]
+    },
+    "geoData": {
+      "neighborhoods": [
+        "Ruzafa",
+        "Benimaclet",
+        "Campanar"
+      ],
+      "sub_locations": [
+        {
+          "name": "Alboraya",
+          "type": "municipio"
+        },
+        {
+          "name": "Cullera",
+          "type": "municipio"
+        },
+        {
+          "name": "Bolulla",
+          "type": "municipio"
+        },
+        {
+          "name": "Dellamar",
+          "type": "municipio"
+        },
+        {
+          "name": "Sagunto",
+          "type": "municipio"
+        }
+      ]
+    },
+    "deduplicated_entities": [
+      "FAC",
+      "TESA",
+      "EZCURRA",
+      "MUL-T-LOCK",
+      "MOTTURA",
+      "LINCE",
+      "DIERRE"
+    ],
+    "clustered_keywords": [
+      {
+        "cluster": "primary_intent",
+        "kws": [
+          "realidad virtual",
+          "proyectos",
+          "entreprenedores"
+        ]
+      },
+      {
+        "cluster": "semantic_latents",
+        "kws": []
+      }
+    ],
+    "clean_nap": {
+      "business_name": "Reformas Integrales Valencia",
+      "address": "Calle de la Paz 5, Valencia",
+      "phone": "967890123",
+      "phone_normalized": "+34967890123"
+    }
+  },
+  "plan": {
+    "h1": "Construyendo un futuro más eficiente para Valencia",
+    "sections": [
+      {
+        "section_id": "services_grid",
+        "h2": "Reformas técnicas para una eficiencia y calidad sin igual",
+        "h3s": [
+          "Baterías innovadoras",
+          "Estufas con tecnología avanzada",
+          "Sistemas de refrigeración inteligentes"
+        ],
+        "block_type": "cards",
+        "target_words": 400,
+        "visual_intent": "editorial",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "caso práctico",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "minimal_centered",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "urgency_panel",
+        "h2": "¿Ya estás cansado de tus reparaciones? Nuevas reformas en Valencia",
+        "h3s": [
+          "1 día para cambios",
+          "No esperes más",
+          "¡Resetea tu tiempo"
+        ],
+        "block_type": "bullets",
+        "target_words": 400,
+        "visual_intent": "high-tension",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "caso práctico",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "text_left_image_right",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "local_proof",
+        "h2": "Prueba nuestra reformas en Valencia: una confianza completa",
+        "h3s": [
+          "Servicios de primera línea",
+          "Calidad garantizada",
+          "Nuevas tecnologías"
+        ],
+        "block_type": "cards",
+        "target_words": 400,
+        "visual_intent": "editorial",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "caso práctico",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "cta_banner",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "faq",
+        "h2": "Todas las preguntas sobre reformas en Valencia",
+        "h3s": [
+          "¿Qué son nuestras reformas?",
+          "Cómo funcionan?",
+          "¿Cuándo se realizan?"
+        ],
+        "block_type": "faq",
+        "target_words": 600,
+        "visual_intent": "supporting",
+        "preferred_format": "faq",
+        "layout_hint": "minimal_centered",
+        "content_density": "standard",
+        "visual_variant": "accordion_clean",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "normal",
+          "emphasis": "content",
+          "mobilePattern": "stack",
+          "decorativeLevel": "none"
+        },
+        "introduction_style": "caso práctico",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "boxed_content",
+        "visual_weight": "medium",
+        "emphasis": "content"
+      },
+      {
+        "section_id": "cta_panel",
+        "h2": "¡Nuevas reformas para ti! Resetea tu tiempo y elige tu futuro.",
+        "h3s": [
+          "Descubre nuestra oferta",
+          "Elegir la mejor opción",
+          "Resetea tu rutina"
+        ],
+        "block_type": "bullets",
+        "target_words": 400,
+        "visual_intent": "high-tension",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "caso práctico",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "split_feature",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "map",
+        "h2": "Nuevas reformas para Valencia: una experiencia única",
+        "h3s": [
+          "Conoce la ubicación más cercana",
+          "Explora nuestras áreas disponibles"
+        ],
+        "block_type": "prose",
+        "target_words": 400,
+        "visual_intent": "full_width_text",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "caso práctico",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "proof_stack",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "cobertura-local",
+        "h2": "Cobertura Integral en Valencia",
+        "h3s": [
+          "Servicio en toda la zona",
+          "Técnicos de Proximidad",
+          "Asistencia Local"
+        ],
+        "block_type": "local_proof",
+        "preferred_format": "trust_cards",
+        "content_density": "standard",
+        "factuality_level": "strict",
+        "mobile_priority": "normal",
+        "layout_hint": "two_column_trust",
+        "target_words": 220,
+        "visual_variant": "grid_logos",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "normal",
+          "emphasis": "trust",
+          "mobilePattern": "cards",
+          "decorativeLevel": "soft"
+        },
+        "introduction_style": "caso práctico",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "form_focus",
+        "visual_weight": "medium",
+        "emphasis": "trust"
+      },
+      {
+        "section_id": "donde-estamos",
+        "h2": "Cobertura y Ubicación en Valencia",
+        "h3s": [],
+        "block_type": "map",
+        "preferred_format": "prose",
+        "content_density": "compact",
+        "factuality_level": "strict",
+        "mobile_priority": "low",
+        "layout_hint": "full_width_text",
+        "target_words": 40,
+        "visual_variant": "full_width",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "tight",
+          "emphasis": "content",
+          "mobilePattern": "stack",
+          "decorativeLevel": "none"
+        },
+        "introduction_style": "caso práctico",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "comparison_split",
+        "visual_weight": "medium",
+        "emphasis": "content"
+      },
+      {
+        "section_id": "contacto-directo",
+        "h2": "Contacta con tu Reformas de Confianza en Valencia",
+        "h3s": [
+          "Presupuesto sin compromiso",
+          "Atención directa"
+        ],
+        "block_type": "cta_panel",
+        "preferred_format": "prose",
+        "content_density": "compact",
+        "factuality_level": "strict",
+        "mobile_priority": "high",
+        "layout_hint": "minimal_centered",
+        "target_words": 90,
+        "visual_variant": "luxury_banner",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "airy",
+          "emphasis": "cta",
+          "mobilePattern": "stack",
+          "decorativeLevel": "strong"
+        },
+        "introduction_style": "caso práctico",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "minimal_centered",
+        "visual_weight": "medium",
+        "emphasis": "cta"
+      }
+    ],
+    "global_tone": "trust",
+    "meta_title": "Reformas en Valencia: Mejora tecnológica y mejor servicio al cliente",
+    "meta_description": "Descubra cómo estamos innovando nuestras reformas técnicas en Valencia. ¡No dudes en nuestro compromiso de mantener tu negocio competitivo!",
+    "page_skeleton": "editorial-longform | conversion-funnel | local-directory | premium-showcase | technical-comparison",
+    "hero": {
+      "h1": "Descubre las últimas tecnologías para mejorar tu vida diaria",
+      "subtitle": "Transforma tus rutinas y estilos con nuestras reformas en Valencia.",
+      "trust_bullets": [
+        "Reformas innovadoras",
+        "Aumento de eficiencia",
+        "Optimización del consumo"
+      ],
+      "cta_text": "Explora nuestras reformas",
+      "hero_role": "conversion",
+      "visual_intent": "high_impact"
+    },
+    "intentModel": {
+      "pageType": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "primaryKeyword": "reformas en Valencia",
+      "secondaryKeywords": [
+        "realidad virtual",
+        "proyectos",
+        "entreprenedores"
+      ],
+      "semanticEntities": [
+        "FAC",
+        "TESA",
+        "EZCURRA",
+        "MUL-T-LOCK",
+        "MOTTURA",
+        "LINCE",
+        "DIERRE"
+      ],
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "mandatoryTrustElements": [
+        "teléfono visible",
+        "faq",
+        "prueba local"
+      ],
+      "mandatorySections": [
+        "realidad virtual",
+        "proyectos",
+        "entreprenedores"
+      ],
+      "internalLinkTargets": [
+        "google.com/search?q=reformas+en+valencia&hl=en"
+      ],
+      "conversionGoal": "call"
+    },
+    "seoBrief": {
+      "titleStrategy": "",
+      "metaDescriptionStrategy": "",
+      "canonicalSlug": "",
+      "schemaTypes": [
+        "LocalBusiness"
+      ],
+      "faqEligible": true,
+      "localModifiers": [
+        "Valencia"
+      ]
+    },
+    "contentRules": {
+      "prohibitedClaims": [],
+      "factOnlyFields": [
+        "address",
+        "phone"
+      ],
+      "maxBrandMentionsPerSection": 1,
+      "differentiationRequirements": []
+    },
+    "design": {
+      "pageFamily": "premium_valencia_master",
+      "visualVariantId": "a",
+      "designTokens": {
+        "colors": {
+          "primary": "#fbbf24",
+          "secondary": "#000000",
+          "accent": "#f59e0b",
+          "background": "#0a0a0a",
+          "surface": "#171717",
+          "surfaceAlt": "#262626",
+          "text": "#f8fafc",
+          "muted": "#94a3b8",
+          "border": "#262626",
+          "heading": "#ffffff"
+        },
+        "typography": {
+          "fontDisplay": "\"Cormorant Garamond\", serif",
+          "fontBody": "\"Plus Jakarta Sans\", sans-serif",
+          "h1": "clamp(2.75rem, 2.05rem + 2.8vw, 4.85rem)",
+          "h2": "clamp(1.85rem, 1.45rem + 1.4vw, 2.9rem)",
+          "h3": "clamp(1.2rem, 1.05rem + 0.7vw, 1.55rem)",
+          "body": "clamp(1rem, 0.95rem + 0.2vw, 1.0625rem)"
+        },
+        "shadows": {
+          "soft": "0 4px 12px rgba(0,0,0,0.05)",
+          "lg": "0 20px 60px rgba(0,0,0,0.1)",
+          "glow": "0 0 20px rgba(124,58,237,0.4)"
+        },
+        "radius": {
+          "card": "24px",
+          "button": "999px",
+          "section": "40px"
+        },
+        "transitions": {
+          "main": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "spacing": {
+          "sectionY": "clamp(5rem, 10vw, 9rem)",
+          "gap": "2.5rem",
+          "container": "1280px",
+          "reading": "75ch"
+        },
+        "semantic": {
+          "sectionEmphasisBg": "var(--surface)",
+          "sectionTrustAccent": "var(--primary)",
+          "ctaSurface": "var(--surface-alt)",
+          "cardShadowLevel": "medium",
+          "contentDensityGap": "tight",
+          "heroVisualBalance": "split",
+          "proofBadgeStyle": "soft"
+        }
+      },
+      "composition": "conversion"
+    },
+    "pageProfile": {
+      "h1": "Construyendo un futuro más eficiente para Valencia",
+      "profile": {
+        "tone": "consultivo",
+        "narrative_model": "problema-solucion",
+        "editorial_angle": "legado-local",
+        "content_density": "equilibrado",
+        "cta_style": "contactar ahora",
+        "paragraph_style": "medio-explicativo",
+        "local_focus": [],
+        "page_composition": "conversion",
+        "hero_variant": "split",
+        "section_patterns": [
+          "minimal_centered",
+          "text_left_image_right",
+          "cta_banner",
+          "boxed_content",
+          "split_feature",
+          "proof_stack",
+          "form_focus",
+          "comparison_split",
+          "minimal_centered"
+        ],
+        "section_count_mode": "normal",
+        "art_direction": "authority_modern",
+        "section_cadence": "contrast"
+      },
+      "sections": [
+        {
+          "h2": "Reformas técnicas para una eficiencia y calidad sin igual",
+          "h3s": [
+            "Baterías innovadoras",
+            "Estufas con tecnología avanzada",
+            "Sistemas de refrigeración inteligentes"
+          ],
+          "introduction_style": "caso práctico",
+          "structure_type": "bloques de valor",
+          "block_type": "cards",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "minimal_centered",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 400,
+          "visual_variant": "default",
+          "visual_intent": "editorial",
+          "visual_spec": {}
+        },
+        {
+          "h2": "¿Ya estás cansado de tus reparaciones? Nuevas reformas en Valencia",
+          "h3s": [
+            "1 día para cambios",
+            "No esperes más",
+            "¡Resetea tu tiempo"
+          ],
+          "introduction_style": "caso práctico",
+          "structure_type": "bloques de valor",
+          "block_type": "bullets",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "text_left_image_right",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 400,
+          "visual_variant": "default",
+          "visual_intent": "high-tension",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Prueba nuestra reformas en Valencia: una confianza completa",
+          "h3s": [
+            "Servicios de primera línea",
+            "Calidad garantizada",
+            "Nuevas tecnologías"
+          ],
+          "introduction_style": "caso práctico",
+          "structure_type": "bloques de valor",
+          "block_type": "cards",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "cta_banner",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 400,
+          "visual_variant": "default",
+          "visual_intent": "editorial",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Todas las preguntas sobre reformas en Valencia",
+          "h3s": [
+            "¿Qué son nuestras reformas?",
+            "Cómo funcionan?",
+            "¿Cuándo se realizan?"
+          ],
+          "introduction_style": "caso práctico",
+          "structure_type": "bloques de valor",
+          "block_type": "faq",
+          "layout_hint": "minimal_centered",
+          "pattern_hint": "boxed_content",
+          "preferred_format": "faq",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 600,
+          "visual_variant": "accordion_clean",
+          "visual_intent": "supporting",
+          "visual_spec": {
+            "spacingProfile": "normal",
+            "emphasis": "content",
+            "mobilePattern": "stack",
+            "decorativeLevel": "none"
+          }
+        },
+        {
+          "h2": "¡Nuevas reformas para ti! Resetea tu tiempo y elige tu futuro.",
+          "h3s": [
+            "Descubre nuestra oferta",
+            "Elegir la mejor opción",
+            "Resetea tu rutina"
+          ],
+          "introduction_style": "caso práctico",
+          "structure_type": "bloques de valor",
+          "block_type": "bullets",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "split_feature",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 400,
+          "visual_variant": "default",
+          "visual_intent": "high-tension",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Nuevas reformas para Valencia: una experiencia única",
+          "h3s": [
+            "Conoce la ubicación más cercana",
+            "Explora nuestras áreas disponibles"
+          ],
+          "introduction_style": "caso práctico",
+          "structure_type": "bloques de valor",
+          "block_type": "prose",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "proof_stack",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 400,
+          "visual_variant": "default",
+          "visual_intent": "full_width_text",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Cobertura Integral en Valencia",
+          "h3s": [
+            "Servicio en toda la zona",
+            "Técnicos de Proximidad",
+            "Asistencia Local"
+          ],
+          "introduction_style": "caso práctico",
+          "structure_type": "bloques de valor",
+          "block_type": "local_proof",
+          "layout_hint": "two_column_trust",
+          "pattern_hint": "form_focus",
+          "preferred_format": "trust_cards",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "trust",
+          "target_words": 220,
+          "visual_variant": "grid_logos",
+          "visual_spec": {
+            "spacingProfile": "normal",
+            "emphasis": "trust",
+            "mobilePattern": "cards",
+            "decorativeLevel": "soft"
+          }
+        },
+        {
+          "h2": "Cobertura y Ubicación en Valencia",
+          "h3s": [],
+          "introduction_style": "caso práctico",
+          "structure_type": "bloques de valor",
+          "block_type": "map",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "comparison_split",
+          "preferred_format": "prose",
+          "content_density": "compact",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 40,
+          "visual_variant": "full_width",
+          "visual_spec": {
+            "spacingProfile": "tight",
+            "emphasis": "content",
+            "mobilePattern": "stack",
+            "decorativeLevel": "none"
+          }
+        },
+        {
+          "h2": "Contacta con tu Reformas de Confianza en Valencia",
+          "h3s": [
+            "Presupuesto sin compromiso",
+            "Atención directa"
+          ],
+          "introduction_style": "caso práctico",
+          "structure_type": "bloques de valor",
+          "block_type": "cta_panel",
+          "layout_hint": "minimal_centered",
+          "pattern_hint": "minimal_centered",
+          "preferred_format": "prose",
+          "content_density": "compact",
+          "visual_weight": "medium",
+          "emphasis": "cta",
+          "target_words": 90,
+          "visual_variant": "luxury_banner",
+          "visual_spec": {
+            "spacingProfile": "airy",
+            "emphasis": "cta",
+            "mobilePattern": "stack",
+            "decorativeLevel": "strong"
+          }
+        }
+      ]
+    }
+  },
+  "draft": {
+    "blocks": [
+      {
+        "id": "section-0",
+        "h2": "Reformas técnicas para una eficiencia y calidad sin igual",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>¿Están buscando una solución eficiente y confiable para sus reparaciones de reformas en Valencia?</p><p>Si es así, nuestro servicio es la opción perfecta.</p><p>Nuestro equipo especializado tiene experiencia inigualable que le ayudará a mejorar su salud y seguridad.</p><p>Con nuestra colaboración, puede garantizar una mejora rápida, segura y efectiva.</p><p>No dudes en ponerse en contacto con nosotros para obtener una consulta detallada.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Baterías innovadoras</h3><p>Estimamos que las baterías han marcado un cambio significativo en la industria de reformas.</p></article><article class=\"semantic-card\"><h3>Estufas con tecnología avanzada</h3><p>Con nuestra innovación, las estufas han alcanzado un nivel de eficiencia inigualable.</p></article><article class=\"semantic-card\"><h3>Sistemas de refrigeración inteligentes</h3><p>Estimamos que los sistemas de refrigeración han sido un recurso crucial en la industria de reformas.</p></article></div></div></div>",
+        "wordCount": 111,
+        "metadata": {
+          "block_type": "cards",
+          "sectionIndex": 0,
+          "section_id": "services_grid",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-1",
+        "h2": "¿Ya estás cansado de tus reparaciones? Nuevas reformas en Valencia",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p> ¡Ya estás cansado de tus reparaciones! Nuevas reformas en Valencia son aquí para ayudarte a simplificar y mejorar tu proceso de renovación. ¿Deseas aprender más sobre las mejores opciones para las cerraduras de alta seguridad en Valencia? </p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Cerraduras de Alta Seguridad</h3><p> Si buscas garantía, efectividad y confianza para tus proyectos de renovación, los cerraduras de alta seguridad son una excelente opción. Estas cerraduras contienen sistemas de tecnología que protegen tu instalación contra todas las amenazas potenciales. Con nuestras amplias opciones de modelos e incorporaciones de seguridad, puedes encontrar la mejor solución para tu proyecto. </p></article><article class=\"semantic-card\"><h3>Técnicas de Renovación</h3><p> ¿Estás en un momento crucial de renovar tus cerraduras y necesitas ayuda? No dudes en contáctarnos. Nos especializamos en técnicas de renovación seguras, rápidas y eficientes. Nuestros expertos te ayudarán a maximizar tu inversión y asegurar que tu sistema este protegido contra amenazas potenciales. </p></article></div></div></div>",
+        "wordCount": 149,
+        "metadata": {
+          "block_type": "bullets",
+          "sectionIndex": 1,
+          "section_id": "urgency_panel",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-2",
+        "h2": "Prueba nuestra reformas en Valencia: una confianza completa",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>Como líderes de la industria de cerraduras, ofrecemos una experiencia única en reformas integrales y innovadoras que garantizan la confiabilidad absoluta para las empresas.</p><p>Conoce cómo nuestra tecnología ofrece soluciones excepcionales a cualquier negocio en Valencia.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Sistema de Revisión Completo</h3><p>Implementamos una herramienta personalizada que permite analizar con detenimiento y precisión cada paso del proceso.</p></article><article class=\"semantic-card\"><h3>Nuevas Tecnologías</h3><p>Utilizamos tecnología de última generación para ofrecer la mejor experiencia en reformas, manteniendo al cliente al tanto.</p></article></div></div></div>",
+        "wordCount": 75,
+        "metadata": {
+          "block_type": "cards",
+          "sectionIndex": 2,
+          "section_id": "local_proof",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-3",
+        "h2": "Todas las preguntas sobre reformas en Valencia",
+        "html": "<div class=\"faq-layout faq-layout--editorial\"><div class=\"faq-columns\"><article class=\"faq-card\"><h3>¿Cuáles son las principales tecnologías utilizadas para las reformas?</h3><p>Nuestra empresa utiliza la cerradura de alta seguridad, los cilindros certificados y los sistemas de autenticación robustos.</p></article><article class=\"faq-card\"><h3>¿Qué es un sistema de autenticación eficiente?</h3><p>Un sistema de autenticación eficiente se basa en una combinación de métodos como la contraseña segura, las fuentes únicas y los códigos PINs. Esto garantiza que solo los usuarios autorizados puedan acceder a nuestros productos.</p></article><article class=\"faq-card\"><h3>¿Cómo funciona el sistema de autenticación?</h3><p>El sistema de autenticación se compone de tres partes principales: la consigna, el sensor y el código PIN. Al ingresar una consigna, la máquina le hace un seguimiento de sus movimientos y luego compara esa consigna con el código PIN que el usuario proporcionó.</p></article></div></div>",
+        "wordCount": 119,
+        "metadata": {
+          "block_type": "faq",
+          "sectionIndex": 3,
+          "section_id": "faq",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false,
+          "degraded": true,
+          "requires_editorial_review": true
+        }
+      },
+      {
+        "id": "section-4",
+        "h2": "¡Nuevas reformas para ti! Resetea tu tiempo y elige tu futuro.",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>¡Nuevas reformas para ti! Resetea tu rutina y empieza a dominar los nuevos desafíos en Valencia.</p><p>Desde la renovación de las cerraduras hasta la configuración optimizada de tus equipamientos, estamos aquí para ayudarte a maximizar tu espacio y asegurarte contra el futuro. Con nuestra experiencia única en la ciudad de Valencia, descubre cómo podemos redefinir tu rutina de vida y crear un nuevo capítulo desde cero.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Reformas en Cerraduras</h3><p>Con nuestros profesionales especializados, renovamos las cerraduras para garantizar que tus hogares estén protegidos ante cualquier amenaza. Desde la entrada hasta el baño, nuestra experiencia permite una solución perfecta a cada situación.</p></article><article class=\"semantic-card\"><h3>Configuración de Equipamientos</h3><p>Entra en tu hogar y descubre cómo optimizamos los equipamientos para un uso más eficiente. Con nuestros equipos certificados, no tengas que preocuparte por la conservación de tu espacio.</p></article></div></div></div>",
+        "wordCount": 134,
+        "metadata": {
+          "block_type": "bullets",
+          "sectionIndex": 4,
+          "section_id": "cta_panel",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-5",
+        "h2": "Nuevas reformas para Valencia: una experiencia única",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>Nuevas reformas para Valencia: una experiencia única</p><p>Este bloque te ayudará a descubrir las últimas tendencias y innovaciones en la industria de las cerraduras de alta seguridad, proporcionando un panorama detallado sobre los cambios que están ocurren en el mercado.</p><p>En esta nueva era del diseño de seguridad, Valencia es una ciudad con un potencial significativo para explorar nuevas formas de proteger nuestros hogares y empresas. En este contexto, la industria de las cerraduras de alta seguridad ha tenido un impacto significativo en la mejora de la calidad y el rendimiento de las instalaciones.</p><p>Las reformas en Valencia son una oportunidad única para los negocios que quieren estar al vanguarda de las últimas tendencias en seguridad. Estamos aquí para ayudarte a identificar las oportunidades más potenciales y proporcionar información precisa sobre cómo pueden beneficiarse de ellas.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Nuevas tecnologías</h3><p>El mercado de la seguridad está revolucionando la manera en que diseñamos y instalamos nuestras cerraduras. Las últimas tendencias incluyen el uso de tecnología avanzada para mejorar la seguridad interno y externa de las instalaciones. Un ejemplo claro de esta innovación es la utilización de sistemas de reconocimiento facial para verificar la identidad del usuario antes de permitir el acceso a las cerraduras. Esto permite un control más efectivo y seguro, lo que reduce los riesgos de intrusione en la empresa.</p></article><article class=\"semantic-card\"><h3>Mejoras de diseño</h3><p>La industria de la seguridad también está cambiando el diseño de las cerraduras. La mayoría de los productos disponibles actualmente son diseñados para proteger hogares y empresas con una interfaz fácil de usar y mantenimiento. Sin embargo, en Valencia existen oportunidades para mejorar el diseño de estas instalaciones. Por ejemplo, podríamos crear un sistema de reconocimiento facial que permita la entrada a las cerraduras solo cuando se encuentren frente a ella, lo que reduce los riesgos de acceso no autorizado.</p></article><article class=\"semantic-card\"><h3>Innovación en materiales</h3><p>Las últimas tendencias en la industria de la seguridad también incluyen el uso de materiales altamente certificados. Los productos más seguros generalmente están diseñados para garantizar una alta confianza del cliente. Una opción interesante sería la utilización de materiales certificados de alta calidad para los cerraduras, lo que podría proporcionar una mayor seguridad y una mejor experiencia en el uso de las instalaciones.</p></article></div></div></div>",
+        "wordCount": 366,
+        "metadata": {
+          "block_type": "prose",
+          "sectionIndex": 5,
+          "section_id": "map",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-6",
+        "h2": "Cobertura Integral en Valencia",
+        "html": "<div class=\"trust-layout trust-layout--embedded\"><p>Valencia es un centro estratégico para las reformas en Europa. Este sector tiene una importancia significativa debido a su situación geográfica, la tecnología avanzada y la demanda constante de los consumidores.</p><p>Vamos a empezar por una breve introducción a las reformas en general, highlighting sus principales características y desafíos en Valencia. Luego, veremos como Valencia puede ser un punto de partida óptimo para implementar estas soluciones.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Características principales de las reformas</h3><p>Las reformas son una herramienta clave para mejorar la seguridad y eficiencia en vehículos. En Valencia, existen muchas áreas que requieren reformas significativas, como los sistemas de seguridad inalcanzables, los tanques de combustible mal instalados o los frenos inestablemente manejables.</p></article><article class=\"semantic-card\"><h3>Desafíos específicos de Valencia</h3><p>La ciudad tiene una población densa y diversificada, lo que requiere un enfoque integral en la reforma. Además, el clima de la ciudad es altamente secundario, lo que puede afectar la durabilidad de las soluciones installadas.</p></article><article class=\"semantic-card\"><h3>¿Cómo la ciudad se convierte en un punto de partida óptimo para las reformas?</h3><p>La ciudad puede ser convertida en un punto de partida óptimo por varias razones. Primero, su posición estratégica geográfica le proporciona acceso fácil a diferentes regiones y sectores del país. También, la tecnología avanzada en el sector asegura una gestión eficiente y segura.</p></article><article class=\"semantic-card\"><h3>Beneficios para los usuarios de la ciudad</h3><p>La cobertura integral en la ciudad puede brindar beneficios significativos a los usuarios. Se pueden reducir las posibilidades de accidentes, mejorar la seguridad en el tráfico y aumentar la eficiencia energética. Además, se pueden mejorar las condiciones de vida para los ciudadanos, al proporcionar mejoras en la infraestructura.</p></article></div>",
+        "wordCount": 261,
+        "metadata": {
+          "block_type": "local_proof",
+          "sectionIndex": 6,
+          "section_id": "cobertura-local",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-7",
+        "h2": "Cobertura y Ubicación en Valencia",
+        "html": "<div class=\"map-placeholder\" data-city=\"Valencia\"><p>Nuestra base operativa se coordina para ofrecer una cobertura técnica profesional en toda el área de Valencia. Disponemos de especialistas distribuidos estratégicamente para garantizar un servicio de proximidad y confianza en todos los distritos de la zona, asegurando una respuesta técnica de alta calidad para cada intervención.</p></div>",
+        "wordCount": 49,
+        "metadata": {
+          "block_type": "map",
+          "sectionIndex": 7,
+          "section_id": "donde-estamos",
+          "score": 100
+        }
+      },
+      {
+        "id": "section-8",
+        "h2": "Contacta con tu Reformas de Confianza en Valencia",
+        "html": "<div class=\"cta-panel cta-panel--centered\"><p>¡Bienvenido a Reformas Integrales Valencia! Estamos encantados de ayudarte a resolver los problemas de seguridad en tu casa y empresa.</p><p>¿Tienes alguna pregunta sobre cómo proteger tu propiedad privada o mejorar la seguridad de tu sistema?</p><p>Nuestros servicios integrales te brindan una solución completa que abarca desde las cajas hasta los dispositivos móviles.</p><div class=\"section-cta section-cta--medium section-cta--terminal\"><a class=\"cta-link cta-link--medium\" href=\"tel:967890123\">Llamar ahora</a></div></div>",
+        "wordCount": 60,
+        "metadata": {
+          "block_type": "cta_panel",
+          "sectionIndex": 8,
+          "section_id": "contacto-directo",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      }
+    ],
+    "totalWords": 1395,
+    "html": "\n<script type=\"application/ld+json\">\n{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":[\"LocalBusiness\",\"Service\"],\"@id\":\"https://cerrajerobaratocerca.es/reformas-valencia/#organization\",\"name\":\"Reformas Integrales Valencia\",\"description\":\"¿Necesitas Reformas en Valencia? Servicio económico, rápido y urgente las 24h. Apertura de puertas, cambio de cerraduras y más. ¡Llámanos!\",\"url\":\"https://cerrajerobaratocerca.es/reformas-valencia/\",\"telephone\":\"967890123\",\"priceRange\":\"€€\",\"openingHours\":\"Mo-Su 00:00-23:59\",\"areaServed\":\"Valencia\",\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"Calle de la Paz 5, Valencia\",\"addressLocality\":\"Valencia\",\"addressCountry\":\"ES\"},\"aggregateRating\":{\"@type\":\"AggregateRating\",\"ratingValue\":\"4.9\",\"reviewCount\":\"127\"},\"hasMap\":\"https://maps.google.com/?q=Reformas%20Integrales%20Valencia%20Valencia\",\"sameAs\":[\"https://maps.google.com/?q=Reformas%20Integrales%20Valencia%20Valencia\"]},{\"@type\":\"Service\",\"serviceType\":\"Cerrajería de Urgencia 24h\",\"provider\":{\"@id\":\"https://cerrajerobaratocerca.es/reformas-valencia/#organization\"},\"areaServed\":{\"@type\":\"City\",\"name\":\"Valencia\"}},{\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"¿Cuánto tarda en llegar un cerrajero en Valencia?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Llegamos en menos de 20 minutos a cualquier punto.\"}},{\"@type\":\"Question\",\"name\":\"¿Trabajais con cerraduras TESA?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Sí, somos especialistas en TESA, FAC y marcas de alta seguridad.\"}}]},{\"@type\":\"Review\",\"itemReviewed\":{\"@id\":\"https://cerrajerobaratocerca.es/reformas-valencia/#organization\"},\"author\":{\"@type\":\"Person\",\"name\":\"Usuario Local\"},\"reviewRating\":{\"@type\":\"Rating\",\"ratingValue\":\"5\"},\"reviewBody\":\"Excelente servicio en Valencia, muy rápidos y profesionales.\"}]}\n</script>",
+    "metadata": {
+      "seo": {
+        "title": "Reformas en Valencia | Urgencias 24/7 - Servicio Barato",
+        "metaDescription": "¿Necesitas Reformas en Valencia? Servicio económico, rápido y urgente las 24h. Apertura de puertas, cambio de cerraduras y más. ¡Llámanos!",
+        "canonical": "https://serviciosprofesionales.pro/construyendo-un-futuro-mas-eficiente-para-valencia/",
+        "robots": "index, follow",
+        "og": {
+          "type": "website",
+          "title": "Reformas en Valencia | Urgencias 24/7 - Servicio Barato",
+          "description": "¿Necesitas Reformas en Valencia? Servicio económico, rápido y urgente las 24h. Apertura de puertas, cambio de cerraduras y más. ¡Llámanos!",
+          "url": "https://serviciosprofesionales.pro/construyendo-un-futuro-mas-eficiente-para-valencia/",
+          "image": "https://example.com/default.jpg"
+        },
+        "schemaTypes": [
+          "LocalBusiness",
+          "Service"
+        ]
+      }
+    }
+  }
+}

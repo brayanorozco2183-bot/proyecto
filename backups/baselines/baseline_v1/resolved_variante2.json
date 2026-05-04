@@ -1,0 +1,188 @@
+{
+  "pageId": "variante2",
+  "pageType": "service",
+  "renderMode": "web",
+  "visualSystem": {
+    "family": "minimal_authority",
+    "heroTreatment": "split",
+    "cadenceCode": "cinematic",
+    "contrastModel": "balanced",
+    "spacingScale": "balanced",
+    "surfaceStyle": "paper",
+    "cardTreatment": "elevated",
+    "navbarTreatment": "solid",
+    "footerTreatment": "directory",
+    "ornamentPolicy": "none"
+  },
+  "hero": {
+    "template": "split",
+    "contentDisposition": "center",
+    "ctaWeight": "medium",
+    "proofPlacement": "right_column",
+    "mediaMode": "photo_slot",
+    "spacingProfile": "balanced",
+    "mobileBehavior": "stack"
+  },
+  "sections": [
+    {
+      "sectionId": "hero_intro",
+      "blockType": "hero_trust",
+      "shell": "hero-bridge",
+      "flow": "split",
+      "widthMode": "standard",
+      "emphasis": "content",
+      "density": "standard",
+      "cardStyle": "elevated",
+      "ornamentLevel": "soft",
+      "sectionPattern": "hero_split_left",
+      "mobilePattern": "stack",
+      "constraints": {
+        "maxColumnsDesktop": 3,
+        "maxColumnsTablet": 2,
+        "maxColumnsMobile": 1,
+        "textMeasure": "medium"
+      }
+    },
+    {
+      "sectionId": "authority",
+      "blockType": "authority_note",
+      "shell": "plain",
+      "flow": "centered",
+      "widthMode": "standard",
+      "emphasis": "content",
+      "density": "standard",
+      "cardStyle": "elevated",
+      "ornamentLevel": "soft",
+      "sectionPattern": "section_minimal",
+      "mobilePattern": "stack",
+      "constraints": {
+        "maxColumnsDesktop": 3,
+        "maxColumnsTablet": 2,
+        "maxColumnsMobile": 1,
+        "textMeasure": "medium"
+      }
+    },
+    {
+      "sectionId": "services",
+      "blockType": "services_grid",
+      "shell": "panel",
+      "flow": "stack",
+      "widthMode": "standard",
+      "emphasis": "content",
+      "density": "standard",
+      "cardStyle": "elevated",
+      "ornamentLevel": "soft",
+      "sectionPattern": "section_dense_grid",
+      "mobilePattern": "stack",
+      "constraints": {
+        "maxColumnsDesktop": 3,
+        "maxColumnsTablet": 2,
+        "maxColumnsMobile": 1,
+        "textMeasure": "medium"
+      }
+    },
+    {
+      "sectionId": "materials",
+      "blockType": "feature_spotlight",
+      "shell": "editorial",
+      "flow": "zigzag",
+      "widthMode": "standard",
+      "emphasis": "content",
+      "density": "standard",
+      "cardStyle": "elevated",
+      "ornamentLevel": "soft",
+      "sectionPattern": "section_editorial",
+      "mobilePattern": "stack",
+      "constraints": {
+        "maxColumnsDesktop": 3,
+        "maxColumnsTablet": 2,
+        "maxColumnsMobile": 1,
+        "textMeasure": "medium"
+      }
+    },
+    {
+      "sectionId": "process",
+      "blockType": "process_steps",
+      "shell": "band",
+      "flow": "stack",
+      "widthMode": "standard",
+      "emphasis": "content",
+      "density": "standard",
+      "cardStyle": "elevated",
+      "ornamentLevel": "soft",
+      "sectionPattern": "timeline",
+      "mobilePattern": "stack",
+      "constraints": {
+        "maxColumnsDesktop": 3,
+        "maxColumnsTablet": 2,
+        "maxColumnsMobile": 1,
+        "textMeasure": "medium"
+      }
+    },
+    {
+      "sectionId": "case_story",
+      "blockType": "case_story",
+      "shell": "editorial",
+      "flow": "asymmetric",
+      "widthMode": "standard",
+      "emphasis": "content",
+      "density": "standard",
+      "cardStyle": "elevated",
+      "ornamentLevel": "soft",
+      "sectionPattern": "section_two_column_story",
+      "mobilePattern": "stack",
+      "constraints": {
+        "maxColumnsDesktop": 3,
+        "maxColumnsTablet": 2,
+        "maxColumnsMobile": 1,
+        "textMeasure": "medium"
+      }
+    },
+    {
+      "sectionId": "faq",
+      "blockType": "faq",
+      "shell": "plain",
+      "flow": "stack",
+      "widthMode": "standard",
+      "emphasis": "content",
+      "density": "standard",
+      "cardStyle": "elevated",
+      "ornamentLevel": "soft",
+      "sectionPattern": "section_minimal",
+      "mobilePattern": "stack",
+      "constraints": {
+        "maxColumnsDesktop": 3,
+        "maxColumnsTablet": 2,
+        "maxColumnsMobile": 1,
+        "textMeasure": "medium"
+      }
+    },
+    {
+      "sectionId": "cta_final",
+      "blockType": "cta_panel",
+      "shell": "band",
+      "flow": "centered",
+      "widthMode": "standard",
+      "emphasis": "content",
+      "density": "standard",
+      "cardStyle": "elevated",
+      "ornamentLevel": "soft",
+      "sectionPattern": "cta_terminal",
+      "mobilePattern": "stack",
+      "constraints": {
+        "maxColumnsDesktop": 3,
+        "maxColumnsTablet": 2,
+        "maxColumnsMobile": 1,
+        "textMeasure": "medium"
+      }
+    }
+  ],
+  "responsivePlan": {
+    "breakpointDesktop": 1280,
+    "breakpointTablet": 768,
+    "breakpointMobile": 480,
+    "baseFontSize": 16,
+    "scalingFactor": 1.2
+  },
+  "outputFingerprintSeed": []
+}

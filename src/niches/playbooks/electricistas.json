@@ -1,0 +1,433 @@
+{
+  "id": "electricistas",
+  "displayName": "Electricistas",
+  "aliases": [
+    "electricista",
+    "electricistas",
+    "electricidad",
+    "instalador electrico",
+    "instalador eléctrico",
+    "averia electrica",
+    "boletin electrico"
+  ],
+  "schemaTypes": [
+    "LocalBusiness",
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "WebPage"
+  ],
+  "allowedVocabulary": [
+    "cuadro eléctrico",
+    "diferencial",
+    "magnetotérmico",
+    "línea",
+    "circuito",
+    "toma de corriente",
+    "enchufe",
+    "iluminación",
+    "boletín eléctrico",
+    "derivación",
+    "cortocircuito",
+    "sobrecarga",
+    "puesta a tierra",
+    "protección",
+    "termo eléctrico",
+    "portero automático",
+    "mantenimiento eléctrico",
+    "revisión de instalación",
+    "fallo intermitente",
+    "consumo",
+    "punto de luz"
+  ],
+  "forbiddenVocabulary": [
+    "bombín",
+    "cerradura",
+    "fuga de agua",
+    "desatasco",
+    "brackets",
+    "implante dental",
+    "despido colectivo",
+    "intrusión",
+    "cerrajero",
+    "apertura de puertas",
+    "bombines"
+  ],
+  "prohibitedClaims": [
+    "avería resuelta siempre en una visita",
+    "boletín garantizado hoy",
+    "precio exacto sin revisar instalación",
+    "cumplimiento normativo garantizado sin inspección"
+  ],
+  "validTrustSignals": [
+    {
+      "id": "diagnosis-circuit",
+      "label": "Diagnóstico por circuito o línea",
+      "description": "No se cambia una pieza sin identificar el origen del disparo o del fallo."
+    },
+    {
+      "id": "safe-isolation",
+      "label": "Aislamiento y seguridad previa",
+      "description": "Se protege la instalación antes de intervenir."
+    },
+    {
+      "id": "measured-tests",
+      "label": "Pruebas y verificaciones",
+      "description": "Se comprueba funcionamiento tras la reparación o ajuste."
+    },
+    {
+      "id": "clear-scope",
+      "label": "Alcance claro de la intervención",
+      "description": "Se diferencia entre avería puntual, revisión y reforma."
+    },
+    {
+      "id": "documentation",
+      "label": "Documentación cuando aplica",
+      "description": "Boletín o justificante solo si procede realmente."
+    }
+  ],
+  "coreServices": [
+    "Localización y reparación de averías eléctricas",
+    "Sustitución de mecanismos, enchufes, interruptores y puntos de luz",
+    "Revisión y actualización de cuadros eléctricos",
+    "Instalación de iluminación interior y exterior",
+    "Boletines e intervenciones relacionadas con instalación eléctrica",
+    "Mantenimiento eléctrico en vivienda, local y comunidad"
+  ],
+  "bofuVariants": [
+    {
+      "slug": "electricista-urgente-corte",
+      "label": "Electricista urgente por corte o disparo del diferencial",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "recuperar suministro con diagnóstico seguro"
+    },
+    {
+      "slug": "reparar-cuadro-electrico",
+      "label": "Revisión o reparación de cuadro eléctrico",
+      "intent": "commercial",
+      "funnelStage": "BOFU",
+      "angle": "corregir protecciones, disparos y reparto de circuitos"
+    },
+    {
+      "slug": "instalar-iluminacion",
+      "label": "Instalación de iluminación y puntos de luz",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "crear o renovar puntos de consumo con criterio técnico"
+    },
+    {
+      "slug": "boletin-electrico",
+      "label": "Boletín eléctrico o revisión de instalación",
+      "intent": "commercial",
+      "funnelStage": "BOFU",
+      "angle": "documentar o adaptar una instalación cuando realmente procede"
+    }
+  ],
+  "commonObjections": [
+    "No sé si falla un enchufe, un circuito o el cuadro.",
+    "Me preocupa tocar la instalación sin un diagnóstico seguro.",
+    "Quiero saber si el problema es puntual o si hay que revisar más parte de la instalación.",
+    "No quiero pagar una reforma si el fallo se puede corregir de forma proporcionada.",
+    "Necesito claridad sobre qué se revisa y qué no."
+  ],
+  "faqBank": [
+    {
+      "question": "¿Por qué salta el diferencial o el automático y cómo se diagnostica?",
+      "answerGuidance": "Diferencia fuga, sobrecarga, cortocircuito o aparato defectuoso; explica pruebas seguras y descarte por circuitos.",
+      "intent": "BOFU",
+      "blockHint": "faq"
+    },
+    {
+      "question": "¿Qué influye en el presupuesto de un electricista?",
+      "answerGuidance": "Habla de acceso, número de puntos afectados, necesidad de medidas, cuadro, cableado y materiales.",
+      "intent": "MOFU",
+      "blockHint": "price_guidance"
+    },
+    {
+      "question": "¿Cuándo conviene revisar el cuadro eléctrico completo?",
+      "answerGuidance": "Aclara disparos repetidos, circuitos mezclados, ampliaciones de consumo y falta de protecciones adecuadas.",
+      "intent": "MOFU",
+      "blockHint": "services_grid"
+    },
+    {
+      "question": "¿Un enchufe o interruptor defectuoso puede ser síntoma de algo mayor?",
+      "answerGuidance": "Explica calentamiento, falsos contactos, derivaciones y por qué revisar solo el embellecedor no siempre basta.",
+      "intent": "TOFU",
+      "blockHint": "faq"
+    },
+    {
+      "question": "¿Cuándo hace falta boletín eléctrico y cuándo no?",
+      "answerGuidance": "Evita afirmar casos normativos cerrados si no están verificados; orienta con prudencia según alta, reforma o requerimiento.",
+      "intent": "MOFU",
+      "blockHint": "faq"
+    }
+  ],
+  "commonMistakes": [
+    "Cambiar un magnetotérmico sin saber por qué dispara.",
+    "Añadir consumo en una línea sin revisar capacidad y protecciones.",
+    "Confundir una avería puntual con un problema global del cuadro.",
+    "Ignorar calentamientos, chispazos o disparos intermitentes.",
+    "Prometer documentación o cumplimiento normativo sin revisar la instalación."
+  ],
+  "decisionCriteria": [
+    {
+      "id": "origin-by-circuit",
+      "label": "Origen del fallo por circuito",
+      "whyItMatters": "Permite aislar si el problema viene de un aparato, de una línea o del cuadro.",
+      "proofExpected": [
+        "pruebas por circuito",
+        "historial del disparo"
+      ]
+    },
+    {
+      "id": "protection-status",
+      "label": "Estado de protecciones",
+      "whyItMatters": "No basta con rearmar; hay que valorar si diferencial y automáticos están bien dimensionados.",
+      "proofExpected": [
+        "revisión de cuadro",
+        "tipología de protecciones"
+      ]
+    },
+    {
+      "id": "load-demand",
+      "label": "Demanda y uso real",
+      "whyItMatters": "Más consumo o nuevos equipos pueden exigir revisar reparto y capacidad.",
+      "proofExpected": [
+        "equipos conectados",
+        "potencia y líneas afectadas"
+      ]
+    },
+    {
+      "id": "documentation-needs",
+      "label": "Necesidad real de documentación",
+      "whyItMatters": "No todas las intervenciones requieren boletín o trámites, pero algunas sí.",
+      "proofExpected": [
+        "motivo de la solicitud",
+        "estado general de la instalación"
+      ]
+    }
+  ],
+  "usefulLocalEntities": [
+    {
+      "type": "service_area",
+      "label": "barrios, polígonos y municipios cercanos",
+      "usage": "Para cobertura real en vivienda y local."
+    },
+    {
+      "type": "public_body",
+      "label": "compañía distribuidora o comercializadora",
+      "usage": "Solo para orientar sobre suministro, nunca como aval comercial."
+    },
+    {
+      "type": "infrastructure",
+      "label": "comunidades, portales y locales comerciales",
+      "usage": "Casos frecuentes de cuadros, iluminación y zonas comunes."
+    },
+    {
+      "type": "regulation",
+      "label": "instalación interior de baja tensión",
+      "usage": "Como marco general prudente sin citar norma concreta no verificada."
+    }
+  ],
+  "toneProfile": {
+    "voice": [
+      "seguro",
+      "técnico claro",
+      "preventivo",
+      "didáctico"
+    ],
+    "forbiddenCliches": [
+      "electricista barato 24h para todo",
+      "avería solucionada en minutos garantizada",
+      "cumplimos cualquier normativa sin revisar"
+    ],
+    "preferredOpenings": [
+      "síntoma eléctrico y riesgo",
+      "diagnóstico por circuito",
+      "cuándo revisar cuadro o línea",
+      "diferenciar fallo puntual de problema estructural"
+    ],
+    "editorialAngles": [
+      "seguridad antes de intervenir",
+      "diagnóstico en vez de cambiar piezas al azar",
+      "dimensionar bien protecciones y consumos",
+      "documentación solo cuando aplica"
+    ]
+  },
+  "legalRiskPolicy": {
+    "prohibitedClaims": [
+      "cumplimiento normativo garantizado sin inspección",
+      "boletín hoy garantizado",
+      "precio exacto por teléfono para cualquier avería",
+      "avería resuelta siempre en una visita"
+    ],
+    "allowedSafeClaims": [
+      "diagnóstico por circuitos",
+      "aislamiento y seguridad previa",
+      "verificación final de funcionamiento",
+      "documentación cuando proceda realmente"
+    ],
+    "requiredDisclaimers": [
+      "la causa del disparo o del fallo debe revisarse in situ",
+      "no todas las intervenciones requieren boletín o reforma",
+      "la instalación puede necesitar revisión adicional si aparecen defectos ocultos"
+    ],
+    "verificationRequiredFor": [
+      "normativa específica",
+      "boletines",
+      "certificados",
+      "marcas de protecciones",
+      "plazos de inspección"
+    ],
+    "pricingPolicy": {
+      "allowExactPrices": false,
+      "allowedLanguage": [
+        "presupuesto orientativo",
+        "coste según líneas afectadas y materiales",
+        "se confirma tras diagnóstico"
+      ],
+      "forbiddenLanguage": [
+        "tarifa única universal",
+        "precio cerrado sin revisar cuadro o instalación"
+      ]
+    },
+    "guaranteePolicy": {
+      "allowSpecificYears": false,
+      "allowedLanguage": [
+        "garantía por escrito",
+        "cobertura sobre el trabajo realizado y los materiales instalados si aplica"
+      ],
+      "forbiddenLanguage": [
+        "garantía de 10 años",
+        "garantía total de cualquier instalación previa"
+      ]
+    }
+  },
+  "blockSemantics": {
+    "servicesGrid": {
+      "categories": [
+        {
+          "label": "Averías y disparos",
+          "summary": "Diagnóstico de diferenciales, magnetotérmicos, cortocircuitos y fallos intermitentes.",
+          "situations": [
+            "salta el diferencial",
+            "zona sin luz",
+            "enchufe que falla"
+          ],
+          "decisionFactor": "Se aísla por circuito antes de sustituir piezas."
+        },
+        {
+          "label": "Cuadros y protecciones",
+          "summary": "Revisión, organización o sustitución de elementos del cuadro cuando procede.",
+          "situations": [
+            "cuadro antiguo",
+            "ampliación de consumo",
+            "protecciones que no corresponden"
+          ],
+          "decisionFactor": "Importa el reparto de cargas y el tipo de protección."
+        },
+        {
+          "label": "Puntos de luz y mecanismos",
+          "summary": "Instalación o reparación de interruptores, enchufes y luminarias.",
+          "situations": [
+            "interruptor defectuoso",
+            "enchufe caliente",
+            "nuevo punto de luz"
+          ],
+          "decisionFactor": "Se valora línea, ubicación y uso real."
+        },
+        {
+          "label": "Revisión documental y mantenimiento",
+          "summary": "Intervenciones ligadas a boletín, comprobaciones o mantenimiento de instalación.",
+          "situations": [
+            "alta o cambio",
+            "revisión preventiva",
+            "reforma parcial"
+          ],
+          "decisionFactor": "La necesidad documental depende del caso concreto."
+        }
+      ],
+      "trustBullets": [
+        "Diagnóstico por circuitos",
+        "Aislamiento y seguridad antes de intervenir",
+        "Verificación final de funcionamiento",
+        "Documentación solo cuando aplica"
+      ]
+    },
+    "processSteps": {
+      "steps": [
+        {
+          "title": "Aislar y revisar el síntoma",
+          "detail": "Se localiza qué parte de la instalación falla y en qué condiciones aparece el problema.",
+          "riskControl": "Evita rearmar o sustituir a ciegas."
+        },
+        {
+          "title": "Diagnóstico por circuito o cuadro",
+          "detail": "Se revisa si el origen está en aparato, línea, mecanismo o protección.",
+          "riskControl": "Permite actuar sobre la causa y no solo sobre el disparo."
+        },
+        {
+          "title": "Corrección técnica",
+          "detail": "Se sustituye, reordena o repara la parte afectada según diagnóstico.",
+          "riskControl": "Reduce falsos contactos, sobrecargas y recaídas."
+        },
+        {
+          "title": "Pruebas y cierre",
+          "detail": "Se comprueba funcionamiento estable y se delimita el alcance de la intervención.",
+          "riskControl": "Aclara qué queda resuelto y si conviene una revisión adicional."
+        }
+      ]
+    },
+    "faq": {
+      "priorityQuestions": [
+        "salta el diferencial",
+        "presupuesto",
+        "revisar cuadro completo",
+        "enchufe como síntoma",
+        "cuándo hace falta boletín"
+      ],
+      "answerPatterns": [
+        "causa probable + prueba segura",
+        "riesgo + recomendación",
+        "caso típico + decisión técnica"
+      ]
+    },
+    "priceGuidance": {
+      "factors": [
+        {
+          "label": "Número de líneas o puntos afectados",
+          "whyItChanges": "Una avería en un enchufe no implica el mismo trabajo que un circuito o cuadro completo.",
+          "safeLanguage": "Se delimita alcance tras el diagnóstico."
+        },
+        {
+          "label": "Acceso y seguridad de la instalación",
+          "whyItChanges": "Cuadros saturados, falsos techos o trazados antiguos cambian la intervención.",
+          "safeLanguage": "Primero se asegura la zona y luego se define trabajo y materiales."
+        },
+        {
+          "label": "Materiales y protecciones necesarias",
+          "whyItChanges": "No cuesta igual sustituir un mecanismo simple que corregir protecciones o varios puntos de consumo.",
+          "safeLanguage": "Solo se presupuestan elementos justificados por la revisión."
+        }
+      ],
+      "comparisonRows": [
+        [
+          "Parte afectada",
+          "enchufe, línea o cuadro modifican alcance y tiempo",
+          "se concreta tras revisar la instalación"
+        ],
+        [
+          "Acceso y seguridad",
+          "cuadro, techo o canalización cambian la intervención",
+          "se explica antes de actuar"
+        ],
+        [
+          "Materiales o protecciones",
+          "mecanismos y elementos de cuadro no equivalen",
+          "se recomiendan solo si están justificados"
+        ]
+      ]
+    }
+  }
+}

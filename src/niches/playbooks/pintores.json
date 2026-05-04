@@ -1,0 +1,267 @@
+{
+  "id": "pintores",
+  "displayName": "Pintores",
+  "aliases": [
+    "pintor",
+    "pintores",
+    "pintura",
+    "pintura decorativa",
+    "alisado de paredes",
+    "quitar gotelé"
+  ],
+  "schemaTypes": [
+    "LocalBusiness",
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "WebPage"
+  ],
+  "allowedVocabulary": [
+    "pintura plástica",
+    "papel pintado",
+    "alisado de paredes",
+    "quitar gotelé",
+    "pintura decorativa",
+    "esmaltado",
+    "barnizado de puertas",
+    "tratamiento de humedades",
+    "pintura de fachadas",
+    "estuco veneciano",
+    "microcemento",
+    "pintura industrial",
+    "revestimientos",
+    "imprimación",
+    "masillado",
+    "lija fina",
+    "cubrición de muebles",
+    "limpieza final",
+    "colores a la carta",
+    "pintura ecológica"
+  ],
+  "forbiddenVocabulary": [
+    "apertura de puertas",
+    "bombín",
+    "fuga de agua",
+    "desatasco",
+    "cuadro eléctrico",
+    "muebles a medida",
+    "carpintería técnica"
+  ],
+  "prohibitedClaims": [
+    "pintamos tu casa en una hora",
+    "pintura eterna que no se ensucia",
+    "el precio más bajo de España",
+    "regalamos la pintura",
+    "resultados mágicos"
+  ],
+  "validTrustSignals": [
+    {
+      "id": "surface-protection",
+      "label": "Protección total",
+      "description": "Cubrimos suelos, muebles y marcos para una limpieza absoluta."
+    },
+    {
+      "id": "premium-paints",
+      "label": "Pinturas de gama alta",
+      "description": "Uso de marcas líderes con alta lavabilidad y cubrición."
+    },
+    {
+      "id": "deadline-commitment",
+      "label": "Compromiso de plazos",
+      "description": "Fecha de inicio y fin garantizada por contrato."
+    },
+    {
+      "id": "humidity-treatment",
+      "label": "Tratamiento previo",
+      "description": "Saneado de manchas y grietas antes de pintar."
+    }
+  ],
+  "coreServices": [
+    "Pintura de viviendas y comunidades",
+    "Alisado de paredes y eliminación de gotelé",
+    "Aplicación de pintura decorativa y estucos",
+    "Pintura de fachadas y exteriores",
+    "Instalación de papel pintado",
+    "Barnizado y lacado de carpintería"
+  ],
+  "bofuVariants": [
+    {
+      "slug": "pintar-piso-precio",
+      "label": "Presupuesto para pintar piso",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "renovar tu hogar con acabados profesionales"
+    },
+    {
+      "slug": "quitar-gotele-madrid",
+      "label": "Eliminar gotelé y alisar",
+      "intent": "transactional",
+      "funnelStage": "BOFU",
+      "angle": "conseguir paredes modernas y lisas"
+    }
+  ],
+  "commonObjections": [
+    "Me preocupa que quede todo sucio después de pintar.",
+    "¿La pintura olerá mucho tiempo?",
+    "Tengo miedo de que el color no sea el que elegí en el catálogo.",
+    "¿Cuánto tiempo estaréis en mi casa?"
+  ],
+  "faqBank": [
+    {
+      "question": "¿Es necesario vaciar el piso para pintar?",
+      "answerGuidance": "Explica que nosotros nos encargamos de mover y proteger los muebles pesados, por lo que no es necesario vaciarlo todo.",
+      "intent": "MOFU",
+      "blockHint": "services_grid"
+    },
+    {
+      "question": "¿Cuánto tiempo se tarda en pintar un piso de 80m2?",
+      "answerGuidance": "Da un rango de 3 a 5 días dependiendo del estado de las paredes y si hay que alisar.",
+      "intent": "MOFU",
+      "blockHint": "process_steps"
+    }
+  ],
+  "commonMistakes": [
+    "No sellar las manchas de humedad antes de pintar.",
+    "Usar pintura de baja calidad que amarillea pronto.",
+    "No respetar los tiempos de secado entre capas.",
+    "Pintar sobre superficies con polvo o grasa."
+  ],
+  "decisionCriteria": [
+    {
+      "id": "preparation",
+      "label": "Preparación de superficies",
+      "whyItMatters": "Un buen acabado depende en un 80% de cómo se preparen las paredes.",
+      "proofExpected": [
+        "lija a máquina",
+        "imprimación selladora"
+      ]
+    }
+  ],
+  "usefulLocalEntities": [
+    {
+      "type": "district",
+      "label": "barrios de la ciudad",
+      "usage": "Para delimitar áreas de actuación rápida."
+    }
+  ],
+  "toneProfile": {
+    "voice": [
+      "profesional",
+      "limpio",
+      "estético",
+      "puntual"
+    ],
+    "forbiddenCliches": [
+      "pintamos barato",
+      "los mejores de la ciudad"
+    ],
+    "preferredOpenings": [
+      "resultados estéticos duraderos",
+      "proceso de alisado técnico",
+      "pintura premium y salud",
+      "acabados de alta decoración"
+    ],
+    "editorialAngles": [
+      "maestría en el color",
+      "protección y limpieza total",
+      "durabilidad certificada",
+      "viviendas con alma y estilo"
+    ]
+  },
+  "legalRiskPolicy": {
+    "prohibitedClaims": [
+      "pintura indestructible"
+    ],
+    "allowedSafeClaims": [
+      "garantía de acabado",
+      "pinturas certificadas"
+    ],
+    "requiredDisclaimers": [
+      "la percepción del color puede variar según la iluminación"
+    ],
+    "verificationRequiredFor": [
+      "metros cuadrados reales",
+      "estado de las superficies"
+    ],
+    "pricingPolicy": {
+      "allowExactPrices": false,
+      "allowedLanguage": [
+        "presupuesto cerrado tras visita"
+      ]
+    },
+    "guaranteePolicy": {
+      "allowSpecificYears": false,
+      "allowedLanguage": [
+        "garantía de mano de obra"
+      ]
+    }
+  },
+  "blockSemantics": {
+    "servicesGrid": {
+      "categories": [
+        {
+          "label": "Pintura de Interiores",
+          "summary": "Renovación estética de viviendas con materiales de primera.",
+          "situations": [
+            "cambio de inquilinos",
+            "manchas de humedad",
+            "desgaste natural"
+          ],
+          "decisionFactor": "Calidad de la pintura y limpieza."
+        }
+      ],
+      "trustBullets": [
+        "Protección de mobiliario",
+        "Limpieza diaria",
+        "Marcas premium",
+        "Plazos cerrados"
+      ]
+    },
+    "processSteps": {
+      "steps": [
+        {
+          "title": "Protección",
+          "detail": "Cubrimos todo con plásticos y cinta de carrocero.",
+          "riskControl": "Evita manchas innecesarias."
+        },
+        {
+          "title": "Preparación",
+          "detail": "Masillamos grietas y lijamos imperfecciones.",
+          "riskControl": "Asegura un acabado liso y duradero."
+        },
+        {
+          "title": "Pintura",
+          "detail": "Aplicamos las capas necesarias para un color uniforme.",
+          "riskControl": "Control de cubrición y recortes perfectos."
+        }
+      ]
+    },
+    "faq": {
+      "priorityQuestions": [
+        "tiempos",
+        "limpieza",
+        "colores",
+        "precios"
+      ],
+      "answerPatterns": [
+        "explicación técnica + seguridad"
+      ]
+    },
+    "priceGuidance": {
+      "factors": [
+        {
+          "label": "Estado de las paredes",
+          "whyItChanges": "Si hay que alisar o quitar gotelé el coste aumenta.",
+          "safeLanguage": "Valoración gratuita sin compromiso."
+        }
+      ],
+      "comparisonRows": [
+        [
+          "Tipo de pintura",
+          "Plástica, mate, satinada o ecológica",
+          "Se elige según la estancia"
+        ]
+      ]
+    }
+  }
+}

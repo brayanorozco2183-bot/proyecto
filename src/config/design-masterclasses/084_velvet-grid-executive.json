@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_084_VELVET_GRID_EXECUTIVE",
+  "title": "Velvet Grid Executive",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "full_screen_parallax",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 12,
+      "gutter": "40px",
+      "container_width": "100%"
+    },
+    "navigation": {
+      "style": "glass_centered",
+      "position": "fixed_top",
+      "blur": "24px",
+      "contrast_safe": true,
+      "mobile_pattern": "bottom_sheet"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#075E63",
+      "accent": "#B45309",
+      "bg": "#F7FBFC",
+      "surface": "#FFFFFF",
+      "surface_alt": "#E8F1F3",
+      "text": "#0E2830",
+      "muted": "#405A63",
+      "on_primary": "#FFFFFF",
+      "on_accent": "#FFFFFF",
+      "radius_policy": "18px",
+      "shadow_policy": "soft_layered",
+      "font_display": "'Cabinet Grotesk', sans-serif",
+      "font_body": "'Satoshi', sans-serif",
+      "spacing_density": "compact",
+      "border_policy": "hairline"
+    },
+    "contrast_report": {
+      "bg_text": 14.77,
+      "surface_text": 15.39,
+      "primary_on_primary": 7.53,
+      "accent_on_accent": 5.02,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #F7FBFC; --surface: #FFFFFF; --surface-alt: #E8F1F3; --text: #0E2830; --muted: #405A63; --primary: #075E63; --accent: #B45309; --on-primary: #FFFFFF; --on-accent: #FFFFFF; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 18px; --gap: 40px; --blur: 24px; --nav-position: fixed; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Satoshi', sans-serif; } h1,h2,h3,.display { font-family: 'Cabinet Grotesk', sans-serif; } .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); } .service-card { position: relative; min-height: 280px; padding: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); transition: transform .35s ease, box-shadow .35s ease; } .service-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-strong); } body::after { content: ''; position: fixed; inset: 0; pointer-events: none; background-image: radial-gradient(color-mix(in srgb, var(--text) 18%, transparent) 1px, transparent 1px); background-size: 4px 4px; opacity: .035; z-index: 80; } @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "cinematic_split_hero",
+      "custom_structure": "<section class='hero hero--split'><div class='hero__copy'><span class='eyebrow'>{{LOCAL_PROOF}}</span><h1>{{H1}}</h1><p>{{INTRO}}</p><div class='hero__actions'>{{CTA_PRIMARY}}{{CTA_SECONDARY}}</div></div><div class='hero__visual'><div class='premium-frame'>{{IMAGE}}</div><div class='trust-badge'>{{RATING}}</div></div></section>"
+    },
+    "services_grid": {
+      "style": "emergency_action_grid",
+      "columns_override": 2,
+      "interaction": "no_motion_static",
+      "content_strategy": "urgent priority cards with phone actions"
+    },
+    "trust_layer": {
+      "style": "certification_ribbon",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "area_bento",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "accordion_luxury",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "arctic_teal",
+    "motion_level": "premium",
+    "noise_overlay": true,
+    "color_glitch": false,
+    "image_treatment": "blueprint_overlay",
+    "premium_cues": [
+      "cinematic hero",
+      "sticky CTA",
+      "local proof"
+    ]
+  }
+}

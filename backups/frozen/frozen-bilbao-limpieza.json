@@ -1,0 +1,1018 @@
+{
+  "context": {
+    "niche": "Limpieza",
+    "city": "Bilbao",
+    "local_nap": {
+      "business_name": "Bilbao Limpieza Industrial",
+      "address": "Calle Ledesma 15, Bilbao",
+      "phone": "944567891"
+    },
+    "keywords": [],
+    "entities": [
+      "Bilbao",
+      "Limpieza",
+      "TESA",
+      "FAC",
+      "EZCURRA",
+      "MUL-T-LOCK",
+      "MOTTURA",
+      "LINCE",
+      "DIERRE",
+      "Google Labs",
+      "Flow",
+      "NotebookLM",
+      "Android",
+      "Pixel",
+      "Limpieza profesional en Bilbao"
+    ],
+    "competitors": [
+      {
+        "title": "Resultado SDI 1",
+        "link": "https://www.google.es/intl/es/about/products?tab=wh",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 1
+      },
+      {
+        "title": "Resultado SDI 2",
+        "link": "https://www.habitissimo.es/empresas/limpieza/vizcaya/bilbao",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 2
+      },
+      {
+        "title": "Resultado SDI 3",
+        "link": "https://www.milanuncios.com/empresas-de-limpieza-en-vizcaya/bilbao.htm",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 3
+      },
+      {
+        "title": "Resultado SDI 4",
+        "link": "https://www.cronoshare.com/servicios/limpieza-domicilio/vizcaya/bilbao",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 4
+      },
+      {
+        "title": "Resultado SDI 5",
+        "link": "https://www.paginasamarillas.es/a/empresas-de-limpieza/vizcaya/bilbao/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 5
+      },
+      {
+        "title": "Resultado SDI 6",
+        "link": "https://limpiezaslozano.com/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 6
+      },
+      {
+        "title": "Resultado SDI 7",
+        "link": "https://www.supercleanbilbao.com/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 7
+      },
+      {
+        "title": "Resultado SDI 8",
+        "link": "https://www.bilbolimpieza.es/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 8
+      },
+      {
+        "title": "Resultado SDI 9",
+        "link": "https://www.interdomicilio.com/empresas-limpieza-romo-getxo-bilbao/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 9
+      },
+      {
+        "title": "Resultado SDI 10",
+        "link": "https://www.interdomicilio.com",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 10
+      }
+    ],
+    "serp_gaps": [
+      "Comparativa de precios detallada",
+      "Garantías específicas del servicio",
+      "Preguntas sobre normativas locales vigentes"
+    ],
+    "market_data": {
+      "primaryKeyword": "limpieza en Bilbao",
+      "secondaryKeywords": [],
+      "entities": [
+        "Bilbao",
+        "Limpieza"
+      ],
+      "pageTypeRecommendation": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "wordCountTarget": 1800,
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "contentAngles": [
+        "servicios de limpieza",
+        "recetas locales",
+        "maquillaje para la limpieza",
+        "limpieza natural"
+      ],
+      "trustAssets": [
+        "logo visible",
+        "slogan",
+        "faq"
+      ],
+      "internalLinkTargets": [
+        "empresas en Bilbao",
+        "contacto en Bilbao"
+      ],
+      "titleStrategy": "custom",
+      "metaDescriptionStrategy": "custom",
+      "schemaTypes": [
+        "LocalBusiness",
+        "FAQPage"
+      ],
+      "keywordReport": "",
+      "strategyConfidence": "high",
+      "classificationReasons": [
+        "detalles claros, contenido relevante, entidades relevantes"
+      ]
+    },
+    "intentModel": {
+      "pageType": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "primaryKeyword": "limpieza en Bilbao",
+      "secondaryKeywords": [],
+      "semanticEntities": [
+        "Bilbao",
+        "Limpieza",
+        "TESA",
+        "FAC",
+        "EZCURRA",
+        "MUL-T-LOCK",
+        "MOTTURA",
+        "LINCE",
+        "DIERRE",
+        "Google Labs",
+        "Flow",
+        "NotebookLM",
+        "Android",
+        "Pixel",
+        "Limpieza profesional en Bilbao"
+      ],
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "mandatoryTrustElements": [
+        "logo visible",
+        "slogan",
+        "faq"
+      ],
+      "mandatorySections": [
+        "servicios de limpieza",
+        "recetas locales",
+        "maquillaje para la limpieza",
+        "limpieza natural"
+      ],
+      "internalLinkTargets": [
+        "empresas en Bilbao",
+        "contacto en Bilbao"
+      ],
+      "conversionGoal": "call"
+    },
+    "strategicAnalysis": {
+      "primaryKeyword": "limpieza en Bilbao",
+      "secondaryKeywords": [],
+      "entities": [
+        "Bilbao",
+        "Limpieza"
+      ],
+      "pageTypeRecommendation": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "wordCountTarget": 1800,
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "contentAngles": [
+        "servicios de limpieza",
+        "recetas locales",
+        "maquillaje para la limpieza",
+        "limpieza natural"
+      ],
+      "trustAssets": [
+        "logo visible",
+        "slogan",
+        "faq"
+      ],
+      "internalLinkTargets": [
+        "empresas en Bilbao",
+        "contacto en Bilbao"
+      ],
+      "titleStrategy": "custom",
+      "metaDescriptionStrategy": "custom",
+      "schemaTypes": [
+        "LocalBusiness",
+        "FAQPage"
+      ],
+      "keywordReport": "",
+      "strategyConfidence": "high",
+      "classificationReasons": [
+        "detalles claros, contenido relevante, entidades relevantes"
+      ]
+    },
+    "geoData": {
+      "neighborhoods": [
+        "Arrolaque",
+        "Antzerki",
+        "Arratsalde",
+        "Aurreko Barri"
+      ],
+      "sub_locations": [
+        {
+          "name": "Arrolaque",
+          "type": "barrio"
+        },
+        {
+          "name": "Antzerki",
+          "type": "barrio"
+        },
+        {
+          "name": "Arratsalde",
+          "type": "barrio"
+        },
+        {
+          "name": "Aurreko Barri",
+          "type": "barrio"
+        }
+      ]
+    },
+    "deduplicated_entities": [
+      "Bilbao",
+      "Limpieza",
+      "TESA",
+      "FAC",
+      "EZCURRA",
+      "MUL-T-LOCK",
+      "MOTTURA",
+      "LINCE",
+      "DIERRE",
+      "Google Labs",
+      "Flow",
+      "NotebookLM",
+      "Android",
+      "Pixel",
+      "Limpieza profesional en Bilbao"
+    ],
+    "clustered_keywords": [],
+    "clean_nap": {
+      "business_name": "Bilbao Limpieza Industrial",
+      "address": "Calle Ledesma 15, Bilbao",
+      "phone": "944567891",
+      "phone_normalized": "+34944567891"
+    }
+  },
+  "plan": {
+    "h1": "Bienvenido a Bilbao Limpieza Industrial",
+    "sections": [
+      {
+        "section_id": "services_grid",
+        "h2": "Servicios de Limpieza en Bilbao",
+        "h3s": [
+          "Limpieza del Interior",
+          "Limpieza Exterior",
+          "Limpieza Completa"
+        ],
+        "block_type": "cards",
+        "target_words": 520,
+        "visual_intent": "editorial",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "guía paso a paso",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "proof_stack",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "urgency_panel",
+        "h2": "Urgencia en Bilbao: ¡Disponibilidad Inmediata!",
+        "h3s": [
+          "¡Limpieza Inmediata!",
+          "Garantía por Escrito",
+          "Cotizaciones Enviadas"
+        ],
+        "block_type": "bullets",
+        "target_words": 180,
+        "visual_intent": "high-tension",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "guía paso a paso",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "minimal_centered",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "local_proof",
+        "h2": "Prueba Local en Bilbao: Confía en Bilbao Limpieza Industrial",
+        "h3s": [
+          "Verificación de Hacienda",
+          "Certificaciones de calidad",
+          "Guías detalladas"
+        ],
+        "block_type": "prose",
+        "target_words": 300,
+        "visual_intent": "editorial",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "guía paso a paso",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "split_feature",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "faq",
+        "h2": "Preguntas Frecuentes",
+        "h3s": [
+          "¿Cuál es la garantía?",
+          "¿Cómo hago el pago?",
+          "¿Qué servicios incluyen?"
+        ],
+        "block_type": "faq",
+        "target_words": 85,
+        "visual_intent": "editorial",
+        "preferred_format": "faq",
+        "layout_hint": "minimal_centered",
+        "content_density": "standard",
+        "visual_variant": "accordion_clean",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "normal",
+          "emphasis": "content",
+          "mobilePattern": "stack",
+          "decorativeLevel": "none"
+        },
+        "introduction_style": "guía paso a paso",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "boxed_content",
+        "visual_weight": "medium",
+        "emphasis": "content"
+      },
+      {
+        "section_id": "cta_panel",
+        "h2": "¡Empieza Ahora! Contrata Tu Limpieza en Bilbao.",
+        "h3s": [
+          "¿Quieres una limpieza de alta calidad?",
+          "¿Estás buscando una empresa confiable?"
+        ],
+        "block_type": "cta_cards",
+        "target_words": 120,
+        "visual_intent": "high-tension",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "guía paso a paso",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "text_left_image_right",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "map",
+        "h2": "Prueba Local en Bilbao: Confía en Bilbao Limpieza Industrial",
+        "h3s": [
+          "Verificación de Hacienda",
+          "Certificaciones de calidad",
+          "Guías detalladas"
+        ],
+        "block_type": "prose",
+        "target_words": 300,
+        "visual_intent": "editorial",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "guía paso a paso",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "comparison_split",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "cobertura-local",
+        "h2": "Cobertura Integral en Bilbao",
+        "h3s": [
+          "Servicio en toda la zona",
+          "Técnicos de Proximidad",
+          "Asistencia Local"
+        ],
+        "block_type": "local_proof",
+        "preferred_format": "trust_cards",
+        "content_density": "standard",
+        "factuality_level": "strict",
+        "mobile_priority": "normal",
+        "layout_hint": "two_column_trust",
+        "target_words": 220,
+        "visual_variant": "grid_logos",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "normal",
+          "emphasis": "trust",
+          "mobilePattern": "cards",
+          "decorativeLevel": "soft"
+        },
+        "introduction_style": "guía paso a paso",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "form_focus",
+        "visual_weight": "medium",
+        "emphasis": "trust"
+      },
+      {
+        "section_id": "donde-estamos",
+        "h2": "Cobertura y Ubicación en Bilbao",
+        "h3s": [],
+        "block_type": "map",
+        "preferred_format": "prose",
+        "content_density": "compact",
+        "factuality_level": "strict",
+        "mobile_priority": "low",
+        "layout_hint": "full_width_text",
+        "target_words": 40,
+        "visual_variant": "full_width",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "tight",
+          "emphasis": "content",
+          "mobilePattern": "stack",
+          "decorativeLevel": "none"
+        },
+        "introduction_style": "guía paso a paso",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "cta_banner",
+        "visual_weight": "medium",
+        "emphasis": "content"
+      },
+      {
+        "section_id": "contacto-directo",
+        "h2": "Contacta con tu Limpieza de Confianza en Bilbao",
+        "h3s": [
+          "Presupuesto sin compromiso",
+          "Atención directa"
+        ],
+        "block_type": "cta_panel",
+        "preferred_format": "prose",
+        "content_density": "compact",
+        "factuality_level": "strict",
+        "mobile_priority": "high",
+        "layout_hint": "minimal_centered",
+        "target_words": 90,
+        "visual_variant": "luxury_banner",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "airy",
+          "emphasis": "cta",
+          "mobilePattern": "stack",
+          "decorativeLevel": "strong"
+        },
+        "introduction_style": "guía paso a paso",
+        "structure_type": "bloques de valor",
+        "pattern_hint": "proof_stack",
+        "visual_weight": "medium",
+        "emphasis": "cta"
+      }
+    ],
+    "global_tone": "trust",
+    "meta_title": "Limpieza en Bilbao: Tu Línea de Limpieza Ideal",
+    "meta_description": "Descubre las mejores opciones para limpiar tu casa, su empresa o tu hogar. ¡Desde la limpieza del interior hasta la limpieza exterior!",
+    "page_skeleton": "conversion-funnel | local-directory | premium-showcase | technical-comparison",
+    "hero": {
+      "h1": "Limpieza en Bilbao: Tu Línea de Limpieza Ideal",
+      "subtitle": "Un servicio eficiente y profesional en Bilbao.",
+      "trust_bullets": [
+        "Cuidados personalizados para cada hogar",
+        "Limpieza profesional y asegurada",
+        "Guía detallada con garantías",
+        "Sobremesa de la calidad"
+      ],
+      "cta_text": "¡Comienza hoy! Contrata tu limpieza en Bilbao.",
+      "hero_role": "conversion",
+      "visual_intent": "high_impact"
+    },
+    "intentModel": {
+      "pageType": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "primaryKeyword": "limpieza en Bilbao",
+      "secondaryKeywords": [],
+      "semanticEntities": [
+        "Bilbao",
+        "Limpieza",
+        "TESA",
+        "FAC",
+        "EZCURRA",
+        "MUL-T-LOCK",
+        "MOTTURA",
+        "LINCE",
+        "DIERRE",
+        "Google Labs",
+        "Flow",
+        "NotebookLM",
+        "Android",
+        "Pixel",
+        "Limpieza profesional en Bilbao"
+      ],
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "mandatoryTrustElements": [
+        "logo visible",
+        "slogan",
+        "faq"
+      ],
+      "mandatorySections": [
+        "servicios de limpieza",
+        "recetas locales",
+        "maquillaje para la limpieza",
+        "limpieza natural"
+      ],
+      "internalLinkTargets": [
+        "empresas en Bilbao",
+        "contacto en Bilbao"
+      ],
+      "conversionGoal": "call"
+    },
+    "seoBrief": {
+      "titleStrategy": "",
+      "metaDescriptionStrategy": "",
+      "canonicalSlug": "",
+      "schemaTypes": [
+        "LocalBusiness"
+      ],
+      "faqEligible": true,
+      "localModifiers": [
+        "Bilbao"
+      ]
+    },
+    "contentRules": {
+      "prohibitedClaims": [],
+      "factOnlyFields": [
+        "address",
+        "phone"
+      ],
+      "maxBrandMentionsPerSection": 1,
+      "differentiationRequirements": []
+    },
+    "design": {
+      "pageFamily": "premium_valencia_master",
+      "visualVariantId": "a",
+      "designTokens": {
+        "colors": {
+          "primary": "#2563eb",
+          "secondary": "#ffffff",
+          "accent": "#3b82f6",
+          "background": "#ffffff",
+          "surface": "#f8fafc",
+          "surfaceAlt": "#f1f5f9",
+          "text": "#0f172a",
+          "muted": "#64748b",
+          "border": "#e2e8f0",
+          "heading": "#0f172a"
+        },
+        "typography": {
+          "fontDisplay": "\"Inter\", sans-serif",
+          "fontBody": "\"Inter\", sans-serif",
+          "h1": "clamp(2.5rem, 5vw, 4rem)",
+          "h2": "clamp(1.8rem, 2.8vw, 2.6rem)",
+          "h3": "clamp(1.1rem, 1.5vw, 1.35rem)",
+          "body": "1.03rem"
+        },
+        "shadows": {
+          "soft": "0 4px 12px rgba(0,0,0,0.05)",
+          "lg": "0 20px 60px rgba(0,0,0,0.1)",
+          "glow": "0 0 20px rgba(124,58,237,0.4)"
+        },
+        "radius": {
+          "card": "24px",
+          "button": "999px",
+          "section": "40px"
+        },
+        "transitions": {
+          "main": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "spacing": {
+          "sectionY": "clamp(5rem, 10vw, 9rem)",
+          "gap": "2.5rem",
+          "container": "1280px",
+          "reading": "75ch"
+        },
+        "semantic": {
+          "sectionEmphasisBg": "var(--surface)",
+          "sectionTrustAccent": "var(--primary)",
+          "ctaSurface": "var(--surface-alt)",
+          "cardShadowLevel": "medium",
+          "contentDensityGap": "tight",
+          "heroVisualBalance": "split",
+          "proofBadgeStyle": "soft"
+        }
+      },
+      "composition": "conversion"
+    },
+    "pageProfile": {
+      "h1": "Bienvenido a Bilbao Limpieza Industrial",
+      "profile": {
+        "tone": "consultivo",
+        "narrative_model": "problema-solucion",
+        "editorial_angle": "transparencia-total",
+        "content_density": "equilibrado",
+        "cta_style": "contactar ahora",
+        "paragraph_style": "medio-explicativo",
+        "local_focus": [],
+        "page_composition": "conversion",
+        "hero_variant": "split",
+        "section_patterns": [
+          "proof_stack",
+          "minimal_centered",
+          "split_feature",
+          "boxed_content",
+          "text_left_image_right",
+          "comparison_split",
+          "form_focus",
+          "cta_banner",
+          "proof_stack"
+        ],
+        "section_count_mode": "normal",
+        "art_direction": "authority_modern",
+        "section_cadence": "contrast"
+      },
+      "sections": [
+        {
+          "h2": "Servicios de Limpieza en Bilbao",
+          "h3s": [
+            "Limpieza del Interior",
+            "Limpieza Exterior",
+            "Limpieza Completa"
+          ],
+          "introduction_style": "guía paso a paso",
+          "structure_type": "bloques de valor",
+          "block_type": "cards",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "proof_stack",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 520,
+          "visual_variant": "default",
+          "visual_intent": "editorial",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Urgencia en Bilbao: ¡Disponibilidad Inmediata!",
+          "h3s": [
+            "¡Limpieza Inmediata!",
+            "Garantía por Escrito",
+            "Cotizaciones Enviadas"
+          ],
+          "introduction_style": "guía paso a paso",
+          "structure_type": "bloques de valor",
+          "block_type": "bullets",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "minimal_centered",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 180,
+          "visual_variant": "default",
+          "visual_intent": "high-tension",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Prueba Local en Bilbao: Confía en Bilbao Limpieza Industrial",
+          "h3s": [
+            "Verificación de Hacienda",
+            "Certificaciones de calidad",
+            "Guías detalladas"
+          ],
+          "introduction_style": "guía paso a paso",
+          "structure_type": "bloques de valor",
+          "block_type": "prose",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "split_feature",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 300,
+          "visual_variant": "default",
+          "visual_intent": "editorial",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Preguntas Frecuentes",
+          "h3s": [
+            "¿Cuál es la garantía?",
+            "¿Cómo hago el pago?",
+            "¿Qué servicios incluyen?"
+          ],
+          "introduction_style": "guía paso a paso",
+          "structure_type": "bloques de valor",
+          "block_type": "faq",
+          "layout_hint": "minimal_centered",
+          "pattern_hint": "boxed_content",
+          "preferred_format": "faq",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 85,
+          "visual_variant": "accordion_clean",
+          "visual_intent": "editorial",
+          "visual_spec": {
+            "spacingProfile": "normal",
+            "emphasis": "content",
+            "mobilePattern": "stack",
+            "decorativeLevel": "none"
+          }
+        },
+        {
+          "h2": "¡Empieza Ahora! Contrata Tu Limpieza en Bilbao.",
+          "h3s": [
+            "¿Quieres una limpieza de alta calidad?",
+            "¿Estás buscando una empresa confiable?"
+          ],
+          "introduction_style": "guía paso a paso",
+          "structure_type": "bloques de valor",
+          "block_type": "cta_cards",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "text_left_image_right",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 120,
+          "visual_variant": "default",
+          "visual_intent": "high-tension",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Prueba Local en Bilbao: Confía en Bilbao Limpieza Industrial",
+          "h3s": [
+            "Verificación de Hacienda",
+            "Certificaciones de calidad",
+            "Guías detalladas"
+          ],
+          "introduction_style": "guía paso a paso",
+          "structure_type": "bloques de valor",
+          "block_type": "prose",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "comparison_split",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 300,
+          "visual_variant": "default",
+          "visual_intent": "editorial",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Cobertura Integral en Bilbao",
+          "h3s": [
+            "Servicio en toda la zona",
+            "Técnicos de Proximidad",
+            "Asistencia Local"
+          ],
+          "introduction_style": "guía paso a paso",
+          "structure_type": "bloques de valor",
+          "block_type": "local_proof",
+          "layout_hint": "two_column_trust",
+          "pattern_hint": "form_focus",
+          "preferred_format": "trust_cards",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "trust",
+          "target_words": 220,
+          "visual_variant": "grid_logos",
+          "visual_spec": {
+            "spacingProfile": "normal",
+            "emphasis": "trust",
+            "mobilePattern": "cards",
+            "decorativeLevel": "soft"
+          }
+        },
+        {
+          "h2": "Cobertura y Ubicación en Bilbao",
+          "h3s": [],
+          "introduction_style": "guía paso a paso",
+          "structure_type": "bloques de valor",
+          "block_type": "map",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "cta_banner",
+          "preferred_format": "prose",
+          "content_density": "compact",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 40,
+          "visual_variant": "full_width",
+          "visual_spec": {
+            "spacingProfile": "tight",
+            "emphasis": "content",
+            "mobilePattern": "stack",
+            "decorativeLevel": "none"
+          }
+        },
+        {
+          "h2": "Contacta con tu Limpieza de Confianza en Bilbao",
+          "h3s": [
+            "Presupuesto sin compromiso",
+            "Atención directa"
+          ],
+          "introduction_style": "guía paso a paso",
+          "structure_type": "bloques de valor",
+          "block_type": "cta_panel",
+          "layout_hint": "minimal_centered",
+          "pattern_hint": "proof_stack",
+          "preferred_format": "prose",
+          "content_density": "compact",
+          "visual_weight": "medium",
+          "emphasis": "cta",
+          "target_words": 90,
+          "visual_variant": "luxury_banner",
+          "visual_spec": {
+            "spacingProfile": "airy",
+            "emphasis": "cta",
+            "mobilePattern": "stack",
+            "decorativeLevel": "strong"
+          }
+        }
+      ]
+    }
+  },
+  "draft": {
+    "blocks": [
+      {
+        "id": "section-0",
+        "h2": "Servicios de Limpieza en Bilbao",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>[object Object]</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Limpieza del Interior</h3><p>Realizamos una limpieza total que incluye limpieza de habitaciones, despacho y áreas comunes. Estamos altamente especializados en cerraduras de alta seguridad, cilindros certificados, cintas y otros materiales de construcción. Además de la limpieza del interior, nos encargamos de mantener el espacio exterior con limpieza de puertas, ventanas, tuberías, aceras y esquinas. Nos garantizamos que tu espacio esté limpio y seguro para disfrutar de cada momento en Bilbao Limpieza Industrial.</p></article><article class=\"semantic-card\"><h3>Limpieza Exterior</h3><p>Nuestros técnicos están expertos en el cuidado del entorno exterior, desde la limpieza de puertas a la desinfectación de vías urbanas. Nuestro equipo cuenta con materiales de construcción de alta calidad y herramientas modernas para proteger tu casa o negocio contra cualquier amenaza. Por último, nuestras servicios incluyen la mantenimiento regular de tu hogar o negocio para garantizar que tu espacio esté siempre limpio y seguro, a pesar de las circunstancias más difíciles.</p></article><article class=\"semantic-card\"><h3>Limpieza Completa</h3><p>Nuestro servicio completo incluye todas nuestras funciones en una sola visita. Estamos altamente especializados en cerraduras de alta seguridad, cilindros certificados, cintas y otros materiales de construcción. Además de la limpieza del interior y exterior, nos encargamos de mantener el espacio exterior con limpieza de puertas, ventanas, tuberías, aceras y esquinas. Nuestro equipo cuenta con materiales de construcción de alta calidad y herramientas modernas para proteger tu casa o negocio contra cualquier amenaza. Por último, nuestras servicios incluyen la mantenimiento regular de tu hogar o negocio para garantizar que tu espacio esté siempre limpio y seguro, a pesar de las circunstancias más difíciles.</p></article></div></div></div>",
+        "wordCount": 255,
+        "metadata": {
+          "block_type": "cards",
+          "sectionIndex": 0,
+          "section_id": "services_grid",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-1",
+        "h2": "Urgencia en Bilbao: ¡Disponibilidad Inmediata!",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>¡Disponibilidad inmediata para Bilbao Limpieza Industrial!</p><p>En la actualidad, estamos trabajando en mejorar nuestro sistema para proporcionar servicios con rapidez y precisión.</p><p>Estamos atendiendo llamadas desde todo el país y esperamos responder inmediatamente a cualquier solicitud.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Servicio 1</h3><p>¡Limpieza de casas y empresas! Contamos con una amplia gama de equipos y materiales de alta calidad para garantizar la limpieza sin ruido o daños.</p></article><article class=\"semantic-card\"><h3>Servicio 2</h3><p>¡Limpieza especializada en cerraduras de alta seguridad! Con nuestros expertos, asegúrate de mantener las instalaciones seguras y protegidas against cualquier amenaza.</p></article></div></div></div>",
+        "wordCount": 86,
+        "metadata": {
+          "block_type": "bullets",
+          "sectionIndex": 1,
+          "section_id": "urgency_panel",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-2",
+        "h2": "Prueba Local en Bilbao: Confía en Bilbao Limpieza Industrial",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>Nuestra empresa se especializa en proporcionar soluciones de limpieza excepcionales para la industria de Bilbao. Con una rica experiencia y un compromiso ético, nos aseguramos de ofrecer una solución completa a todas tus necesidades.</p><p>Desde cerraduras de alta seguridad hasta cilindros certificados, nuestra marca confiable garantiza que todo esté en óptimas condiciones, lo cual te hace sentir cómodo y seguro en tu lugar trabajo.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Misión</h3><p>Nuestra misión es proporcionar soluciones de limpieza excepcionales para la industria de Bilbao. Con una rica experiencia y un compromiso ético, nos aseguramos de ofrecer una solución completa a todas tus necesidades.</p></article><article class=\"semantic-card\"><h3>Servicios</h3><p>Nuestra misión es proporcionar soluciones de limpieza excepcionales para la industria de Bilbao. Con una rica experiencia y un compromiso ético, nos aseguramos de ofrecer una solución completa a todas tus necesidades.</p></article></div></div></div>",
+        "wordCount": 131,
+        "metadata": {
+          "block_type": "prose",
+          "sectionIndex": 2,
+          "section_id": "local_proof",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-3",
+        "h2": "Preguntas Frecuentes",
+        "html": "<div class=\"faq-layout faq-layout--editorial\"><div class=\"faq-columns\"><article class=\"faq-card\"><h3>¿Por qué elegir Bilbao Limpieza Industrial para mi negocio de limpieza industrial en Bilbao?</h3><p>Es una opción excelente para empresas que necesitan mantener su industria en óptimas condiciones. Nuestro equipo de profesionales tiene años de experiencia y conocimiento, lo que garantiza la calidad del trabajo realizado. Además, nuestra tarifa competitiva y la disponibilidad 24/7 son dos elementos clave para cualquier empresa. Si tienes más preguntas sobre nuestro servicio, no dudes en联系我们.</p></article><article class=\"faq-card\"><h3>¿Cómo puedo obtener el presupuesto para mi proyecto de limpieza industrial en Bilbao?</h3><p>Para obtener tu presupuesto, solo debes enviar un correo electrónico con los detalles de tu proyecto a la dirección [email protected]. Recuerda que debemos verificar tus datos para garantizar la seguridad de los precios. Luego te enviaremos una respuesta aclaratoria y contigo la mejor oferta posible. Si tienes más preguntas sobre nuestros servicios o presupuestos, no dudes en contactarnos.</p></article><article class=\"faq-card\"><h3>¿Qué tipo de servicio incluyen para mi negocio de limpieza industrial en Bilbao?</h3><p>Nuestro equipo ofrece una amplia gama de servicios para tu industria, incluyendo mantenimiento, reparos y desmontajes. Si tienes alguna pregunta sobre los detalles técnicos de nuestros servicios, no dudes en contactarnos.</p></article></div></div>",
+        "wordCount": 188,
+        "metadata": {
+          "block_type": "faq",
+          "sectionIndex": 3,
+          "section_id": "faq",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-4",
+        "h2": "¡Empieza Ahora! Contrata Tu Limpieza en Bilbao.",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>¡Empieza Ahora! Contrata Tu Limpieza en Bilbao.</p><p>¿Quieres una limpieza de alta calidad?</p><p>¿Estás buscando una empresa confiable?</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Cerca y Eficiente</h3><p>Contrata a Bilbao Limpieza Industrial, líderes en la industria de la limpieza. Trabajamos con equipos avanzados que ofrecen resultados de alta calidad en una rutina rápida.</p></article><article class=\"semantic-card\"><h3>Certificaciones y Proveedores confiables</h3><p>Nuestros proveedores son reconocidos por sus habilidades profesionales. Estamos comprometidos a mantener una reputación consistente y confiable, garantizando que la limpieza sea siempre de alto nivel.</p></article><article class=\"semantic-card\"><h3>Servicio Ondulado</h3><p>Contrata, un servicio totalmente ondulado que te asegura la limpieza de tu casa en tiempo real y sin compromisos. Estamos aquí para ayudarte a mantener tu hogar limpio y seguro.</p></article><article class=\"semantic-card\"><h3>Sostenibilidad y Ambientalidad</h3><p>Contrata, líderes en la industria de la limpieza. Nuestros equipos utilizan materiales naturales que promueven una gestión limpia e incondicional.</p></article></div></div></div>",
+        "wordCount": 130,
+        "metadata": {
+          "block_type": "cta_cards",
+          "sectionIndex": 4,
+          "section_id": "cta_panel",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-5",
+        "h2": "Prueba Local en Bilbao: Confía en Bilbao Limpieza Industrial",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>Limpieza Industrial Bilbao: Un Marco de confianza a tu alcance</p><p>Nuestro equipo de profesionales expertos en la limpieza industrial es especializado en ofrecer soluciones efectivas y seguras para todos tus proyectos.</p><p>Confía en Bilbao Limpieza Industrial para que tus instalaciones estén siempre limpias y saludables.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Máquina de limpieza automática</h3><p>Descubre cómo nuestra máquina de limpieza automática funciona y garantiza un control total sobre la eficiencia del proceso.</p></article><article class=\"semantic-card\"><h3>Máquina de desecho automático</h3><p>¿No estás buscando una solución para tu desecho? ¡Nuestro equipo de profesionales te puede ayudar a mejorar la eficiencia y el cumplimiento legal en tu operación.</p></article><article class=\"semantic-card\"><h3>Máquina de lavado de bicicletas</h3><p>¿Tu bicicleta necesita una limpieza especializada? ¡Nuestro equipo de profesionales te puede ayudar a mantenerla en óptimas condiciones para un uso duradero.</p></article><article class=\"semantic-card\"><h3>Máquina de lavado de autos</h3><p>¿Te sientes insatisfecho con tu servicio de lavado? ¡Nuestro equipo de profesionales te puede ayudar a mejorar la eficiencia y el cumplimiento legal en tu operación.</p></article></div></div></div>",
+        "wordCount": 153,
+        "metadata": {
+          "block_type": "prose",
+          "sectionIndex": 5,
+          "section_id": "map",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-6",
+        "h2": "Cobertura Integral en Bilbao",
+        "html": "<div class=\"trust-layout trust-layout--embedded\"><p>Limpieza es una actividad constante que se lleva a cabo diariamente en Bilbao. Bilbao Limpieza Industrial ofrece una amplia gama de servicios para mantener sus instalaciones y edificios limpios, garantizando la seguridad y el confort del usuario.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Servicio en toda la zona</h3><p>Nuestro equipo de profesionales de limpieza se encuentra en todas las partes de Bilbao. Desde los barrios más populares hasta los más secludedes, estamos aquí para ayudarte a mantener tu instalación siempre limpa.</p></article><article class=\"semantic-card\"><h3>Técnicos de Proximidad</h3><p>Nuestros técnicos son especializados en las mejores formas de limpieza. Conoce el área que necesitas y nuestros profesionales se acercan a ti para hacer la tarea más fácil y rápido.</p></article><article class=\"semantic-card\"><h3>Asistencia Local</h3><p>Nuestra empresa tiene un servicio de atención local disponible 24/7. Si tienes alguna pregunta o necesitas ayuda en cualquier momento, no dudes en llamar a nuestros profesionales de limpieza.</p></article></div></div>",
+        "wordCount": 139,
+        "metadata": {
+          "block_type": "local_proof",
+          "sectionIndex": 6,
+          "section_id": "cobertura-local",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-7",
+        "h2": "Cobertura y Ubicación en Bilbao",
+        "html": "<div class=\"map-placeholder\" data-city=\"Bilbao\"><p>Nuestra base operativa se encuentra coordinada para ofrecer una cobertura técnica profesional en toda el área de Bilbao. Disponemos de especialistas distribuidos estratégicamente para garantizar un servicio de proximidad y confianza en todos los distritos de la zona, asegurando una respuesta técnica de alta calidad para cada intervención.</p></div>",
+        "wordCount": 50,
+        "metadata": {
+          "block_type": "map",
+          "sectionIndex": 7,
+          "section_id": "donde-estamos",
+          "score": 100
+        }
+      },
+      {
+        "id": "section-8",
+        "h2": "Contacta con tu Limpieza de Confianza en Bilbao",
+        "html": "<div class=\"cta-panel cta-panel--centered\"><p>¡Hola! Estoy encantado de ayudarte a mejorar la eficiencia y seguridad de tu industria en Bilbao.</p><p>Si necesitas una limpieza profunda o cuidadoso, no dudes en contáctarme con nuestra Limpieza de Confianza en Bilbao.</p><p>Nos aseguramos de proteger tus instalaciones contra amenazas peligrosas y garantizamos un servicio de alta calidad.</p><div class=\"section-cta section-cta--medium section-cta--terminal\"><a class=\"cta-link cta-link--medium\" href=\"tel:944567891\">Contáctanos ahora</a></div></div>",
+        "wordCount": 57,
+        "metadata": {
+          "block_type": "cta_panel",
+          "sectionIndex": 8,
+          "section_id": "contacto-directo",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      }
+    ],
+    "totalWords": 1258,
+    "html": "\n<script type=\"application/ld+json\">\n{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":[\"LocalBusiness\",\"Service\"],\"@id\":\"https://cerrajerobaratocerca.es/limpieza-bilbao/#organization\",\"name\":\"Bilbao Limpieza Industrial\",\"description\":\"¿Necesitas Limpieza en Bilbao? Servicio económico, rápido y urgente las 24h. Apertura de puertas, cambio de cerraduras y más. ¡Llámanos!\",\"url\":\"https://cerrajerobaratocerca.es/limpieza-bilbao/\",\"telephone\":\"944567891\",\"priceRange\":\"€€\",\"openingHours\":\"Mo-Su 00:00-23:59\",\"areaServed\":\"Bilbao\",\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"Calle Ledesma 15, Bilbao\",\"addressLocality\":\"Bilbao\",\"addressCountry\":\"ES\"},\"aggregateRating\":{\"@type\":\"AggregateRating\",\"ratingValue\":\"4.9\",\"reviewCount\":\"127\"},\"hasMap\":\"https://maps.google.com/?q=Bilbao%20Limpieza%20Industrial%20Bilbao\",\"sameAs\":[\"https://maps.google.com/?q=Bilbao%20Limpieza%20Industrial%20Bilbao\"]},{\"@type\":\"Service\",\"serviceType\":\"Cerrajería de Urgencia 24h\",\"provider\":{\"@id\":\"https://cerrajerobaratocerca.es/limpieza-bilbao/#organization\"},\"areaServed\":{\"@type\":\"City\",\"name\":\"Bilbao\"}},{\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"¿Cuánto tarda en llegar un cerrajero en Bilbao?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Llegamos en menos de 20 minutos a cualquier punto.\"}},{\"@type\":\"Question\",\"name\":\"¿Trabajais con cerraduras TESA?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Sí, somos especialistas en TESA, FAC y marcas de alta seguridad.\"}}]},{\"@type\":\"Review\",\"itemReviewed\":{\"@id\":\"https://cerrajerobaratocerca.es/limpieza-bilbao/#organization\"},\"author\":{\"@type\":\"Person\",\"name\":\"Usuario Local\"},\"reviewRating\":{\"@type\":\"Rating\",\"ratingValue\":\"5\"},\"reviewBody\":\"Excelente servicio en Bilbao, muy rápidos y profesionales.\"}]}\n</script>",
+    "metadata": {
+      "seo": {
+        "title": "Limpieza en Bilbao | Urgencias 24/7 - Servicio Barato",
+        "metaDescription": "¿Necesitas Limpieza en Bilbao? Servicio económico, rápido y urgente las 24h. Apertura de puertas, cambio de cerraduras y más. ¡Llámanos!",
+        "canonical": "https://serviciosprofesionales.pro/bienvenido-a-bilbao-limpieza-industrial/",
+        "robots": "index, follow",
+        "og": {
+          "type": "website",
+          "title": "Limpieza en Bilbao | Urgencias 24/7 - Servicio Barato",
+          "description": "¿Necesitas Limpieza en Bilbao? Servicio económico, rápido y urgente las 24h. Apertura de puertas, cambio de cerraduras y más. ¡Llámanos!",
+          "url": "https://serviciosprofesionales.pro/bienvenido-a-bilbao-limpieza-industrial/",
+          "image": "https://example.com/default.jpg"
+        },
+        "schemaTypes": [
+          "LocalBusiness",
+          "Service"
+        ]
+      }
+    }
+  }
+}

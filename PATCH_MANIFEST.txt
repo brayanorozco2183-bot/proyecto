@@ -1,0 +1,16 @@
+Gravity patch: Final Production Audit Loop
+
+Apply from project root with:
+  aplicar_parche_final_production_audit_loop.bat
+
+Added:
+  src/quality/finalProductionAudit.ts
+  scripts/audit_final_html.ts
+  docs/PATCH_FINAL_PRODUCTION_AUDIT_LOOP.md
+
+Modified:
+  src/utils/deterministicHtmlSanitizer.ts
+  src/quality/deterministicProductionGate.ts
+  src/pipelines/phases/quality.phase.ts
+  src/pipelines/phases/delivery.phase.ts
+  package.json

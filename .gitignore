@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+.env
+.env.tmp
+.env.local
+.env.production
+.bot_profiles/
+
+# Build and Source artifacts
+dist/
+build/
+src/**/*.js
+src/**/*.js.map
+!src/**/*.ts
+
+# Database and state
+# Database and state (Whitelisted for backup)
+# maestro.db
+# maestro.db-journal
+# maestro.db-shm
+# maestro.db-wal
+# database.sqlite
+# *.db
+# *.sqlite
+# *.sqlite3
+# maestro.db
+
+# Generated outputs (Whitelisted for backup)
+# output_sites/
+# scripts/output_sites/
+# scripts/public_static/
+# public_static/
+# public-static/
+# site_output/
+test_results/
+debug_runs/
+assets_generated/
+playwright-report/
+test-results/
+
+# Temporary / Scratch
+tmp/
+scratch/
+tmp_*
+debug_*
+finalize_*
+repair_*
+
+# Test and flow scripts in root (moving to tools/ later)
+test_*.ts
+run_*.ts
+monitor_*.ts
+*.patch
+
+# System
+.DS_Store
+.vscode/
+.idea/
+OllamaSetup.exe

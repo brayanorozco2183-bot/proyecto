@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{NICHE}} en Valencia | {{NICHE}} Elite Valencia</title>
+  <meta name="description" content="{{NICHE}} en Valencia con atención profesional, aperturas, cambios de cerradura, refuerzo de seguridad y asistencia urgente.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      color-scheme: dark;
+
+      /* Palette */
+      --primary: hsl(257 46% 58%);
+      --primary-dark: hsl(257 52% 44%);
+      --secondary: hsl(257 20% 18%);
+      --accent: hsl(85 60% 58%);
+      --color-bg: hsl(250 24% 8%);
+      --surface: hsl(252 20% 11%);
+      --surface-alt: hsl(252 18% 14%);
+      --color-text: hsl(0 0% 97%);
+      --heading-color: hsl(0 0% 99%);
+      --muted: hsl(240 10% 75%);
+      --border: hsl(250 14% 22%);
+      --shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.18);
+      --shadow-lg: 0 24px 80px rgba(0, 0, 0, 0.28);
+
+      /* Typography */
+      --font-headings: "Cormorant Garamond", serif;
+      --font-body: "Plus Jakarta Sans", sans-serif;
+      --fs-body: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+      --fs-small: clamp(0.875rem, 0.83rem + 0.15vw, 0.95rem);
+      --fs-h1: clamp(2.75rem, 2.05rem + 2.8vw, 4.85rem);
+      --fs-h2: clamp(1.85rem, 1.45rem + 1.4vw, 2.9rem);
+      --fs-h3: clamp(1.2rem, 1.05rem + 0.7vw, 1.55rem);
+      --lh-body: 1.72;
+      --lh-headings: 1.08;
+
+      /* Layout */
+      --container-max: 1180px;
+      --reading-max: 68ch;
+      --gap-sm: 0.875rem;
+      --gap-md: clamp(1rem, 0.7rem + 1vw, 1.5rem);
+      --gap-lg: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+      --space-xs: 0.5rem;
+      --space-sm: 0.875rem;
+      --space-md: 1.25rem;
+      --space-lg: 2rem;
+      --space-xl: 3rem;
+      --space-2xl: 4.5rem;
+      --section-space-sm: clamp(3rem, 5vw, 4rem);
+      --section-space-md: clamp(4rem, 7vw, 6rem);
+      --section-space-lg: clamp(5rem, 10vw, 8rem);
+
+      /* Radius */
+      --radius-card: 18px;
+      --radius-surface: 28px;
+      --radius-button: 999px;
+      --radius-badge: 999px;
+
+      /* Motion */
+      --transition-fast: 180ms ease;
+      --transition-normal: 280ms ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top, rgba(123, 97, 255, 0.12), transparent 35%),
+        linear-gradient(180deg, hsl(250 24% 9%), hsl(250 24% 8%));
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--container-max));
+      margin-inline: auto;
+    }
+
+    .content-width {
+      max-width: 1100px;
+      margin-inline: auto;
+    }
+
+    .prose-width {
+      max-width: var(--reading-max);
+    }
+
+    h1, h2, h3 {
+      color: var(--heading-color);
+      font-family: var(--font-headings);
+      line-height: var(--lh-headings);
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      font-size: var(--fs-h1);
+      font-weight: 700;
+    }
+
+    h2 {
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    p, ul, ol {
+      margin-bottom: 1rem;
+    }
+
+    ul, ol {
+      padding-left: 1.2rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 32px;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-badge);
+      background: color-mix(in srgb, var(--primary) 24%, transparent);
+      border: 1px solid color-mix(in srgb, var(--primary) 42%, var(--border));
+      color: hsl(0 0% 100% / 0.9);
+      font-size: var(--fs-small);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin-bottom: 1rem;
+    }
+
+    .section-lead {
+      max-width: 62ch;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--color-bg) 84%, transparent);
+      backdrop-filter: blur(16px);
+    }
+
+    .site-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      min-height: 74px;
+    }
+
+    .brand {
+      display: inline-flex;
+      flex-direction: column;
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    .brand__name {
+      color: var(--heading-color);
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .brand__meta {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a:not(.cta-primary):not(.cta-secondary) {
+      color: var(--color-text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      opacity: 0.92;
+      transition: opacity var(--transition-fast);
+    }
+
+    .nav a:hover {
+      opacity: 1;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.875rem;
+      align-items: center;
+    }
+
+    .cta-primary,
+    .cta-secondary,
+    .cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0.95rem 1.45rem;
+      border-radius: var(--radius-button);
+      text-decoration: none;
+      font-weight: 800;
+      transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .cta-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: 1px solid transparent;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cta-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(88, 71, 196, 0.28);
+    }
+
+    .cta-secondary {
+      background: transparent;
+      color: var(--color-text);
+      border: 1px solid var(--border);
+    }
+
+    .cta-secondary:hover {
+      border-color: color-mix(in srgb, var(--primary) 60%, var(--border));
+      background: color-mix(in srgb, var(--surface-alt) 75%, transparent);
+    }
+
+    .cta-ghost {
+      background: color-mix(in srgb, var(--surface) 76%, transparent);
+      color: var(--color-text);
+      border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    }
+
+    .hero {
+      padding: var(--section-space-lg) 0 var(--section-space-md);
+    }
+
+    .hero__shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(1.5rem, 4vw, 4rem);
+      padding: clamp(2rem, 4vw, 3.5rem);
+      border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
+      border-radius: var(--radius-surface);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        linear-gradient(145deg, color-mix(in srgb, var(--surface) 92%, transparent), color-mix(in srgb, var(--surface-alt) 96%, transparent));
+      box-shadow: var(--shadow-lg);
+      overflow: clip;
+      isolation: isolate;
+    }
+
+    .hero__shell::before {
+      content: "";
+      position: absolute;
+      inset: auto -10% -30% auto;
+      width: 320px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 255, 96, 0.14), transparent 65%);
+      z-index: -1;
+    }
+
+    .hero__copy {
+      min-width: 0;
+    }
+
+    .hero__title {
+      max-width: 12ch;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero__subtitle {
+      max-width: 60ch;
+      font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.2rem);
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero__list {
+      display: grid;
+      gap: 0.75rem;
+      max-width: 54ch;
+      color: hsl(0 0% 100% / 0.9);
+      margin-top: 1.25rem;
+    }
+
+    .hero__list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .hero__list-item::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1.1rem;
+      line-height: 1.2;
+    }
+
+    .hero__aside {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .hero-card {
+      width: 100%;
+      padding: clamp(1.25rem, 2vw, 1.75rem);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid color-mix(in srgb, var(--border) 80%, rgba(255,255,255,0.08));
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+
+    .hero-card__kicker {
+      color: var(--muted);
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .hero-card__phone {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      width: 100%;
+      border-radius: var(--radius-button);
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 44%, var(--border));
+      font-size: 1rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .hero-card__meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .section {
+      padding: var(--section-space-md) 0;
+      position: relative;
+    }
+
+    .section--alt {
+      background: color-mix(in srgb, var(--primary) 4%, var(--color-bg));
+    }
+
+    .section--compact {
+      padding: var(--section-space-sm) 0;
+    }
+
+    .section-card {
+      padding: clamp(1.4rem, 2vw, 2rem);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-grid {
+      display: grid;
+      gap: clamp(1.5rem, 4vw, 3rem);
+      align-items: start;
+    }
+
+    .section-grid--split {
+      grid-template-columns: 1.08fr 0.92fr;
+    }
+
+    .section-grid--reverse {
+      grid-template-columns: 0.92fr 1.08fr;
+    }
+
+    .section-grid--two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .feature-list li {
+      list-style: none;
+      position: relative;
+      padding-left: 1.25rem;
+      color: hsl(0 0% 100% / 0.92);
+    }
+
+    .feature-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 20%, transparent);
+    }
+
+    .info-panel {
+      display: grid;
+      gap: 1rem;
+      position: sticky;
+      top: 98px;
+    }
+
+    .stats-card {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stat {
+      padding: 1rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface-alt) 82%, transparent);
+    }
+
+    .stat__value {
+      display: block;
+      color: var(--heading-color);
+      font-size: 1.3rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .stat__label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .benefit-card {
+      padding: 1.3rem;
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--surface) 84%, transparent);
+      border: 1px solid var(--border);
+    }
+
+    .benefit-card__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      margin-bottom: 0.9rem;
+      background: color-mix(in srgb, var(--primary) 22%, transparent);
+      font-size: 1.1rem;
+    }
+
+    .benefit-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .service-card {
+      padding: 1.35rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      min-height: 100%;
+    }
+
+    .service-card__title {
+      margin-bottom: 0.45rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--heading-color);
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+
+    .trust-strip {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--surface) 84%, transparent);
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem 1.5rem;
+    }
+
+    .trust-strip__label {
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .trust-strip__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .trust-strip__links a {
+      text-decoration: none;
+      color: var(--color-text);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface-alt) 82%, transparent);
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--surface) 82%, transparent);
+      padding: 1.2rem 1.25rem;
+    }
+
+    .faq-item h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .cta-band {
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      border-radius: 24px;
+      border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
+      background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 30%, transparent), color-mix(in srgb, var(--surface-alt) 95%, transparent));
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem 1.5rem;
+      align-items: center;
+    }
+
+    .cta-band p {
+      color: hsl(0 0% 100% / 0.88);
+      margin-bottom: 0;
+      max-width: 60ch;
+    }
+
+    .footer {
+      padding: var(--section-space-md) 0;
+      border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--secondary) 70%, var(--color-bg)), var(--color-bg));
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
+
+    .footer__brand {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .footer__lead {
+      color: var(--muted);
+      max-width: 54ch;
+    }
+
+    .footer__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .footer__links a {
+      text-decoration: none;
+      color: var(--color-text);
+      font-size: 0.94rem;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--surface-alt) 80%, transparent);
+    }
+
+    .footer__aside {
+      display: grid;
+      gap: 1rem;
+      justify-items: start;
+    }
+
+    .footer__meta {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .footer__legal {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 1024px) {
+      .hero__shell,
+      .section-grid--split,
+      .section-grid--reverse,
+      .footer__grid,
+      .cta-band {
+        grid-template-columns: 1fr;
+      }
+
+      .info-panel {
+        position: static;
+      }
+
+      .services-grid,
+      .benefits-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero__title {
+        max-width: 14ch;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .site-header__inner {
+        min-height: 64px;
+      }
+
+      .nav {
+        gap: 0.75rem;
+      }
+
+      .hero {
+        padding-top: var(--section-space-md);
+      }
+
+      .hero__shell {
+        padding: 1.4rem;
+      }
+
+      .cta-row,
+      .trust-strip,
+      .footer__links {
+        align-items: stretch;
+      }
+
+      .cta-primary,
+      .cta-secondary,
+      .cta-ghost,
+      .hero-card__phone {
+        width: 100%;
+      }
+
+      .services-grid,
+      .benefits-grid,
+      .section-grid--two,
+      .stats-card {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        width: min(calc(100% - 1rem), var(--container-max));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container site-header__inner">
+      <a href="#top" class="brand" aria-label="Ir al inicio">
+        <span class="brand__name">{{NICHE}} Elite Valencia</span>
+        <span class="brand__meta">Atención local y asistencia urgente</span>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#servicios">Servicios</a>
+        <a href="#seguridad">Seguridad</a>
+        <a href="#faq">FAQ</a>
+        <a href="tel:+34961234567" class="cta-primary">Llamar ahora</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero__shell">
+          <div class="hero__copy">
+            <span class="eyebrow">{{NICHE}} en Valencia</span>
+            <h1 id="hero-title" class="hero__title">{{NICHE}} de confianza en Valencia con respuesta clara y profesional</h1>
+            <p class="hero__subtitle">Atendemos aperturas, cambios de cerradura, refuerzo de puertas y revisión de accesos en Valencia, con una propuesta seria, cercana y centrada en la seguridad real de viviendas y negocios.</p>
+
+            <div class="cta-row" aria-label="Acciones principales">
+              <a href="tel:+34961234567" class="cta-primary">+34 96 123 45 67</a>
+              <a href="#servicios" class="cta-secondary">Ver servicios</a>
+            </div>
+
+            <div class="hero__list" aria-label="Ventajas principales">
+              <div class="hero__list-item">Asistencia urgente y trabajos programados con presupuesto explicado antes de intervenir.</div>
+              <div class="hero__list-item">Revisión de bombines, escudos, cerraduras multipunto y sistemas de acceso habituales.</div>
+              <div class="hero__list-item">Atención tanto a viviendas como a locales, portales y comunidades.</div>
+            </div>
+          </div>
+
+          <aside class="hero__aside" aria-label="Datos rápidos del servicio">
+            <div class="hero-card">
+              <div>
+                <p class="hero-card__kicker">Disponibilidad</p>
+                <h2 style="font-size: clamp(1.55rem, 1.1rem + 1.2vw, 2.05rem); margin-bottom: 0.6rem;">Intervención local con criterio técnico</h2>
+                <p class="hero-card__meta">Valencia capital y zonas cercanas. Aperturas, sustitución de bombines y mejora de seguridad con atención directa.</p>
+              </div>
+
+              <div class="stats-card" aria-label="Indicadores del servicio">
+                <div class="stat">
+                  <span class="stat__value">24h</span>
+                  <span class="stat__label">Atención urgente</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__value">Local</span>
+                  <span class="stat__label">Cobertura en Valencia</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__value">Claro</span>
+                  <span class="stat__label">Presupuesto explicado</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__value">Directo</span>
+                  <span class="stat__label">Contacto sin rodeos</span>
+                </div>
+              </div>
+
+              <a href="tel:+34961234567" class="hero-card__phone">Llamar a {{NICHE}} Elite Valencia</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--compact" aria-label="Fuentes oficiales">
+      <div class="container">
+        <div class="trust-strip">
+          <span class="trust-strip__label">Fuentes oficiales</span>
+          <div class="trust-strip__links">
+            <a href="https://www.policia.es/" target="_blank" rel="noopener noreferrer">Policía Nacional</a>
+            <a href="https://www.guardiacivil.es/" target="_blank" rel="noopener noreferrer">Guardia Civil</a>
+            <a href="https://www.boe.es/" target="_blank" rel="noopener noreferrer">BOE</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicios" aria-labelledby="servicios-title">
+      <div class="container content-width">
+        <span class="eyebrow">Servicios</span>
+        <h2 id="servicios-title" class="section-title">Servicios técnicos de {{NICHE}} en Valencia</h2>
+        <p class="section-lead">Combinamos asistencia urgente con trabajos programados de mejora y sustitución. El objetivo no es solo abrir una puerta, sino dejar la seguridad resuelta con criterio.</p>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <h3 class="service-card__title">Apertura de puertas</h3>
+            <p>Intervenciones para puertas bloqueadas o cerraduras atascadas, priorizando técnicas limpias siempre que el sistema lo permita.</p>
+          </article>
+
+          <article class="service-card">
+            <h3 class="service-card__title">Cambio de bombines</h3>
+            <p>Sustitución de cilindros desgastados o vulnerables por opciones más adecuadas al uso y al nivel de seguridad de la puerta.</p>
+          </article>
+
+          <article class="service-card">
+            <h3 class="service-card__title">Refuerzo de accesos</h3>
+            <p>Revisión de cerraduras, escudos, puntos de cierre y elementos complementarios para mejorar la protección general.</p>
+          </article>
+
+          <article class="service-card">
+            <h3 class="service-card__title">Apertura de locales</h3>
+            <p>Atención en persianas, accesos comerciales y cierres que requieren una actuación rápida para reducir interrupciones.</p>
+          </article>
+
+          <article class="service-card">
+            <h3 class="service-card__title">Mantenimiento preventivo</h3>
+            <p>Comprobación de holguras, desgaste y fallos repetitivos antes de que acaben generando bloqueos o incidencias mayores.</p>
+          </article>
+
+          <article class="service-card">
+            <h3 class="service-card__title">Atención a comunidades</h3>
+            <p>Soporte para portales, accesos compartidos y puertas de uso intensivo con un enfoque claro y operativo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="seguridad" aria-labelledby="seguridad-title">
+      <div class="container content-width section-grid section-grid--split">
+        <div class="stack prose-width">
+          <span class="eyebrow">Seguridad local</span>
+          <h2 id="seguridad-title" class="section-title">Qué problemas de seguridad vemos con más frecuencia en Valencia</h2>
+          <p class="section-lead">En viviendas y negocios suelen repetirse incidencias relacionadas con desgaste, accesos mal ajustados, bombines poco actualizados y cerraduras que ya no responden como deberían.</p>
+
+          <h3>Desgaste y bloqueos por uso continuado</h3>
+          <p>Muchas incidencias no vienen de un intento de robo, sino de mecanismos que llevan demasiado tiempo funcionando al límite. Ahí es donde una revisión a tiempo ahorra aperturas urgentes y cambios más costosos.</p>
+
+          <h3>Puntos débiles en puertas y cierres</h3>
+          <p>No basta con cambiar una pieza si el conjunto sigue descompensado. Revisamos el acceso como sistema: ajuste de la puerta, cilindro, escudo, golpe y elementos que afectan al cierre real.</p>
+
+          <ul class="feature-list">
+            <li>Bombines que ya no ofrecen el nivel de seguridad esperado.</li>
+            <li>Cerraduras que fallan de forma intermitente y anticipan un bloqueo.</li>
+            <li>Puertas que rozan, cierran mal o fuerzan el mecanismo con cada uso.</li>
+          </ul>
+        </div>
+
+        <aside class="info-panel" aria-label="Panel de confianza">
+          <div class="section-card">
+            <h3>Recomendación práctica</h3>
+            <p>No esperes a que una cerradura falle del todo. Si el cierre se endurece, hay juego en el bombín o la puerta necesita presión para cerrar, conviene revisarlo antes.</p>
+          </div>
+
+          <div class="section-card">
+            <h3>Atención directa</h3>
+            <p>Explicamos lo necesario con claridad y evitamos inflar la intervención con cambios que no aportan valor real.</p>
+            <div class="cta-row" style="margin-top: 1rem;">
+              <a href="tel:+34961234567" class="cta-primary">Solicitar atención</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="ventajas" aria-labelledby="ventajas-title">
+      <div class="container content-width">
+        <span class="eyebrow">Por qué elegirnos</span>
+        <h2 id="ventajas-title" class="section-title">Un servicio pensado para resolver bien, no solo rápido</h2>
+        <p class="section-lead">La rapidez importa, pero también importa salir de la intervención con el acceso funcionando correctamente y con una explicación razonable de lo que se ha hecho.</p>
+
+        <div class="benefits-grid">
+          <article class="benefit-card">
+            <div class="benefit-card__icon">⚡</div>
+            <h3>Respuesta ágil</h3>
+            <p>Prioridad para incidencias activas y contacto directo sin formularios innecesarios.</p>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-card__icon">🛡️</div>
+            <h3>Criterio técnico</h3>
+            <p>Revisión del conjunto del acceso, no solo de la pieza que ha fallado.</p>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-card__icon">💬</div>
+            <h3>Comunicación clara</h3>
+            <p>Explicación previa de la intervención y del enfoque recomendado en cada caso.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="experiencia" aria-labelledby="experiencia-title">
+      <div class="container content-width section-grid section-grid--reverse">
+        <aside class="section-card">
+          <span class="eyebrow">Cobertura</span>
+          <h2 style="font-size: clamp(1.6rem, 1.2rem + 1vw, 2.2rem); margin-top: 1rem;">Valencia y zonas cercanas</h2>
+          <p class="section-lead" style="margin-bottom: 1rem;">Prestamos servicio en distintos puntos de Valencia y en áreas próximas según disponibilidad y tipo de intervención.</p>
+          <ul class="feature-list">
+            <li>Valencia centro</li>
+            <li>Ruzafa</li>
+            <li>Benimaclet</li>
+            <li>Cabanyal</li>
+            <li>Patraix</li>
+          </ul>
+        </aside>
+
+        <div class="stack prose-width">
+          <span class="eyebrow">Trayectoria</span>
+          <h2 id="experiencia-title" class="section-title">Experiencia local y trabajo orientado a la seguridad real</h2>
+          <p>Atendemos situaciones habituales en viviendas, locales y comunidades: puertas que han perdido ajuste, bombines que ya no responden bien, cambios tras pérdida de llaves o necesidad de reforzar un acceso concreto.</p>
+          <p>El enfoque es simple: revisar el punto crítico, explicar qué conviene hacer y actuar con la solución más razonable para ese caso. No todas las puertas necesitan lo mismo y no todos los cambios mejoran la seguridad.</p>
+
+          <div class="section-card" style="margin-top: 0.5rem;">
+            <h3>Qué valoran más nuestros clientes</h3>
+            <ul class="feature-list">
+              <li>Que el diagnóstico sea comprensible y directo.</li>
+              <li>Que se respete el tiempo del cliente en urgencias.</li>
+              <li>Que la solución final se note en el uso diario de la puerta.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq-title" id="faq">
+      <div class="container content-width">
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2 id="faq-title" class="section-title">Dudas habituales sobre {{NICHE}} en Valencia</h2>
+
+        <div class="faq-list">
+          <article class="faq-item">
+            <h3>¿Podéis revisar una cerradura antes de cambiarla?</h3>
+            <p>Sí. Siempre que sea viable, valoramos primero el estado real del mecanismo para determinar si conviene ajustar, reparar o sustituir.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>¿Atendéis urgencias fuera del horario habitual?</h3>
+            <p>Sí, mantenemos atención para incidencias urgentes, especialmente en bloqueos, aperturas y problemas que impiden usar el acceso con normalidad.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>¿Trabajáis también con locales y comunidades?</h3>
+            <p>Sí. Atendemos viviendas, negocios y accesos compartidos, adaptando la intervención al tipo de puerta, uso y nivel de exigencia.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--compact" aria-labelledby="cta-final-title">
+      <div class="container content-width">
+        <div class="cta-band">
+          <div>
+            <h2 id="cta-final-title" style="font-size: clamp(1.8rem, 1.4rem + 1vw, 2.3rem); margin-bottom: 0.6rem;">¿Necesitas atención ahora o quieres revisar la seguridad de tu puerta?</h2>
+            <p>Atendemos incidencias urgentes y también revisiones programadas para mejorar cerraduras, bombines y accesos en Valencia.</p>
+          </div>
+          <div class="cta-row">
+            <a href="tel:+34961234567" class="cta-primary">+34 96 123 45 67</a>
+            <a href="#top" class="cta-secondary">Volver arriba</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <span class="eyebrow">Red local</span>
+          <h2 style="font-size: clamp(1.8rem, 1.45rem + 1vw, 2.4rem); margin-top: 0.75rem;">{{NICHE}} Elite Valencia</h2>
+          <p class="footer__lead">Servicio de {{NICHE}} orientado a aperturas, sustitución de cerraduras y mejora de accesos con atención local en Valencia.</p>
+
+          <div class="footer__links" aria-label="Zonas cercanas">
+            <a href="../ruzafa/index.html">Ruzafa</a>
+            <a href="../el-carmen/index.html">El Carmen</a>
+            <a href="../benimaclet/index.html">Benimaclet</a>
+            <a href="../cabanyal/index.html">Cabanyal</a>
+            <a href="../patraix/index.html">Patraix</a>
+          </div>
+        </div>
+
+        <div class="footer__aside">
+          <h3>Contacto directo</h3>
+          <a href="tel:+34961234567" class="cta-primary">Llamar ahora</a>
+          <a href="#servicios" class="cta-ghost">Ver servicios</a>
+          <p class="footer__meta">Atención urgente y trabajos programados según disponibilidad. Valencia y zonas cercanas.</p>
+        </div>
+      </div>
+
+      <div class="footer__legal">
+        {{NICHE}} Elite Valencia © 2026 · CIF disponible bajo solicitud · Valencia, España
+      </div>
+    </div>
+  </footer>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "{{NICHE}} Elite Valencia",
+    "telephone": "+34961234567",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Calle San Vicente, 34",
+      "addressLocality": "Valencia",
+      "addressRegion": "Valencia",
+      "postalCode": "46002",
+      "addressCountry": "ES"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Valencia"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "00:00",
+        "closes": "23:59"
+      }
+    ]
+  }
+  </script>
+</body>
+</html>

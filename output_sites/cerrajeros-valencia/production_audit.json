@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "gravity-final-production-audit@1",
+  "passed": true,
+  "score": 93,
+  "status": "production_ready",
+  "metrics": {
+    "titleLength": 61,
+    "metaDescriptionLength": 162,
+    "h1Count": 1,
+    "h2Count": 11,
+    "sectionCount": 13,
+    "ctaCount": 13,
+    "contactAnchors": 1,
+    "contactLinks": 13,
+    "internalHashLinks": 21,
+    "deadHashLinks": [],
+    "blockTypes": [
+      {
+        "blockType": "urgency_panel",
+        "count": 1,
+        "headings": [
+          "Urgencias de Cerrajeros en Valencia"
+        ]
+      },
+      {
+        "blockType": "services_grid",
+        "count": 1,
+        "headings": [
+          "Nuestros Servicios"
+        ]
+      },
+      {
+        "blockType": "process_steps",
+        "count": 1,
+        "headings": [
+          "Proceso de Servicio"
+        ]
+      },
+      {
+        "blockType": "local_proof",
+        "count": 1,
+        "headings": [
+          "Criterios de confianza antes de decidir"
+        ]
+      },
+      {
+        "blockType": "map",
+        "count": 1,
+        "headings": [
+          "Cobertura y ubicación operativa en Valencia"
+        ]
+      },
+      {
+        "blockType": "price_guidance",
+        "count": 1,
+        "headings": [
+          "Precios Condicionados"
+        ]
+      },
+      {
+        "blockType": "faq",
+        "count": 1,
+        "headings": [
+          "Preguntas Frecuentes"
+        ]
+      },
+      {
+        "blockType": "cta_panel",
+        "count": 1,
+        "headings": [
+          "Contrata Ahora mismo"
+        ]
+      },
+      {
+        "blockType": "trust_band",
+        "count": 1,
+        "headings": [
+          "Señales de confianza que conviene exigir antes de contratar"
+        ]
+      },
+      {
+        "blockType": "internal_linking",
+        "count": 1,
+        "headings": [
+          "Navegación relacionada del proyecto"
+        ]
+      }
+    ],
+    "styleLayerCount": 11
+  },
+  "issues": [
+    {
+      "code": "TOO_MANY_STYLE_LAYERS",
+      "severity": "warning",
+      "message": "Hay muchas capas <style> en el HTML final (11); conviene consolidar para evitar conflictos visuales."
+    }
+  ],
+  "summary": "Listo para producción con score 93."
+}

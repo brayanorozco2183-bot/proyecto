@@ -1,0 +1,1802 @@
+[
+  {
+    "file": "templates/001_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_001_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/002_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_002_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/003_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_003_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/004_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_004_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/005_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_005_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/006_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_006_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/007_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_007_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/008_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_008_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/009_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_009_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/010_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_010_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/011_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_011_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/012_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_012_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/013_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_013_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/014_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_014_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/015_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_015_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/016_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_016_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/017_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_017_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/018_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_018_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/019_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_019_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/020_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_020_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  },
+  {
+    "file": "templates/021_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_021_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/022_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_022_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/023_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_023_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/024_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_024_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/025_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_025_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/026_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_026_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/027_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_027_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/028_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_028_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/029_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_029_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/030_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_030_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/031_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_031_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/032_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_032_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/033_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_033_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/034_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_034_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/035_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_035_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/036_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_036_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/037_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_037_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/038_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_038_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/039_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_039_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/040_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_040_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  },
+  {
+    "file": "templates/041_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_041_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/042_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_042_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/043_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_043_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/044_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_044_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/045_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_045_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/046_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_046_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/047_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_047_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/048_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_048_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/049_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_049_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/050_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_050_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/051_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_051_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/052_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_052_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/053_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_053_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/054_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_054_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/055_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_055_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/056_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_056_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/057_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_057_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/058_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_058_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/059_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_059_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/060_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_060_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  },
+  {
+    "file": "templates/061_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_061_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/062_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_062_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/063_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_063_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/064_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_064_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/065_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_065_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/066_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_066_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/067_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_067_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/068_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_068_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/069_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_069_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/070_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_070_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/071_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_071_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/072_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_072_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/073_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_073_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/074_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_074_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/075_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_075_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/076_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_076_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/077_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_077_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/078_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_078_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/079_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_079_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/080_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_080_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  },
+  {
+    "file": "templates/081_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_081_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/082_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_082_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/083_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_083_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/084_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_084_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/085_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_085_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/086_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_086_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/087_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_087_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/088_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_088_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/089_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_089_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/090_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_090_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/091_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_091_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/092_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_092_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/093_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_093_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/094_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_094_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/095_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_095_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/096_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_096_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/097_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_097_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/098_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_098_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/099_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_099_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/100_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_100_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  },
+  {
+    "file": "templates/101_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_101_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/102_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_102_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/103_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_103_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/104_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_104_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/105_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_105_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/106_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_106_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/107_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_107_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/108_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_108_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/109_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_109_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/110_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_110_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/111_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_111_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/112_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_112_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/113_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_113_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/114_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_114_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/115_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_115_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/116_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_116_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/117_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_117_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/118_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_118_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/119_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_119_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/120_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_120_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  },
+  {
+    "file": "templates/121_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_121_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/122_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_122_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/123_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_123_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/124_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_124_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/125_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_125_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/126_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_126_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/127_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_127_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/128_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_128_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/129_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_129_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/130_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_130_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/131_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_131_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/132_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_132_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/133_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_133_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/134_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_134_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/135_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_135_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/136_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_136_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/137_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_137_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/138_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_138_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/139_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_139_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/140_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_140_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  },
+  {
+    "file": "templates/141_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_141_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/142_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_142_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/143_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_143_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/144_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_144_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/145_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_145_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/146_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_146_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/147_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_147_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/148_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_148_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/149_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_149_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/150_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_150_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/151_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_151_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/152_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_152_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/153_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_153_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/154_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_154_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/155_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_155_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/156_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_156_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/157_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_157_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/158_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_158_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/159_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_159_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/160_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_160_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  },
+  {
+    "file": "templates/161_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_161_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/162_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_162_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/163_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_163_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/164_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_164_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/165_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_165_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/166_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_166_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/167_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_167_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/168_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_168_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/169_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_169_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/170_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_170_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/171_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_171_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/172_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_172_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/173_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_173_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/174_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_174_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/175_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_175_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/176_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_176_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/177_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_177_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/178_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_178_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/179_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_179_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/180_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_180_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  },
+  {
+    "file": "templates/181_total-control-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_181_TOTAL_CONTROL_HERITAGE",
+    "title": "Total Control Heritage",
+    "layout": "vertical_sidebar",
+    "palette": "obsidian_gold",
+    "bg_text_contrast": 17.28,
+    "primary_cta_contrast": 10.45
+  },
+  {
+    "file": "templates/182_obsidian-pulse-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_182_OBSIDIAN_PULSE_PRO",
+    "title": "Obsidian Pulse Pro",
+    "layout": "vertical_sidebar",
+    "palette": "ivory_navy",
+    "bg_text_contrast": 16.3,
+    "primary_cta_contrast": 11.31
+  },
+  {
+    "file": "templates/183_aurora-ledger-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_183_AURORA_LEDGER_PRIME",
+    "title": "Aurora Ledger Prime",
+    "layout": "horizontal_split",
+    "palette": "ink_copper",
+    "bg_text_contrast": 18.27,
+    "primary_cta_contrast": 6.12
+  },
+  {
+    "file": "templates/184_velvet-grid-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_184_VELVET_GRID_EXECUTIVE",
+    "title": "Velvet Grid Executive",
+    "layout": "full_screen_parallax",
+    "palette": "arctic_teal",
+    "bg_text_contrast": 14.77,
+    "primary_cta_contrast": 7.53
+  },
+  {
+    "file": "templates/185_civic-halo-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_185_CIVIC_HALO_PRESTIGE",
+    "title": "Civic Halo Prestige",
+    "layout": "bento_grid_system",
+    "palette": "midnight_cyan",
+    "bg_text_contrast": 19.37,
+    "primary_cta_contrast": 6.91
+  },
+  {
+    "file": "templates/186_noir-atlas-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_186_NOIR_ATLAS_PRECISE",
+    "title": "Noir Atlas Precise",
+    "layout": "editorial_stack",
+    "palette": "charcoal_lime",
+    "bg_text_contrast": 18.69,
+    "primary_cta_contrast": 7.4
+  },
+  {
+    "file": "templates/187_kinetic-district-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_187_KINETIC_DISTRICT_CINEMATIC",
+    "title": "Kinetic District Cinematic",
+    "layout": "conversion_landing",
+    "palette": "porcelain_burgundy",
+    "bg_text_contrast": 16.62,
+    "primary_cta_contrast": 9.44
+  },
+  {
+    "file": "templates/188_titanium-calm-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_188_TITANIUM_CALM_ARCHITECT",
+    "title": "Titanium Calm Architect",
+    "layout": "trust_dashboard",
+    "palette": "deep_plum",
+    "bg_text_contrast": 17.97,
+    "primary_cta_contrast": 7.95
+  },
+  {
+    "file": "templates/189_granite-signal-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_189_GRANITE_SIGNAL_MODERN",
+    "title": "Granite Signal Modern",
+    "layout": "asymmetric_story",
+    "palette": "slate_amber",
+    "bg_text_contrast": 17.06,
+    "primary_cta_contrast": 9.78
+  },
+  {
+    "file": "templates/190_opal-command-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_190_OPAL_COMMAND_NOBLE",
+    "title": "Opal Command Noble",
+    "layout": "local_authority_map",
+    "palette": "paper_emerald",
+    "bg_text_contrast": 15.62,
+    "primary_cta_contrast": 5.48
+  },
+  {
+    "file": "templates/191_monolith-flow-heritage.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_191_MONOLITH_FLOW_HERITAGE",
+    "title": "Monolith Flow Heritage",
+    "layout": "service_command_center",
+    "palette": "graphite_rose",
+    "bg_text_contrast": 18.11,
+    "primary_cta_contrast": 4.7
+  },
+  {
+    "file": "templates/192_solar-vault-pro.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_192_SOLAR_VAULT_PRO",
+    "title": "Solar Vault Pro",
+    "layout": "premium_directory",
+    "palette": "royal_cream",
+    "bg_text_contrast": 17.77,
+    "primary_cta_contrast": 7.1
+  },
+  {
+    "file": "templates/193_neon-province-prime.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_193_NEON_PROVINCE_PRIME",
+    "title": "Neon Province Prime",
+    "layout": "split_hero_cards",
+    "palette": "petrol_mint",
+    "bg_text_contrast": 18.03,
+    "primary_cta_contrast": 11.28
+  },
+  {
+    "file": "templates/194_editorial-forge-executive.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_194_EDITORIAL_FORGE_EXECUTIVE",
+    "title": "Editorial Forge Executive",
+    "layout": "radial_focus",
+    "palette": "basalt_blue",
+    "bg_text_contrast": 17.37,
+    "primary_cta_contrast": 8.26
+  },
+  {
+    "file": "templates/195_glass-dominion-prestige.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_195_GLASS_DOMINION_PRESTIGE",
+    "title": "Glass Dominion Prestige",
+    "layout": "cinematic_scroll",
+    "palette": "linen_black",
+    "bg_text_contrast": 16.13,
+    "primary_cta_contrast": 17.85
+  },
+  {
+    "file": "templates/196_bento-crown-precise.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_196_BENTO_CROWN_PRECISE",
+    "title": "Bento Crown Precise",
+    "layout": "modular_grid",
+    "palette": "forest_ivory",
+    "bg_text_contrast": 18.55,
+    "primary_cta_contrast": 10.63
+  },
+  {
+    "file": "templates/197_parallax-estate-cinematic.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_197_PARALLAX_ESTATE_CINEMATIC",
+    "title": "Parallax Estate Cinematic",
+    "layout": "luxury_catalog",
+    "palette": "white_sapphire",
+    "bg_text_contrast": 16.37,
+    "primary_cta_contrast": 6.7
+  },
+  {
+    "file": "templates/198_lunar-workshop-architect.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_198_LUNAR_WORKSHOP_ARCHITECT",
+    "title": "Lunar Workshop Architect",
+    "layout": "technical_blueprint",
+    "palette": "volcanic_orange",
+    "bg_text_contrast": 18.04,
+    "primary_cta_contrast": 5.9
+  },
+  {
+    "file": "templates/199_copper-avenue-modern.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_199_COPPER_AVENUE_MODERN",
+    "title": "Copper Avenue Modern",
+    "layout": "soft_residential",
+    "palette": "quiet_lavender",
+    "bg_text_contrast": 15.69,
+    "primary_cta_contrast": 5.7
+  },
+  {
+    "file": "templates/200_midnight-index-noble.json",
+    "id": "GRAVITY_PREMIUM_CONTRAST_200_MIDNIGHT_INDEX_NOBLE",
+    "title": "Midnight Index Noble",
+    "layout": "emergency_priority",
+    "palette": "espresso_sand",
+    "bg_text_contrast": 18.19,
+    "primary_cta_contrast": 6.59
+  }
+]

@@ -1,0 +1,893 @@
+{
+  "context": {
+    "niche": "Cerrajeros",
+    "city": "Madrid",
+    "local_nap": {
+      "business_name": "Madrid Cerrajeros 24h",
+      "address": "Calle Mayor 1, Madrid",
+      "phone": "912345678"
+    },
+    "keywords": [
+      "servicios",
+      "barcelona"
+    ],
+    "entities": [
+      "Madrid",
+      "Fontaneros",
+      "Cerrajero",
+      "Tesa",
+      "FAC",
+      "EZCURRA",
+      "MUL-T-LOCK",
+      "MOTTURA",
+      "LINCE",
+      "DIERRE"
+    ],
+    "competitors": [
+      {
+        "title": "Resultado SDI 1",
+        "link": "https://www.google.es/intl/es/about/products?tab=wh",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 1
+      },
+      {
+        "title": "Resultado SDI 2",
+        "link": "https://www.cronoshare.com/servicios/fontaneros/barcelona/barcelona",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 2
+      },
+      {
+        "title": "Resultado SDI 3",
+        "link": "https://www.habitissimo.es/empresas/fontaneros/barcelona",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 3
+      },
+      {
+        "title": "Resultado SDI 4",
+        "link": "https://es.wallapop.com/servicios/fontaneros/barcelona",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 4
+      },
+      {
+        "title": "Resultado SDI 5",
+        "link": "https://www.milanuncios.com/fontaneros-en-barcelona/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 5
+      },
+      {
+        "title": "Resultado SDI 6",
+        "link": "https://fontelectrourgente.com/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 6
+      },
+      {
+        "title": "Resultado SDI 7",
+        "link": "https://fontanerobarcelona.pro/?utm_source=google",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 7
+      },
+      {
+        "title": "Resultado SDI 8",
+        "link": "https://fontanerobarcelona.pro/%3Futm_source%3Dgoogle%26utm_medium%3Dperfil%2Bde%2Bempresa%26utm_campaign%3Dboton%2Bsitio%2Bweb",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 8
+      },
+      {
+        "title": "Resultado SDI 9",
+        "link": "https://www.fontanerourgenciasroberto.es/",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 9
+      },
+      {
+        "title": "Resultado SDI 10",
+        "link": "https://hogami.leroymerlin.es/servicio/barcelona/fontaneros",
+        "snippet": "Capturado vía Inyección de Teclas (SDI)",
+        "position": 10
+      }
+    ],
+    "serp_gaps": [
+      "Comparativa de precios detallada",
+      "Garantías específicas del servicio",
+      "Preguntas sobre normativas locales vigentes"
+    ],
+    "market_data": {
+      "primaryKeyword": "fontaneros en Madrid",
+      "secondaryKeywords": [
+        "servicios",
+        "barcelona"
+      ],
+      "entities": [
+        "Madrid",
+        "Fontaneros"
+      ],
+      "pageTypeRecommendation": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "wordCountTarget": 1900,
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "contentAngles": [
+        "busca con la cámara",
+        "preguntas adicionales y vínculos web"
+      ],
+      "trustAssets": [
+        "telefono visible",
+        "faq",
+        "prueba local"
+      ],
+      "internalLinkTargets": [],
+      "titleStrategy": "keyword_based",
+      "metaDescriptionStrategy": "keyword_based",
+      "schemaTypes": [
+        "LocalBusiness",
+        "FAQPage"
+      ],
+      "keywordReport": "fontaneros en Madrid, servicios de fontaneros en Barcelona, barcelonan fontaneros, fontaneros en el mercado español",
+      "strategyConfidence": "high",
+      "classificationReasons": [
+        "reducción del wordCountTarget para adaptación a la estrategia BOFU",
+        "aplicación de una estrategia centrada en la conversión local"
+      ]
+    },
+    "intentModel": {
+      "pageType": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "primaryKeyword": "fontaneros en Madrid",
+      "secondaryKeywords": [
+        "servicios",
+        "barcelona"
+      ],
+      "semanticEntities": [
+        "Madrid",
+        "Fontaneros",
+        "Cerrajero",
+        "Tesa",
+        "FAC",
+        "EZCURRA",
+        "MUL-T-LOCK",
+        "MOTTURA",
+        "LINCE",
+        "DIERRE"
+      ],
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "mandatoryTrustElements": [
+        "telefono visible",
+        "faq",
+        "prueba local"
+      ],
+      "mandatorySections": [
+        "busca con la cámara",
+        "preguntas adicionales y vínculos web"
+      ],
+      "internalLinkTargets": [],
+      "conversionGoal": "call"
+    },
+    "strategicAnalysis": {
+      "primaryKeyword": "fontaneros en Madrid",
+      "secondaryKeywords": [
+        "servicios",
+        "barcelona"
+      ],
+      "entities": [
+        "Madrid",
+        "Fontaneros"
+      ],
+      "pageTypeRecommendation": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "wordCountTarget": 1900,
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "contentAngles": [
+        "busca con la cámara",
+        "preguntas adicionales y vínculos web"
+      ],
+      "trustAssets": [
+        "telefono visible",
+        "faq",
+        "prueba local"
+      ],
+      "internalLinkTargets": [],
+      "titleStrategy": "keyword_based",
+      "metaDescriptionStrategy": "keyword_based",
+      "schemaTypes": [
+        "LocalBusiness",
+        "FAQPage"
+      ],
+      "keywordReport": "fontaneros en Madrid, servicios de fontaneros en Barcelona, barcelonan fontaneros, fontaneros en el mercado español",
+      "strategyConfidence": "high",
+      "classificationReasons": [
+        "reducción del wordCountTarget para adaptación a la estrategia BOFU",
+        "aplicación de una estrategia centrada en la conversión local"
+      ]
+    },
+    "geoData": {
+      "neighborhoods": [
+        "Fuente del Río",
+        "Moratalaz",
+        "Carabanchel"
+      ],
+      "sub_locations": [
+        {
+          "name": "Fuente del Río",
+          "type": "barrio"
+        },
+        {
+          "name": "Moratalaz",
+          "type": "barrio"
+        },
+        {
+          "name": "Carabanchel",
+          "type": "barrio"
+        }
+      ]
+    },
+    "deduplicated_entities": [
+      "Madrid",
+      "Fontaneros",
+      "Cerrajero",
+      "Tesa",
+      "FAC",
+      "EZCURRA",
+      "MUL-T-LOCK",
+      "MOTTURA",
+      "LINCE",
+      "DIERRE"
+    ],
+    "clustered_keywords": [
+      {
+        "cluster": "primary_intent",
+        "kws": [
+          "servicios",
+          "barcelona"
+        ]
+      },
+      {
+        "cluster": "semantic_latents",
+        "kws": []
+      }
+    ],
+    "clean_nap": {
+      "business_name": "Madrid Cerrajeros 24h",
+      "address": "Calle Mayor 1, Madrid",
+      "phone": "912345678",
+      "phone_normalized": "+34912345678"
+    }
+  },
+  "plan": {
+    "h1": "Sofisticado, confiable, y rápido",
+    "sections": [
+      {
+        "section_id": "servicios",
+        "h2": "Servicios de reparación del cerramiento en Madrid",
+        "h3s": [
+          "Cerradura completa",
+          "Reparación de puertas",
+          "Asistencia en emergencias",
+          "Sistema de seguridad"
+        ],
+        "block_type": "cards",
+        "target_words": 400,
+        "visual_intent": "editorial",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "minimal_centered",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "urgencia",
+        "h2": "¡El momento de cerrar es aquí!",
+        "h3s": [
+          "Disponibilidad inmediata",
+          "Horarios flexibles",
+          "Pruebas locales en Madrid"
+        ],
+        "block_type": "bullets",
+        "target_words": 240,
+        "visual_intent": "high_tension",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "boxed_content",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "zonas-cobertura",
+        "h2": "Nuestros expertos están aquí para ti",
+        "h3s": [
+          "Red de repuestos disponibles",
+          "Cerramientos en todo el mundo",
+          "Ofertas especiales para clientes frecuentes"
+        ],
+        "block_type": "table",
+        "target_words": 500,
+        "visual_intent": "supporting",
+        "preferred_format": "prose",
+        "layout_hint": "full_width_text",
+        "content_density": "standard",
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "proof_stack",
+        "visual_weight": "medium",
+        "emphasis": "content",
+        "visual_variant": "default",
+        "visual_spec": {}
+      },
+      {
+        "section_id": "faq",
+        "h2": "Preguntas frecuentes",
+        "h3s": [
+          "¿Por qué elegirnos para cerrar tus puertas?",
+          "Cómo funciona tu sistema de seguridad?",
+          "¿Es seguro cerrar tus puertas en Madrid?"
+        ],
+        "block_type": "faq",
+        "target_words": 120,
+        "visual_intent": "editorial",
+        "preferred_format": "faq",
+        "layout_hint": "minimal_centered",
+        "content_density": "standard",
+        "visual_variant": "accordion_clean",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "normal",
+          "emphasis": "content",
+          "mobilePattern": "stack",
+          "decorativeLevel": "none"
+        },
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "comparison_split",
+        "visual_weight": "medium",
+        "emphasis": "content"
+      },
+      {
+        "section_id": "cobertura-local",
+        "h2": "Cobertura Integral en Madrid",
+        "h3s": [
+          "Servicio en toda la zona",
+          "Técnicos de Proximidad",
+          "Asistencia Local"
+        ],
+        "block_type": "local_proof",
+        "preferred_format": "trust_cards",
+        "content_density": "standard",
+        "factuality_level": "strict",
+        "mobile_priority": "normal",
+        "layout_hint": "two_column_trust",
+        "target_words": 220,
+        "visual_variant": "grid_logos",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "normal",
+          "emphasis": "trust",
+          "mobilePattern": "cards",
+          "decorativeLevel": "soft"
+        },
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "form_focus",
+        "visual_weight": "medium",
+        "emphasis": "trust"
+      },
+      {
+        "section_id": "donde-estamos",
+        "h2": "Cobertura y Ubicación en Madrid",
+        "h3s": [],
+        "block_type": "map",
+        "preferred_format": "prose",
+        "content_density": "compact",
+        "factuality_level": "strict",
+        "mobile_priority": "low",
+        "layout_hint": "full_width_text",
+        "target_words": 40,
+        "visual_variant": "full_width",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "tight",
+          "emphasis": "content",
+          "mobilePattern": "stack",
+          "decorativeLevel": "none"
+        },
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "split_feature",
+        "visual_weight": "medium",
+        "emphasis": "content"
+      },
+      {
+        "section_id": "contacto-directo",
+        "h2": "Contacta con tu Cerrajeros de Confianza en Madrid",
+        "h3s": [
+          "Presupuesto sin compromiso",
+          "Atención directa"
+        ],
+        "block_type": "cta_panel",
+        "preferred_format": "prose",
+        "content_density": "compact",
+        "factuality_level": "strict",
+        "mobile_priority": "high",
+        "layout_hint": "minimal_centered",
+        "target_words": 90,
+        "visual_variant": "luxury_banner",
+        "candidate_visual_variants": [],
+        "visual_spec": {
+          "spacingProfile": "airy",
+          "emphasis": "cta",
+          "mobilePattern": "stack",
+          "decorativeLevel": "strong"
+        },
+        "introduction_style": "explicación técnica",
+        "structure_type": "técnico",
+        "pattern_hint": "text_left_image_right",
+        "visual_weight": "medium",
+        "emphasis": "cta"
+      }
+    ],
+    "global_tone": "trust",
+    "meta_title": "Detente, experto: Explora nuestras servicios de reparación del cerramiento en Madrid",
+    "meta_description": "¡Descubre cómo nuestro equipo ha sido creado para brindarte la seguridad más sólida posible en tu casa o negocio!",
+    "page_skeleton": "editorial-longform | conversion-funnel | local-directory | premium-showcase | technical-comparison",
+    "hero": {
+      "h1": "¿Es hora de cerrar tus puertas?",
+      "subtitle": "Descubre la experiencia máxima con nuestro servicio de reparación del cerramiento en Madrid.",
+      "trust_bullets": [
+        "Nuestro equipo es confiable y profesional",
+        "Convierte tu casa o negocio en un hogar seguro",
+        "Estamos siempre disponibles para resolver cualquier problema"
+      ],
+      "cta_text": "¡Descubre más sobre nuestros servicios!",
+      "hero_role": "conversion",
+      "visual_intent": "high_impact"
+    },
+    "intentModel": {
+      "pageType": "service_area",
+      "primaryIntent": "transactional",
+      "secondaryIntent": "commercial",
+      "funnelStage": "BOFU",
+      "primaryKeyword": "fontaneros en Madrid",
+      "secondaryKeywords": [
+        "servicios",
+        "barcelona"
+      ],
+      "semanticEntities": [
+        "Madrid",
+        "Fontaneros",
+        "Cerrajero",
+        "Tesa",
+        "FAC",
+        "EZCURRA",
+        "MUL-T-LOCK",
+        "MOTTURA",
+        "LINCE",
+        "DIERRE"
+      ],
+      "serpFeaturesTarget": [
+        "local_pack",
+        "faq"
+      ],
+      "mandatoryTrustElements": [
+        "telefono visible",
+        "faq",
+        "prueba local"
+      ],
+      "mandatorySections": [
+        "busca con la cámara",
+        "preguntas adicionales y vínculos web"
+      ],
+      "internalLinkTargets": [],
+      "conversionGoal": "call"
+    },
+    "seoBrief": {
+      "titleStrategy": "",
+      "metaDescriptionStrategy": "",
+      "canonicalSlug": "",
+      "schemaTypes": [
+        "LocalBusiness"
+      ],
+      "faqEligible": true,
+      "localModifiers": [
+        "Madrid"
+      ]
+    },
+    "contentRules": {
+      "prohibitedClaims": [],
+      "factOnlyFields": [
+        "address",
+        "phone"
+      ],
+      "maxBrandMentionsPerSection": 1,
+      "differentiationRequirements": []
+    },
+    "design": {
+      "pageFamily": "premium_valencia_master",
+      "visualVariantId": "a",
+      "designTokens": {
+        "colors": {
+          "primary": "#fbbf24",
+          "secondary": "#000000",
+          "accent": "#f59e0b",
+          "background": "#0a0a0a",
+          "surface": "#171717",
+          "surfaceAlt": "#262626",
+          "text": "#f8fafc",
+          "muted": "#94a3b8",
+          "border": "#262626",
+          "heading": "#ffffff"
+        },
+        "typography": {
+          "fontDisplay": "\"Cormorant Garamond\", serif",
+          "fontBody": "\"Plus Jakarta Sans\", sans-serif",
+          "h1": "clamp(2.75rem, 2.05rem + 2.8vw, 4.85rem)",
+          "h2": "clamp(1.85rem, 1.45rem + 1.4vw, 2.9rem)",
+          "h3": "clamp(1.2rem, 1.05rem + 0.7vw, 1.55rem)",
+          "body": "clamp(1rem, 0.95rem + 0.2vw, 1.0625rem)"
+        },
+        "shadows": {
+          "soft": "0 4px 12px rgba(0,0,0,0.05)",
+          "lg": "0 20px 60px rgba(0,0,0,0.1)",
+          "glow": "0 0 20px rgba(124,58,237,0.4)"
+        },
+        "radius": {
+          "card": "24px",
+          "button": "999px",
+          "section": "40px"
+        },
+        "transitions": {
+          "main": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "spacing": {
+          "sectionY": "clamp(5rem, 10vw, 9rem)",
+          "gap": "2.5rem",
+          "container": "1280px",
+          "reading": "75ch"
+        },
+        "semantic": {
+          "sectionEmphasisBg": "var(--surface)",
+          "sectionTrustAccent": "var(--primary)",
+          "ctaSurface": "var(--surface-alt)",
+          "cardShadowLevel": "medium",
+          "contentDensityGap": "tight",
+          "heroVisualBalance": "split",
+          "proofBadgeStyle": "soft"
+        }
+      },
+      "composition": "conversion"
+    },
+    "pageProfile": {
+      "h1": "Sofisticado, confiable, y rápido",
+      "profile": {
+        "tone": "consultivo",
+        "narrative_model": "problema-solucion",
+        "editorial_angle": "elite-tecnica",
+        "content_density": "equilibrado",
+        "cta_style": "contactar ahora",
+        "paragraph_style": "medio-explicativo",
+        "local_focus": [],
+        "page_composition": "conversion",
+        "hero_variant": "split",
+        "section_patterns": [
+          "minimal_centered",
+          "boxed_content",
+          "proof_stack",
+          "comparison_split",
+          "form_focus",
+          "split_feature",
+          "text_left_image_right"
+        ],
+        "section_count_mode": "normal",
+        "art_direction": "authority_modern",
+        "section_cadence": "contrast"
+      },
+      "sections": [
+        {
+          "h2": "Servicios de reparación del cerramiento en Madrid",
+          "h3s": [
+            "Cerradura completa",
+            "Reparación de puertas",
+            "Asistencia en emergencias",
+            "Sistema de seguridad"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "cards",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "minimal_centered",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 400,
+          "visual_variant": "default",
+          "visual_intent": "editorial",
+          "visual_spec": {}
+        },
+        {
+          "h2": "¡El momento de cerrar es aquí!",
+          "h3s": [
+            "Disponibilidad inmediata",
+            "Horarios flexibles",
+            "Pruebas locales en Madrid"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "bullets",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "boxed_content",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 240,
+          "visual_variant": "default",
+          "visual_intent": "high_tension",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Nuestros expertos están aquí para ti",
+          "h3s": [
+            "Red de repuestos disponibles",
+            "Cerramientos en todo el mundo",
+            "Ofertas especiales para clientes frecuentes"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "table",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "proof_stack",
+          "preferred_format": "prose",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 500,
+          "visual_variant": "default",
+          "visual_intent": "supporting",
+          "visual_spec": {}
+        },
+        {
+          "h2": "Preguntas frecuentes",
+          "h3s": [
+            "¿Por qué elegirnos para cerrar tus puertas?",
+            "Cómo funciona tu sistema de seguridad?",
+            "¿Es seguro cerrar tus puertas en Madrid?"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "faq",
+          "layout_hint": "minimal_centered",
+          "pattern_hint": "comparison_split",
+          "preferred_format": "faq",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 120,
+          "visual_variant": "accordion_clean",
+          "visual_intent": "editorial",
+          "visual_spec": {
+            "spacingProfile": "normal",
+            "emphasis": "content",
+            "mobilePattern": "stack",
+            "decorativeLevel": "none"
+          }
+        },
+        {
+          "h2": "Cobertura Integral en Madrid",
+          "h3s": [
+            "Servicio en toda la zona",
+            "Técnicos de Proximidad",
+            "Asistencia Local"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "local_proof",
+          "layout_hint": "two_column_trust",
+          "pattern_hint": "form_focus",
+          "preferred_format": "trust_cards",
+          "content_density": "standard",
+          "visual_weight": "medium",
+          "emphasis": "trust",
+          "target_words": 220,
+          "visual_variant": "grid_logos",
+          "visual_spec": {
+            "spacingProfile": "normal",
+            "emphasis": "trust",
+            "mobilePattern": "cards",
+            "decorativeLevel": "soft"
+          }
+        },
+        {
+          "h2": "Cobertura y Ubicación en Madrid",
+          "h3s": [],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "map",
+          "layout_hint": "full_width_text",
+          "pattern_hint": "split_feature",
+          "preferred_format": "prose",
+          "content_density": "compact",
+          "visual_weight": "medium",
+          "emphasis": "content",
+          "target_words": 40,
+          "visual_variant": "full_width",
+          "visual_spec": {
+            "spacingProfile": "tight",
+            "emphasis": "content",
+            "mobilePattern": "stack",
+            "decorativeLevel": "none"
+          }
+        },
+        {
+          "h2": "Contacta con tu Cerrajeros de Confianza en Madrid",
+          "h3s": [
+            "Presupuesto sin compromiso",
+            "Atención directa"
+          ],
+          "introduction_style": "explicación técnica",
+          "structure_type": "técnico",
+          "block_type": "cta_panel",
+          "layout_hint": "minimal_centered",
+          "pattern_hint": "text_left_image_right",
+          "preferred_format": "prose",
+          "content_density": "compact",
+          "visual_weight": "medium",
+          "emphasis": "cta",
+          "target_words": 90,
+          "visual_variant": "luxury_banner",
+          "visual_spec": {
+            "spacingProfile": "airy",
+            "emphasis": "cta",
+            "mobilePattern": "stack",
+            "decorativeLevel": "strong"
+          }
+        }
+      ]
+    }
+  },
+  "draft": {
+    "blocks": [
+      {
+        "id": "section-0",
+        "h2": "Servicios de reparación del cerramiento en Madrid",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>En Madrid Cerrajeros 24h es tu opción ideal para mantener tus hogares seguros y funcionando perfectamente. Con una amplia gama de servicios de reparación del cerramiento, desde la reparación completa hasta asistencia en emergencias, estamos aquí para ayudarte a manejar cualquier problema con facilidad.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Cerradura completa</h3><p>¿Qué es una cerradura completa? Es el proceso completo de reparación del cerramiento y su instalación en tu hogar. Contamos con profesionales certificados que proporcionan una solución rápida y eficiente.</p></article><article class=\"semantic-card\"><h3>Reparación de puertas</h3><p>¿Qué es una reparación de puerta? Es la revisión y corrección del sistema de puertas en tu hogar. Contamos con profesionales expertos que ayudan a garantizar su función correcta.</p></article><article class=\"semantic-card\"><h3>Asistencia en emergencias</h3><p>¿Qué es asistencia en emergencias? Nos ocupa los aspectos más importantes de la reparación del cerramiento, como la seguridad, el mantenimiento preventivo y la respuesta a las emergencias. Contamos con un equipo integral que te proporciona una solución rápida y eficiente.</p></article></div></div></div>",
+        "wordCount": 153,
+        "metadata": {
+          "block_type": "cards",
+          "sectionIndex": 0,
+          "section_id": "servicios",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-1",
+        "h2": "¡El momento de cerrar es aquí!",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>¡El momento de cerrar es aquí! Con Madrid Cerrajeros 24h, tus opciones para cerraduras de alta seguridad están a mano. ¡Estos son los mejores precios en Madrid y sin necesidad de agencias!</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Disponibilidad inmediata</h3><p>¡Si tienes urgencia, no dudes en contactarnos. Tenemos horarios flexibles desde las 8:00 a la 24:00 para que puedas cerrar tus propias cerraduras sin problemas!</p></article><article class=\"semantic-card\"><h3>Horarios flexibles</h3><p>¡Nosotros estamos aquí para ayudarte a cerrar tus cerraduras de alta seguridad. Toma un look rápido por nuestros horarios disponibles y contacta con nosotros si necesitas ayuda inmediata!</p></article></div></div></div>",
+        "wordCount": 91,
+        "metadata": {
+          "block_type": "bullets",
+          "sectionIndex": 1,
+          "section_id": "urgencia",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-2",
+        "h2": "Nuestros expertos están aquí para ti",
+        "html": "<div class=\"generic-layout\"><div class=\"layout-block layout-block--stack\"><p>Nuestros expertos están aquí para ayudarte a mantener tu negocio en el centro del conocimiento, proporcionando soluciones excepcionalmente rápidas y eficientes.</p><p>Si tienes alguna pregunta o necesitas un servicio más personalizado, no dudes en llamar al 912345678. Estamos aquí para ayudarte a resolver tus problemas con seguridad y calidad.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Red de repuestos disponibles</h3><p>Nuestros expertos están siempre disponibles para mantener tu negocio en el centro del conocimiento, proporcionando soluciones excepcionalmente rápidas y eficientes.</p></article><article class=\"semantic-card\"><h3>Cerramientos en todo el mundo</h3><p>Nuestros expertos están siempre disponibles para mantener tu negocio en el centro del conocimiento, proporcionando soluciones excepcionalmente rápidas y eficientes.</p></article><article class=\"semantic-card\"><h3>Ofertas especiales para clientes frecuentes</h3><p>Nuestros expertos están siempre disponibles para mantener tu negocio en el centro del conocimiento, proporcionando soluciones excepcionalmente rápidas y eficientes.</p></article></div></div></div>",
+        "wordCount": 123,
+        "metadata": {
+          "block_type": "table",
+          "sectionIndex": 2,
+          "section_id": "zonas-cobertura",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false,
+          "degraded": true,
+          "requires_editorial_review": true
+        }
+      },
+      {
+        "id": "section-3",
+        "h2": "Preguntas frecuentes",
+        "html": "<div class=\"faq-layout faq-layout--editorial\"><div class=\"faq-columns\"><article class=\"faq-card\"><h3>¿Qué garantías ofrecemos?</h3><p>Llamamos al cliente en 15 minutos para asegurarnos de que nuestro equipo esté preparado. Estamos certificados de seguridad y cumplimos con la normativa española.</p></article><article class=\"faq-card\"><h3>¿Cuáles son las tarifas?</h3><p>Estimamos que el precio se ajuste a tus necesidades, pero generalmente los precios están entre 100 y 300 euros por puerta. Estos son solo guías generales para facilitar la comparación.</p></article><article class=\"faq-card\"><h3>¿Es seguro cerrar tus puertas en Madrid?</h3><p>Claro, nuestros clientes confían en nosotros para cerrar sus puertas en Madrid con seguridad y eficiencia. Estamos certificados de seguridad y cumplimos con la normativa española.</p></article></div></div>",
+        "wordCount": 95,
+        "metadata": {
+          "block_type": "faq",
+          "sectionIndex": 3,
+          "section_id": "faq",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false,
+          "degraded": true,
+          "requires_editorial_review": true
+        }
+      },
+      {
+        "id": "section-4",
+        "h2": "Cobertura Integral en Madrid",
+        "html": "<div class=\"trust-layout trust-layout--embedded\"><p>¿Qué ofrecemos en Madrid Cerrajeros 24h?</p><p>Nuestra empresa es la líder mundial en cerraduras de alta seguridad en Madrid, garantizando la confiabilidad y el cumplimiento ético del cliente.</p><div class=\"semantic-items\"><article class=\"semantic-card\"><h3>Servicio en toda la zona</h3><p>Nuestros técnicos de proximidad se dirigen directamente a las casas y lugares a los que necesita cerrar sus puertas.</p></article><article class=\"semantic-card\"><h3>Técnicos de Proximidad</h3><p>En Madrid, nuestro equipo de cerraduras es conocido por su rapidez y eficiencia, garantizando un servicio constante para las más necesitadas.</p></article></div></div>",
+        "wordCount": 76,
+        "metadata": {
+          "block_type": "local_proof",
+          "sectionIndex": 4,
+          "section_id": "cobertura-local",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      },
+      {
+        "id": "section-5",
+        "h2": "Cobertura y Ubicación en Madrid",
+        "html": "<div class=\"map-placeholder\" data-city=\"Madrid\"><p>Nuestra base operativa se coordina para ofrecer una cobertura técnica profesional en toda el área de Madrid. Disponemos de especialistas distribuidos estratégicamente para garantizar un servicio de proximidad y confianza en todos los distritos de la zona, asegurando una respuesta técnica de alta calidad para cada intervención.</p></div>",
+        "wordCount": 49,
+        "metadata": {
+          "block_type": "map",
+          "sectionIndex": 5,
+          "section_id": "donde-estamos",
+          "score": 100
+        }
+      },
+      {
+        "id": "section-6",
+        "h2": "Contacta con tu Cerrajeros de Confianza en Madrid",
+        "html": "<div class=\"cta-panel cta-panel--centered\"><p>Por favor, contacta a nuestro cerrajeros de confianza en Madrid para obtener asistencia y garantía ante cualquier inconveniente.</p><div class=\"section-cta section-cta--medium section-cta--terminal\"><a class=\"cta-link cta-link--medium\" href=\"tel:912345678\">Llámanos ahora</a></div></div>",
+        "wordCount": 27,
+        "metadata": {
+          "block_type": "cta_panel",
+          "sectionIndex": 6,
+          "section_id": "contacto-directo",
+          "score": 0,
+          "corruptionDetected": false,
+          "unsafeHtml": false
+        }
+      }
+    ],
+    "totalWords": 683,
+    "html": "\n<script type=\"application/ld+json\">\n{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":[\"LocalBusiness\",\"Service\"],\"@id\":\"https://cerrajerobaratocerca.es/cerrajeros-madrid/#organization\",\"name\":\"Madrid Cerrajeros 24h\",\"description\":\"¿Necesitas Cerrajeros en Madrid? Servicio económico, rápido y urgente las 24h. Apertura de puertas, cambio de cerraduras y más. ¡Llámanos!\",\"url\":\"https://cerrajerobaratocerca.es/cerrajeros-madrid/\",\"telephone\":\"912345678\",\"priceRange\":\"€€\",\"openingHours\":\"Mo-Su 00:00-23:59\",\"areaServed\":\"Madrid\",\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"Calle Mayor 1, Madrid\",\"addressLocality\":\"Madrid\",\"addressCountry\":\"ES\"},\"aggregateRating\":{\"@type\":\"AggregateRating\",\"ratingValue\":\"4.9\",\"reviewCount\":\"127\"},\"hasMap\":\"https://maps.google.com/?q=Madrid%20Cerrajeros%2024h%20Madrid\",\"sameAs\":[\"https://maps.google.com/?q=Madrid%20Cerrajeros%2024h%20Madrid\"]},{\"@type\":\"Service\",\"serviceType\":\"Cerrajería de Urgencia 24h\",\"provider\":{\"@id\":\"https://cerrajerobaratocerca.es/cerrajeros-madrid/#organization\"},\"areaServed\":{\"@type\":\"City\",\"name\":\"Madrid\"}},{\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"¿Cuánto tarda en llegar un cerrajero en Madrid?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Llegamos en menos de 20 minutos a cualquier punto.\"}},{\"@type\":\"Question\",\"name\":\"¿Trabajais con cerraduras TESA?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Sí, somos especialistas en TESA, FAC y marcas de alta seguridad.\"}}]},{\"@type\":\"Review\",\"itemReviewed\":{\"@id\":\"https://cerrajerobaratocerca.es/cerrajeros-madrid/#organization\"},\"author\":{\"@type\":\"Person\",\"name\":\"Usuario Local\"},\"reviewRating\":{\"@type\":\"Rating\",\"ratingValue\":\"5\"},\"reviewBody\":\"Excelente servicio en Madrid, muy rápidos y profesionales.\"}]}\n</script>",
+    "metadata": {
+      "seo": {
+        "title": "Cerrajeros en Madrid | Urgencias 24/7 - Servicio Barato",
+        "metaDescription": "¿Necesitas Cerrajeros en Madrid? Servicio económico, rápido y urgente las 24h. Apertura de puertas, cambio de cerraduras y más. ¡Llámanos!",
+        "canonical": "https://serviciosprofesionales.pro/sofisticado-confiable-y-rapido/",
+        "robots": "index, follow",
+        "og": {
+          "type": "website",
+          "title": "Cerrajeros en Madrid | Urgencias 24/7 - Servicio Barato",
+          "description": "¿Necesitas Cerrajeros en Madrid? Servicio económico, rápido y urgente las 24h. Apertura de puertas, cambio de cerraduras y más. ¡Llámanos!",
+          "url": "https://serviciosprofesionales.pro/sofisticado-confiable-y-rapido/",
+          "image": "https://example.com/default.jpg"
+        },
+        "schemaTypes": [
+          "LocalBusiness",
+          "Service"
+        ]
+      }
+    }
+  }
+}

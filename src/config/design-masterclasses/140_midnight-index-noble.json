@@ -1,0 +1,120 @@
+{
+  "id": "GRAVITY_PREMIUM_CONTRAST_140_MIDNIGHT_INDEX_NOBLE",
+  "title": "Midnight Index Noble",
+  "source_analysis": {
+    "derived_from_uploaded_html": true,
+    "observed_patterns_used": [
+      "hero premium con CTA principal",
+      "bloques de prueba/confianza tipo conversion-proof",
+      "cards elevadas, testimonials y navegación sticky/fixed",
+      "variables CSS de color y tipografía similares al sistema Gravity"
+    ],
+    "contrast_policy": "AA/AAA-first: body text 7:1 target, CTA text >= 4.5:1"
+  },
+  "architecture": {
+    "layout_paradigm": "emergency_priority",
+    "// Paradigmas": [
+      "vertical_sidebar",
+      "horizontal_split",
+      "full_screen_parallax",
+      "bento_grid_system",
+      "editorial_stack",
+      "conversion_landing",
+      "trust_dashboard",
+      "asymmetric_story",
+      "local_authority_map",
+      "service_command_center",
+      "premium_directory",
+      "split_hero_cards",
+      "radial_focus",
+      "cinematic_scroll",
+      "modular_grid",
+      "luxury_catalog",
+      "technical_blueprint",
+      "soft_residential",
+      "emergency_priority"
+    ],
+    "grid_config": {
+      "columns": 12,
+      "gutter": "20px",
+      "container_width": "100%"
+    },
+    "navigation": {
+      "style": "urgent_action_dock",
+      "position": "fixed_bottom",
+      "blur": "18px",
+      "contrast_safe": true,
+      "mobile_pattern": "bottom_sheet"
+    }
+  },
+  "design_system_injection": {
+    "tokens": {
+      "primary": "#D97706",
+      "accent": "#4ADE80",
+      "bg": "#120D09",
+      "surface": "#22180F",
+      "surface_alt": "#342417",
+      "text": "#FFF7ED",
+      "muted": "#D9C4AA",
+      "on_primary": "#000000",
+      "on_accent": "#000000",
+      "radius_policy": "18px",
+      "shadow_policy": "deep_editorial",
+      "font_display": "'Sora', sans-serif",
+      "font_body": "'Inter', sans-serif",
+      "spacing_density": "compact",
+      "border_policy": "hairline"
+    },
+    "contrast_report": {
+      "bg_text": 18.19,
+      "surface_text": 16.41,
+      "primary_on_primary": 6.59,
+      "accent_on_accent": 12.05,
+      "wcag_note": "Valores >= 4.5 son AA para texto normal; bg_text apunta a >= 7 cuando el palette lo permite."
+    },
+    "custom_css": ":root { --bg: #120D09; --surface: #22180F; --surface-alt: #342417; --text: #FFF7ED; --muted: #D9C4AA; --primary: #D97706; --accent: #4ADE80; --on-primary: #000000; --on-accent: #000000; --border: color-mix(in srgb, var(--text) 14%, transparent); --grid-line: color-mix(in srgb, var(--text) 8%, transparent); --radius: 18px; --gap: 20px; --blur: 18px; --nav-position: fixed; --shadow: 0 24px 70px color-mix(in srgb, var(--text) 13%, transparent); --shadow-strong: 0 36px 100px color-mix(in srgb, var(--text) 20%, transparent); } body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; } h1,h2,h3,.display { font-family: 'Sora', sans-serif; } .testimonial-card { padding: 28px; border-radius: var(--radius); background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 92%, var(--primary))); border: 1px solid var(--border); } .testimonial-card__stars { color: var(--accent); letter-spacing: .16em; } .avatar { width: 48px; height: 48px; border-radius: 999px; background: var(--primary); color: var(--on-primary); }  @media (max-width: 760px) { .hero, .hero--bento, .local-map-panel, .editorial-flow { grid-template-columns: 1fr; min-height: auto; } .proof-strip { grid-template-columns: 1fr 1fr; } }"
+  },
+  "block_blueprints": {
+    "hero": {
+      "template": "raw_html",
+      "variant": "cinematic_split_hero",
+      "custom_structure": "<section class='hero hero--split'><div class='hero__copy'><span class='eyebrow'>{{LOCAL_PROOF}}</span><h1>{{H1}}</h1><p>{{INTRO}}</p><div class='hero__actions'>{{CTA_PRIMARY}}{{CTA_SECONDARY}}</div></div><div class='hero__visual'><div class='premium-frame'>{{IMAGE}}</div><div class='trust-badge'>{{RATING}}</div></div></section>"
+    },
+    "services_grid": {
+      "style": "technical_spec_grid",
+      "columns_override": 4,
+      "interaction": "hover_lift",
+      "content_strategy": "compact spec cards with icons and SLA rows"
+    },
+    "trust_layer": {
+      "style": "conversion_proof_strip",
+      "required_items": [
+        "rating",
+        "response_time",
+        "local_presence",
+        "guarantee"
+      ]
+    },
+    "local_interlinking": {
+      "style": "area_bento",
+      "parent_child_safe": true,
+      "future_pages_manifest_ready": true
+    },
+    "faq": {
+      "style": "accordion_luxury",
+      "schema_ready": true
+    }
+  },
+  "art_direction": {
+    "palette_name": "espresso_sand",
+    "motion_level": "cinematic",
+    "noise_overlay": false,
+    "color_glitch": false,
+    "image_treatment": "duotone_safe",
+    "premium_cues": [
+      "large whitespace",
+      "thin borders",
+      "gold accent"
+    ]
+  }
+}
