@@ -31,8 +31,9 @@ export default function MissionPhaseMonitor() {
                 const cityData = await cityRes.json();
                 setCities(cityData);
                 
-                // Calculate elapsed time from created_at
-                const start = new Date(data.mission.created_at).getTime();
+                // Calculate elapsed time from created_at (ensure UTC interpretation)
+                const dateStr = data.mission.created_at.includes('Z') ? data.mission.created_at : `${data.mission.created_at.replace(' ', 'T')}Z`;
+                const start = new Date(dateStr).getTime();
                 const now = Date.now();
                 setElapsedTime(Math.floor((now - start) / 1000));
             } else {
@@ -53,7 +54,7 @@ export default function MissionPhaseMonitor() {
         
         // Timer interval for smooth ticking
         const timerInterval = setInterval(() => {
-            if (activeMission && activeMission.status === 'PROCESSING') {
+            if (activeMission && (activeMission.status === 'PROCESSING' || activeMission.status === 'PENDING')) {
                 setElapsedTime(prev => prev + 1);
             }
         }, 1000);
@@ -74,17 +75,43 @@ export default function MissionPhaseMonitor() {
     }
 
     const formatTime = (seconds: number) => {
-        const mins = Math.floor(seconds / 60);
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
         const secs = seconds % 60;
+        
+        if (hrs > 0) {
+            return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 
+    const formatStartTime = (dateStr: string) => {
+        try {
+            const utcStr = dateStr.includes('Z') ? dateStr : `${dateStr.replace(' ', 'T')}Z`;
+            const date = new Date(utcStr);
+            return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        } catch {
+            return '--:--';
+        }
+    };
+
     const totalCities = cities.length;
-    const completedCities = cities.filter(c => c.status === 'PUBLISHED' || c.status === 'STATIC_READY' || c.status === 'FAILED').length;
     
-    // Estimate: 2 minutes (120s) per city average
-    const estimatedTotalSeconds = totalCities * 135; 
-    const remainingSeconds = Math.max(0, estimatedTotalSeconds - elapsedTime);
+    // Improved estimation logic
+    const getEstimatedRemainingForCity = (status: string) => {
+        switch (status) {
+            case 'PENDING': return 210;
+            case 'RESEARCHING': return 180;
+            case 'ANALYZED': return 150;
+            case 'WRITING': return 120;
+            case 'AUDITING': case 'PIPELINE_RUNNING': return 40;
+            case 'PUBLISHED': case 'STATIC_READY': case 'FAILED': return 0;
+            default: return 180;
+        }
+    };
+
+    const remainingSeconds = cities.reduce((acc, city) => acc + getEstimatedRemainingForCity(city.status), 0);
+    const completedCities = cities.filter(c => c.status === 'PUBLISHED' || c.status === 'STATIC_READY' || c.status === 'FAILED').length;
 
     const phases = [
         { id: 'PENDING', label: 'Iniciando', icon: '🚀' },
@@ -107,24 +134,60 @@ export default function MissionPhaseMonitor() {
         : 0;
 
     return (
-        <div className="premium-card" style={{ background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(2, 6, 23, 0.9) 100%)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem' }}>
+        <div className="premium-card" style={{ background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(2, 6, 23, 0.9) 100%)', position: 'relative', overflow: 'hidden' }}>
+            {/* Animated background glow for active mission */}
+            {activeMission?.status === 'PROCESSING' || activeMission?.status === 'PENDING' ? (
+                <div style={{ 
+                    position: 'absolute', 
+                    top: '-50px', 
+                    right: '-50px', 
+                    width: '200px', 
+                    height: '200px', 
+                    background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
+                    zIndex: 0,
+                    animation: 'pulse 4s infinite ease-in-out'
+                }}></div>
+            ) : null}
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>
                 <div>
-                    <h3 style={{ fontSize: '1.25rem', margin: 0 }}>Monitor de Fase en Tiempo Real</h3>
+                    <h3 style={{ fontSize: '1.25rem', margin: '0 0 0.25rem 0', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        Monitor de Fase en Tiempo Real
+                        {(activeMission?.status === 'PROCESSING' || activeMission?.status === 'PENDING') && (
+                            <span style={{ 
+                                display: 'inline-flex', 
+                                alignItems: 'center', 
+                                gap: '4px', 
+                                fontSize: '0.6rem', 
+                                background: 'rgba(16, 185, 129, 0.2)', 
+                                color: '#10b981', 
+                                padding: '2px 6px', 
+                                borderRadius: '100px',
+                                fontWeight: 800,
+                                letterSpacing: '0.5px'
+                            }}>
+                                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', animation: 'pulse 1.5s infinite' }}></span>
+                                LIVE
+                            </span>
+                        )}
+                    </h3>
                     <p style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>
-                        Misión: <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{activeMission?.niche}</span> • Cluster: {totalCities} ciudades
+                        Misión: <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{activeMission?.niche}</span> • Cluster: {totalCities} ciudades 
+                        {activeMission?.created_at && ` • Iniciada a las ${formatStartTime(activeMission.created_at)}`}
                     </p>
                 </div>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                     <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '0.65rem', color: 'var(--muted)', textTransform: 'uppercase' }}>Tiempo Transcurrido</div>
-                        <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--primary)', fontFamily: 'monospace' }}>{formatTime(elapsedTime)}</div>
+                        <div style={{ fontSize: '0.65rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Duración de Misión</div>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#fff', fontFamily: 'monospace', textShadow: '0 0 10px rgba(59, 130, 246, 0.3)' }}>
+                            {formatTime(elapsedTime)}
+                        </div>
                     </div>
-                    <div style={{ width: '1px', height: '30px', background: 'rgba(255,255,255,0.1)' }}></div>
+                    <div style={{ width: '1px', height: '40px', background: 'rgba(255,255,255,0.1)' }}></div>
                     <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '0.65rem', color: 'var(--muted)', textTransform: 'uppercase' }}>Estimado Restante</div>
-                        <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--accent)', fontFamily: 'monospace' }}>
-                            {completedCities === totalCities ? '0:00' : formatTime(remainingSeconds)}
+                        <div style={{ fontSize: '0.65rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Meta de Finalización</div>
+                        <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--accent)', fontFamily: 'monospace', opacity: 0.8 }}>
+                            {completedCities === totalCities ? 'COMPLETADA' : formatTime(remainingSeconds)}
                         </div>
                     </div>
                 </div>

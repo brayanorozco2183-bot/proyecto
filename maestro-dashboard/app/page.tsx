@@ -49,7 +49,7 @@ export default async function Home() {
       <header className="dashboard-header" style={{ marginBottom: '2rem' }}>
         <div>
           <h1 style={{ fontSize: '2.5rem', marginBottom: '0.25rem', background: 'linear-gradient(to right, #6366f1, #10b981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: 900 }}>
-            Gravity V7.2 Orchestrator
+            SEO Maestro Orchestrator V7.2
           </h1>
           <p style={{ color: 'var(--muted)', fontSize: '1rem' }}>Sincronización Total: Enjambre de Agentes Autónomos con Aprendizaje V8.0</p>
         </div>
