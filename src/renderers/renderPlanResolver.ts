@@ -106,13 +106,13 @@ export class RenderPlanResolver {
 
         if (familyId === 'local_trust') {
             if (sv.block_type === 'cta_panel' || sv.block_type === 'trust_band') return 'band';
-            if (['services_grid', 'local_proof', 'faq', 'price_guidance', 'map'].includes(sv.block_type)) return 'panel';
-            return sv.block_type === 'process_steps' ? 'plain' : 'panel';
+            if (['services_grid', 'local_proof', 'faq', 'price_guidance', 'map'].includes(sv.block_type || '')) return 'panel';
+            return (sv.block_type || '') === 'process_steps' ? 'plain' : 'panel';
         }
 
         if (familyId === 'technical_grid') {
             if (sv.block_type === 'urgency_panel' || sv.block_type === 'cta_panel') return 'band';
-            if (['services_grid', 'local_proof', 'faq', 'price_guidance', 'map'].includes(sv.block_type)) return 'panel';
+            if (['services_grid', 'local_proof', 'faq', 'price_guidance', 'map'].includes(sv.block_type || '')) return 'panel';
             return 'plain';
         }
 

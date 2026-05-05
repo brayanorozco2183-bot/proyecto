@@ -5,7 +5,7 @@ import { getCanonicalNicheLabel } from '../niches/agentAdapters.js';
 import { normalizeFaqQuestionText, normalizeFaqAnswerText } from './faqSanitizer.js';
 import { sanitizeLegalRiskClaims } from './legalClaimSanitizer.js';
 import { applyPremiumContentDepth } from './premiumContentDepth.js';
-import { applyFinalUxDeliveryGuard } from './finalUxDeliveryGuard.js';
+import { applyFinalTransmissionGuard } from './finalTransmissionGuard.js';
 
 function escapeHtml(value = ''): string {
   return String(value)
@@ -78,7 +78,7 @@ function ensureSpanishPunctuation(value: string): string {
     .replace(/^Por que\b/i, 'Por qué');
 }
 
-function ensureHeadBaseline($: cheerio.CheerioAPI): void {
+function ensureHeadBaseline($: any): void {
   const html = $('html').first();
   if (html.length) html.attr('lang', 'es-ES');
   if ($('meta[charset]').length === 0) $('head').prepend('<meta charset="utf-8">');
@@ -305,7 +305,7 @@ function sanitizeTitle(value: string, city?: string, niche?: string): string {
     out = `${service} en ${city || 'tu zona'} con diagnóstico claro y cobertura real`;
   }
 
-  return truncateSmart(repairBrokenLocalFragments(out, city), 65, 30);
+  return truncateSmart(repairBrokenLocalFragments(out, { city }), 65, 30);
 }
 
 function buildMetaFallback(niche?: string, city?: string): string {
@@ -329,7 +329,7 @@ function sanitizeDescription(value: string, niche?: string, city?: string): stri
     out = buildMetaFallback(niche, city);
   }
 
-  return truncateSmart(repairBrokenLocalFragments(out, city), 165, 100);
+  return truncateSmart(repairBrokenLocalFragments(out, { city }), 165, 100);
 }
 
 function sanitizeAnswerText(value: string, niche?: string, city?: string): string {
@@ -346,7 +346,7 @@ function sanitizeAnswerText(value: string, niche?: string, city?: string): strin
     out = `${out} En ${city || 'la zona'}, conviene valorar el alcance real, el acceso a la incidencia y la solución proporcional antes de intervenir.`.trim();
   }
 
-  return truncateSmart(repairBrokenLocalFragments(out, city), 320, 140);
+  return truncateSmart(repairBrokenLocalFragments(out, { city }), 320, 140);
 }
 
 function sanitizeStructuredDataNode(value: JsonValue, context: FinalDocumentSanitizerContext): JsonValue {
@@ -889,7 +889,7 @@ function fixTextNodes($: cheerio.CheerioAPI, context: FinalDocumentSanitizerCont
   });
 }
 
-function getFirstMeaningfulParagraph($scope: cheerio.Cheerio<any>, $: cheerio.CheerioAPI): string {
+function getFirstMeaningfulParagraph($scope: any, $: any): string {
   const texts = $scope.find('p').map((_i, el) => normalizeText($(el).text())).get().filter((text) => text.length >= 60);
   return texts[0] || '';
 }
@@ -1413,5 +1413,5 @@ export function sanitizeFinalRenderedHtml(html: string, context: FinalDocumentSa
   removeEmptyArtifacts($);
 
   const sanitized = sanitizeLegalRiskClaims($.html().replace(/\s{2,}/g, ' ').replace(/\n{2,}/g, '\n').trim(), context.niche).html;
-  return applyFinalUxDeliveryGuard(applyPremiumContentDepth(sanitized, context), context);
+  return applyFinalTransmissionGuard(applyPremiumContentDepth(sanitized, context), context);
 }

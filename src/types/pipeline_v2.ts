@@ -350,8 +350,11 @@ export interface PostDeployAuditResult {
     lighthouse?: any;
     schema_valid: boolean;
     broken_links: string[];
-    issues?: string[];
+    issues: string[];
+    warnings: string[];
+    recommendations: string[];
     notes?: string[];
+    stats?: any;
 }
 
 export interface PipelineResult {

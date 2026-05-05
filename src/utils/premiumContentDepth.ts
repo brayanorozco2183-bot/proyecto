@@ -218,7 +218,7 @@ function commonCasesBlock(city: string, niche: string): string {
   return premiumBlock('premium-depth-casos', 'Guía práctica', title, [
     sectionIntro(city, niche),
     `Estos casos ayudan a ordenar la conversación inicial y a preparar una intervención más clara. La clave es aportar información concreta: síntoma, antigüedad aproximada, tipo de inmueble, urgencia real y cualquier manipulación previa.`
-  ], cards);
+  ], cards as [string, string][]);
 }
 
 function decisionBlock(city: string, niche: string): string {
@@ -257,7 +257,7 @@ function comparisonBlock(city: string, niche: string): string {
   ]);
 }
 
-function premiumBlock(id: string, eyebrow: string, title: string, paragraphs: string[], cards: Array<[string, string]>): string {
+function premiumBlock(id: string, eyebrow: string, title: string, paragraphs: string[], cards: [string, string][]): string {
   return `
 <section id="${id}" class="block-section premium-depth-section gpc-depth-section" data-block-type="premium_content_depth">
   <div class="el-container">

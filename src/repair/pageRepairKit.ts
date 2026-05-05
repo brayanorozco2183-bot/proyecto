@@ -2,7 +2,7 @@ import * as cheerio from 'cheerio';
 import { analyzeTechnicalIntegrity, enforceTechnicalIntegrityPolish } from '../quality/technicalIntegrityGate.js';
 import { finalHtmlPolish } from '../utils/finalHtmlPolish.js';
 import { applyPremiumContentDepth } from '../utils/premiumContentDepth.js';
-import { applyFinalUxDeliveryGuard } from '../utils/finalUxDeliveryGuard.js';
+import { applyFinalTransmissionGuard } from '../utils/finalTransmissionGuard.js';
 import { normalizeFaqQuestionText, normalizeFaqAnswerText } from '../utils/faqSanitizer.js';
 import type { PhaseValidationResult, PhaseValidationIssue } from './phaseRepairOrchestrator.js';
 
@@ -294,7 +294,7 @@ export function repairRenderedHtmlForPhase(html: string, phase: RepairablePagePh
   repairImages($, options);
   syncFaqSchema($);
   const repaired = $.html({ decodeEntities: false }).replace(/>\s+</g, '><').replace(/\s{2,}/g, ' ').trim();
-  return applyFinalUxDeliveryGuard(applyPremiumContentDepth(repaired, options), options);
+  return applyFinalTransmissionGuard(applyPremiumContentDepth(repaired, options), options);
 }
 
 export function repairRenderedPageForPhase<T extends RenderedPageLike>(page: T, phase: RepairablePagePhase, options: PageRepairOptions = {}): T {

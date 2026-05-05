@@ -33,7 +33,7 @@ export function normalizeFaqAnswerText(value: unknown): string {
 
 export function normalizeFaqEntity<T extends Record<string, any>>(entity: T): T {
   if (!entity || typeof entity !== 'object') return entity;
-  if ('name' in entity) entity.name = normalizeFaqQuestionText(entity.name);
+  if ('name' in entity) (entity as any).name = normalizeFaqQuestionText((entity as any).name);
   if (entity.acceptedAnswer && typeof entity.acceptedAnswer === 'object' && 'text' in entity.acceptedAnswer) {
     entity.acceptedAnswer.text = normalizeFaqAnswerText(entity.acceptedAnswer.text);
   }

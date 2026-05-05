@@ -11,7 +11,7 @@ import {
 import { PhaseHostOutcome } from '../../types/pipeline/state.js';
 import { reconcileClusterInternalLinks } from '../../internal-linking/postClusterInterlinking.js';
 import { applyPremiumContentDepth } from '../../utils/premiumContentDepth.js';
-import { applyFinalUxDeliveryGuard } from '../../utils/finalUxDeliveryGuard.js';
+import { applyFinalTransmissionGuard } from '../../utils/finalTransmissionGuard.js';
 
 export class DeliveryPhase {
     async run(page: RenderedPage, mission: GenerationMission): Promise<PhaseHostOutcome<{ renderedPage: RenderedPage; delivery: any }>> {
@@ -30,7 +30,7 @@ export class DeliveryPhase {
                     businessName: (mission as any).businessName || (mission as any).business_name,
                     phone: (mission as any).phone
                 };
-                page.html = applyFinalUxDeliveryGuard(applyPremiumContentDepth(page.html, deliveryContext), deliveryContext);
+                page.html = applyFinalTransmissionGuard(applyPremiumContentDepth(page.html, deliveryContext), deliveryContext);
             }
             await fs.writeFile(finalPath, page.html, 'utf-8');
             page.metadata.output_path = finalPath;
