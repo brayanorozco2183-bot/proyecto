@@ -54,7 +54,7 @@ export abstract class BaseAgent {
   abstract execute(input: any): Promise<AgentResponse<any>>;
 
   public async logThought(thought: string): Promise<void> {
-    RuntimeControl.check();
+    await RuntimeControl.check(this.missionId);
     console.log(`[${this.name}] Thinking: ${thought}`);
     if (this.missionId) {
       const { dbManager } = await import('../db/index.js');
@@ -247,7 +247,7 @@ export abstract class BaseAgent {
   ): Promise<string> {
     const { AIFacade } = await import('../tools/aiFacade.js');
     const { resolveModelForAgent } = await import('../ai/modelRouter.js');
-    RuntimeControl.check();
+    await RuntimeControl.check(this.missionId);
 
     const routingDecision = resolveModelForAgent(this.name, model || this.model);
     const finalModel = routingDecision.selectedModel;

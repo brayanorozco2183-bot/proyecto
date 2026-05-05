@@ -43,7 +43,7 @@ export class AIFacade {
     }
 
     const endpoint = `${vault.OLLAMA_URL}/api/generate`;
-    
+
     // Tiered Model Fallback Chain
     const modelTiers = [
       model,                             // Original (Router assigned)
@@ -76,7 +76,7 @@ export class AIFacade {
         const maxRetries = options.maxRetries ?? (agentName.includes('architect') ? 1 : 2);
 
         for (let attempt = 1; attempt <= maxRetries; attempt++) {
-          RuntimeControl.check();
+          await RuntimeControl.check(options.missionId);
           const callStartedAt = Date.now();
           try {
             console.log(`[AIFacade] ${agentName} -> ${runtimeModel} | attempt ${attempt}/${maxRetries} | tier_fallback=${currentModel !== model}`);
@@ -96,7 +96,7 @@ export class AIFacade {
               city: options.city,
               scopeKey: options.scopeKey,
             });
-            
+
             const payload = {
               model: runtimeModel,
               prompt,
@@ -108,7 +108,10 @@ export class AIFacade {
               format: options.json ? 'json' : undefined
             };
 
-            const response = await axios.post(endpoint, payload, { timeout: timeoutMs });
+            const response = await axios.post(endpoint, payload, { 
+              timeout: timeoutMs,
+              signal: RuntimeControl.getSignal(options.missionId)
+            });
             const text = String(response?.data?.response || '').trim();
             if (!text) throw new Error('empty response');
 
@@ -185,7 +188,7 @@ export class AIFacade {
 
     if (options.fallbackResponse) return this.resolveFallbackResponse(options.fallbackResponse) || '';
     if (vault.AI_FACADE_ALLOW_MOCKS) return this.getMockResponse(agentName, prompt);
-    
+
     throw new Error(`[AIFacade] All model tiers failed for ${agentName}. Last error: ${lastError?.message}`);
   }
 

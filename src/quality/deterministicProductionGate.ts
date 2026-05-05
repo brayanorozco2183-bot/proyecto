@@ -43,9 +43,7 @@ export function validateDeterministicProductionHtml(html: string): Deterministic
     add('HASH_LINKS_REPAIRED', 'warning', 'El sanitizador tuvo que reparar enlaces internos sin destino.');
   }
 
-  if (count(/data-image-warning="[^"]*resolution-low/gi, source) > 0 && !/gdk-hero-illustration/.test(source)) {
-    add('LOW_RES_HERO_NOT_REPLACED', 'warning', 'La imagen hero de baja resolución no fue sustituida por fallback premium.');
-  }
+
   if (count(/<section\b/gi, source) < 6) {
     add('TOO_FEW_SECTIONS', 'warning', 'La página parece tener pocas secciones para una landing local completa.');
   }

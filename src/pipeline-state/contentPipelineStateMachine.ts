@@ -1,4 +1,5 @@
 import type { ObservabilityMetadata, PipelineResult } from '../types/pipeline_v2.js';
+import { RuntimeControl } from '../utils/runtimeControl.js';
 import { assertPipelinePhaseContract } from '../validators/pipelineContractValidator.js';
 import { QualityPolicyEngine } from '../quality/policy/qualityPolicyEngine.js';
 import { createEmptyQualityLedger, type PipelineQualityLedger } from '../types/pipeline/quality.js';
@@ -576,6 +577,10 @@ export class ContentPipelineStateMachine {
     if (!options.resumeFromStatePath) {
       state.mission = sanitizedMission;
     }
+    
+    if (state.mission.missionId) {
+      RuntimeControl.setActiveMission(state.mission.missionId);
+    }
 
     if (persistState && state.artifactsDir) {
       state.stateFilePath = await savePipelineState(state);
@@ -599,6 +604,7 @@ export class ContentPipelineStateMachine {
       const phases = phaseRange(startPhase, options.stopAfterPhase);
 
       for (const phase of phases) {
+        await RuntimeControl.check(state.mission.missionId);
         const startedAt = Date.now();
         const phaseInput = safeClone({
           mission: state.mission,

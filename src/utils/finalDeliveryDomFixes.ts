@@ -60,10 +60,6 @@ function hardenHeroMedia($: cheerio.CheerioAPI, context: FinalDeliveryDomFixCont
     img.attr('decoding', img.attr('decoding') || 'async');
     img.attr('loading', img.attr('loading') || 'eager');
     img.attr('onerror', "this.closest('.hero-visual__frame')?.setAttribute('data-image-missing','true');this.style.display='none';");
-
-    if (/resolution-low/i.test(String(img.attr('data-image-warning') || '')) || String(img.attr('data-image-width-real') || '') === '640') {
-      box.attr('data-image-low-quality', 'true');
-    }
   });
 }
 

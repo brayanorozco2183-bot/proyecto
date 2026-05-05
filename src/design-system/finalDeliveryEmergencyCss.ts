@@ -62,8 +62,6 @@ body.gravity-final-delivery-lock .hero-visual__frame img { position: relative !i
 body.gravity-final-delivery-lock .hero-visual__frame[data-image-missing="true"] img,
 body.gravity-final-delivery-lock .hero-visual__frame img[src=""],
 body.gravity-final-delivery-lock .hero-visual__frame img:not([src]) { display: none !important; }
-body.gravity-final-delivery-lock .hero-visual__frame img[data-image-warning*="resolution-low"],
-body.gravity-final-delivery-lock .hero-visual__frame img[data-image-width-real="640"] { opacity: .001 !important; }
 
 /* Sections and blocks: flatten broken wrappers and enforce stable grids. */
 body.gravity-final-delivery-lock .el-section-wrapper:empty { display: none !important; }

@@ -4,7 +4,8 @@ import { sanitizeBrandName, buildCanonicalBrandName, repairBrokenLocalFragments 
 import { getCanonicalNicheLabel } from '../niches/agentAdapters.js';
 import { normalizeFaqQuestionText, normalizeFaqAnswerText } from './faqSanitizer.js';
 import { sanitizeLegalRiskClaims } from './legalClaimSanitizer.js';
-import { normalizeCleanDeliveryHtml } from './cleanDeliveryHtmlNormalizer.js';
+import { applyPremiumContentDepth } from './premiumContentDepth.js';
+import { applyFinalUxDeliveryGuard } from './finalUxDeliveryGuard.js';
 
 function escapeHtml(value = ''): string {
   return String(value)
@@ -1411,6 +1412,6 @@ export function sanitizeFinalRenderedHtml(html: string, context: FinalDocumentSa
   ensureCoreStructuredData($, context);
   removeEmptyArtifacts($);
 
-  const legallySanitized = sanitizeLegalRiskClaims($.html().replace(/\s{2,}/g, ' ').replace(/\n{2,}/g, '\n').trim(), context.niche).html;
-  return normalizeCleanDeliveryHtml(legallySanitized, context);
+  const sanitized = sanitizeLegalRiskClaims($.html().replace(/\s{2,}/g, ' ').replace(/\n{2,}/g, '\n').trim(), context.niche).html;
+  return applyFinalUxDeliveryGuard(applyPremiumContentDepth(sanitized, context), context);
 }

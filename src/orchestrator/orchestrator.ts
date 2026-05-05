@@ -22,6 +22,7 @@ import { CompetitorAuditAgent } from '../agents/competitor_audit.js';
 import { GeoIntelAgent } from '../agents/geointel.js';
 import { resolvePlaybookForMission } from '../niches/agentAdapters.js';
 import { buildCanonicalBrandName } from '../utils/brandGuard.js';
+import { sanitizeFinalRenderedHtml } from '../utils/finalDocumentSanitizer.js';
 
 // V3 Specialized Agents
 import { ContentWriterAgent } from '../agents/contentWriterAgent.js';
@@ -201,7 +202,7 @@ export class TaskOrchestrator {
         const isRedisOffline = !this.connection || this.connection.status !== 'ready';
         const missionData = { ...options, niche, locations, publish_mode: publishMode, site_type: options.site_type || 'wordpress' };
 
-        if (this.failsafeMode || !this.missionQueue || isRedisOffline) {
+        if (this.failsafeMode || !this.missionQueue || isRedisOffline || options.force_failsafe) {
             await this.processMissionLogic(jobId, niche, locations, missionData);
         } else {
             try {
@@ -382,6 +383,8 @@ export class TaskOrchestrator {
     }
 
     private async processMissionLogic(jobId: string, niche: string, locations: string[], extraData: any = {}) {
+        RuntimeControl.reset();
+        this.globalStop = false;
         const force = extraData.force === true;
         try {
             const db = await dbManager.getDB();
@@ -389,6 +392,7 @@ export class TaskOrchestrator {
 
             const agents = [this.analyst, this.architect, this.visual, this.technical, this.bridge, this.qa, this.nap, this.linguist, this.staticDeploy, this.videoArchitect, this.sentinel, this.weaver, this.roiAuditor, this.competitorAudit, this.geoIntel];
             agents.forEach(a => a.setMissionId(jobId));
+            RuntimeControl.setActiveMission(jobId);
 
             // Inject niche/technical briefs if available
             try {
@@ -442,10 +446,10 @@ export class TaskOrchestrator {
 
             for (const city of processingOrder) {
                 try {
-                    RuntimeControl.check();
+                    await RuntimeControl.check(jobId);
                     // --- RECHECK STOP SIGNAL (Multi-process safe) ---
                     const missionStatus = await db.get('SELECT status FROM missions WHERE id = ?', [jobId]);
-                    if (this.globalStop || missionStatus?.status === 'STOPPED' || RuntimeControl.isStopped()) {
+                    if (this.globalStop || missionStatus?.status === 'STOPPED' || RuntimeControl.isStopped(jobId)) {
                         this.globalStop = true; // Sync local state
                         stoppedMission = true;
                         await this.analyst.logThought(`🛑 Misión abortada manualmente por el usuario. Deteniendo el procesamiento en ${city}.`);
@@ -623,6 +627,15 @@ export class TaskOrchestrator {
                             let optimizedContent = pipelineResult.data?.html || pipelineResult.html || '';
                             const metadata = pipelineResult.data?.metadata || (pipelineResult as any).metadata || {};
 
+                            // --- RELEASE VISUAL FREEZE & SANITIZATION ---
+                            await this.analyst.logThought(`[FLOW] Aplicando Sanitización Final y Visual Freeze para ${city}...`);
+                            optimizedContent = sanitizeFinalRenderedHtml(optimizedContent, {
+                                city,
+                                niche,
+                                businessName: napData?.business_name,
+                                phone: napData?.phone
+                            });
+
                             // --- BUCLE DE AUDITORÍA EEAT (PASO 1) ---
                             await this.qa.logThought(`[EEAT Audit] Verificando señales negativas para ${city}...`);
 
@@ -718,10 +731,11 @@ if (isMain) {
     const command = process.argv.slice(2).join(' ').replace(/^ \/ /, '').trim();
     if (command) {
         console.log(`[CLI] 🚀 Inyectando comando manual: "${command}"`);
-        orchestrator.executeCommand(command, 'publish', { debug_mode: true })
+        // En modo CLI forzamos failsafe para evitar colisión con el worker del servidor
+        orchestrator.executeCommand(command, 'publish', { debug_mode: true, force_failsafe: true })
             .then(res => {
                 console.log(`[CLI] ✅ Comando completado: ${res.response}`);
-                setTimeout(() => process.exit(0), 1000); // Give some time for logs
+                setTimeout(() => process.exit(0), 1000);
             })
             .catch(err => {
                 console.error('[CLI] ❌ Error fatal en ejecución:', err);

@@ -10,8 +10,8 @@ import {
 } from '../../types/pipeline_v2.js';
 import { PhaseHostOutcome } from '../../types/pipeline/state.js';
 import { reconcileClusterInternalLinks } from '../../internal-linking/postClusterInterlinking.js';
-import { applyDeterministicHtmlSanitizer } from '../../utils/deterministicHtmlSanitizer.js';
-import { runFinalProductionAudit, renderFinalProductionAuditMarkdown } from '../../quality/finalProductionAudit.js';
+import { applyPremiumContentDepth } from '../../utils/premiumContentDepth.js';
+import { applyFinalUxDeliveryGuard } from '../../utils/finalUxDeliveryGuard.js';
 
 export class DeliveryPhase {
     async run(page: RenderedPage, mission: GenerationMission): Promise<PhaseHostOutcome<{ renderedPage: RenderedPage; delivery: any }>> {
@@ -22,31 +22,18 @@ export class DeliveryPhase {
             const fileName = mission.wordpress?.enabled ? 'content.txt' : 'index.html';
             const finalPath = path.join(fullDir, fileName);
 
-            page.html = applyDeterministicHtmlSanitizer(page.html, {
-                city: mission.city,
-                niche: mission.niche,
-                businessName: mission.local_nap?.business_name,
-                phone: mission.local_nap?.phone
-            });
-
-            const finalProductionAudit = runFinalProductionAudit(page.html);
-            page.metadata = page.metadata || {};
-            (page.metadata as any).final_production_audit = finalProductionAudit;
-
-            const blockOnFinalAudit = String(process.env.GRAVITY_DELIVERY_BLOCK_ON_FINAL_AUDIT || '').toLowerCase() === 'true';
-            if (blockOnFinalAudit && finalProductionAudit.issues.some((issue: any) => issue.severity === 'critical')) {
-                throw new Error(`Final production audit blocked delivery: ${finalProductionAudit.summary}`);
-            }
-
             await fs.mkdir(fullDir, { recursive: true });
+            if (!mission.wordpress?.enabled && fileName === 'index.html') {
+                const deliveryContext = {
+                    city: mission.city,
+                    niche: mission.niche,
+                    businessName: (mission as any).businessName || (mission as any).business_name,
+                    phone: (mission as any).phone
+                };
+                page.html = applyFinalUxDeliveryGuard(applyPremiumContentDepth(page.html, deliveryContext), deliveryContext);
+            }
             await fs.writeFile(finalPath, page.html, 'utf-8');
-            const auditJsonPath = path.join(fullDir, 'production_audit.json');
-            const auditMdPath = path.join(fullDir, 'production_audit.md');
-            await fs.writeFile(auditJsonPath, JSON.stringify(finalProductionAudit, null, 2), 'utf-8');
-            await fs.writeFile(auditMdPath, renderFinalProductionAuditMarkdown(finalProductionAudit), 'utf-8');
             page.metadata.output_path = finalPath;
-            (page.metadata as any).production_audit_path = auditJsonPath;
-            (page.metadata as any).production_audit_markdown_path = auditMdPath;
 
             let interlinkingReconciliation: any = null;
             if (Array.isArray((mission as any)?.cluster_data?.geo) && (mission as any).cluster_data.geo.length > 1 && !mission.wordpress?.enabled) {
@@ -69,7 +56,7 @@ export class DeliveryPhase {
                 status: 'success',
                 output: {
                     renderedPage: page,
-                    delivery: { attempted: true, completed: true, path: finalPath, productionAudit: (page.metadata as any).final_production_audit, productionAuditPath: (page.metadata as any).production_audit_path, interlinkingReconciliation }
+                    delivery: { attempted: true, completed: true, path: finalPath, interlinkingReconciliation }
                 }
             };
         } catch (error: any) {

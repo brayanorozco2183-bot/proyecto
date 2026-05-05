@@ -62,6 +62,7 @@ app.post('/api/command/stop', async (req: Request, res: Response) => {
         const db = await dbManager.getDB();
         // Detenemos todas las misiones activas en la base de datos para que el orquestador (proceso separado) lo vea
         await db.run('UPDATE missions SET status = ? WHERE status IN (?, ?)', ['STOPPED', 'PROCESSING', 'PENDING']);
+        await db.run('UPDATE city_data SET status = ? WHERE status NOT IN (?, ?, ?, ?)', ['STOPPED', 'COMPLETED', 'FAILED', 'STATIC_READY', 'PUBLISHED']);
         
         const orch = await getOrchestrator();
         orch.stopAllMissions();
@@ -112,7 +113,7 @@ app.get('/api/logs', async (req: Request, res: Response) => {
         }
     }
 
-    query += ' ORDER BY id DESC LIMIT 100';
+    query += ' ORDER BY id DESC LIMIT 2000';
     const logs = await db.all(query, params);
     res.json(logs);
 });
@@ -294,15 +295,17 @@ app.post('/api/settings', express.json(), async (req: Request, res: Response) =>
         ftp_pass,
         ftp_port,
         ftp_path,
-        enable_wordpress
+        enable_wordpress,
+        debug_mode,
+        is_cluster
     } = req.body;
 
     const db = await dbManager.getDB();
     await db.run('DELETE FROM site_settings');
     await db.run(
         `INSERT INTO site_settings 
-        (site_url, auth_user, auth_pass, site_type, ftp_host, ftp_user, ftp_pass, ftp_port, ftp_path, enable_wordpress) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (site_url, auth_user, auth_pass, site_type, ftp_host, ftp_user, ftp_pass, ftp_port, ftp_path, enable_wordpress, debug_mode, is_cluster) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
             site_url,
             auth_user,
@@ -313,7 +316,9 @@ app.post('/api/settings', express.json(), async (req: Request, res: Response) =>
             ftp_pass,
             ftp_port || 22,
             ftp_path,
-            enable_wordpress ? 1 : 0
+            enable_wordpress ? 1 : 0,
+            debug_mode ? 1 : 0,
+            is_cluster ? 1 : 0
         ]
     );
     res.json({ success: true });

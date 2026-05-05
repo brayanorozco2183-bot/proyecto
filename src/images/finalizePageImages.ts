@@ -141,7 +141,10 @@ export async function finalizePageImages(html: string, context: PageImageContext
 
     for (const node of candidates) {
         const $node = $(node);
-        if (!isProvisionalImage($node)) continue;
+        if (!isProvisionalImage($node)) {
+            console.log(`[finalizePageImages] Skipping node: not provisional (status=${$node.attr('data-image-status')}, src=${$node.find('img').first().attr('src')})`);
+            continue;
+        }
 
         const slot = String($node.attr('data-image-slot') || '').trim();
         if (!slot) continue;
@@ -150,9 +153,14 @@ export async function finalizePageImages(html: string, context: PageImageContext
         const brief = buildBriefForSlot(slot, sectionTitle, context);
 
         try {
+            console.log(`[finalizePageImages] Generating image for slot: ${slot}`);
             const asset = await comfyClient.generateImage(brief);
+            console.log(`[finalizePageImages] Success! Asset: ${asset.filename}`);
             const $img = $node.find('img').first();
-            if (!$img.length) continue;
+            if (!$img.length) {
+                console.warn(`[finalizePageImages] No <img> found inside node for slot ${slot}`);
+                continue;
+            }
 
             // --- Lógica de Ruteo Real: Copiar imagen a la carpeta del sitio y su espejo público ---
             if (normalizedOutputSlug) {
@@ -186,9 +194,6 @@ export async function finalizePageImages(html: string, context: PageImageContext
                 $img.attr('height', String(dimensions.height));
                 $img.attr('data-image-width-real', String(dimensions.width));
                 $img.attr('data-image-height-real', String(dimensions.height));
-                if (slot === 'hero-default' && dimensions.width < 900) {
-                    $node.attr('data-image-warning', `hero-resolution-low:${dimensions.width}x${dimensions.height}`);
-                }
             }
 
             $img.attr('alt', asset.alt);

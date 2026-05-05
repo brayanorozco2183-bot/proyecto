@@ -12,7 +12,9 @@ export default function SiteSettings() {
         ftp_user: '',
         ftp_pass: '',
         ftp_port: 22,
-        ftp_path: ''
+        ftp_path: '',
+        debug_mode: 0,
+        is_cluster: 0
     });
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
@@ -21,7 +23,7 @@ export default function SiteSettings() {
         fetch('http://localhost:8081/api/settings')
             .then(res => res.json())
             .then(data => {
-                if (data.site_url || data.ftp_host) {
+                if (data.site_url || data.ftp_host || data.debug_mode !== undefined) {
                     setSettings(prev => ({ ...prev, ...data }));
                 }
             });
@@ -84,7 +86,7 @@ export default function SiteSettings() {
                 {/* GLOBAL SECTOR: Platform & URL */}
                 <section style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', border: '1px solid var(--border)' }}>
                     <h3 style={{ fontSize: '0.9rem', marginBottom: '1rem', color: 'var(--primary)', fontWeight: 700 }}>1. Plataforma Base</h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
                         <div>
                             <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--muted)', marginBottom: '0.5rem' }}>Tipo de Despliegue</label>
                             <select
@@ -106,6 +108,28 @@ export default function SiteSettings() {
                                 style={{ width: '100%', padding: '0.75rem', background: '#050507', border: '1px solid var(--border)', borderRadius: '8px', color: '#fff' }}
                             />
                         </div>
+                    </div>
+
+                    <h3 style={{ fontSize: '0.8rem', marginBottom: '0.75rem', color: 'var(--muted)', fontWeight: 600 }}>Predeterminados de Pipeline</h3>
+                    <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.85rem' }}>
+                            <input 
+                                type="checkbox" 
+                                checked={settings.debug_mode === 1}
+                                onChange={(e) => setSettings({ ...settings, debug_mode: e.target.checked ? 1 : 0 })}
+                                style={{ width: '18px', height: '18px' }}
+                            />
+                            <span style={{ color: '#ffa500', fontWeight: 700 }}>🛠️ MODO DEBUG</span>
+                        </label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.85rem' }}>
+                            <input 
+                                type="checkbox" 
+                                checked={settings.is_cluster === 1}
+                                onChange={(e) => setSettings({ ...settings, is_cluster: e.target.checked ? 1 : 0 })}
+                                style={{ width: '18px', height: '18px' }}
+                            />
+                            <span style={{ color: 'var(--primary)', fontWeight: 700 }}>🚀 MODO CLÚSTER</span>
+                        </label>
                     </div>
                 </section>
 

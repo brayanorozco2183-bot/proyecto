@@ -104,38 +104,6 @@ function stabilizeClasses($: cheerio.CheerioAPI): void {
   });
 }
 
-function replaceLowQualityHeroMedia($: cheerio.CheerioAPI, context: DeterministicHtmlContext): void {
-  const title = escapeHtml(serviceLabel(context.niche));
-  const city = escapeHtml(context.city || 'Cobertura local');
-  $('.hero-visual__frame').each((_i: number, el: any) => {
-    const frame = $(el);
-    const img = frame.find('img').first();
-    const warning = String(img.attr('data-image-warning') || '');
-    const width = Number(img.attr('data-image-width-real') || img.attr('width') || 0);
-    const isLowQuality = /resolution-low/i.test(warning) || (width > 0 && width < 900);
-    if (!isLowQuality) return;
-    frame.empty().append(`
-      <div class="gdk-hero-illustration" role="img" aria-label="${title} en ${city}">
-        <div class="gdk-hero-illustration__panel">
-          <span>${title}</span>
-          <strong>${city}</strong>
-          <em>Diagnóstico claro · cobertura real · actuación proporcionada</em>
-        </div>
-      </div>
-    `);
-  });
-}
-
-function ensureHeroIllustrationCss($: cheerio.CheerioAPI): void {
-  if ($('#gravity-deterministic-hero-illustration-css').length) return;
-  $('head').append(`<style id="gravity-deterministic-hero-illustration-css">
-    .gdk-hero-illustration{min-height:inherit;height:100%;display:grid;place-items:center;padding:clamp(1.2rem,3vw,2rem);background:radial-gradient(circle at 82% 18%,rgba(255,255,255,.22),transparent 30%),linear-gradient(135deg,#0f172a,var(--primary,#0f766e));color:#fff}
-    .gdk-hero-illustration__panel{width:min(100%,26rem);display:grid;gap:.55rem;padding:1.25rem;border-radius:1.35rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.20);box-shadow:0 24px 60px rgba(2,6,23,.22)}
-    .gdk-hero-illustration__panel span{font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:rgba(255,255,255,.76)}
-    .gdk-hero-illustration__panel strong{font-size:clamp(2rem,4vw,3.2rem);line-height:1;letter-spacing:-.05em;color:#fff}
-    .gdk-hero-illustration__panel em{font-style:normal;color:rgba(255,255,255,.78);font-weight:700}
-  </style>`);
-}
 
 function ensureContactAnchor($: cheerio.CheerioAPI): void {
   const hasContactLinks = $('a[href="#contacto"]').length > 0;
@@ -173,15 +141,10 @@ function normalizeHashLinks($: cheerio.CheerioAPI): void {
 export function applyDeterministicHtmlSanitizer(html: string, context: DeterministicHtmlContext = {}): string {
   const $ = cheerio.load(String(html || ''), { decodeEntities: false });
   injectCss($);
-  ensureHeroIllustrationCss($);
   stabilizeClasses($);
   ensureContactAnchor($);
   normalizeHashLinks($);
   repairBrokenVisibleCopy($, context);
-  replaceLowQualityHeroMedia($, context);
   removeEmptyStructures($);
-  ensureContactAnchor($);
-  normalizeHashLinks($);
-  repairBrokenVisibleCopy($, context);
   return $.html().replace(/\s{2,}/g, ' ').trim();
 }

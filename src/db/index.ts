@@ -72,6 +72,8 @@ export class DBManager {
     await safeAlter(`ALTER TABLE site_settings ADD COLUMN ftp_port INTEGER DEFAULT 22;`);
     await safeAlter(`ALTER TABLE site_settings ADD COLUMN ftp_path TEXT;`);
     await safeAlter(`ALTER TABLE site_settings ADD COLUMN enable_wordpress INTEGER DEFAULT 0;`);
+    await safeAlter(`ALTER TABLE site_settings ADD COLUMN debug_mode INTEGER DEFAULT 0;`);
+    await safeAlter(`ALTER TABLE site_settings ADD COLUMN is_cluster INTEGER DEFAULT 0;`);
 
     await this.db.exec(`
       CREATE TABLE IF NOT EXISTS assets (
@@ -113,7 +115,9 @@ export class DBManager {
         ftp_pass TEXT,
         ftp_port INTEGER DEFAULT 22,
         ftp_path TEXT,
-        enable_wordpress INTEGER DEFAULT 0
+        enable_wordpress INTEGER DEFAULT 0,
+        debug_mode INTEGER DEFAULT 0,
+        is_cluster INTEGER DEFAULT 0
       );
 
       CREATE TABLE IF NOT EXISTS agent_knowledge (

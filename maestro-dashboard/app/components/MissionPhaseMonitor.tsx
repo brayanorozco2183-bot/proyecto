@@ -22,6 +22,7 @@ const PHASES = [
     { id: 'integrity', label: 'Integridad Técnica', icon: '🛡️' },
     { id: 'enrichment', label: 'Enriquecimiento LSI', icon: '💎' },
     { id: 'assembly', label: 'Ensamblaje HTML', icon: '🏗️' },
+    { id: 'images', label: 'Generación Visual (Comfy)', icon: '🎨' },
     { id: 'qa', label: 'Control de Calidad', icon: '✅' },
     { id: 'delivery', label: 'Despliegue Final', icon: '🚀' },
     { id: 'audit_post', label: 'Auditoría Post-Deploy', icon: '🔍' }
@@ -60,15 +61,21 @@ export default function MissionPhaseMonitor() {
         if (s.includes('integrity')) return 6;
         if (s.includes('enrichment')) return 7;
         if (s.includes('assembly')) return 8;
-        if (s.includes('qa') || s.includes('quality')) return 9;
-        if (s.includes('delivery')) return 10;
+        if (s.includes('image') || s.includes('comfy')) return 9;
+        if (s.includes('qa') || s.includes('quality') || s.includes('completeness')) return 10;
+        if (s.includes('delivery')) return 11;
         if (s.includes('published') || s.includes('completed') || s.includes('static_ready')) return 12;
         return -1;
     };
 
     if (loading && missions.length === 0) return <div className="premium-card">Cargando monitor de fases...</div>;
 
-    const activeMission = missions.find(m => m.status !== 'COMPLETED' && m.status !== 'FAILED' && m.status !== 'PUBLISHED') || missions[0];
+    const activeMission = missions.find(m => 
+        m.status !== 'COMPLETED' && 
+        m.status !== 'FAILED' && 
+        m.status !== 'PUBLISHED' && 
+        m.status !== 'PENDING'
+    ) || missions.find(m => m.status === 'PENDING') || missions[0];
 
     if (!activeMission) return null;
 

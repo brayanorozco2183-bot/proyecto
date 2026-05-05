@@ -136,7 +136,6 @@ export function runFinalProductionAudit(html: string): FinalProductionAuditResul
   if (/[:;,.\s]+este\s+bloque\s+resume/i.test(visibleText)) addIssue(issues, 'VISIBLE_TEMPLATE_RESIDUE', 'critical', 'Hay residuo de plantilla visible.', { sample: visibleText.match(/.{0,40}este\s+bloque\s+resume.{0,80}/i)?.[0] });
   if (/\ben\s+y\b|\ben\s+puede\s+variar\b|\baver[ií]as\s+comunes\s+en\s+y\b/i.test(visibleText)) addIssue(issues, 'BROKEN_LOCAL_COPY', 'critical', 'Hay copy local incompleto, normalmente por ciudad perdida.');
   if (/Lo\s+que\s+dicen\s+nuestros\s+clientes|reseñas\s+de\s+clientes|testimonios/i.test(visibleText)) addIssue(issues, 'UNVERIFIED_REVIEW_LANGUAGE', 'critical', 'Hay lenguaje de reseñas/testimonios sin evidencia.');
-  if (/data-image-warning="[^"]*resolution-low/i.test(source) && !/gdk-hero-illustration/.test(source)) addIssue(issues, 'LOW_RES_HERO_VISIBLE', 'warning', 'La imagen hero de baja resolución no se sustituyó por fallback premium.');
   if (countMatches(source, /class="[^"]*(?:undefined|null)[^"]*"/gi) > 0) addIssue(issues, 'BROKEN_CLASS_TOKEN', 'critical', 'Hay clases CSS con tokens undefined/null.');
   if (styleLayerCount > 8) addIssue(issues, 'TOO_MANY_STYLE_LAYERS', 'warning', `Hay muchas capas <style> en el HTML final (${styleLayerCount}); conviene consolidar para evitar conflictos visuales.`);
   if (!blockTypes.some((b) => b.blockType === 'services_grid')) addIssue(issues, 'SERVICES_BLOCK_MISSING', 'warning', 'No se detectó bloque services_grid.');

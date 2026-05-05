@@ -126,6 +126,7 @@ export function isBannedResearchUrl(rawUrl: string): boolean {
     const host = url.hostname.toLowerCase();
     const pathname = url.pathname.toLowerCase();
     if (/(^|\.)google\./.test(host)) return true;
+    if (host === 'localhost' || host === '127.0.0.1' || host.startsWith('192.168.')) return true;
     if (classifyResearchHost(normalized) === 'banned') return true;
     if (/\.pdf(?:$|[?#])/.test(pathname)) return true;
     if (/\/(trabajo|empleo|jobs?|oferta(?:s)?|career|careers|download|pdf)\b/.test(`${pathname}${url.search.toLowerCase()}`)) return true;

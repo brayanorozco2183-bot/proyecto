@@ -67,9 +67,16 @@ export default async function Home() {
           <p style={{ fontSize: '2rem', fontWeight: 700 }}>{agents.length}</p>
         </div>
         <div className="premium-card">
+          <h3 style={{ color: 'var(--muted)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>Misiones en Proceso</h3>
+          <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--primary)' }}>
+            {stats.reduce((acc: number, s: Stat) => 
+              ['RESEARCHING', 'ANALYZED', 'PLANNING', 'WRITING', 'EDITING', 'CORRECTING', 'QA_READY', 'PROCESSING', 'IMAGES', 'IMAGES_GENERATING', 'QA', 'COMPLETENESS', 'TECHNICAL_VALIDATION'].includes(s.status) ? acc + s.count : acc, 0)}
+          </p>
+        </div>
+        <div className="premium-card">
           <h3 style={{ color: 'var(--muted)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>Misiones Publicadas</h3>
           <p style={{ fontSize: '2rem', fontWeight: 700 }}>
-            {stats.find((s: Stat) => s.status === 'PUBLISHED')?.count || 0}
+            {stats.find((s: Stat) => s.status === 'PUBLISHED' || s.status === 'STATIC_READY' || s.status === 'COMPLETED')?.count || 0}
           </p>
         </div>
         <div className="premium-card">

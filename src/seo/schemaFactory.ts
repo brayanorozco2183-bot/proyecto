@@ -1,4 +1,3 @@
-
 import type { BreadcrumbItem, SchemaBuildResult, SupportedSchemaType } from './types.js';
 import { sanitizeBrandName, repairBrokenLocalFragments } from '../utils/brandGuard.js';
 import { getCanonicalNicheLabel } from '../niches/agentAdapters.js';
@@ -56,14 +55,39 @@ function resolveSafeBusinessName(mission: any): string {
   );
 }
 
+function looksLikePlaceholderPhone(value: any): boolean {
+  const raw = normalizeText(value);
+  const digits = raw.replace(/\D/g, '');
+  return !raw
+    || /\+\s*34\s*\+\s*34/i.test(raw)
+    || /0{6,}/.test(digits)
+    || /^(?:34)?(?:600000000|666666666|999999999|960000000|910000000|900000000)$/.test(digits)
+    || /^(\d)\1+$/.test(digits);
+}
+
+function isTrustedNapSource(mission: any): boolean {
+  return process.env.GRAVITY_ALLOW_UNVERIFIED_NAP_SCHEMA === 'true'
+    || mission?.local_nap?.verified === true
+    || mission?.local_nap?.isVerified === true
+    || mission?.local_nap?.source === 'user'
+    || mission?.siteConfig?.napVerified === true;
+}
+
 function resolveSafePhone(mission: any): string | undefined {
+  const sitePhone = normalizePhone(mission?.siteConfig?.phone || mission?.siteConfig?.brandPhone || '');
+  if (sitePhone && !looksLikePlaceholderPhone(mission?.siteConfig?.phone || mission?.siteConfig?.brandPhone)) return sitePhone;
+
+  if (!isTrustedNapSource(mission)) return undefined;
   const phone = normalizePhone(mission?.local_nap?.phone || '');
-  return phone || undefined;
+  if (!phone || looksLikePlaceholderPhone(mission?.local_nap?.phone)) return undefined;
+  return phone;
 }
 
 function resolvePostalAddress(mission: any): Record<string, any> | undefined {
+  const cityAddress = mission?.city ? { '@type': 'PostalAddress', addressLocality: mission.city, addressCountry: 'ES' } : undefined;
+  if (!isTrustedNapSource(mission)) return cityAddress;
   const address = normalizeText(mission?.local_nap?.address || '');
-  if (!address) return undefined;
+  if (!address || /Calle\s+de\s+Col[oó]n,?\s*10/i.test(address)) return cityAddress;
   return {
     '@type': 'PostalAddress',
     streetAddress: address,

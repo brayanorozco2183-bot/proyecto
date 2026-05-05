@@ -5,14 +5,14 @@
   "status": "production_ready",
   "metrics": {
     "titleLength": 61,
-    "metaDescriptionLength": 129,
+    "metaDescriptionLength": 121,
     "h1Count": 1,
     "h2Count": 11,
     "sectionCount": 13,
     "ctaCount": 13,
     "contactAnchors": 1,
-    "contactLinks": 0,
-    "internalHashLinks": 8,
+    "contactLinks": 13,
+    "internalHashLinks": 21,
     "deadHashLinks": [],
     "blockTypes": [
       {
@@ -26,7 +26,7 @@
         "blockType": "services_grid",
         "count": 1,
         "headings": [
-          "Nuestros Servicios"
+          "Servicios Ofrecidos"
         ]
       },
       {
@@ -40,7 +40,7 @@
         "blockType": "local_proof",
         "count": 1,
         "headings": [
-          "Prueba Local"
+          "Prueba Local de Seguridad"
         ]
       },
       {
@@ -82,17 +82,17 @@
         "blockType": "internal_linking",
         "count": 1,
         "headings": [
-          "Páginas recomendadas dentro del proyecto"
+          "Navegación relacionada del proyecto"
         ]
       }
     ],
-    "styleLayerCount": 10
+    "styleLayerCount": 9
   },
   "issues": [
     {
       "code": "TOO_MANY_STYLE_LAYERS",
       "severity": "warning",
-      "message": "Hay muchas capas <style> en el HTML final (10); conviene consolidar para evitar conflictos visuales."
+      "message": "Hay muchas capas <style> en el HTML final (9); conviene consolidar para evitar conflictos visuales."
     }
   ],
   "summary": "Listo para producción con score 93."

@@ -1,6 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+interface Agent {
+    id: string;
+    role: string;
+}
 
 export default function MissionControl() {
     const [niche, setNiche] = useState('');
@@ -12,7 +17,37 @@ export default function MissionControl() {
     const [publishMode, setPublishMode] = useState<'draft' | 'publish'>('publish');
     const [siteType, setSiteType] = useState<'wordpress' | 'static'>('wordpress');
     const [isCluster, setIsCluster] = useState(false);
+    const [debugMode, setDebugMode] = useState(false);
     const [scope, setScope] = useState<'neighborhoods' | 'municipalities' | 'auto'>('auto');
+    const [agents, setAgents] = useState<Agent[]>([]);
+
+    useEffect(() => {
+        const fetchAgents = async () => {
+            try {
+                const res = await fetch('http://localhost:8081/api/agents');
+                const data = await res.json();
+                setAgents(data);
+            } catch (err) {
+                console.error('Error fetching agents:', err);
+            }
+        };
+
+        const fetchDefaults = async () => {
+            try {
+                const res = await fetch('http://localhost:8081/api/settings');
+                const data = await res.json();
+                if (data.debug_mode !== undefined) setDebugMode(data.debug_mode === 1);
+                if (data.is_cluster !== undefined) setIsCluster(data.is_cluster === 1);
+            } catch (err) {
+                console.error('Error fetching default settings:', err);
+            }
+        };
+
+        fetchAgents();
+        fetchDefaults();
+        const interval = setInterval(fetchAgents, 10000);
+        return () => clearInterval(interval);
+    }, []);
 
     // Credenciales específicas de la misión
     const [ftpHost, setFtpHost] = useState('');
@@ -72,7 +107,7 @@ export default function MissionControl() {
                 extraPayload.wp_creds = { site_url: wpUrl, auth_user: wpUser, auth_pass: wpPass };
             }
 
-            const res = await fetch('http://localhost:8081/api/command', {
+                    const res = await fetch('http://localhost:8081/api/command', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -80,6 +115,7 @@ export default function MissionControl() {
                     publish_mode: publishMode,
                     site_type: siteType,
                     is_cluster: isCluster,
+                    debug_mode: debugMode,
                     scope: scope,
                     ...extraPayload
                 })
@@ -192,40 +228,55 @@ export default function MissionControl() {
                         />
                     </div>
 
-                    <div style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', marginBottom: '1rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                            <label style={{ fontSize: '0.75rem', fontWeight: 700 }}>🚀 MODO CLÚSTER (DOMINACIÓN)</label>
-                            <input
-                                type="checkbox"
-                                checked={isCluster}
-                                onChange={(e) => setIsCluster(e.target.checked)}
-                                style={{ transform: 'scale(1.2)', cursor: 'pointer' }}
-                            />
-                        </div>
-                        {isCluster && (
-                            <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                {(['neighborhoods', 'municipalities', 'auto'] as const).map(s => (
-                                    <button
-                                        key={s}
-                                        type="button"
-                                        onClick={() => setScope(s)}
-                                        style={{
-                                            flex: 1,
-                                            padding: '0.3rem',
-                                            fontSize: '0.65rem',
-                                            background: scope === s ? 'var(--accent)' : 'transparent',
-                                            border: `1px solid ${scope === s ? 'var(--accent)' : 'var(--border)'}`,
-                                            borderRadius: '4px',
-                                            color: '#fff',
-                                            cursor: 'pointer',
-                                            fontWeight: scope === s ? 700 : 400
-                                        }}
-                                    >
-                                        {s === 'neighborhoods' ? 'BARRIOS' : s === 'municipalities' ? 'MUNICIPIOS' : 'AUTO'}
-                                    </button>
-                                ))}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                        <div style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                                <label style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--primary)' }}>🚀 MODO CLÚSTER</label>
+                                <input
+                                    type="checkbox"
+                                    checked={isCluster}
+                                    onChange={(e) => setIsCluster(e.target.checked)}
+                                    style={{ transform: 'scale(1.2)', cursor: 'pointer' }}
+                                />
                             </div>
-                        )}
+                            {isCluster && (
+                                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    {(['neighborhoods', 'municipalities', 'auto'] as const).map(s => (
+                                        <button
+                                            key={s}
+                                            type="button"
+                                            onClick={() => setScope(s)}
+                                            style={{
+                                                flex: 1,
+                                                padding: '0.3rem',
+                                                fontSize: '0.6rem',
+                                                background: scope === s ? 'var(--accent)' : 'transparent',
+                                                border: `1px solid ${scope === s ? 'var(--accent)' : 'var(--border)'}`,
+                                                borderRadius: '4px',
+                                                color: '#fff',
+                                                cursor: 'pointer',
+                                                fontWeight: scope === s ? 700 : 400
+                                            }}
+                                        >
+                                            {s === 'neighborhoods' ? 'BARRIOS' : s === 'municipalities' ? 'MUNICIPIOS' : 'AUTO'}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        <div style={{ padding: '0.75rem', background: 'rgba(255,165,0,0.05)', borderRadius: '8px', border: '1px solid rgba(255,165,0,0.2)' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <label style={{ fontSize: '0.7rem', fontWeight: 700, color: '#ffa500' }}>🛠️ MODO DEBUG</label>
+                                <input
+                                    type="checkbox"
+                                    checked={debugMode}
+                                    onChange={(e) => setDebugMode(e.target.checked)}
+                                    style={{ transform: 'scale(1.2)', cursor: 'pointer' }}
+                                />
+                            </div>
+                            <p style={{ fontSize: '0.6rem', color: 'var(--muted)', marginTop: '0.5rem' }}>Habilita trazas detalladas y modo sandbox si está disponible.</p>
+                        </div>
                     </div>
 
                     <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>

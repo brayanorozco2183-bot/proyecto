@@ -13,30 +13,28 @@ src/**/*.js
 src/**/*.js.map
 !src/**/*.ts
 
-# Database and state
-# Database and state (Whitelisted for backup)
-# maestro.db
-# maestro.db-journal
-# maestro.db-shm
-# maestro.db-wal
-# database.sqlite
-# *.db
-# *.sqlite
-# *.sqlite3
-# maestro.db
+# Database and state — do NOT commit the live database
+maestro.db
+maestro.db-journal
+maestro.db-shm
+maestro.db-wal
+*.db
+*.sqlite
+*.sqlite3
 
-# Generated outputs (Whitelisted for backup)
-# output_sites/
-# scripts/output_sites/
-# scripts/public_static/
-# public_static/
-# public-static/
-# site_output/
-test_results/
-debug_runs/
+# Generated outputs — local only
+output_sites/
+public-static/
+public_static/
+site_output/
 assets_generated/
+
+# Debug and test artifacts
+debug_runs/
+test_results/
 playwright-report/
 test-results/
+ux-audit/
 
 # Temporary / Scratch
 tmp/
@@ -45,12 +43,32 @@ tmp_*
 debug_*
 finalize_*
 repair_*
+.gravity_backups/
 
-# Test and flow scripts in root (moving to tools/ later)
+# Root-level utility scripts (not part of the core project)
 test_*.ts
 run_*.ts
 monitor_*.ts
+check_*.ts
+check_*.cjs
+clear_*.ts
+read_*.cjs
+read_*.js
+read_*.py
+verify_*.cjs
+verify_*.py
+list_*.cjs
+delete_*.cjs
 *.patch
+*.bat
+architect_output.json
+mission_cmd.json
+logs_
+gravity_copia_log.txt
+sdi_pilot.ps1
+
+# Parche directory (legacy)
+parche/
 
 # System
 .DS_Store

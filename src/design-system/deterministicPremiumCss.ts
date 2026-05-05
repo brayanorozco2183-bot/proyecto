@@ -85,14 +85,6 @@ body.family-local_trust {
   border: 1px solid rgba(255,255,255,.75) !important;
   box-shadow: var(--gdk-shadow-strong) !important;
 }
-.hero-visual__frame img[data-image-warning*="resolution-low"],
-.hero-visual__frame img[data-image-width-real="640"] { opacity: 0 !important; }
-.hero-visual__frame:has(img[data-image-warning*="resolution-low"]),
-.hero-visual__frame:has(img[data-image-width-real="640"]) {
-  background:
-    radial-gradient(circle at 82% 18%, rgba(255,255,255,.20), transparent 26%),
-    linear-gradient(135deg, #0f172a, var(--gdk-primary)) !important;
-}
 
 .el-section-wrapper { padding-block: .45rem !important; }
 .el-section, .block-section, .semantic-section { padding: var(--gdk-section-y) 0 !important; }

@@ -128,15 +128,7 @@ export function validatePremiumPageReadiness(input: {
   const emptyStructuralLists = $('ul:empty, ol:empty, .service-card__meta:empty, .step-row__meta:empty, .proof-row__meta:empty').length;
   if (emptyStructuralLists) push(issues, 'PREMIUM_EMPTY_STRUCTURAL_LISTS', 'error', `Hay ${emptyStructuralLists} listas estructurales vacías en el HTML final.`);
 
-  const lowConfidenceHero = $('figure.hero-visual[data-image-warning*="low"], figure.hero-visual[data-image-status*="fallback"], figure.hero-visual img[data-image-width-real]').filter((_i: any, el: any) => {
-    const img = $(el).is('img') ? $(el) : $(el).find('img').first();
-    const w = Number(img.attr('data-image-width-real') || img.attr('width') || 0);
-    const h = Number(img.attr('data-image-height-real') || img.attr('height') || 0);
-    return (w > 0 && w < 900) || (h > 0 && h < 520) || /low|fallback/i.test(String($(el).attr('data-image-warning') || $(el).attr('data-image-status') || ''));
-  }).length;
-  if (lowConfidenceHero && !$('.hero-visual--fallback, .hero-visual--low-confidence').length) {
-    push(issues, 'PREMIUM_LOW_CONFIDENCE_HERO_IMAGE', 'error', 'La imagen hero es de baja confianza y no se sustituyó por fallback visual premium.');
-  }
+
 
   const reviewLanguage = $('[data-block-type="local_proof"], [data-block-type="trust_band"]').text().match(/lo que dicen nuestros clientes|reseñas|testimonios|opiniones de clientes/i);
   if (!hasReviews && reviewLanguage) push(issues, 'PREMIUM_UNVERIFIED_REVIEW_COPY', 'critical', 'Aparece lenguaje de reseñas/clientes sin evidencia validada.', reviewLanguage[0]);

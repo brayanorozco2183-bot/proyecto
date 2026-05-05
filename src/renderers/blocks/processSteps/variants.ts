@@ -67,7 +67,6 @@ const numberedList = (input: BlockRendererInput): string => {
       <ol class="process-steps__list">
         ${items.map((item: any, index: number) => `
           <li>
-            <span class="step-card__index">${index + 1}</span>
             <div class="step-card__body">
               ${item.title ? `<h3>${escapeHtml(item.title)}</h3>` : ''}
               ${item.body ? `<p>${escapeHtml(item.body)}</p>` : ''}

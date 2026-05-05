@@ -681,7 +681,11 @@ export function finalHtmlPolish(html: string, options: FinalHtmlPolishOptions = 
   syncFooterBrandWithSeo($, city, options.niche);
   ensureInternalLinkAnchors($);
   // BLE V2.2: no forzamos /index.html; production links se normalizan en technicalIntegrityGate.
-  injectPremiumConsistencyCss($);
+  // La ruta de entrega actual usa SuperDeliveryLock como única cascada final.
+  // Solo mantenemos este CSS histórico si el usuario activa explícitamente el modo legacy.
+  if (process.env.GRAVITY_LEGACY_LAYERED_CSS === 'true') {
+    injectPremiumConsistencyCss($);
+  }
   removeOnlyKnownBadGeneratedStyle($);
   removeDuplicatePatchStyles($);
 

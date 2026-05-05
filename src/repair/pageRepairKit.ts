@@ -1,8 +1,9 @@
 import * as cheerio from 'cheerio';
 import { analyzeTechnicalIntegrity, enforceTechnicalIntegrityPolish } from '../quality/technicalIntegrityGate.js';
 import { finalHtmlPolish } from '../utils/finalHtmlPolish.js';
+import { applyPremiumContentDepth } from '../utils/premiumContentDepth.js';
+import { applyFinalUxDeliveryGuard } from '../utils/finalUxDeliveryGuard.js';
 import { normalizeFaqQuestionText, normalizeFaqAnswerText } from '../utils/faqSanitizer.js';
-import { normalizeCleanDeliveryHtml } from '../utils/cleanDeliveryHtmlNormalizer.js';
 import type { PhaseValidationResult, PhaseValidationIssue } from './phaseRepairOrchestrator.js';
 
 export interface RenderedPageLike {
@@ -108,16 +109,9 @@ function sanitizeVisibleText($: cheerio.CheerioAPI, options: PageRepairOptions):
     if (node.type !== 'text') return;
     const original = (node as any).data || '';
     let next = original
-      .replace(/:\s*este bloque resume[^.?!]*(?:[.?!]|$)/gi, ' ')
       .replace(/\[[^\]]+\]/g, '')
       .replace(/\{\{[^}]+\}\}/g, '')
       .replace(/\bEn\s*([,.;:])/g, `En ${city}$1`)
-      .replace(/\ben\s+y\b/gi, `en ${city} y`)
-      .replace(/\ben\s+puede\s+variar\b/gi, `en ${city} puede variar`)
-      .replace(/\ben\s+conviene\b/gi, `en ${city} conviene`)
-      .replace(/\b(?:Factor|Criterio)\s*\d+\b\s*[:.-]?/gi, 'Aspecto clave')
-      .replace(/\bTestimonios\s+Locales\b/gi, 'Señales locales de confianza')
-      .replace(/\bLo que dicen nuestros clientes\b/gi, 'Qué conviene comprobar antes de contratar')
       .replace(/\b(undefined|null|object object)\b/gi, '')
       .replace(/AI Response:|Writing Phase:|Block Index:/gi, '')
       .replace(/\s{2,}/g, ' ');
@@ -300,7 +294,7 @@ export function repairRenderedHtmlForPhase(html: string, phase: RepairablePagePh
   repairImages($, options);
   syncFaqSchema($);
   const repaired = $.html({ decodeEntities: false }).replace(/>\s+</g, '><').replace(/\s{2,}/g, ' ').trim();
-  return normalizeCleanDeliveryHtml(repaired, options);
+  return applyFinalUxDeliveryGuard(applyPremiumContentDepth(repaired, options), options);
 }
 
 export function repairRenderedPageForPhase<T extends RenderedPageLike>(page: T, phase: RepairablePagePhase, options: PageRepairOptions = {}): T {

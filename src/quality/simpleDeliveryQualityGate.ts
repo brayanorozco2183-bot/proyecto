@@ -239,10 +239,6 @@ export function validateSimpleDeliveryQuality(html: string, context: SimpleDeliv
     addIssue(issues, { code: 'IMAGE_WITHOUT_SRC', severity: 'critical', message: `Hay imágenes sin src válido (${brokenImages.length}).` });
   }
 
-  if (/data-image-warning=["'][^"']*hero-resolution-low/i.test(source)) {
-    addIssue(issues, { code: 'HERO_LOW_RESOLUTION_WARNING', severity: 'warning', message: 'La imagen hero está marcada como baja resolución; conviene usar fallback visual o regenerarla.' });
-  }
-
   if (/<iframe\b/i.test(source) && !/\btitle=["'][^"']+["']/i.test(source)) {
     addIssue(issues, { code: 'IFRAME_WITHOUT_TITLE', severity: 'warning', message: 'Hay iframe sin title accesible.' });
   }

@@ -28,7 +28,10 @@
     "prepare:production:apply": "node scripts/prepare_production_tree.mjs --apply",
     "test:hardening": "npm run typecheck && npm run audit:security && npm run audit:hardening",
     "verify:niche-intelligence": "node scripts/verify_niche_intelligence_patch.mjs",
-    "verify:clean-delivery-cascade-lock": "node scripts/verify_clean_delivery_cascade_lock.mjs"
+    "verify:premium-content-depth": "node scripts/verify_premium_content_depth_release.mjs",
+    "release:premium-check": "node scripts/verify_premium_content_depth_release.mjs",
+    "verify:final-ux-delivery-guard": "node scripts/verify_final_ux_delivery_guard.mjs",
+    "release:visual-check": "node scripts/verify_final_ux_delivery_guard.mjs"
   },
   "dependencies": {
     "axios": "^1.13.5",
