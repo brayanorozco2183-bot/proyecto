@@ -1,0 +1,108 @@
+[
+  {
+    "blockId": "urgency_panel",
+    "blockType": "urgency_panel",
+    "h2": "Urgencias y Emergencias",
+    "wordCount": 69,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "services_grid",
+    "blockType": "services_grid",
+    "h2": "Nuestros Servicios",
+    "wordCount": 357,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "process_steps",
+    "blockType": "process_steps",
+    "h2": "Proceso de Servicio",
+    "wordCount": 254,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "local_proof",
+    "blockType": "local_proof",
+    "h2": "Testimonios Locales",
+    "wordCount": 104,
+    "score": 88,
+    "status": "success",
+    "issues": [
+      "low_local_specificity"
+    ],
+    "examples": []
+  },
+  {
+    "blockId": "donde-estamos",
+    "blockType": "map",
+    "h2": "Cobertura y ubicación operativa en Bilbao",
+    "wordCount": 35,
+    "score": 90,
+    "status": "success",
+    "issues": [
+      "low_word_count"
+    ],
+    "examples": []
+  },
+  {
+    "blockId": "price_guidance",
+    "blockType": "price_guidance",
+    "h2": "Precios Condicionados",
+    "wordCount": 110,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "faq",
+    "blockType": "faq",
+    "h2": "Preguntas Frecuentes",
+    "wordCount": 179,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "internal-links-contextual",
+    "blockType": "internal_linking",
+    "h2": "Navegación relacionada del proyecto",
+    "wordCount": 56,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "cta_panel",
+    "blockType": "cta_panel",
+    "h2": "Contratar Ahora",
+    "wordCount": 35,
+    "score": 90,
+    "status": "success",
+    "issues": [
+      "low_word_count"
+    ],
+    "examples": []
+  },
+  {
+    "blockId": "senales-confianza",
+    "blockType": "trust_band",
+    "h2": "Señales de confianza que conviene exigir antes de contratar",
+    "wordCount": 172,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  }
+]

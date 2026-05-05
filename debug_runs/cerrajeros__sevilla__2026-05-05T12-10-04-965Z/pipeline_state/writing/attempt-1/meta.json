@@ -1,0 +1,20 @@
+{
+  "phase": "writing",
+  "status": "success",
+  "startedAt": "2026-05-05T12:13:23.815Z",
+  "completedAt": "2026-05-05T12:21:15.767Z",
+  "durationMs": 471952,
+  "warnings": [],
+  "metrics": {
+    "blocks": 9,
+    "totalWords": 1285
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

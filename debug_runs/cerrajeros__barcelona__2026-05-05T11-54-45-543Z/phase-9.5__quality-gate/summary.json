@@ -1,0 +1,17 @@
+{
+  "phase": "9.5",
+  "label": "quality-gate",
+  "notes": [
+    "Incumplimiento de Playbook (cerrajeros): Schema recomendado ausente para el nicho: FAQPage",
+    "No se ha inyectado la capa CSS estable de producción.",
+    "El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "El bloque cta_panel tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+  ],
+  "summary": {
+    "score": 85,
+    "passed": false,
+    "issues": 1
+  }
+}

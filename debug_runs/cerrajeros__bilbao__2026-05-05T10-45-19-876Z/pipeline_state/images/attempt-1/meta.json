@@ -1,0 +1,17 @@
+{
+  "phase": "images",
+  "status": "success",
+  "startedAt": "2026-05-05T11:00:51.695Z",
+  "completedAt": "2026-05-05T11:02:12.702Z",
+  "durationMs": 81007,
+  "warnings": [],
+  "metrics": {},
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

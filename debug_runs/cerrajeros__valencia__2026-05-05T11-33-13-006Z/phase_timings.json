@@ -1,0 +1,220 @@
+[
+  {
+    "phase": "playbook",
+    "status": "success",
+    "durationMs": 9,
+    "duration": "9ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "site-graph",
+    "status": "success",
+    "durationMs": 11,
+    "duration": "11ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "research",
+    "status": "success",
+    "durationMs": 26283,
+    "duration": "26s",
+    "warnings": [],
+    "metrics": {
+      "competitors": 6,
+      "entities": 26,
+      "intent": "transactional"
+    }
+  },
+  {
+    "phase": "normalization",
+    "status": "success",
+    "durationMs": 20,
+    "duration": "20ms",
+    "warnings": [],
+    "metrics": {
+      "phoneNormalized": null,
+      "clusteredKeywords": 5
+    }
+  },
+  {
+    "phase": "planning",
+    "status": "success",
+    "durationMs": 156165,
+    "duration": "2m 36s",
+    "warnings": [],
+    "metrics": {
+      "sections": 9,
+      "h1": "Cerrajeros en Valencia: Soluciones de Seguridad y Acceso",
+      "pageType": "service"
+    }
+  },
+  {
+    "phase": "render-plan",
+    "status": "success",
+    "durationMs": 22,
+    "duration": "22ms",
+    "warnings": [],
+    "metrics": {
+      "orderedSections": 9,
+      "theme": "technicalClean"
+    }
+  },
+  {
+    "phase": "writing",
+    "status": "success",
+    "durationMs": 410056,
+    "duration": "6m 50s",
+    "warnings": [],
+    "metrics": {
+      "blocks": 9,
+      "totalWords": 1218
+    }
+  },
+  {
+    "phase": "correction",
+    "status": "success",
+    "durationMs": 234989,
+    "duration": "3m 55s",
+    "warnings": [],
+    "metrics": {
+      "blocks": 9,
+      "totalWords": 1218
+    }
+  },
+  {
+    "phase": "integrity",
+    "status": "success",
+    "durationMs": 111,
+    "duration": "111ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "enrichment",
+    "status": "success",
+    "durationMs": 94,
+    "duration": "94ms",
+    "warnings": [],
+    "metrics": {
+      "blocks": 10,
+      "totalWords": 1276
+    }
+  },
+  {
+    "phase": "seo-contract",
+    "status": "success",
+    "durationMs": 29,
+    "duration": "29ms",
+    "warnings": [],
+    "metrics": {
+      "blocks": 10,
+      "totalWords": 1276
+    }
+  },
+  {
+    "phase": "assembly",
+    "status": "success",
+    "durationMs": 1121,
+    "duration": "1s",
+    "warnings": [],
+    "metrics": {
+      "htmlLength": 99428
+    }
+  },
+  {
+    "phase": "images",
+    "status": "success",
+    "durationMs": 115730,
+    "duration": "1m 56s",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "completeness",
+    "status": "success",
+    "durationMs": 91,
+    "duration": "91ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "technical-validation",
+    "status": "degraded",
+    "durationMs": 205,
+    "duration": "205ms",
+    "warnings": [
+      "UNEXPECTED_INTERNAL_LINK_TARGETS:/jesus",
+      "PRODUCTION_STABLE_CSS_MISSING",
+      "BLOCK_VISUAL_CLASSES_WITHOUT_CSS",
+      "TEXT_BLOCK_WITHOUT_VISUAL_STRUCTURE",
+      "UNVERIFIED_COMMERCIAL_CLAIM"
+    ],
+    "metrics": {
+      "technicalPassed": false,
+      "issues": 5
+    }
+  },
+  {
+    "phase": "ux-validation",
+    "status": "success",
+    "durationMs": 5427,
+    "duration": "5s",
+    "warnings": [
+      "Found text elements smaller than 12px.",
+      "Found text elements smaller than 12px.",
+      "Found text elements smaller than 12px.",
+      "Found text elements smaller than 12px.",
+      "Found text elements smaller than 12px."
+    ],
+    "metrics": {}
+  },
+  {
+    "phase": "quality-gate",
+    "status": "degraded",
+    "durationMs": 430,
+    "duration": "430ms",
+    "warnings": [
+      "Los títulos internos repiten una plantilla demasiado genérica. Apariciones: 1.",
+      "No se ha inyectado la capa CSS estable de producción.",
+      "Hay clases de bloques renderizadas sin cobertura CSS directa: block__cta-note, footer__grid-refined",
+      "El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque cta_panel tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+    ],
+    "metrics": {
+      "score": 86,
+      "passed": false,
+      "issues": 1
+    }
+  },
+  {
+    "phase": "editorial-validation",
+    "status": "success",
+    "durationMs": 351,
+    "duration": "351ms",
+    "warnings": [],
+    "metrics": {
+      "editorialScore": 89,
+      "editorialPassed": true
+    }
+  },
+  {
+    "phase": "delivery",
+    "status": "success",
+    "durationMs": 72,
+    "duration": "72ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "post-audit",
+    "status": "success",
+    "durationMs": 50,
+    "duration": "50ms",
+    "warnings": [],
+    "metrics": {}
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "phase": "site-graph",
+  "status": "success",
+  "startedAt": "2026-05-05T12:10:05.003Z",
+  "completedAt": "2026-05-05T12:10:05.017Z",
+  "durationMs": 14,
+  "warnings": [],
+  "metrics": {},
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

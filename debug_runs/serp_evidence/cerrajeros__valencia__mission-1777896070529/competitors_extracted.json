@@ -1,0 +1,98 @@
+[
+  {
+    "url": "https://fetch.spec.whatwg.org",
+    "title": "Fetch Standard",
+    "description": "",
+    "wordCount": 41302,
+    "h1s": [
+      "Fetch"
+    ],
+    "h2s": [
+      "Abstract",
+      "Table of Contents",
+      "Goals",
+      "1. Preface",
+      "2. Infrastructure",
+      "3. HTTP extensions",
+      "4. Fetching",
+      "5. Fetch API",
+      "6. data: URLs",
+      "Background reading"
+    ],
+    "h3s": [
+      "2.1. URL",
+      "2.2. HTTP",
+      "2.3. Authentication entries",
+      "2.4. Fetch groups",
+      "2.5. Resolving domains",
+      "2.6. Connections",
+      "2.7. Network partition keys",
+      "2.8. HTTP cache partitions",
+      "2.9. Port blocking",
+      "2.10. Should\nresponse to request be blocked due to its MIME type?"
+    ],
+    "images": [],
+    "internalLinks": 0,
+    "externalLinks": 0,
+    "research_score": 42,
+    "research_reason": "business_site"
+  },
+  {
+    "url": "https://react.dev/link/new-jsx-transform",
+    "title": "Introducing the New JSX Transform – React Blog",
+    "description": "",
+    "wordCount": 1692,
+    "h1s": [
+      "Introducing the New JSX Transform"
+    ],
+    "h2s": [
+      "What’s a JSX Transform?",
+      "What’s Different in the New Transform?",
+      "How to Upgrade to the New JSX Transform",
+      "Removing Unused React Imports",
+      "Thanks"
+    ],
+    "h3s": [
+      "Create React App",
+      "Next.js",
+      "Gatsby",
+      "Manual Babel Setup",
+      "ESLint",
+      "TypeScript",
+      "Flow"
+    ],
+    "images": [],
+    "internalLinks": 0,
+    "externalLinks": 0,
+    "research_score": 38,
+    "research_reason": "business_site"
+  },
+  {
+    "url": "https://github.com/nodejs/node/issues/51486rn",
+    "title": "Issues · nodejs/node · GitHub",
+    "description": "Node.js JavaScript runtime ✨🐢🚀✨. Contribute to nodejs/node development by creating an account on GitHub.",
+    "wordCount": 297,
+    "h1s": [
+      "Search code, repositories, users, issues, pull requests...",
+      "Provide feedback",
+      "Saved searches",
+      "Issues"
+    ],
+    "h2s": [
+      "Navigation Menu",
+      "Use saved searches to filter your results more quickly",
+      "Search results",
+      "Footer"
+    ],
+    "h3s": [
+      "Uh oh!",
+      "No results",
+      "Footer navigation"
+    ],
+    "images": [],
+    "internalLinks": 0,
+    "externalLinks": 0,
+    "research_score": 14,
+    "research_reason": "business_site"
+  }
+]

@@ -1,0 +1,359 @@
+{
+  "schemaVersion": "mission-summary@1",
+  "generatedAt": "2026-05-05T12:26:51.300Z",
+  "runId": "cerrajeros__sevilla__2026-05-05T12-10-04-965Z",
+  "status": "success_with_warnings",
+  "failedPhase": null,
+  "lastStablePhase": "post-audit",
+  "error": null,
+  "errorType": null,
+  "errorHint": null,
+  "durationMs": 1005394,
+  "phases": [
+    {
+      "phase": "playbook",
+      "status": "success",
+      "durationMs": 10,
+      "duration": "10ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "site-graph",
+      "status": "success",
+      "durationMs": 14,
+      "duration": "14ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "research",
+      "status": "success",
+      "durationMs": 49303,
+      "duration": "49s",
+      "warnings": [],
+      "metrics": {
+        "competitors": 6,
+        "entities": 30,
+        "intent": "transactional"
+      }
+    },
+    {
+      "phase": "normalization",
+      "status": "success",
+      "durationMs": 14,
+      "duration": "14ms",
+      "warnings": [],
+      "metrics": {
+        "phoneNormalized": null,
+        "clusteredKeywords": 5
+      }
+    },
+    {
+      "phase": "planning",
+      "status": "success",
+      "durationMs": 149310,
+      "duration": "2m 29s",
+      "warnings": [],
+      "metrics": {
+        "sections": 9,
+        "h1": "Cerrajeros en Sevilla: Apertura de Puertas, Cambio e Instalación de Cerraduras y Bombines",
+        "pageType": "service"
+      }
+    },
+    {
+      "phase": "render-plan",
+      "status": "success",
+      "durationMs": 28,
+      "duration": "28ms",
+      "warnings": [],
+      "metrics": {
+        "orderedSections": 9,
+        "theme": "corporateGold"
+      }
+    },
+    {
+      "phase": "writing",
+      "status": "success",
+      "durationMs": 471952,
+      "duration": "7m 52s",
+      "warnings": [],
+      "metrics": {
+        "blocks": 9,
+        "totalWords": 1285
+      }
+    },
+    {
+      "phase": "correction",
+      "status": "success",
+      "durationMs": 243047,
+      "duration": "4m 3s",
+      "warnings": [],
+      "metrics": {
+        "blocks": 9,
+        "totalWords": 1275
+      }
+    },
+    {
+      "phase": "integrity",
+      "status": "success",
+      "durationMs": 120,
+      "duration": "120ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "enrichment",
+      "status": "success",
+      "durationMs": 89,
+      "duration": "89ms",
+      "warnings": [],
+      "metrics": {
+        "blocks": 10,
+        "totalWords": 1311
+      }
+    },
+    {
+      "phase": "seo-contract",
+      "status": "success",
+      "durationMs": 34,
+      "duration": "34ms",
+      "warnings": [],
+      "metrics": {
+        "blocks": 10,
+        "totalWords": 1311
+      }
+    },
+    {
+      "phase": "assembly",
+      "status": "success",
+      "durationMs": 1317,
+      "duration": "1s",
+      "warnings": [],
+      "metrics": {
+        "htmlLength": 65401
+      }
+    },
+    {
+      "phase": "images",
+      "status": "success",
+      "durationMs": 81207,
+      "duration": "1m 21s",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "completeness",
+      "status": "success",
+      "durationMs": 92,
+      "duration": "92ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "technical-validation",
+      "status": "degraded",
+      "durationMs": 234,
+      "duration": "234ms",
+      "warnings": [
+        "UNDEFINED_CSS_VARS:--text,--muted,--primary,--primary-rgb,--accent,--font-body,--font-display,--shadow-lift,--shadow-soft,--shadow-dramatic,--bg,--text-on-surface",
+        "PRODUCTION_STABLE_CSS_MISSING",
+        "TEXT_BLOCK_WITHOUT_VISUAL_STRUCTURE",
+        "UNVERIFIED_COMMERCIAL_CLAIM"
+      ],
+      "metrics": {
+        "technicalPassed": false,
+        "issues": 4
+      }
+    },
+    {
+      "phase": "ux-validation",
+      "status": "success",
+      "durationMs": 7719,
+      "duration": "8s",
+      "warnings": [
+        "Found text elements smaller than 12px.",
+        "Found text elements smaller than 12px.",
+        "Found text elements smaller than 12px.",
+        "Found text elements smaller than 12px.",
+        "Found text elements smaller than 12px."
+      ],
+      "metrics": {}
+    },
+    {
+      "phase": "quality-gate",
+      "status": "degraded",
+      "durationMs": 404,
+      "duration": "404ms",
+      "warnings": [
+        "No se ha inyectado la capa CSS estable de producción.",
+        "El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+        "El bloque cta_panel tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+        "El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+        "Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+      ],
+      "metrics": {
+        "score": 100,
+        "passed": false,
+        "issues": 0
+      }
+    },
+    {
+      "phase": "editorial-validation",
+      "status": "success",
+      "durationMs": 411,
+      "duration": "411ms",
+      "warnings": [],
+      "metrics": {
+        "editorialScore": 89,
+        "editorialPassed": true
+      }
+    },
+    {
+      "phase": "delivery",
+      "status": "success",
+      "durationMs": 50,
+      "duration": "50ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "post-audit",
+      "status": "success",
+      "durationMs": 39,
+      "duration": "39ms",
+      "warnings": [],
+      "metrics": {}
+    }
+  ],
+  "llmCalls": {
+    "total": 21,
+    "failed": 0,
+    "slow": 9,
+    "totalDurationMs": 1313885
+  },
+  "fallbacks": [
+    {
+      "type": "PHASE_DEGRADED",
+      "phase": "technical-validation",
+      "reason": "UNDEFINED_CSS_VARS:--text,--muted,--primary,--primary-rgb,--accent,--font-body,--font-display,--shadow-lift,--shadow-soft,--shadow-dramatic,--bg,--text-on-surface; PRODUCTION_STABLE_CSS_MISSING; TEXT_BLOCK_WITHOUT_VISUAL_STRUCTURE; UNVERIFIED_COMMERCIAL_CLAIM"
+    },
+    {
+      "type": "PHASE_DEGRADED",
+      "phase": "quality-gate",
+      "reason": "No se ha inyectado la capa CSS estable de producción.; El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.; El bloque cta_panel tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.; El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.; Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+    }
+  ],
+  "blockDiagnostics": [
+    {
+      "blockId": "urgency_panel",
+      "blockType": "urgency_panel",
+      "h2": "Urgencias de Cerrajeros en Sevilla",
+      "wordCount": 74,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "services_grid",
+      "blockType": "services_grid",
+      "h2": "Nuestros Servicios",
+      "wordCount": 429,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "process_steps",
+      "blockType": "process_steps",
+      "h2": "Proceso de Servicio",
+      "wordCount": 181,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "local_proof",
+      "blockType": "local_proof",
+      "h2": "Prueba Local Prudente",
+      "wordCount": 71,
+      "score": 76,
+      "status": "warning",
+      "issues": [
+        "generic_heading_prueba_local",
+        "low_local_specificity"
+      ],
+      "examples": [
+        "Prueba Local"
+      ]
+    },
+    {
+      "blockId": "donde-estamos",
+      "blockType": "map",
+      "h2": "Cobertura y ubicación operativa en Sevilla",
+      "wordCount": 27,
+      "score": 90,
+      "status": "success",
+      "issues": [
+        "low_word_count"
+      ],
+      "examples": []
+    },
+    {
+      "blockId": "price_guidance",
+      "blockType": "price_guidance",
+      "h2": "Precios Condicionados",
+      "wordCount": 173,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "faq",
+      "blockType": "faq",
+      "h2": "Preguntas Frecuentes",
+      "wordCount": 98,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "internal-links-contextual",
+      "blockType": "internal_linking",
+      "h2": "Navegación relacionada del proyecto",
+      "wordCount": 56,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "cta_panel",
+      "blockType": "cta_panel",
+      "h2": "Contáctanos Ahora mismo",
+      "wordCount": 36,
+      "score": 90,
+      "status": "success",
+      "issues": [
+        "low_word_count"
+      ],
+      "examples": []
+    },
+    {
+      "blockId": "senales-confianza",
+      "blockType": "trust_band",
+      "h2": "Señales de confianza que conviene exigir antes de contratar",
+      "wordCount": 166,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    }
+  ],
+  "recommendedAction": "No hay acción bloqueante. Revisar warnings y bloques con score bajo si el resultado visual no convence."
+}

@@ -1,0 +1,17 @@
+{
+  "phase": "post-audit",
+  "status": "success",
+  "startedAt": "2026-05-05T12:03:32.434Z",
+  "completedAt": "2026-05-05T12:03:32.474Z",
+  "durationMs": 40,
+  "warnings": [],
+  "metrics": {},
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

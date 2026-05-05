@@ -1,0 +1,18 @@
+{
+  "missionId": "debug-getafe-cerrajeros-real",
+  "niche": "cerrajeros",
+  "city": "Getafe",
+  "local_nap": {
+    "business_name": "Cerrajeros Getafe Express-Test",
+    "address": "Calle Mayor 45, Getafe",
+    "phone": "+34 611 222 333"
+  },
+  "siteConfig": {
+    "baseUrl": "https://cerrajeros-getafe.pro",
+    "brandName": "Cerrajeros Getafe Express-Test"
+  },
+  "cluster_folder_name": "cerrajeros getafe",
+  "subPath": "puertas-seguridad",
+  "mode": "production",
+  "debugMode": true
+}

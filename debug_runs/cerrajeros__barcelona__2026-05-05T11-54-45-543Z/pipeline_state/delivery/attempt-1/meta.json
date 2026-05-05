@@ -1,0 +1,17 @@
+{
+  "phase": "delivery",
+  "status": "success",
+  "startedAt": "2026-05-05T12:03:32.337Z",
+  "completedAt": "2026-05-05T12:03:32.386Z",
+  "durationMs": 49,
+  "warnings": [],
+  "metrics": {},
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

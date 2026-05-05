@@ -1,0 +1,204 @@
+[2026-05-05T11:54:45.545Z] [LOG] [LOGGER] Redirección de logs activa: c:\Users\Bryan\Desktop\pruebaGravity\debug_runs\cerrajeros__barcelona__2026-05-05T11-54-45-543Z\mission_execution.txt
+[2026-05-05T11:54:45.556Z] [LOG] [Mission] MISSION_START status=initialized
+[2026-05-05T11:54:45.559Z] [LOG] [playbook] PHASE_START status=running
+[2026-05-05T11:54:45.577Z] [LOG] [playbook] PHASE_END status=success durationMs=12
+[2026-05-05T11:54:45.585Z] [LOG] [site-graph] PHASE_START status=running
+[2026-05-05T11:54:45.602Z] [LOG] [site-graph] PHASE_END status=success durationMs=11
+[2026-05-05T11:54:45.609Z] [LOG] [research] PHASE_START status=running
+[2026-05-05T11:54:45.618Z] [LOG] [Phase 1.1] Geo-Intelligence & Local Mapping...
+[2026-05-05T11:54:45.618Z] [LOG] [GeoIntel_Agent] Thinking: Mapping geographic domination cluster for: Barcelona (Scope: auto)
+[2026-05-05T11:54:46.307Z] [LOG] [Router] Agent: GeoIntel_Agent | Tier: standard | Selected: qwen2.5:1.5b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T11:54:46.317Z] [LOG] [AIFacade] GeoIntel_Agent -> qwen2.5:1.5b | attempt 1/2 | tier_fallback=false
+[2026-05-05T11:54:54.388Z] [LOG] [Phase 1.2] SERP Research (live_serp_optional)...
+[2026-05-05T11:54:54.388Z] [LOG] [STEALTH] Atraco Unificado SDI (PowerShell): cerrajeros Barcelona
+[2026-05-05T11:55:08.857Z] [LOG] [STEALTH] SDI Exitoso. 10 enlaces capturados.
+[2026-05-05T11:55:08.859Z] [LOG] [SERP] query="cerrajeros Barcelona" provider=sdi organic=6 localPack=0
+[2026-05-05T11:55:08.859Z] [LOG] [Phase 1.3] Competitive Audit & SERP Deep Analysis...
+[2026-05-05T11:55:08.859Z] [LOG] [Competitor_Audit_Agent] Thinking: Iniciando auditoría profunda de competidores. Candidatos limpios: 6 de 6.
+[2026-05-05T11:55:08.859Z] [LOG] [Competitor_Audit_Agent] Thinking: Auditing competitor at: https://cerrajerosbarcelona.co
+[2026-05-05T11:55:08.859Z] [LOG] [Competitor_Audit_Agent] Thinking: Auditing competitor at: https://cerrajeropro.com.es
+[2026-05-05T11:55:08.859Z] [LOG] [Competitor_Audit_Agent] Thinking: Auditing competitor at: https://cerrajeropro.com.es/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb
+[2026-05-05T11:55:08.859Z] [LOG] [Competitor_Audit_Agent] Thinking: Auditing competitor at: https://clauteck.com
+[2026-05-05T11:55:08.860Z] [LOG] [Competitor_Audit_Agent] Thinking: Auditing competitor at: https://barnaclau.es
+[2026-05-05T11:55:08.860Z] [LOG] [Competitor_Audit_Agent] Thinking: Auditing competitor at: https://barnaclau.es/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb
+[2026-05-05T11:55:08.860Z] [LOG] [STEALTH] Lanzando motor Incógnito Puro (Aislado)...
+[2026-05-05T11:55:08.861Z] [LOG] [STEALTH] Lanzando motor Incógnito Puro (Aislado)...
+[2026-05-05T11:55:08.861Z] [LOG] [STEALTH] Lanzando motor Incógnito Puro (Aislado)...
+[2026-05-05T11:55:08.863Z] [LOG] [STEALTH] Lanzando motor Incógnito Puro (Aislado)...
+[2026-05-05T11:55:08.864Z] [LOG] [STEALTH] Lanzando motor Incógnito Puro (Aislado)...
+[2026-05-05T11:55:08.865Z] [LOG] [STEALTH] Lanzando motor Incógnito Puro (Aislado)...
+[2026-05-05T11:55:10.569Z] [LOG] [STEALTH] Deep Audit (Incógnito): https://barnaclau.es
+[2026-05-05T11:55:10.693Z] [LOG] [STEALTH] Deep Audit (Incógnito): https://cerrajeropro.com.es
+[2026-05-05T11:55:10.727Z] [LOG] [STEALTH] Deep Audit (Incógnito): https://cerrajeropro.com.es/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb
+[2026-05-05T11:55:10.739Z] [LOG] [STEALTH] Deep Audit (Incógnito): https://barnaclau.es/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb
+[2026-05-05T11:55:10.742Z] [LOG] [STEALTH] Deep Audit (Incógnito): https://clauteck.com
+[2026-05-05T11:55:10.745Z] [LOG] [STEALTH] Deep Audit (Incógnito): https://cerrajerosbarcelona.co
+[2026-05-05T11:55:13.922Z] [LOG] [Competitor_Audit_Agent] Thinking: Auditoría útil: 4 aceptadas, 0 rechazadas por baja relevancia o baja señal local.
+[2026-05-05T11:55:13.929Z] [LOG] [Phase 1.4] Entity Extraction & Niche Knowledge...
+[2026-05-05T11:55:13.929Z] [LOG] [Entity_Extractor] Thinking: Extrayendo entidades semánticas para la keyword: "cerrajeros"
+[2026-05-05T11:55:13.931Z] [LOG] [Entity_Extractor] Thinking: Extracción determinista completada. 10 entidades encontradas.
+[2026-05-05T11:55:13.931Z] [LOG] [Phase 1.5] Identifying Content Gaps & Opportunities...
+[2026-05-05T11:55:13.931Z] [LOG] [SERP_Gap_Agent] Thinking: Analizando brechas de contenido para la palabra clave: cerrajeros
+[2026-05-05T11:55:13.932Z] [LOG] [SERP_Gap_Agent] Thinking: Análisis completado. Encontradas 7 brechas de contenido.
+[2026-05-05T11:55:13.933Z] [LOG] [Phase 1.6] Strategic Intelligence Synthesis...
+[2026-05-05T11:55:13.937Z] [LOG] [SEO_Analyst_01] Thinking: [INTEL] Sintetizando Estatuto de Dominación para "cerrajeros" en "Barcelona". Confianza: high
+[2026-05-05T11:55:13.937Z] [LOG] [SEO_Analyst_01] Thinking: [FASTPATH] Strategy resolved in deterministic mode for Barcelona.
+[2026-05-05T11:55:13.946Z] [LOG] [research] PHASE_END status=success durationMs=28330
+[2026-05-05T11:55:13.959Z] [LOG] [normalization] PHASE_START status=running
+[2026-05-05T11:55:13.969Z] [LOG] [Phase 2] Normalizing and clustering research data for Barcelona...
+[2026-05-05T11:55:13.974Z] [WARN] [Normalization Gate] Invalid phone.
+[2026-05-05T11:55:13.985Z] [LOG] [normalization] PHASE_END status=success durationMs=17
+[2026-05-05T11:55:13.998Z] [LOG] [planning] PHASE_START status=running
+[2026-05-05T11:55:14.011Z] [LOG] [Phase 3] Iniciando planificación arquitectónica para Barcelona...
+[2026-05-05T11:55:14.028Z] [LOG] [Content_Architect_01] Thinking: Procesando arquitectura para: Barcelona (cerrajeros)
+[2026-05-05T11:55:14.030Z] [LOG] [Router] Agent: Content_Architect_01 | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T11:55:14.037Z] [LOG] [LEARNING] Inferred Context for Content_Architect_01: niche=cerrajeros, city=Barcelona, blockType=hero
+[2026-05-05T11:55:14.042Z] [LOG] [LEARNING] SUCCESS! Augmenting prompt for Content_Architect_01 with 0 lessons, 1 positive exemplars, 0 negative exemplars.
+[2026-05-05T11:55:14.042Z] [LOG] [Router] Agent: Content_Architect_01 | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T11:55:14.042Z] [LOG] [AIFacade] Content_Architect_01 -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T11:56:35.236Z] [WARN] [LLM] SLOW_CALL agent=Content_Architect_01 model=qwen2.5-coder:3b durationMs=81194 thresholdMs=60000
+[2026-05-05T11:56:35.243Z] [LOG] [Art_Director_01] Thinking: Defining visual DNA for the page...
+[2026-05-05T11:56:35.292Z] [LOG] [Art_Director_01] Thinking: [FASTPATH] Visual DNA resolved in deterministic mode. 
+[2026-05-05T11:56:35.293Z] [LOG] [Content_Variety_01] Thinking: Executing SemanticDrift Engine...
+[2026-05-05T11:56:35.293Z] [LOG] [Content_Variety_01] Thinking: SemanticDrift applied: Angle=rapidez-critica
+[2026-05-05T11:56:35.313Z] [LOG] [planning] PHASE_END status=success durationMs=81305
+[2026-05-05T11:56:35.330Z] [LOG] [render-plan] PHASE_START status=running
+[2026-05-05T11:56:35.343Z] [LOG] [Phase 3.5] Resolving render plan for Barcelona...
+[2026-05-05T11:56:35.375Z] [LOG] [render-plan] PHASE_END status=success durationMs=35
+[2026-05-05T11:56:35.392Z] [LOG] [writing] PHASE_START status=running
+[2026-05-05T11:56:35.408Z] [LOG] [Phase 4] Multi-Agent semantic writing for H1: Cerrajeros en Barcelona: Soluciones de Seguridad y Acceso
+[2026-05-05T11:56:35.416Z] [LOG] [Content_Writer_01] Thinking: Redactando sección [urgency_panel]: Urgencias de Cerrajeros en Barcelona
+[2026-05-05T11:56:35.437Z] [LOG] [Content_Writer_01] Thinking: Redactando sección [services_grid]: Nuestros Servicios
+[2026-05-05T11:56:35.448Z] [LOG] [LEARNING] Inferred Context for Content_Writer_01: niche=cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T11:56:35.476Z] [LOG] [LEARNING] SUCCESS! Augmenting prompt for Content_Writer_01 with 0 lessons, 2 positive exemplars, 0 negative exemplars.
+[2026-05-05T11:56:35.481Z] [LOG] [AIFacade] Content_Writer_01 -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T11:57:36.849Z] [WARN] [LLM] SLOW_CALL agent=Content_Writer_01 model=qwen2.5-coder:3b durationMs=61368 thresholdMs=60000
+[2026-05-05T11:57:36.916Z] [LOG] [Content_Writer_01] Thinking: Redactando sección [process_steps]: Proceso de Servicio
+[2026-05-05T11:57:36.919Z] [LOG] [LEARNING] Inferred Context for Content_Writer_01: niche=cerrajeros, city=Barcelona, blockType=process
+[2026-05-05T11:57:36.921Z] [LOG] [LEARNING] SUCCESS! Augmenting prompt for Content_Writer_01 with 0 lessons, 2 positive exemplars, 0 negative exemplars.
+[2026-05-05T11:57:36.924Z] [LOG] [AIFacade] Content_Writer_01 -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T11:58:33.943Z] [LOG] [Content_Writer_01] Thinking: Redactando sección [local_proof]: Prueba Local Prudente
+[2026-05-05T11:58:33.950Z] [LOG] [Content_Writer_01] Thinking: Redactando sección [map]: Cobertura y ubicación operativa en Barcelona
+[2026-05-05T11:58:33.955Z] [LOG] [Content_Writer_01] Thinking: Redactando sección [price_guidance]: Precios Condicionados
+[2026-05-05T11:58:33.959Z] [LOG] [LEARNING] Inferred Context for Content_Writer_01: niche=cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T11:58:33.961Z] [LOG] [LEARNING] SUCCESS! Augmenting prompt for Content_Writer_01 with 0 lessons, 2 positive exemplars, 0 negative exemplars.
+[2026-05-05T11:58:33.964Z] [LOG] [AIFacade] Content_Writer_01 -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T11:59:39.390Z] [WARN] [LLM] SLOW_CALL agent=Content_Writer_01 model=qwen2.5-coder:3b durationMs=65426 thresholdMs=60000
+[2026-05-05T11:59:39.434Z] [LOG] [Content_Writer_01] Thinking: Redactando sección [faq]: Preguntas Frecuentes
+[2026-05-05T11:59:39.437Z] [LOG] [LEARNING] Inferred Context for Content_Writer_01: niche=cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T11:59:39.438Z] [LOG] [LEARNING] SUCCESS! Augmenting prompt for Content_Writer_01 with 0 lessons, 2 positive exemplars, 0 negative exemplars.
+[2026-05-05T11:59:39.441Z] [LOG] [AIFacade] Content_Writer_01 -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:00:35.881Z] [LOG] [Content_Writer_01] Thinking: Redactando sección [cta_panel]: Contratar Ahora
+[2026-05-05T12:00:35.886Z] [LOG] [Content_Writer_01] Thinking: Redactando sección [trust_band]: Señales de confianza que conviene exigir antes de contratar
+[2026-05-05T12:00:35.895Z] [LOG] [SeoGuard] ✅ SEO Quality passed for Barcelona.
+[2026-05-05T12:00:35.913Z] [LOG] [writing] PHASE_END status=success durationMs=240509
+[2026-05-05T12:00:35.932Z] [LOG] [correction] PHASE_START status=running
+[2026-05-05T12:00:35.947Z] [LOG] [Phase 5] Global coherence and linguistic correction...
+[2026-05-05T12:00:35.948Z] [LOG] [Niche_Coherence_Auditor] Thinking: Auditoría de coherencia para cerrajeros en Barcelona
+[2026-05-05T12:00:35.948Z] [LOG] [Router] Agent: Niche_Coherence_Auditor | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:00:35.951Z] [LOG] [AIFacade] Niche_Coherence_Auditor -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:00:42.185Z] [LOG] [Spanish_Linguistic_Corrector_V2] Thinking: Corrigiendo gramática, puntuación y coherencia lingüística para cerrajeros en Barcelona
+[2026-05-05T12:00:42.190Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:00:42.194Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:00:42.208Z] [LOG] [Niche_Coherence_Auditor] Thinking: Auditoría de coherencia para cerrajeros en Barcelona
+[2026-05-05T12:00:42.208Z] [LOG] [Router] Agent: Niche_Coherence_Auditor | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:00:42.208Z] [LOG] [AIFacade] Niche_Coherence_Auditor -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:01:00.977Z] [LOG] [Spanish_Linguistic_Corrector_V2] Thinking: Corrigiendo gramática, puntuación y coherencia lingüística para cerrajeros en Barcelona
+[2026-05-05T12:01:00.980Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:01:00.981Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:01:00.983Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:01:00.983Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:01:01.047Z] [LOG] [Niche_Coherence_Auditor] Thinking: Auditoría de coherencia para cerrajeros en Barcelona
+[2026-05-05T12:01:01.047Z] [LOG] [Router] Agent: Niche_Coherence_Auditor | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:01:01.047Z] [LOG] [AIFacade] Niche_Coherence_Auditor -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:01:16.767Z] [LOG] [Spanish_Linguistic_Corrector_V2] Thinking: Corrigiendo gramática, puntuación y coherencia lingüística para cerrajeros en Barcelona
+[2026-05-05T12:01:16.771Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:01:16.772Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:01:16.776Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:01:16.777Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:01:16.826Z] [LOG] [Niche_Coherence_Auditor] Thinking: Auditoría de coherencia para cerrajeros en Barcelona
+[2026-05-05T12:01:16.826Z] [LOG] [Router] Agent: Niche_Coherence_Auditor | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:01:16.826Z] [LOG] [AIFacade] Niche_Coherence_Auditor -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:01:24.122Z] [LOG] [Spanish_Linguistic_Corrector_V2] Thinking: Corrigiendo gramática, puntuación y coherencia lingüística para cerrajeros en Barcelona
+[2026-05-05T12:01:24.125Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:01:24.126Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:01:24.139Z] [LOG] [Niche_Coherence_Auditor] Thinking: Auditoría de coherencia para cerrajeros en Barcelona
+[2026-05-05T12:01:24.139Z] [LOG] [Router] Agent: Niche_Coherence_Auditor | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:01:24.139Z] [LOG] [AIFacade] Niche_Coherence_Auditor -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:01:30.879Z] [LOG] [Spanish_Linguistic_Corrector_V2] Thinking: Corrigiendo gramática, puntuación y coherencia lingüística para cerrajeros en Barcelona
+[2026-05-05T12:01:30.881Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:01:30.882Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:01:30.891Z] [LOG] [Niche_Coherence_Auditor] Thinking: Auditoría de coherencia para cerrajeros en Barcelona
+[2026-05-05T12:01:30.891Z] [LOG] [Router] Agent: Niche_Coherence_Auditor | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:01:30.891Z] [LOG] [AIFacade] Niche_Coherence_Auditor -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:01:40.060Z] [LOG] [Spanish_Linguistic_Corrector_V2] Thinking: Corrigiendo gramática, puntuación y coherencia lingüística para cerrajeros en Barcelona
+[2026-05-05T12:01:40.062Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:01:40.063Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:01:40.090Z] [LOG] [Niche_Coherence_Auditor] Thinking: Auditoría de coherencia para cerrajeros en Barcelona
+[2026-05-05T12:01:40.090Z] [LOG] [Router] Agent: Niche_Coherence_Auditor | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:01:40.090Z] [LOG] [AIFacade] Niche_Coherence_Auditor -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:01:50.962Z] [LOG] [Spanish_Linguistic_Corrector_V2] Thinking: Corrigiendo gramática, puntuación y coherencia lingüística para cerrajeros en Barcelona
+[2026-05-05T12:01:50.965Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:01:50.967Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:01:50.998Z] [LOG] [Niche_Coherence_Auditor] Thinking: Auditoría de coherencia para cerrajeros en Barcelona
+[2026-05-05T12:01:50.999Z] [LOG] [Router] Agent: Niche_Coherence_Auditor | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:01:50.999Z] [LOG] [AIFacade] Niche_Coherence_Auditor -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:01:57.066Z] [LOG] [Spanish_Linguistic_Corrector_V2] Thinking: Corrigiendo gramática, puntuación y coherencia lingüística para cerrajeros en Barcelona
+[2026-05-05T12:01:57.069Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:01:57.070Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:01:57.078Z] [LOG] [Niche_Coherence_Auditor] Thinking: Auditoría de coherencia para cerrajeros en Barcelona
+[2026-05-05T12:01:57.078Z] [LOG] [Router] Agent: Niche_Coherence_Auditor | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:01:57.078Z] [LOG] [AIFacade] Niche_Coherence_Auditor -> qwen2.5-coder:3b | attempt 1/2 | tier_fallback=false
+[2026-05-05T12:02:08.882Z] [LOG] [Spanish_Linguistic_Corrector_V2] Thinking: Corrigiendo gramática, puntuación y coherencia lingüística para cerrajeros en Barcelona
+[2026-05-05T12:02:08.884Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:02:08.885Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:02:08.886Z] [LOG] [LEARNING] Inferred Context for Spanish_Linguistic_Corrector_V2: niche=Cerrajeros, city=Barcelona, blockType=faq
+[2026-05-05T12:02:08.887Z] [LOG] [LEARNING] No lessons found for Spanish_Linguistic_Corrector_V2 in this context.
+[2026-05-05T12:02:08.989Z] [LOG] [correction] PHASE_END status=success durationMs=93038
+[2026-05-05T12:02:09.016Z] [LOG] [integrity] PHASE_START status=running
+[2026-05-05T12:02:09.035Z] [LOG] [Phase 6] Validating content integrity for Barcelona...
+[2026-05-05T12:02:09.036Z] [WARN] [Integrity] Low word count: 1308/2600
+[2026-05-05T12:02:09.168Z] [LOG] [integrity] PHASE_END status=success durationMs=133
+[2026-05-05T12:02:09.200Z] [LOG] [enrichment] PHASE_START status=running
+[2026-05-05T12:02:09.219Z] [LOG] [Phase 7] START Content enrichment (SEO/Trust/Internal Linking)...
+[2026-05-05T12:02:09.239Z] [LOG] [Phase 7] Low link density detected. Injecting Surgical Geo Cluster Fallback.
+[2026-05-05T12:02:09.307Z] [LOG] [Phase 7] END Content enrichment in 88ms
+[2026-05-05T12:02:09.332Z] [LOG] [enrichment] PHASE_END status=success durationMs=115
+[2026-05-05T12:02:09.361Z] [LOG] [seo-contract] PHASE_START status=running
+[2026-05-05T12:02:09.388Z] [LOG] [Phase 7.5] Building SEO contract and metadata...
+[2026-05-05T12:02:09.420Z] [LOG] [seo-contract] PHASE_END status=success durationMs=41
+[2026-05-05T12:02:09.451Z] [LOG] [assembly] PHASE_START status=running
+[2026-05-05T12:02:09.478Z] [LOG] [Phase 8] START Final procedural composition...
+[2026-05-05T12:02:09.478Z] [LOG] [Phase 8] Sections prepared: 10
+[2026-05-05T12:02:09.491Z] [LOG] [Phase 8] Raw HTML composed: 71616 chars
+[2026-05-05T12:02:10.566Z] [LOG] [Phase 8] Page coherence cleanup applied: REPEATED_PILLS_DEDUPED, CTA_TEXT_NORMALIZED, FAQ_SCHEMA_SCOPED_AND_CLEANED, EMPTY_GENERATED_CONTAINERS_REMOVED
+[2026-05-05T12:02:10.853Z] [LOG] [Phase 8] END Final procedural composition in 1375ms | final HTML: 65767 chars
+[2026-05-05T12:02:10.884Z] [LOG] [assembly] PHASE_END status=success durationMs=1411
+[2026-05-05T12:02:10.918Z] [LOG] [images] PHASE_START status=running
+[2026-05-05T12:02:11.021Z] [LOG] [finalizePageImages] Generating image for slot: hero-default
+[2026-05-05T12:03:21.440Z] [LOG] [finalizePageImages] Success! Asset: hero-default_00002_.png
+[2026-05-05T12:03:21.807Z] [LOG] [images] PHASE_END status=success durationMs=70860
+[2026-05-05T12:03:21.856Z] [LOG] [completeness] PHASE_START status=running
+[2026-05-05T12:03:21.971Z] [LOG] [completeness] PHASE_END status=success durationMs=92
+[2026-05-05T12:03:22.011Z] [LOG] [technical-validation] PHASE_START status=running
+[2026-05-05T12:03:22.279Z] [WARN] [technical-validation] PHASE_END status=degraded durationMs=239
+[2026-05-05T12:03:22.319Z] [LOG] [ux-validation] PHASE_START status=running
+[2026-05-05T12:03:31.507Z] [LOG] [ux-validation] PHASE_END status=success durationMs=9173
+[2026-05-05T12:03:31.536Z] [LOG] [quality-gate] PHASE_START status=running
+[2026-05-05T12:03:31.935Z] [WARN] [quality-gate] PHASE_END status=degraded durationMs=381
+[2026-05-05T12:03:31.963Z] [LOG] [editorial-validation] PHASE_START status=running
+[2026-05-05T12:03:32.015Z] [LOG] [Router] Agent: Quality_Auditor_10 | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:03:32.016Z] [LOG] [LEARNING] Inferred Context for Quality_Auditor_10: niche=cerrajeros, city=Barcelona, blockType=content
+[2026-05-05T12:03:32.017Z] [LOG] [LEARNING] No lessons found for Quality_Auditor_10 in this context.
+[2026-05-05T12:03:32.017Z] [LOG] [Router] Agent: Quality_Auditor_10 | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:03:32.053Z] [LOG] [Router] Agent: Quality_Auditor_10 | Tier: premium | Selected: qwen2.5-coder:3b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T12:03:32.312Z] [LOG] [editorial-validation] PHASE_END status=success durationMs=330
+[2026-05-05T12:03:32.340Z] [LOG] [delivery] PHASE_START status=running
+[2026-05-05T12:03:32.382Z] [LOG] [Phase 11] Delivered to: c:\Users\Bryan\Desktop\pruebaGravity\output_sites\cerrajeros-barcelona\index.html
+[2026-05-05T12:03:32.406Z] [LOG] [delivery] PHASE_END status=success durationMs=49
+[2026-05-05T12:03:32.437Z] [LOG] [post-audit] PHASE_START status=running
+[2026-05-05T12:03:32.462Z] [LOG] [AuditSentinel] 🤖 Crawling site health for Barcelona...
+[2026-05-05T12:03:32.504Z] [LOG] [post-audit] PHASE_END status=success durationMs=40
+[2026-05-05T12:03:32.564Z] [LOG] [Mission] MISSION_SUCCESS status=completed
+
+[2026-05-05T12:03:32.864Z] [SYSTEM] Sesión de log finalizada.

@@ -1,0 +1,25 @@
+{
+  "phase": "technical-validation",
+  "status": "degraded",
+  "startedAt": "2026-05-05T12:03:22.006Z",
+  "completedAt": "2026-05-05T12:03:22.245Z",
+  "durationMs": 239,
+  "warnings": [
+    "UNDEFINED_CSS_VARS:--text,--muted,--primary,--primary-rgb,--accent,--font-body,--font-display,--shadow-lift,--shadow-soft,--shadow-dramatic,--bg,--text-on-surface",
+    "PRODUCTION_STABLE_CSS_MISSING",
+    "TEXT_BLOCK_WITHOUT_VISUAL_STRUCTURE",
+    "UNVERIFIED_COMMERCIAL_CLAIM"
+  ],
+  "metrics": {
+    "technicalPassed": false,
+    "issues": 4
+  },
+  "qualitySummary": {
+    "decision": "degraded",
+    "issueCount": 9,
+    "fatal": 0,
+    "major": 4,
+    "minor": 1,
+    "warning": 4
+  }
+}

@@ -1,0 +1,357 @@
+{
+  "schemaVersion": "mission-summary@1",
+  "generatedAt": "2026-05-05T11:23:23.793Z",
+  "runId": "cerrajeros__bilbao__2026-05-05T11-15-14-857Z",
+  "status": "success",
+  "failedPhase": null,
+  "lastStablePhase": "post-audit",
+  "error": null,
+  "errorType": null,
+  "errorHint": null,
+  "durationMs": 487976,
+  "phases": [
+    {
+      "phase": "playbook",
+      "status": "success",
+      "durationMs": 10,
+      "duration": "10ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "site-graph",
+      "status": "success",
+      "durationMs": 12,
+      "duration": "12ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "research",
+      "status": "success",
+      "durationMs": 25317,
+      "duration": "25s",
+      "warnings": [],
+      "metrics": {
+        "competitors": 5,
+        "entities": 23,
+        "intent": "transactional"
+      }
+    },
+    {
+      "phase": "normalization",
+      "status": "success",
+      "durationMs": 15,
+      "duration": "15ms",
+      "warnings": [],
+      "metrics": {
+        "phoneNormalized": null,
+        "clusteredKeywords": 5
+      }
+    },
+    {
+      "phase": "planning",
+      "status": "success",
+      "durationMs": 83177,
+      "duration": "1m 23s",
+      "warnings": [],
+      "metrics": {
+        "sections": 9,
+        "h1": "Cerrajeros en Bilbao: Servicios de Seguridad y Apertura",
+        "pageType": "service"
+      }
+    },
+    {
+      "phase": "render-plan",
+      "status": "success",
+      "durationMs": 20,
+      "duration": "20ms",
+      "warnings": [],
+      "metrics": {
+        "orderedSections": 9,
+        "theme": "corporateGold"
+      }
+    },
+    {
+      "phase": "writing",
+      "status": "success",
+      "durationMs": 225727,
+      "duration": "3m 46s",
+      "warnings": [],
+      "metrics": {
+        "blocks": 9,
+        "totalWords": 1349
+      }
+    },
+    {
+      "phase": "correction",
+      "status": "success",
+      "durationMs": 94846,
+      "duration": "1m 35s",
+      "warnings": [],
+      "metrics": {
+        "blocks": 9,
+        "totalWords": 1343
+      }
+    },
+    {
+      "phase": "integrity",
+      "status": "success",
+      "durationMs": 131,
+      "duration": "131ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "enrichment",
+      "status": "success",
+      "durationMs": 92,
+      "duration": "92ms",
+      "warnings": [],
+      "metrics": {
+        "blocks": 10,
+        "totalWords": 1371
+      }
+    },
+    {
+      "phase": "seo-contract",
+      "status": "success",
+      "durationMs": 30,
+      "duration": "30ms",
+      "warnings": [],
+      "metrics": {
+        "blocks": 10,
+        "totalWords": 1371
+      }
+    },
+    {
+      "phase": "assembly",
+      "status": "success",
+      "durationMs": 1152,
+      "duration": "1s",
+      "warnings": [],
+      "metrics": {
+        "htmlLength": 102665
+      }
+    },
+    {
+      "phase": "images",
+      "status": "success",
+      "durationMs": 50584,
+      "duration": "51s",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "completeness",
+      "status": "success",
+      "durationMs": 79,
+      "duration": "79ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "technical-validation",
+      "status": "degraded",
+      "durationMs": 294,
+      "duration": "294ms",
+      "warnings": [
+        "PRODUCTION_STABLE_CSS_MISSING",
+        "BLOCK_VISUAL_CLASSES_WITHOUT_CSS",
+        "TEXT_BLOCK_WITHOUT_VISUAL_STRUCTURE",
+        "UNVERIFIED_COMMERCIAL_CLAIM"
+      ],
+      "metrics": {
+        "technicalPassed": false,
+        "issues": 4
+      }
+    },
+    {
+      "phase": "ux-validation",
+      "status": "success",
+      "durationMs": 5375,
+      "duration": "5s",
+      "warnings": [
+        "Found text elements smaller than 12px.",
+        "Found text elements smaller than 12px.",
+        "Found text elements smaller than 12px.",
+        "Found text elements smaller than 12px.",
+        "Found text elements smaller than 12px."
+      ],
+      "metrics": {}
+    },
+    {
+      "phase": "quality-gate",
+      "status": "degraded",
+      "durationMs": 481,
+      "duration": "481ms",
+      "warnings": [
+        "No se ha inyectado la capa CSS estable de producción.",
+        "Hay clases de bloques renderizadas sin cobertura CSS directa: block__cta-note, footer__grid-refined",
+        "El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+        "El bloque cta_panel tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+        "El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+        "Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+      ],
+      "metrics": {
+        "score": 100,
+        "passed": false,
+        "issues": 0
+      }
+    },
+    {
+      "phase": "editorial-validation",
+      "status": "success",
+      "durationMs": 511,
+      "duration": "511ms",
+      "warnings": [],
+      "metrics": {
+        "editorialScore": 89,
+        "editorialPassed": true
+      }
+    },
+    {
+      "phase": "delivery",
+      "status": "success",
+      "durationMs": 69,
+      "duration": "69ms",
+      "warnings": [],
+      "metrics": {}
+    },
+    {
+      "phase": "post-audit",
+      "status": "success",
+      "durationMs": 54,
+      "duration": "54ms",
+      "warnings": [],
+      "metrics": {}
+    }
+  ],
+  "llmCalls": {
+    "total": 22,
+    "failed": 0,
+    "slow": 8,
+    "totalDurationMs": 1320606
+  },
+  "fallbacks": [
+    {
+      "type": "PHASE_DEGRADED",
+      "phase": "technical-validation",
+      "reason": "PRODUCTION_STABLE_CSS_MISSING; BLOCK_VISUAL_CLASSES_WITHOUT_CSS; TEXT_BLOCK_WITHOUT_VISUAL_STRUCTURE; UNVERIFIED_COMMERCIAL_CLAIM"
+    },
+    {
+      "type": "PHASE_DEGRADED",
+      "phase": "quality-gate",
+      "reason": "No se ha inyectado la capa CSS estable de producción.; Hay clases de bloques renderizadas sin cobertura CSS directa: block__cta-note, footer__grid-refined; El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.; El bloque cta_panel tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.; El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.; Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+    }
+  ],
+  "blockDiagnostics": [
+    {
+      "blockId": "urgency_panel",
+      "blockType": "urgency_panel",
+      "h2": "Urgencias y Emergencias",
+      "wordCount": 69,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "services_grid",
+      "blockType": "services_grid",
+      "h2": "Nuestros Servicios",
+      "wordCount": 357,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "process_steps",
+      "blockType": "process_steps",
+      "h2": "Proceso de Servicio",
+      "wordCount": 254,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "local_proof",
+      "blockType": "local_proof",
+      "h2": "Testimonios Locales",
+      "wordCount": 104,
+      "score": 88,
+      "status": "success",
+      "issues": [
+        "low_local_specificity"
+      ],
+      "examples": []
+    },
+    {
+      "blockId": "donde-estamos",
+      "blockType": "map",
+      "h2": "Cobertura y ubicación operativa en Bilbao",
+      "wordCount": 35,
+      "score": 90,
+      "status": "success",
+      "issues": [
+        "low_word_count"
+      ],
+      "examples": []
+    },
+    {
+      "blockId": "price_guidance",
+      "blockType": "price_guidance",
+      "h2": "Precios Condicionados",
+      "wordCount": 110,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "faq",
+      "blockType": "faq",
+      "h2": "Preguntas Frecuentes",
+      "wordCount": 179,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "internal-links-contextual",
+      "blockType": "internal_linking",
+      "h2": "Navegación relacionada del proyecto",
+      "wordCount": 56,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    },
+    {
+      "blockId": "cta_panel",
+      "blockType": "cta_panel",
+      "h2": "Contratar Ahora",
+      "wordCount": 35,
+      "score": 90,
+      "status": "success",
+      "issues": [
+        "low_word_count"
+      ],
+      "examples": []
+    },
+    {
+      "blockId": "senales-confianza",
+      "blockType": "trust_band",
+      "h2": "Señales de confianza que conviene exigir antes de contratar",
+      "wordCount": 172,
+      "score": 100,
+      "status": "success",
+      "issues": [],
+      "examples": []
+    }
+  ],
+  "recommendedAction": "No hay acción bloqueante. Revisar warnings y bloques con score bajo si el resultado visual no convence."
+}

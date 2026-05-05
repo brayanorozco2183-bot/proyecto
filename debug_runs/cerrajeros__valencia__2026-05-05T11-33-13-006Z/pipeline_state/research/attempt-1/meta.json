@@ -1,0 +1,21 @@
+{
+  "phase": "research",
+  "status": "success",
+  "startedAt": "2026-05-05T11:33:13.058Z",
+  "completedAt": "2026-05-05T11:33:39.341Z",
+  "durationMs": 26283,
+  "warnings": [],
+  "metrics": {
+    "competitors": 6,
+    "entities": 26,
+    "intent": "transactional"
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

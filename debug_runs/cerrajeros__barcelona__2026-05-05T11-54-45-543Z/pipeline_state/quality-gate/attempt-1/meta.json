@@ -1,0 +1,28 @@
+{
+  "phase": "quality-gate",
+  "status": "degraded",
+  "startedAt": "2026-05-05T12:03:31.532Z",
+  "completedAt": "2026-05-05T12:03:31.913Z",
+  "durationMs": 381,
+  "warnings": [
+    "Incumplimiento de Playbook (cerrajeros): Schema recomendado ausente para el nicho: FAQPage",
+    "No se ha inyectado la capa CSS estable de producción.",
+    "El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "El bloque cta_panel tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+  ],
+  "metrics": {
+    "score": 85,
+    "passed": false,
+    "issues": 1
+  },
+  "qualitySummary": {
+    "decision": "degraded",
+    "issueCount": 8,
+    "fatal": 0,
+    "major": 1,
+    "minor": 1,
+    "warning": 6
+  }
+}

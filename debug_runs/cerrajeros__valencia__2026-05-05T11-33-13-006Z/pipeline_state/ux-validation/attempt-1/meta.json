@@ -1,0 +1,23 @@
+{
+  "phase": "ux-validation",
+  "status": "success",
+  "startedAt": "2026-05-05T11:48:58.524Z",
+  "completedAt": "2026-05-05T11:49:03.951Z",
+  "durationMs": 5427,
+  "warnings": [
+    "Found text elements smaller than 12px.",
+    "Found text elements smaller than 12px.",
+    "Found text elements smaller than 12px.",
+    "Found text elements smaller than 12px.",
+    "Found text elements smaller than 12px."
+  ],
+  "metrics": {},
+  "qualitySummary": {
+    "decision": "degraded",
+    "issueCount": 1,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 1
+  }
+}

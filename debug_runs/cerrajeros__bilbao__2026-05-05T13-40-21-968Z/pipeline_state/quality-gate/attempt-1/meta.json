@@ -1,0 +1,29 @@
+{
+  "phase": "quality-gate",
+  "status": "degraded",
+  "startedAt": "2026-05-05T13:56:01.730Z",
+  "completedAt": "2026-05-05T13:56:02.184Z",
+  "durationMs": 454,
+  "warnings": [
+    "No se ha inyectado la capa CSS estable de producción.",
+    "Hay clases de bloques renderizadas sin cobertura CSS directa: block__pill, local-proof__signal-list, faq-content-refined, footer__grid-refined",
+    "El bloque premium_content_depth tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "El bloque premium_content_depth tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+    "Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+  ],
+  "metrics": {
+    "score": 100,
+    "passed": false,
+    "issues": 0
+  },
+  "qualitySummary": {
+    "decision": "degraded",
+    "issueCount": 7,
+    "fatal": 0,
+    "major": 0,
+    "minor": 1,
+    "warning": 6
+  }
+}

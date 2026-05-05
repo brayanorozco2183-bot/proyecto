@@ -1,0 +1,17 @@
+{
+  "missionId": "debug-getafe-fontaneros",
+  "niche": "fontaneros",
+  "city": "Getafe",
+  "local_nap": {
+    "business_name": "Fontaneros Getafe Inter-Test",
+    "address": "Calle de la Prueba 123, Getafe",
+    "phone": "+34 600 000 000"
+  },
+  "siteConfig": {
+    "baseUrl": "https://fontaneros-getafe.pro",
+    "brandName": "Fontaneros Getafe Inter-Test"
+  },
+  "cluster_folder_name": "fontaneros getafe",
+  "subPath": "servicios-tecnicos",
+  "mode": "production"
+}

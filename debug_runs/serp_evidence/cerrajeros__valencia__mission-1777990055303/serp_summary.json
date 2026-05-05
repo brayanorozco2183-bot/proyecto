@@ -1,0 +1,17 @@
+{
+  "attempted": true,
+  "executed": true,
+  "status": "success",
+  "fallbackUsed": false,
+  "fallbackReason": null,
+  "provider": "sdi",
+  "mode": "live_serp_optional",
+  "query": "cerrajeros Valencia",
+  "city": "Valencia",
+  "niche": "cerrajeros",
+  "organicResultsCount": 6,
+  "competitorsFetched": 3,
+  "localPackCount": 0,
+  "timestamp": "2026-05-05T14:08:12.488Z",
+  "error": null
+}

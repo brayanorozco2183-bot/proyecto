@@ -1,0 +1,21 @@
+{
+  "phase": "planning",
+  "status": "success",
+  "startedAt": "2026-05-05T12:10:54.391Z",
+  "completedAt": "2026-05-05T12:13:23.701Z",
+  "durationMs": 149310,
+  "warnings": [],
+  "metrics": {
+    "sections": 9,
+    "h1": "Cerrajeros en Sevilla: Apertura de Puertas, Cambio e Instalación de Cerraduras y Bombines",
+    "pageType": "service"
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

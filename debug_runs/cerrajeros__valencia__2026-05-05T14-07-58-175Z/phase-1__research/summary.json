@@ -1,0 +1,10 @@
+{
+  "phase": "1",
+  "label": "research",
+  "notes": [],
+  "summary": {
+    "competitors": 6,
+    "entities": 26,
+    "intent": "transactional"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "phase": "enrichment",
+  "status": "success",
+  "startedAt": "2026-05-05T12:25:19.049Z",
+  "completedAt": "2026-05-05T12:25:19.138Z",
+  "durationMs": 89,
+  "warnings": [],
+  "metrics": {
+    "blocks": 10,
+    "totalWords": 1311
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

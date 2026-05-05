@@ -1,0 +1,19 @@
+{
+  "phase": "assembly",
+  "status": "success",
+  "startedAt": "2026-05-05T13:55:11.801Z",
+  "completedAt": "2026-05-05T13:55:12.983Z",
+  "durationMs": 1182,
+  "warnings": [],
+  "metrics": {
+    "htmlLength": 80845
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

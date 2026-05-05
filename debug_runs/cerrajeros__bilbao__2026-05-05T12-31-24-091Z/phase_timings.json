@@ -1,0 +1,216 @@
+[
+  {
+    "phase": "playbook",
+    "status": "success",
+    "durationMs": 27,
+    "duration": "27ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "site-graph",
+    "status": "success",
+    "durationMs": 12,
+    "duration": "12ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "research",
+    "status": "success",
+    "durationMs": 27684,
+    "duration": "28s",
+    "warnings": [],
+    "metrics": {
+      "competitors": 5,
+      "entities": 23,
+      "intent": "transactional"
+    }
+  },
+  {
+    "phase": "normalization",
+    "status": "success",
+    "durationMs": 25,
+    "duration": "25ms",
+    "warnings": [],
+    "metrics": {
+      "phoneNormalized": null,
+      "clusteredKeywords": 5
+    }
+  },
+  {
+    "phase": "planning",
+    "status": "success",
+    "durationMs": 87976,
+    "duration": "1m 28s",
+    "warnings": [],
+    "metrics": {
+      "sections": 9,
+      "h1": "Cerrajeros en Bilbao: Soluciones de Seguridad y Acceso",
+      "pageType": "service"
+    }
+  },
+  {
+    "phase": "render-plan",
+    "status": "success",
+    "durationMs": 39,
+    "duration": "39ms",
+    "warnings": [],
+    "metrics": {
+      "orderedSections": 9,
+      "theme": "corporateGold"
+    }
+  },
+  {
+    "phase": "writing",
+    "status": "success",
+    "durationMs": 266309,
+    "duration": "4m 26s",
+    "warnings": [],
+    "metrics": {
+      "blocks": 9,
+      "totalWords": 1376
+    }
+  },
+  {
+    "phase": "correction",
+    "status": "success",
+    "durationMs": 101494,
+    "duration": "1m 41s",
+    "warnings": [],
+    "metrics": {
+      "blocks": 9,
+      "totalWords": 1350
+    }
+  },
+  {
+    "phase": "integrity",
+    "status": "success",
+    "durationMs": 135,
+    "duration": "135ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "enrichment",
+    "status": "success",
+    "durationMs": 118,
+    "duration": "118ms",
+    "warnings": [],
+    "metrics": {
+      "blocks": 10,
+      "totalWords": 1406
+    }
+  },
+  {
+    "phase": "seo-contract",
+    "status": "success",
+    "durationMs": 48,
+    "duration": "48ms",
+    "warnings": [],
+    "metrics": {
+      "blocks": 10,
+      "totalWords": 1406
+    }
+  },
+  {
+    "phase": "assembly",
+    "status": "success",
+    "durationMs": 1592,
+    "duration": "2s",
+    "warnings": [],
+    "metrics": {
+      "htmlLength": 81222
+    }
+  },
+  {
+    "phase": "images",
+    "status": "success",
+    "durationMs": 45583,
+    "duration": "46s",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "completeness",
+    "status": "success",
+    "durationMs": 72,
+    "duration": "72ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "technical-validation",
+    "status": "degraded",
+    "durationMs": 201,
+    "duration": "201ms",
+    "warnings": [
+      "PRODUCTION_STABLE_CSS_MISSING",
+      "BLOCK_VISUAL_CLASSES_WITHOUT_CSS",
+      "TEXT_BLOCK_WITHOUT_VISUAL_STRUCTURE",
+      "UNVERIFIED_COMMERCIAL_CLAIM"
+    ],
+    "metrics": {
+      "technicalPassed": false,
+      "issues": 4
+    }
+  },
+  {
+    "phase": "ux-validation",
+    "status": "success",
+    "durationMs": 5366,
+    "duration": "5s",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "quality-gate",
+    "status": "degraded",
+    "durationMs": 461,
+    "duration": "461ms",
+    "warnings": [
+      "Los títulos internos repiten una plantilla demasiado genérica. Apariciones: 1.",
+      "No se ha inyectado la capa CSS estable de producción.",
+      "Hay clases de bloques renderizadas sin cobertura CSS directa: block__pill, local-proof__signal-list, faq-content-refined, footer__grid-refined",
+      "El bloque premium_content_depth tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque premium_content_depth tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque premium_content_depth tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque cta_panel tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+    ],
+    "metrics": {
+      "score": 86,
+      "passed": false,
+      "issues": 1
+    }
+  },
+  {
+    "phase": "editorial-validation",
+    "status": "success",
+    "durationMs": 387,
+    "duration": "387ms",
+    "warnings": [],
+    "metrics": {
+      "editorialScore": 89,
+      "editorialPassed": true
+    }
+  },
+  {
+    "phase": "delivery",
+    "status": "success",
+    "durationMs": 56,
+    "duration": "56ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "post-audit",
+    "status": "success",
+    "durationMs": 52,
+    "duration": "52ms",
+    "warnings": [],
+    "metrics": {}
+  }
+]

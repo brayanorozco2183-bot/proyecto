@@ -1,77 +1,10 @@
-# Dependencies
+# Gravity V8.1 - Total Delivery Gitignore
+
+# Only keep node_modules out
 node_modules/
-.env
-.env.tmp
-.env.local
-.env.production
-.bot_profiles/
 
-# Build and Source artifacts
-dist/
-build/
-src/**/*.js
-src/**/*.js.map
-!src/**/*.ts
-
-# Database and state — do NOT commit the live database
-maestro.db
-maestro.db-journal
-maestro.db-shm
-maestro.db-wal
-*.db
-*.sqlite
-*.sqlite3
-
-# Generated outputs — local only
-output_sites/
-public-static/
-public_static/
-site_output/
-assets_generated/
-
-# Debug and test artifacts
-debug_runs/
-test_results/
-playwright-report/
-test-results/
-ux-audit/
-
-# Temporary / Scratch
-tmp/
-scratch/
-tmp_*
-debug_*
-finalize_*
-repair_*
-.gravity_backups/
-
-# Root-level utility scripts (not part of the core project)
-test_*.ts
-run_*.ts
-monitor_*.ts
-check_*.ts
-check_*.cjs
-clear_*.ts
-read_*.cjs
-read_*.js
-read_*.py
-verify_*.cjs
-verify_*.py
-list_*.cjs
-delete_*.cjs
-*.patch
-*.bat
-architect_output.json
-mission_cmd.json
-logs_
-gravity_copia_log.txt
-sdi_pilot.ps1
-
-# Parche directory (legacy)
-parche/
-
-# System
-.DS_Store
-.vscode/
-.idea/
-OllamaSetup.exe
+# Keep everything else for total delivery
+# .env
+# maestro.db
+# output_sites
+# etc.

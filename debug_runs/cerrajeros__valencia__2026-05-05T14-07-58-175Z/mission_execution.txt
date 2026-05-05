@@ -1,0 +1,11 @@
+[2026-05-05T14:07:58.177Z] [LOG] [LOGGER] Redirección de logs activa: C:\Users\Bryan\Desktop\pruebaGravity\debug_runs\cerrajeros__valencia__2026-05-05T14-07-58-175Z\mission_execution.txt
+[2026-05-05T14:07:58.191Z] [LOG] [Mission] MISSION_START status=initialized
+[2026-05-05T14:07:58.194Z] [LOG] [playbook] PHASE_START status=running
+[2026-05-05T14:07:58.216Z] [LOG] [playbook] PHASE_END status=success durationMs=13
+[2026-05-05T14:07:58.225Z] [LOG] [site-graph] PHASE_START status=running
+[2026-05-05T14:07:58.248Z] [LOG] [site-graph] PHASE_END status=success durationMs=12
+[2026-05-05T14:07:58.256Z] [LOG] [research] PHASE_START status=running
+[2026-05-05T14:07:58.267Z] [LOG] [Phase 1.1] Geo-Intelligence & Local Mapping...
+[2026-05-05T14:07:58.267Z] [LOG] [GeoIntel_Agent] Thinking: Mapping geographic domination cluster for: Valencia (Scope: auto)
+[2026-05-05T14:07:59.177Z] [LOG] [Router] Agent: GeoIntel_Agent | Tier: standard | Selected: qwen2.5:1.5b | TierPlan: {"fast":"qwen2.5:1.5b","standard":"qwen2.5:1.5b","premium":"qwen2.5-coder:3b","coder":"qwen2.5-coder:3b"}
+[2026-05-05T14:07:59.210Z] [LOG] [AIFacade] GeoIntel_Agent -> qwen2.5:1.5b | attempt 1/2 | tier_fallback=false

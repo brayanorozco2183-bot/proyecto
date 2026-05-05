@@ -1,0 +1,14 @@
+{
+  "phase": "9",
+  "label": "technical-validation",
+  "notes": [
+    "PRODUCTION_STABLE_CSS_MISSING",
+    "BLOCK_VISUAL_CLASSES_WITHOUT_CSS",
+    "TEXT_BLOCK_WITHOUT_VISUAL_STRUCTURE",
+    "UNVERIFIED_COMMERCIAL_CLAIM"
+  ],
+  "summary": {
+    "technicalPassed": false,
+    "issues": 4
+  }
+}

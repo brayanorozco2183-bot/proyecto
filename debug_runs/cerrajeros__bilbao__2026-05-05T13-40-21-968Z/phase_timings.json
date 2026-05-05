@@ -1,0 +1,213 @@
+[
+  {
+    "phase": "playbook",
+    "status": "success",
+    "durationMs": 8,
+    "duration": "8ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "site-graph",
+    "status": "success",
+    "durationMs": 9,
+    "duration": "9ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "research",
+    "status": "success",
+    "durationMs": 35262,
+    "duration": "35s",
+    "warnings": [],
+    "metrics": {
+      "competitors": 8,
+      "entities": 23,
+      "intent": "transactional"
+    }
+  },
+  {
+    "phase": "normalization",
+    "status": "success",
+    "durationMs": 43,
+    "duration": "43ms",
+    "warnings": [],
+    "metrics": {
+      "phoneNormalized": null,
+      "clusteredKeywords": 5
+    }
+  },
+  {
+    "phase": "planning",
+    "status": "success",
+    "durationMs": 161098,
+    "duration": "2m 41s",
+    "warnings": [],
+    "metrics": {
+      "sections": 9,
+      "h1": "Cerrajeros en Bilbao: Soluciones de Seguridad y Acceso",
+      "pageType": "service"
+    }
+  },
+  {
+    "phase": "render-plan",
+    "status": "success",
+    "durationMs": 19,
+    "duration": "19ms",
+    "warnings": [],
+    "metrics": {
+      "orderedSections": 9,
+      "theme": "corporateGold"
+    }
+  },
+  {
+    "phase": "writing",
+    "status": "success",
+    "durationMs": 440577,
+    "duration": "7m 21s",
+    "warnings": [],
+    "metrics": {
+      "blocks": 9,
+      "totalWords": 1347
+    }
+  },
+  {
+    "phase": "correction",
+    "status": "success",
+    "durationMs": 252228,
+    "duration": "4m 12s",
+    "warnings": [],
+    "metrics": {
+      "blocks": 9,
+      "totalWords": 1327
+    }
+  },
+  {
+    "phase": "integrity",
+    "status": "success",
+    "durationMs": 139,
+    "duration": "139ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "enrichment",
+    "status": "success",
+    "durationMs": 85,
+    "duration": "85ms",
+    "warnings": [],
+    "metrics": {
+      "blocks": 10,
+      "totalWords": 1383
+    }
+  },
+  {
+    "phase": "seo-contract",
+    "status": "success",
+    "durationMs": 28,
+    "duration": "28ms",
+    "warnings": [],
+    "metrics": {
+      "blocks": 10,
+      "totalWords": 1383
+    }
+  },
+  {
+    "phase": "assembly",
+    "status": "success",
+    "durationMs": 1182,
+    "duration": "1s",
+    "warnings": [],
+    "metrics": {
+      "htmlLength": 80845
+    }
+  },
+  {
+    "phase": "images",
+    "status": "success",
+    "durationMs": 35719,
+    "duration": "36s",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "completeness",
+    "status": "success",
+    "durationMs": 87,
+    "duration": "87ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "technical-validation",
+    "status": "degraded",
+    "durationMs": 210,
+    "duration": "210ms",
+    "warnings": [
+      "PRODUCTION_STABLE_CSS_MISSING",
+      "BLOCK_VISUAL_CLASSES_WITHOUT_CSS",
+      "TEXT_BLOCK_WITHOUT_VISUAL_STRUCTURE",
+      "UNVERIFIED_COMMERCIAL_CLAIM"
+    ],
+    "metrics": {
+      "technicalPassed": false,
+      "issues": 4
+    }
+  },
+  {
+    "phase": "ux-validation",
+    "status": "success",
+    "durationMs": 12264,
+    "duration": "12s",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "quality-gate",
+    "status": "degraded",
+    "durationMs": 454,
+    "duration": "454ms",
+    "warnings": [
+      "No se ha inyectado la capa CSS estable de producción.",
+      "Hay clases de bloques renderizadas sin cobertura CSS directa: block__pill, local-proof__signal-list, faq-content-refined, footer__grid-refined",
+      "El bloque premium_content_depth tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque process_steps tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque premium_content_depth tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "El bloque trust_band tiene contenido visible pero no se detecta estructura visual de tarjeta/layout.",
+      "Claim \"24h\" debe estar respaldado por datos reales antes de publicar."
+    ],
+    "metrics": {
+      "score": 100,
+      "passed": false,
+      "issues": 0
+    }
+  },
+  {
+    "phase": "editorial-validation",
+    "status": "success",
+    "durationMs": 449,
+    "duration": "449ms",
+    "warnings": [],
+    "metrics": {
+      "editorialScore": 89,
+      "editorialPassed": true
+    }
+  },
+  {
+    "phase": "delivery",
+    "status": "success",
+    "durationMs": 55,
+    "duration": "55ms",
+    "warnings": [],
+    "metrics": {}
+  },
+  {
+    "phase": "post-audit",
+    "status": "success",
+    "durationMs": 38,
+    "duration": "38ms",
+    "warnings": [],
+    "metrics": {}
+  }
+]

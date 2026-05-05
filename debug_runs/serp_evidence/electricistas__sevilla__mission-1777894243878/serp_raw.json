@@ -1,0 +1,53 @@
+{
+  "organic": [
+    {
+      "title": "Resultado SDI 1",
+      "link": "https://miweb.com",
+      "snippet": "Capturado vía Inyección de Teclas (SDI)",
+      "position": 1
+    },
+    {
+      "title": "Resultado SDI 2",
+      "link": "https://tu-web.com",
+      "snippet": "Capturado vía Inyección de Teclas (SDI)",
+      "position": 2
+    },
+    {
+      "title": "Resultado SDI 3",
+      "link": "https://react.dev/link/new-jsx-transform",
+      "snippet": "Capturado vía Inyección de Teclas (SDI)",
+      "position": 3
+    },
+    {
+      "title": "Resultado SDI 4",
+      "link": "https://react.dev/link/special-props",
+      "snippet": "Capturado vía Inyección de Teclas (SDI)",
+      "position": 4
+    },
+    {
+      "title": "Resultado SDI 5",
+      "link": "https://github.com/nodejs/node/issues/51486rn",
+      "snippet": "Capturado vía Inyección de Teclas (SDI)",
+      "position": 5
+    },
+    {
+      "title": "Resultado SDI 6",
+      "link": "https://fetch.spec.whatwg.org",
+      "snippet": "Capturado vía Inyección de Teclas (SDI)",
+      "position": 6
+    },
+    {
+      "title": "Resultado SDI 7",
+      "link": "http://localhost:8081/api/stats",
+      "snippet": "Capturado vía Inyección de Teclas (SDI)",
+      "position": 7
+    },
+    {
+      "title": "Resultado SDI 8",
+      "link": "http://localhost:8081/api/agents",
+      "snippet": "Capturado vía Inyección de Teclas (SDI)",
+      "position": 8
+    }
+  ],
+  "localPack": []
+}

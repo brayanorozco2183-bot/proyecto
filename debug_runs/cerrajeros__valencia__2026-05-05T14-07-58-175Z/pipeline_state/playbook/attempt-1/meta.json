@@ -1,0 +1,17 @@
+{
+  "phase": "playbook",
+  "status": "success",
+  "startedAt": "2026-05-05T14:07:58.193Z",
+  "completedAt": "2026-05-05T14:07:58.206Z",
+  "durationMs": 13,
+  "warnings": [],
+  "metrics": {},
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

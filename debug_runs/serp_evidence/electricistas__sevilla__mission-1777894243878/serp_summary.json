@@ -1,0 +1,17 @@
+{
+  "attempted": true,
+  "executed": true,
+  "status": "success",
+  "fallbackUsed": false,
+  "fallbackReason": null,
+  "provider": "sdi",
+  "mode": "live_serp_optional",
+  "query": "electricistas Sevilla",
+  "city": "Sevilla",
+  "niche": "electricistas",
+  "organicResultsCount": 8,
+  "competitorsFetched": 3,
+  "localPackCount": 0,
+  "timestamp": "2026-05-04T11:31:24.119Z",
+  "error": null
+}

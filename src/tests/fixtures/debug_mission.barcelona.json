@@ -1,0 +1,17 @@
+{
+  "missionId": "debug-bcn-cerrajeros",
+  "niche": "cerrajeros",
+  "city": "Barcelona",
+  "local_nap": {
+    "business_name": "Servicio de Cerrajería Barcelona Pro",
+    "address": "Carrer de Balmes 45, L'Eixample, Barcelona",
+    "phone": "+34 611 222 333"
+  },
+  "siteConfig": {
+    "baseUrl": "https://cerrajeros-barcelona.pro",
+    "brandName": "Cerrajería Barcelona Pro"
+  },
+  "cluster_folder_name": "cerrajeros barcelona",
+  "subPath": "urgencias-24h",
+  "mode": "production"
+}

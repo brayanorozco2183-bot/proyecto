@@ -1,0 +1,20 @@
+{
+  "phase": "render-plan",
+  "status": "success",
+  "startedAt": "2026-05-05T14:09:57.081Z",
+  "completedAt": "2026-05-05T14:09:57.148Z",
+  "durationMs": 67,
+  "warnings": [],
+  "metrics": {
+    "orderedSections": 9,
+    "theme": "technicalClean"
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

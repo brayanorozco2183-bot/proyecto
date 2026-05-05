@@ -1,0 +1,20 @@
+{
+  "phase": "normalization",
+  "status": "success",
+  "startedAt": "2026-05-05T13:40:57.314Z",
+  "completedAt": "2026-05-05T13:40:57.357Z",
+  "durationMs": 43,
+  "warnings": [],
+  "metrics": {
+    "phoneNormalized": null,
+    "clusteredKeywords": 5
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "phase": "10",
+  "label": "editorial-validation",
+  "notes": [],
+  "summary": {
+    "editorialScore": 89,
+    "editorialPassed": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "phase": "editorial-validation",
+  "status": "success",
+  "startedAt": "2026-05-05T11:49:04.493Z",
+  "completedAt": "2026-05-05T11:49:04.844Z",
+  "durationMs": 351,
+  "warnings": [],
+  "metrics": {
+    "editorialScore": 89,
+    "editorialPassed": true
+  },
+  "qualitySummary": {
+    "decision": "degraded",
+    "issueCount": 1,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 1
+  }
+}

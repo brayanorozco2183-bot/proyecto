@@ -1,0 +1,21 @@
+{
+  "phase": "planning",
+  "status": "success",
+  "startedAt": "2026-05-05T11:15:40.287Z",
+  "completedAt": "2026-05-05T11:17:03.464Z",
+  "durationMs": 83177,
+  "warnings": [],
+  "metrics": {
+    "sections": 9,
+    "h1": "Cerrajeros en Bilbao: Servicios de Seguridad y Apertura",
+    "pageType": "service"
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

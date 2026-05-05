@@ -1,0 +1,12 @@
+{
+  "phase": "9.25",
+  "label": "ux-validation",
+  "notes": [
+    "Found text elements smaller than 12px.",
+    "Found text elements smaller than 12px.",
+    "Found text elements smaller than 12px.",
+    "Found text elements smaller than 12px.",
+    "Found text elements smaller than 12px."
+  ],
+  "summary": {}
+}

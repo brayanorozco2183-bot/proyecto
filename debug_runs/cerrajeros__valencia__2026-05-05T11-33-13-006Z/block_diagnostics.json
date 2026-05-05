@@ -1,0 +1,119 @@
+[
+  {
+    "blockId": "urgency_panel",
+    "blockType": "urgency_panel",
+    "h2": "Urgencias de Cerrajeros en Valencia",
+    "wordCount": 108,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "services_grid",
+    "blockType": "services_grid",
+    "h2": "Servicios Ofrecidos",
+    "wordCount": 282,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "process_steps",
+    "blockType": "process_steps",
+    "h2": "Proceso de Servicio",
+    "wordCount": 260,
+    "score": 88,
+    "status": "success",
+    "issues": [
+      "unverified_experience_claim"
+    ],
+    "examples": [
+      "más de 10 años"
+    ]
+  },
+  {
+    "blockId": "local_proof",
+    "blockType": "local_proof",
+    "h2": "Prueba Local de Seguridad",
+    "wordCount": 72,
+    "score": 76,
+    "status": "warning",
+    "issues": [
+      "generic_heading_prueba_local",
+      "low_local_specificity"
+    ],
+    "examples": [
+      "Prueba Local"
+    ]
+  },
+  {
+    "blockId": "donde-estamos",
+    "blockType": "map",
+    "h2": "Cobertura y ubicación operativa en Valencia",
+    "wordCount": 35,
+    "score": 90,
+    "status": "success",
+    "issues": [
+      "low_word_count"
+    ],
+    "examples": []
+  },
+  {
+    "blockId": "price_guidance",
+    "blockType": "price_guidance",
+    "h2": "Precios Condicionados",
+    "wordCount": 151,
+    "score": 88,
+    "status": "success",
+    "issues": [
+      "unverified_experience_claim"
+    ],
+    "examples": [
+      "más de 30 años"
+    ]
+  },
+  {
+    "blockId": "faq",
+    "blockType": "faq",
+    "h2": "Preguntas Frecuentes",
+    "wordCount": 105,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "internal-links-contextual",
+    "blockType": "internal_linking",
+    "h2": "Navegación relacionada del proyecto",
+    "wordCount": 58,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  },
+  {
+    "blockId": "cta_panel",
+    "blockType": "cta_panel",
+    "h2": "Contratar Ahora",
+    "wordCount": 35,
+    "score": 90,
+    "status": "success",
+    "issues": [
+      "low_word_count"
+    ],
+    "examples": []
+  },
+  {
+    "blockId": "senales-confianza",
+    "blockType": "trust_band",
+    "h2": "Señales de confianza que conviene exigir antes de contratar",
+    "wordCount": 170,
+    "score": 100,
+    "status": "success",
+    "issues": [],
+    "examples": []
+  }
+]

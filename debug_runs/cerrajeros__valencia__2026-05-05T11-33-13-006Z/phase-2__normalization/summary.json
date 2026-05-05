@@ -1,0 +1,9 @@
+{
+  "phase": "2",
+  "label": "normalization",
+  "notes": [],
+  "summary": {
+    "phoneNormalized": null,
+    "clusteredKeywords": 5
+  }
+}

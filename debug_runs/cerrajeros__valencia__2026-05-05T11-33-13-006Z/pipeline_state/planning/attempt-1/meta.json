@@ -1,0 +1,21 @@
+{
+  "phase": "planning",
+  "status": "success",
+  "startedAt": "2026-05-05T11:33:39.407Z",
+  "completedAt": "2026-05-05T11:36:15.572Z",
+  "durationMs": 156165,
+  "warnings": [],
+  "metrics": {
+    "sections": 9,
+    "h1": "Cerrajeros en Valencia: Soluciones de Seguridad y Acceso",
+    "pageType": "service"
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

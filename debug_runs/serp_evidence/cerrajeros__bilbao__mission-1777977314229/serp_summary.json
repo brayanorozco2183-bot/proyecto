@@ -1,0 +1,17 @@
+{
+  "attempted": true,
+  "executed": true,
+  "status": "success",
+  "fallbackUsed": false,
+  "fallbackReason": null,
+  "provider": "sdi",
+  "mode": "live_serp_optional",
+  "query": "cerrajeros Bilbao",
+  "city": "Bilbao",
+  "niche": "cerrajeros",
+  "organicResultsCount": 5,
+  "competitorsFetched": 3,
+  "localPackCount": 0,
+  "timestamp": "2026-05-05T10:35:48.065Z",
+  "error": null
+}

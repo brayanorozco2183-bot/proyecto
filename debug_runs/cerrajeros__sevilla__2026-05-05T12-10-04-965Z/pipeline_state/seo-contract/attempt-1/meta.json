@@ -1,0 +1,20 @@
+{
+  "phase": "seo-contract",
+  "status": "success",
+  "startedAt": "2026-05-05T12:25:19.186Z",
+  "completedAt": "2026-05-05T12:25:19.220Z",
+  "durationMs": 34,
+  "warnings": [],
+  "metrics": {
+    "blocks": 10,
+    "totalWords": 1311
+  },
+  "qualitySummary": {
+    "decision": "pass",
+    "issueCount": 0,
+    "fatal": 0,
+    "major": 0,
+    "minor": 0,
+    "warning": 0
+  }
+}

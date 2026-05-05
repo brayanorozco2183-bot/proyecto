@@ -1,0 +1,17 @@
+{
+  "attempted": true,
+  "executed": true,
+  "status": "success",
+  "fallbackUsed": false,
+  "fallbackReason": null,
+  "provider": "sdi",
+  "mode": "live_serp_optional",
+  "query": "cerrajeros Jesús",
+  "city": "Jesús",
+  "niche": "cerrajeros",
+  "organicResultsCount": 10,
+  "competitorsFetched": 3,
+  "localPackCount": 0,
+  "timestamp": "2026-05-05T09:27:28.086Z",
+  "error": null
+}
